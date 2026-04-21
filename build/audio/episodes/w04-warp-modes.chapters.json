@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ch000",
+    "title": "Intro",
+    "start_ms": 0,
+    "end_ms": 87700
+  },
+  {
+    "id": "ch001",
+    "title": "Warp is not for tempo matching",
+    "start_ms": 88100,
+    "end_ms": 199750
+  },
+  {
+    "id": "ch002",
+    "title": "Why Hallogallo is the test clip",
+    "start_ms": 200150,
+    "end_ms": 325900
+  },
+  {
+    "id": "ch003",
+    "title": "The warp-mode menu, short version",
+    "start_ms": 326300,
+    "end_ms": 436950
+  },
+  {
+    "id": "ch004",
+    "title": "Complex Pro \u2014 Formants and Envelope",
+    "start_ms": 437350,
+    "end_ms": 554400
+  },
+  {
+    "id": "ch005",
+    "title": "Beats mode \u2014 transients intact, grid hostile",
+    "start_ms": 554800,
+    "end_ms": 668250
+  },
+  {
+    "id": "ch006",
+    "title": "The pitfall \u2014 Complex Pro softens kicks",
+    "start_ms": 668650,
+    "end_ms": 788950
+  },
+  {
+    "id": "ch007",
+    "title": "Aside \u2014 a studio in Cassadaga",
+    "start_ms": 789350,
+    "end_ms": 927100
+  },
+  {
+    "id": "ch008",
+    "title": "Texture mode \u2014 Flux from stable to cloud",
+    "start_ms": 927500,
+    "end_ms": 1056300
+  },
+  {
+    "id": "ch009",
+    "title": "Re-Pitch mode \u2014 chipmunk-soul territory",
+    "start_ms": 1056700,
+    "end_ms": 1192550
+  },
+  {
+    "id": "ch010",
+    "title": "Walkthrough \u2014 Hallogallo drums, four modes",
+    "start_ms": 1192950,
+    "end_ms": 1336300
+  },
+  {
+    "id": "ch011",
+    "title": "Settings to remember, pitfalls to flag",
+    "start_ms": 1336700,
+    "end_ms": 1445350
+  },
+  {
+    "id": "ch012",
+    "title": "Assignment \u2014 three modes, three sentences",
+    "start_ms": 1445750,
+    "end_ms": 1558700
+  },
+  {
+    "id": "ch013",
+    "title": "Outro",
+    "start_ms": 1559100,
+    "end_ms": 1628150
+  }
+]

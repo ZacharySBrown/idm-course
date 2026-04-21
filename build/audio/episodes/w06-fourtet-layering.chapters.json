@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ch000",
+    "title": "Intro",
+    "start_ms": 0,
+    "end_ms": 67300
+  },
+  {
+    "id": "ch001",
+    "title": "Henke shipped a granulator, then mixed a record on laptop speakers",
+    "start_ms": 67700,
+    "end_ms": 177750
+  },
+  {
+    "id": "ch002",
+    "title": "Preset discipline \u2014 Omnisphere as the whole palette",
+    "start_ms": 178150,
+    "end_ms": 296100
+  },
+  {
+    "id": "ch003",
+    "title": "The can't-be-bothered framing is performative",
+    "start_ms": 296500,
+    "end_ms": 411750
+  },
+  {
+    "id": "ch004",
+    "title": "Subliminal layering \u2014 the Fridge-era precedent",
+    "start_ms": 412150,
+    "end_ms": 528600
+  },
+  {
+    "id": "ch005",
+    "title": "Daydream Repeat \u2014 the four-layer kick stack",
+    "start_ms": 529000,
+    "end_ms": 653550
+  },
+  {
+    "id": "ch006",
+    "title": "Skater \u2014 the bell doubling the bass you cannot hear",
+    "start_ms": 653950,
+    "end_ms": 753650
+  },
+  {
+    "id": "ch007",
+    "title": "Looking At Your Pager \u2014 15% velocity, 15% octave",
+    "start_ms": 754050,
+    "end_ms": 873350
+  },
+  {
+    "id": "ch008",
+    "title": "Ableton wiring \u2014 Note Chance + Pitch Transformer",
+    "start_ms": 873750,
+    "end_ms": 1000450
+  },
+  {
+    "id": "ch009",
+    "title": "Laptop-speaker mixing \u2014 the cost",
+    "start_ms": 1000850,
+    "end_ms": 1115350
+  },
+  {
+    "id": "ch010",
+    "title": "Rounds-era Hebden \u2014 the same discipline, different decade",
+    "start_ms": 1115750,
+    "end_ms": 1237650
+  },
+  {
+    "id": "ch011",
+    "title": "Stemforge glitch render on Moanin' \u2014 what to listen for",
+    "start_ms": 1238050,
+    "end_ms": 1362250
+  },
+  {
+    "id": "ch012",
+    "title": "Build the four-layer kick on a Moanin' stem",
+    "start_ms": 1362650,
+    "end_ms": 1484550
+  },
+  {
+    "id": "ch013",
+    "title": "Outro",
+    "start_ms": 1484950,
+    "end_ms": 1535600
+  }
+]

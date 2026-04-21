@@ -1,0 +1,8 @@
+[
+  {"id": "bib:ableton_live_12_manual", "ok": false, "note": "wkhtmltopdf not installed — install via 'brew install --cask wkhtmltopdf'"},
+  {"id": "bib:max_for_live_readmes", "ok": true, "note": "copied from local Ableton install"},
+  {"id": "bib:henke_granulator_iii", "ok": true, "note": "downloaded from https://roberthenke.com/technology/granulator.html"},
+  {"id": "bib:oblique_strategies_eno", "ok": true, "note": "downloaded from https://stoney.sb.org/eno/oblique.html"},
+  {"id": "bib:korg_monologue_afx_manual", "ok": false, "note": "curl failed for https://www.korg.com/us/support/download/manual/0/562/3261/"},
+  {"id": "bucket_B_purchase_todo", "ok": true, "note": "written to /Users/zak/Desktop/IDM_COURSE/references/pdfs/_purchase_todo.md"}
+]

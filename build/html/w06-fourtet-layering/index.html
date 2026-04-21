@@ -1,0 +1,1515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W6 — Week 6 — Four Tet: subliminal layering &amp; preset discipline</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W6</span>
+  <span class="title-chip">Week 6 — Four Tet: subliminal layering &amp; preset discipline</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>Henke shipped a granulator, then mixed a record on laptop speakers</h2>
+  
+  <div class="body"></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>Preset discipline — Omnisphere as the whole palette</h2>
+  
+  <div class="body"><h2>Preset discipline — Omnisphere as the whole palette</h2>
+<ul>
+<li><em>Three</em> (2022). Hebden: <strong>Spectrasonics Omnisphere</strong> is &ldquo;the synth, main synth plugin I use for absolutely everything.&rdquo; <code>Tape Notes #140</code>.</li>
+<li>He browses <strong>alphabetically</strong> — &ldquo;Plectra Sub,&rdquo; &ldquo;Swaggering Around.&rdquo; Picks a preset, plays it. No oscillator editing.</li>
+<li>Quote, verbatim: &ldquo;I pretty much only use presets on things. I don&rsquo;t really mess with&hellip; definitely not one of those people that&rsquo;s like, I&rsquo;m going to start with a sine wave.&rdquo; <code>Tape Notes #140</code>.</li>
+<li>Supporting cast: <strong>NI Kontakt</strong> for orchestral (harp on &ldquo;Daydream Repeat&rdquo;). <strong>SoundToys MicroShift</strong> for width. <strong>FabFilter Pro-L2</strong> + <strong>iZotope Ozone Maximizer</strong> on the master bus.</li>
+<li>Hardware is a sample-generation loop only: Roland TR-8, Arturia DrumBrute, two cassette four-tracks. Patched briefly, sampled, then shelved.</li>
+</ul>
+<p>The rule: pick the preset, commit to the preset, move on. The track is the work, not the patch.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide caveat" id="slide-s03">
+  <h1>Slide s03 · caveat</h1>
+  <h2>The can&#x27;t-be-bothered framing is performative</h2>
+  
+  <div class="body"><h2>The can&rsquo;t-be-bothered framing is performative</h2>
+<ul>
+<li>On <code>Tape Notes #140</code> Hebden frames preset use as laziness — &ldquo;I can&rsquo;t be bothered.&rdquo; Taken at face value, reads as anti-craft.</li>
+<li>Partly a pose. The same interview documents months of club playbacks tuning the &ldquo;Daydream Repeat&rdquo; kick, 40-track sessions, arrangement maps drawn before a sound is placed.</li>
+<li>Honest read: <strong>preset discipline is a constraint, not apathy</strong>. He rules out one rabbit hole (patch design) so the session budget lands on arrangement and mixing.</li>
+<li>Earlier-era Hebden is not a preset user — <em>Rounds</em> (2003) is 200–300 source samples, mangled in AudioMulch + Cool Edit Pro. Flagged in <code>needs_bib</code>.</li>
+<li>Adopt the constraint. Do not adopt the pose.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div><div class="song-ref"><span class="title">Unspoken</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/69t0SrCVeudh7Ycxp9PxDr" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/5ViItcZyYBw" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Unspoken" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>Subliminal layering — the Fridge-era precedent</h2>
+  
+  <div class="body"><h2>Subliminal layering — the Fridge-era precedent</h2>
+<ul>
+<li><code>Tape Notes #140</code>: &ldquo;little quiet echo-y bits of vocals and noises and little things happening all the time… tons of subliminal little sounds and textures all the time.&rdquo;</li>
+<li>Precedent — his band Fridge tracked live-room mics of players chatting and playing video games between takes, then summed them quietly under the mix with delay. Conversations on the record. Not consciously audible.</li>
+<li>Function, his words: &ldquo;a way for people to connect to it without them really even understanding why they&rsquo;re connecting to it.&rdquo;</li>
+<li><strong>Mechanism</strong>: a layer 15–25 dB below the leads, often band-limited, often delayed. Does not compete. Fattens spatial impression.</li>
+<li><strong>Mix-bus implication</strong>: this is why the record works on laptop speakers. Subliminal layers are additive depth, not rivals for headroom.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>Daydream Repeat — the four-layer kick stack</h2>
+  
+  <div class="body"><h2>Daydream Repeat — the four-layer kick stack</h2>
+<p><code>Tape Notes #140</code>. Hebden walks through &ldquo;Daydream Repeat&rdquo; element by element. Four layers, each one job.</p>
+<ol>
+<li><strong>Main kick sample</strong> — the recognizable thump. Midrange body, character. A drum-machine sample that already felt right.</li>
+<li><strong>Sine sub</strong> — tuned to track root. On headphones &ldquo;almost inaudible… but just gives the weight in a big club.&rdquo; Operator sine, short envelope.</li>
+<li><strong>Transient click</strong> — high-frequency click above the main attack, for small-speaker cut-through. Band-passed above 3 kHz, 10 ms envelope.</li>
+<li><strong>Sub body</strong> — longer, slower sustain for weight past the transient. Low-passed sine tail at 120 Hz, 200–300 ms release.</li>
+</ol>
+<p>Process: added iteratively over months of club playbacks. Each layer solved a problem that only surfaced on a large PA. <code>Tape Notes #140</code>.</p>
+<p>Rule: solo each, confirm one job, sum.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Main kick alone vs full four-layer stack</div><div class="controls"><button data-src="main kick sample — solo" class="active">A — dry</button><button data-src="main + sub sine + transient click + sub body — summed">B — wet</button></div><audio class="abplayer" preload="none" controls src="main kick sample — solo"></audio></div>
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Skater — the bell doubling the bass you cannot hear</h2>
+  
+  <div class="body"><h2>Skater — the bell doubling the bass you cannot hear</h2>
+<ul>
+<li><code>Tape Notes #140</code>. &ldquo;Skater&rdquo; — Hebden doubles an Omnisphere &ldquo;Plectra Sub&rdquo; bass with an identical MIDI bell part, pitched up.</li>
+<li>Quote: &ldquo;You can&rsquo;t really hear the bell too much… without it, it&rsquo;s burying the bass more in the mix.&rdquo;</li>
+<li>The bell is not counter-melody. It plays the bass line transposed up. Reads as a <strong>brightness halo</strong> around the low fundamental, not as a separate voice.</li>
+<li>Same logic on the lead — one melody played on three instruments layered in sequence.</li>
+<li><strong>Rule.</strong> When a bass disappears in the low-mids, do not automate a high-shelf. Double with a bright voice on the same MIDI, pitched high, centered, 18–24 dB below the lead.</li>
+<li>A/B on headphones: mute the bell, unmute. Bass reads bigger with it.</li>
+</ul></div>
+  
+  
+  
+  <div class="ab"><div class="label">Skater bass with bell muted vs unmuted (headphones)</div><div class="controls"><button data-src="bass solo — bell muted" class="active">A — dry</button><button data-src="bass + bell summed — note the depth shift">B — wet</button></div><audio class="abplayer" preload="none" controls src="bass solo — bell muted"></audio></div>
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Skater</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/2zmpcYAM15byqlySCB64ua" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/1BPEhDTscqE" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Skater" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>Looking At Your Pager — 15% velocity, 15% octave</h2>
+  
+  <div class="body"><h2>Looking At Your Pager — 15% velocity, 15% octave</h2>
+<ul>
+<li><code>Tape Notes #140</code>. The KH track &ldquo;Looking At Your Pager.&rdquo; Used on &ldquo;pretty much everything&rdquo; on <em>Three</em>.</li>
+<li>Verbatim: &ldquo;randomization on the velocity of the midi notes… random 15%. And then… 15% of the time to pick one of the notes and play either an octave up or an octave below.&rdquo;</li>
+<li>Result: &ldquo;little sparkles and twinkles.&rdquo; Pattern never locks. Every playback differs.</li>
+<li>Consequence, his words: &ldquo;the version on the vinyl will be different probably to the version that&rsquo;s digitally available.&rdquo; Two valid masters. Rendered off a probabilistic source.</li>
+<li>Two parameters. Velocity ±15% of current value. 15% per-note probability of ±1 octave transposition. That is the whole trick.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Looking At Your Pager</span><span class="by"> — KH</span><span class="links"><a href="https://open.spotify.com/track/0y6CoVW1ZSBqRmPbyfhFQs" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/z-CcdRv87CA" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Looking%20At%20Your%20Pager" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide reference" id="slide-s08">
+  <h1>Slide s08 · reference</h1>
+  <h2>Ableton wiring — Note Chance + Pitch Transformer</h2>
+  
+  <div class="body"><h2>Ableton wiring — Note Chance + Pitch Transformer</h2>
+<p>Both pieces native to Live 12. <code>Ableton Live 12 Reference Manual</code>.</p>
+<p><strong>Velocity variance (±15%)</strong>
+- Clip view → note editor → <strong>Velocity Range</strong> handle per note.
+- Select all notes, drag any Range handle — Live scales proportionally.
+- Every trigger, Live rolls a uniform random velocity inside the band.</p>
+<p><strong>Octave shift at 15% probability</strong>
+- Duplicate the clip&rsquo;s notes in place. Shift duplicates +12 semitones. With duplicates selected, set <strong>Chance</strong> field to 15%. Delete originals at those beat positions.
+- For ±12 symmetry, split 15% across two duplicate layers (one +12, one −12, ~7–8% each).
+- Alternate: <strong>Clip → Transform → Pitch</strong> with probabilistic shift, then bake.</p>
+<p>Prefer the duplicated-layer route. It survives bounces, it is inspectable in the clip.</p>
+<p>Check: re-trigger five times. If every playback is identical, the Chance did not commit.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s09">
+  <h1>Slide s09 · caveat</h1>
+  <h2>Laptop-speaker mixing — the cost</h2>
+  
+  <div class="body"><h2>Laptop-speaker mixing — the cost</h2>
+<ul>
+<li><code>Tape Notes #140</code>: &ldquo;90% of the listening and mixing and everything for this album… is just the laptop speakers.&rdquo;</li>
+<li>Supplement: Audio-Technica reference cans, Sennheiser HD25s on trains and planes. <em>Three</em> released &ldquo;near-unmastered&rdquo; by his own account.</li>
+<li><strong>Upside</strong>: low-end commitment forced by a speaker with no low-end. If it feels heavy on a MacBook, it will feel crushing in a club. The four-layer kick stack solves sub on a system that cannot reproduce sub.</li>
+<li><strong>Downside</strong> (inline): mid-range decisions land sharper on real monitors. Laptop-only adopters often land shrill mixes on anything bigger. Hebden survives it because arrangement is sparse and the Omnisphere palette is pre-voiced.</li>
+<li><strong>Adopt</strong>: one laptop-speaker pass per session. <strong>Do not adopt</strong>: laptop speakers as only reference.</li>
+</ul>
+<p>Discipline, not a workflow to copy wholesale.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide reference" id="slide-s10">
+  <h1>Slide s10 · reference</h1>
+  <h2>Rounds-era Hebden — the same discipline, different decade</h2>
+  
+  <div class="body"><h2>Rounds-era Hebden — same discipline, different decade</h2>
+<ul>
+<li><em>Rounds</em> (2003). Estimated 200–300 source samples per album, 20–30 per track. Zak Handbook synthesis — flagged in <code>needs_bib</code>, not a confirmed primary interview.</li>
+<li>Tool chain: <strong>AudioMulch</strong> (modular patching host) + <strong>Cool Edit Pro</strong> (pre-Audition destructive editor). Both long superseded; the logic survives.</li>
+<li>Hebden, <em>Rounds</em>-era quote surfaced again on <code>Tape Notes #140</code>: &ldquo;A lot of the sounds you hear on Rounds are kind of misleading. You might hear something that sounds like a bass, but it&rsquo;s actually… a guitar or harp… slowed down a lot and reversed and then manipulated.&rdquo;</li>
+<li>Opposite surface, same artist. 2003 — mangled samples as palette. 2022 — factory presets as palette.</li>
+<li>Through-line: constrain the material, spend the session on arrangement. On &ldquo;Unspoken&rdquo; — 2.5-hour train listening to the central loop, then 40 audio tracks filled into a pre-existing map.</li>
+</ul>
+<p>Palette is negotiable. Arrangement discipline is not.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Unspoken</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/69t0SrCVeudh7Ycxp9PxDr" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/5ViItcZyYBw" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Unspoken" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s11">
+  <h1>Slide s11 · concept</h1>
+  <h2>Stemforge glitch render on Moanin&#x27; — what to listen for</h2>
+  
+  <div class="body"><h2>Stemforge glitch render on Moanin&rsquo; — what to listen for</h2>
+<p>Recipe: <code>w06-moanin-glitch-layers</code>. Source: &ldquo;Moanin&rsquo;&rdquo; (Art Blakey &amp; The Jazz Messengers, 1958). Pipeline: <code>stemforge split {input} --pipeline glitch</code>. <code>bib:stemforge_repo</code>.</p>
+<p>Renders in <code>build/audio/stemforge-renders/w06/</code>:
+- <code>moanin_dry.wav</code> — unprocessed split reference.
+- <code>moanin_glitch.wav</code> — glitch pipeline wet. Transient re-slicing, pitched ghost tails, occasional reverse stabs.</p>
+<p>Listen for:
+- <strong>Sub-audible ghost tails</strong> — quiet, band-limited, contextual. Exactly the Hebden subliminal-layer material.
+- <strong>Pipeline artifacts as texture</strong> — the detritus is source, not bug. The &ldquo;dirty intake&rdquo; posture.</p>
+<p>For the exercise: keep <code>moanin_glitch</code> on a return or a muted parallel. The kick stack goes on its own group, tuned to the Moanin&rsquo; bass walk (F minor — root and fifth).</p>
+<p>Do not mix the stem up to equal the stack. It is a subliminal bed.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Moanin&#x27; dry vs glitch-pipeline wet (stemforge w06)</div><div class="controls"><button data-src="stemforge/moanin_dry.wav" class="active">A — dry</button><button data-src="stemforge/moanin_glitch.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/moanin_dry.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s12">
+  <h1>Slide s12 · exercise</h1>
+  <h2>Build the four-layer kick on a Moanin&#x27; stem</h2>
+  
+  <div class="body"><h2>Exercise — build the four-layer kick on a Moanin&rsquo; stem</h2>
+<p><strong>Deliverable.</strong> 8-bar loop at 120 BPM over <code>moanin_glitch.wav</code>. Four-layer kick stack on its own group. Render stereo master + one stem per layer + notes file naming each layer&rsquo;s one job.</p>
+<p><strong>Steps.</strong></p>
+<ol>
+<li><code>moanin_glitch.wav</code> on an audio track. Warp Complex Pro. Tempo 120.</li>
+<li>MIDI group <strong>KickStack</strong>, four tracks routed to group out.</li>
+<li><strong>Main kick</strong> — your favorite kick one-shot in Simpler, Classic mode.</li>
+<li><strong>Sub sine</strong> — Operator sine, Ratio 0.5, release 120 ms. Tune to Moanin&rsquo; root (F1) by ear.</li>
+<li><strong>Transient click</strong> — noise burst or hat-attack in Simpler, band-pass 3–6 kHz, 10 ms envelope.</li>
+<li><strong>Sub body</strong> — Operator sine, octave below layer 2 (F0), release 300 ms, LP 120 Hz.</li>
+<li>Solo each. Confirm one job. Sum.</li>
+<li>Render.</li>
+</ol>
+<p><strong>Constraint.</strong> No EQ on layers beyond the click&rsquo;s band-pass. <code>Tape Notes #140</code> — layers are chosen to not fight, not EQed to not fight.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A rendered 8-bar loop at 120 BPM over the Moanin&#x27; glitch stem, with a four-layer kick stack (main + sub sine + transient click + sub body) on its own group. Bounce a stereo WAV and a stem per layer. Notes file naming each layer&#x27;s one job.</div>
+  
+</section>
+
+
+<section class="slide reference" id="slide-i01">
+  <h1>Slide i01 · reference</h1>
+  <h2>Kieran Hebden — laptop, headphones, and a TR-8 he has already put away</h2>
+  
+  <div class="body"><h2>Kieran Hebden — laptop, headphones, and a TR-8 he has already put away</h2>
+<p>Portrait slide. Use a press shot from the <em>Three</em> promo cycle or a Tape Notes studio sit-down photo.</p>
+<p>Context for the image — one man, one laptop, a pair of Sennheiser HD25s, and hardware shelved in the corner of a north London flat. No console, no outboard rack, no treated room shot. The absence is the point.</p>
+<p>This is the producer who, twenty years earlier, tracked <em>Rounds</em> with 200–300 manually mangled samples. Same artist. Opposite setup. Through-line: arrangement discipline regardless of palette.</p>
+<p>Image sourcing note for Wave 10 — prefer a press shot tagged for editorial commentary use; avoid paparazzi-era crops. If a live-rig shot exists from the 2023 Parallax tour, it shows the laptop + minimal-hardware framing cleanly.</p></div>
+  <figure class="figure"><img src="assets/hebden-portrait.jpg" alt="Kieran Hebden in studio, Three promo cycle (2024)."><figcaption>Kieran Hebden in studio, Three promo cycle (2024).<div class="credit">Photo: press/editorial — to be sourced · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i02">
+  <h1>Slide i02 · reference</h1>
+  <h2>Three (2024) — the album the receipts describe</h2>
+  
+  <div class="body"><h2><em>Three</em> (2024) — the album the receipts describe</h2>
+<p>Album art slide. Four Tet, <em>Three</em>, released 15 March 2024 on Text Records. The cover is a high-res photographic portrait (as distinct from the scribbled-marker covers of <em>Sixteen Oceans</em> or <em>New Energy</em>).</p>
+<p>Tracks referenced across this lesson:</p>
+<ul>
+<li><strong>&ldquo;Daydream Repeat&rdquo;</strong> — four-layer kick stack, Kontakt harp lead.</li>
+<li><strong>&ldquo;Skater&rdquo;</strong> — Omnisphere Plectra Sub + bell doubling.</li>
+<li><strong>&ldquo;Looking At Your Pager&rdquo;</strong> — 15% velocity / 15% octave randomization receipt.</li>
+</ul>
+<p>The album is flagged in <code>needs_bib</code> — we are missing a canonical press entry for the release. Every production claim in this lesson cites <code>Tape Notes #140</code> as primary; confirm Text Records press material when available.</p>
+<p>Image sourcing note — Text Records publishes cover art on Bandcamp and the label site. Use the official 1:1 square with standard fair-use-commentary credit.</p></div>
+  <figure class="figure"><img src="assets/three-cover.jpg" alt="Four Tet, Three (Text Records, 15 March 2024)."><figcaption>Four Tet, Three (Text Records, 15 March 2024).<div class="credit">Artwork: Text Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div><div class="song-ref"><span class="title">Skater</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/2zmpcYAM15byqlySCB64ua" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/1BPEhDTscqE" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Skater" target="_blank" rel="noopener">Apple</a> </span></div><div class="song-ref"><span class="title">Looking At Your Pager</span><span class="by"> — KH</span><span class="links"><a href="https://open.spotify.com/track/0y6CoVW1ZSBqRmPbyfhFQs" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/z-CcdRv87CA" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Looking%20At%20Your%20Pager" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide reference" id="slide-i03">
+  <h1>Slide i03 · reference</h1>
+  <h2>Rounds (2003) — the other Hebden</h2>
+  
+  <div class="body"><h2><em>Rounds</em> (2003) — the <em>other</em> Hebden</h2>
+<p>Reference slide for the Rounds-era module. Domino Records, 6 May 2003. Cover: hand-drawn geometric pattern, black on white — the same design family as <em>Pause</em> (2001) and <em>Everything Ecstatic</em> (2005).</p>
+<p>Tracks referenced:</p>
+<ul>
+<li><strong>&ldquo;Unspoken&rdquo;</strong> — 2.5-hour train ride with the central loop before placing a second element.</li>
+<li><strong>&ldquo;She Moves She&rdquo;</strong> — <em>Rounds</em>-era AudioMulch + Cool Edit tool-chain exemplar.</li>
+</ul>
+<p>The contrast with <em>Three</em> is the pedagogical hook for <code>s10</code> and the <code>gd-audmulch</code> module. Same artist, twenty-one years apart. Different palette, identical arrangement discipline.</p>
+<p>Image note — Domino&rsquo;s original <em>Rounds</em> cover art is canonical; avoid streaming-service auto-cropped variants. For <em>Parallel Jalebi</em> and <em>New Energy</em> single art (referenced across Text Records cycle), Text&rsquo;s official Bandcamp has hi-res masters.</p></div>
+  <figure class="figure"><img src="assets/rounds-cover.jpg" alt="Four Tet, Rounds (Domino, 6 May 2003)."><figcaption>Four Tet, Rounds (Domino, 6 May 2003).<div class="credit">Artwork: Domino Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Unspoken</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/69t0SrCVeudh7Ycxp9PxDr" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/5ViItcZyYBw" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Unspoken" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-k01">
+  <h1>Slide k01 · concept</h1>
+  <h2>Kick-stack anatomy — the four-layer mental model</h2>
+  
+  <div class="body"><h2>Kick-stack anatomy — the four-layer mental model</h2>
+<p>Before the diagram, the premise. Each layer answers one question about one speaker.</p>
+<ul>
+<li><strong>Main kick</strong> — what does this sound like on a typical monitor speaker? Answers the &ldquo;character&rdquo; question.</li>
+<li><strong>Transient click</strong> — does the kick <em>cut through</em> a laptop speaker or an earbud at low volume? Answers the &ldquo;small-speaker readability&rdquo; question.</li>
+<li><strong>Sub sine</strong> — does the kick feel heavy in a club on a subwoofer? Answers the &ldquo;PA weight&rdquo; question.</li>
+<li><strong>Sub body</strong> — does the weight <em>sustain</em> past the transient, or does it collapse? Answers the &ldquo;decay tail&rdquo; question.</li>
+</ul>
+<p>Each layer is designed for a speaker Hebden does not own. The main kick is for the MacBook. The rest is for rooms he learned about during months of DJ sets at Plastic People and Freerotation. <code>Tape Notes #140</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-k02">
+  <h1>Slide k02 · concept</h1>
+  <h2>Kick-stack frequency bands — one layer per band</h2>
+  
+  <div class="body"><h2>Kick-stack frequency bands — one layer per band</h2>
+<p>Visualizing the stack as a frequency-domain split. Each horizontal bar = one layer&rsquo;s dominant energy range. No EQ cuts — layers are <em>chosen</em> for their band.</p>
+<p>Approximate energy bands (Zak estimate, not from interview — flagged as inference):</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Dominant band</th>
+<th>Peak frequency</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transient click</td>
+<td>3–8 kHz</td>
+<td>~5 kHz</td>
+<td>Small-speaker attack</td>
+</tr>
+<tr>
+<td>Main kick</td>
+<td>80–400 Hz + click 1–3 kHz</td>
+<td>~120 Hz body, ~2 kHz click</td>
+<td>Character</td>
+</tr>
+<tr>
+<td>Sub body</td>
+<td>40–120 Hz</td>
+<td>~60 Hz</td>
+<td>Sustained weight</td>
+</tr>
+<tr>
+<td>Sub sine</td>
+<td>30–60 Hz</td>
+<td>~40 Hz (F1)</td>
+<td>PA-only foundation</td>
+</tr>
+</tbody>
+</table>
+<p>The rule: if two layers share a dominant band, one of them is redundant — swap, do not EQ. <code>Tape Notes #140</code> — Hebden describes the layers as distinct in function, not as carved-out-of-each-other via EQ.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="360" fill="#f6f4ee"/>
+  <text x="20" y="30" font-family="monospace" font-size="16" fill="#222">Kick-stack frequency bands (log-ish Hz, Zak estimate)</text>
+  <g font-family="monospace" font-size="12" fill="#222">
+    <text x="20" y="90">transient click</text>
+    <rect x="180" y="72" width="480" height="24" fill="#c97a4a" opacity="0.85"/>
+    <text x="670" y="90">3k–8k Hz</text>
+    <text x="20" y="160">main kick</text>
+    <rect x="90" y="142" width="360" height="24" fill="#5a7a8f" opacity="0.85"/>
+    <text x="460" y="160">80–400 Hz body + 1–3k click</text>
+    <text x="20" y="230">sub body</text>
+    <rect x="60" y="212" width="180" height="24" fill="#3e5f3a" opacity="0.85"/>
+    <text x="250" y="230">40–120 Hz</text>
+    <text x="20" y="300">sub sine</text>
+    <rect x="45" y="282" width="90" height="24" fill="#2a2a5a" opacity="0.85"/>
+    <text x="145" y="300">30–60 Hz (F1)</text>
+  </g>
+  <line x1="180" y1="340" x2="780" y2="340" stroke="#222" stroke-width="1"/>
+  <text x="180" y="356" font-family="monospace" font-size="10" fill="#222">20 Hz</text>
+  <text x="760" y="356" font-family="monospace" font-size="10" fill="#222">20 kHz</text>
+</svg>
+<div class="caption">Each layer chosen for its dominant band, not EQed into one. Inferred bands — flagged as estimate, not interview source.</div></div>
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-k03">
+  <h1>Slide k03 · concept</h1>
+  <h2>The iteration process — months of club playbacks</h2>
+  
+  <div class="body"><h2>The iteration process — months of club playbacks</h2>
+<p>The four-layer stack was not designed in a session. It was accreted over live sets.</p>
+<p>Hebden, paraphrased from <code>Tape Notes #140</code>: he played early versions of &ldquo;Daydream Repeat&rdquo; on large club systems — Plastic People, Fabric, Freerotation, his own Parallax live tours — and on each playback noticed a specific failure mode. Each layer was added to solve one failure.</p>
+<p>Likely iteration order, inferred from the interview:</p>
+<ol>
+<li><strong>Main kick</strong> — the initial sketch kick that felt right on headphones.</li>
+<li><strong>Sub sine</strong> — added after a club set revealed the kick had no sub weight on the PA.</li>
+<li><strong>Transient click</strong> — added after a smaller-speaker playback showed the kick was thumpy but unintelligible.</li>
+<li><strong>Sub body</strong> — added last, to sustain the weight past the sub-sine&rsquo;s short envelope.</li>
+</ol>
+<p>The lesson is not the stack. It is the <strong>iterative ear, not synthesis</strong>. You do not build a four-layer stack on night one. You build a two-layer stack, play it out, fix what fails, play it out again.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Daydream Repeat</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/bKaRxvxeUzs" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-k04">
+  <h1>Slide k04 · concept</h1>
+  <h2>Checklist — how to audit your own stack</h2>
+  
+  <div class="body"><h2>Checklist — how to audit your own stack</h2>
+<p>Six checks, in order. Each takes under a minute.</p>
+<ol>
+<li><strong>Solo main kick.</strong> Ask: can I identify this kick from a one-shot blind-test? If not, change the sample, do not add layers.</li>
+<li><strong>Add sub sine.</strong> Tune to track root. Play on headphones. It should be <em>almost</em> inaudible — if you hear it prominently, it is too loud; if you cannot hear it at all on a phone speaker, that is correct.</li>
+<li><strong>Add transient click.</strong> Check on a laptop speaker or phone. The kick should now <em>cut</em> — pop out of the mix at low volume.</li>
+<li><strong>Add sub body.</strong> Check on studio monitors if available. The tail should extend the weight, not double the thump.</li>
+<li><strong>Sum.</strong> A/B with just main kick. The stack should feel <em>bigger</em> without feeling <em>louder</em> on a meter.</li>
+<li><strong>Render. Walk away. Check on a different speaker tomorrow.</strong> The club-playback iteration loop in miniature.</li>
+</ol>
+<p>If any layer fails its check, swap the sample or retune, do not EQ the existing layer harder. <code>Tape Notes #140</code> — layers are chosen to not fight, not EQed to not fight.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d01">
+  <h1>Slide d01 · concept</h1>
+  <h2>Note Chance + Pitch Transformer wiring</h2>
+  
+  <div class="body"><h2>Diagram — Note Chance + Pitch Transformer wiring</h2>
+<p>The &ldquo;Looking At Your Pager&rdquo; 15% / 15% randomization, laid out as a signal diagram.</p>
+<pre><code>MIDI clip ──► [Velocity Range ±15%] ──► note-on velocity randomized on each trigger
+         │
+         └──► duplicate notes +12 semitones, stacked at same beat position
+                     │
+                     └──► [Chance 15%] ──► 15% probability the duplicate plays
+                                     │
+                                     └──► if duplicate fires, original is masked via Chance 85%
+</code></pre>
+<ul>
+<li><span class="term">Note Chance<span class="gloss"><strong>Note Chance</strong> — Per-note probability (0–100%) that a MIDI note actually triggers on playback. Introduced in Live 11. Hi-hat at Chance 60–75% with a hand-programmed pattern never plays the same bar twice and still keeps its musical logic. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> is a per-note probability field in Live 12&rsquo;s clip editor. 0–100%.</li>
+<li><strong>Velocity Range</strong> is the secondary handle on each note. Scales the triggered velocity randomly within the band.</li>
+<li>The <strong>Pitch Transformer</strong> is an alternative path — use <em>Clip → Transform → Pitch</em> with a probability setting, then <strong>Bake</strong> to lock the result into actual notes.</li>
+</ul>
+<p>Prefer the duplicated-layer route. It survives bounces. <code>Ableton Live 12 Reference Manual</code>.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[MIDI clip] --&gt; B[Velocity Range ±15%]
+  B --&gt; C[note-on velocity randomized per trigger]
+  A --&gt; D[duplicate notes +12 semitones]
+  D --&gt; E{Chance 15%}
+  E --&gt;|fires| F[octave-up replacement]
+  E --&gt;|skips| G[original plays]
+</div><div class="caption">Live 12 native primitives — Velocity Range + Note Chance — implement the Hebden 15/15 trick.</div></div>
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Looking At Your Pager</span><span class="by"> — KH</span><span class="links"><a href="https://open.spotify.com/track/0y6CoVW1ZSBqRmPbyfhFQs" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/z-CcdRv87CA" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Looking%20At%20Your%20Pager" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-d02">
+  <h1>Slide d02 · concept</h1>
+  <h2>Skater doubling — one MIDI clip, three octave layers</h2>
+  
+  <div class="body"><h2>Diagram — &ldquo;same preset, three layers&rdquo; doubling for Skater</h2>
+<p>Signal flow of the Hebden Skater-bass doubling move. Single MIDI part, three instrument tracks, no counter-melody logic. <code>Tape Notes #140</code>.</p>
+<pre><code>MIDI clip (bass line, F minor walk, root-fifth)
+   │
+   ├──► Track 1: Omnisphere &quot;Plectra Sub&quot;  ──► bass register (F1-F2)
+   │          └─► ~0 dB, center
+   │
+   ├──► Track 2: same MIDI, transposed +24  ──► bell register (F3-F4)
+   │          └─► ~−20 dB, center, no EQ, no bright-ifying
+   │
+   └──► Track 3: same MIDI, transposed +36  ──► upper register (F4-F5)
+              └─► ~−24 dB, light shimmer reverb
+</code></pre>
+<p>All three tracks trigger off one MIDI clip via MIDI routing (or duplicate clips locked in sync). No counter-melody, no voicing changes. The doubling is <em>pure</em> — identical line, three octaves of the same notes.</p>
+<p>The effect is a brightness halo on the fundamental, not a melodic stack. Mute track 2 + 3 and the bass &ldquo;buries.&rdquo; Unmute and it reads as a single, fatter instrument.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  M[MIDI clip&lt;br/&gt;F minor bass walk] --&gt; T1[Omnisphere Plectra Sub&lt;br/&gt;F1–F2, 0 dB]
+  M --&gt; T2[Same patch +24 semi&lt;br/&gt;F3–F4, −20 dB]
+  M --&gt; T3[Same patch +36 semi&lt;br/&gt;F4–F5, −24 dB, reverb]
+  T1 --&gt; G[group bus → brightness halo]
+  T2 --&gt; G
+  T3 --&gt; G
+</div><div class="caption">No counter-melody. Same notes, three octaves. The halo reveals the fundamental on small speakers.</div></div>
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Skater</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/2zmpcYAM15byqlySCB64ua" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/1BPEhDTscqE" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Skater" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-01">
+  <h1>Slide gd-omni-01 · gear deep dive</h1>
+  <h2>Spectrasonics Omnisphere — the whole palette</h2>
+  
+  <div class="body"><h2>Spectrasonics Omnisphere — the whole palette</h2>
+<p>Confession first. A gear walkthrough on a software synth feels suspect. Except Hebden names one plugin as <em>the</em> instrument, and it is this one. <code>Tape Notes #140</code>.</p>
+<ul>
+<li>Released 2008, Omnisphere 2 in 2015, continuing updates through v2.8.</li>
+<li>Developer: Spectrasonics (Eric Persing + team). Ships with ~14,000+ factory patches on current versions. <code>bib:spectrasonics_omnisphere_docs</code>.</li>
+<li>Two synthesis engines under one hood — wavetable oscillators and the <strong>STEAM</strong> sample-playback engine, co-driven per patch.</li>
+<li>Hebden&rsquo;s use: preset browser → play. No oscillator editing, no envelope reshaping. The patch is the decision.</li>
+</ul>
+<p>The module is not about what Omnisphere can do. It is about what Hebden refuses to do with it.</p></div>
+  <figure class="figure"><img src="assets/gear-omnisphere-browser-hero.jpg" alt="Omnisphere 2.8 preset browser open on category pane."><figcaption>Omnisphere 2.8 preset browser open on category pane.<div class="credit">Spectrasonics marketing asset / fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-02">
+  <h1>Slide gd-omni-02 · gear deep dive</h1>
+  <h2>Annotated tour 1/5 — the preset browser</h2>
+  
+  <div class="body"><h2>Annotated tour 1/5 — the preset browser</h2>
+<p>The browser is the whole instrument for Hebden. The oscillator page is not on screen.</p>
+<ul>
+<li><strong>Sound Match</strong> — pulls timbrally-similar patches across the library. Hebden does not use it. He browses alphabetically.</li>
+<li><strong>Attribute tags</strong> — genre, category, mood columns. Also unused. Alphabetical list only.</li>
+<li><strong>Favorites / Ratings</strong> — track-by-track shortlist. The one affordance that maps to his workflow, used lightly.</li>
+<li><strong>Category pane</strong> — <em>Bass</em>, <em>Keyboards</em>, <em>Leads</em>, <em>Pads</em>, <em>Textures</em>, <em>Grooves</em>, <em>Arps+BPM</em>, <em>Hits</em>. Hebden picks a category per track slot, then scrolls.</li>
+</ul>
+<p>Quote, verbatim: <em>&ldquo;I pretty much only use presets on things.&rdquo;</em> <code>Tape Notes #140</code>. The tour is the browser. The rest is theoretical for this user.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-omnisphere-browser.jpg" alt="Preset browser — alphabetical column is the only affordance Hebden uses."><div class="callouts"><ol><li><strong>category pane</strong>: Bass / Keyboards / Leads / Pads / Textures / Grooves / Arps+BPM / Hits</li><li><strong>preset list</strong>: Alphabetical sort — Hebden&#x27;s default scroll</li><li><strong>Sound Match</strong>: Timbrally-similar suggestions — unused by Hebden</li><li><strong>favorites</strong>: Per-track shortlist, lightly used</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-03">
+  <h1>Slide gd-omni-03 · gear deep dive</h1>
+  <h2>Annotated tour 2/5 — patch layer architecture</h2>
+  
+  <div class="body"><h2>Annotated tour 2/5 — patch layer architecture</h2>
+<p>Every Omnisphere patch is two <strong>Parts</strong> (A + B), each with two <strong>Layers</strong> (A+B inside each Part). Four sound sources stackable per patch, each independently filtered, enveloped, and routed.</p>
+<ul>
+<li>Each Layer picks either a <strong>Soundsource</strong> (sample, multisampled or one-shot) or a <strong>Synth oscillator</strong> (wavetable, analog-model, granular).</li>
+<li>Layers can be <strong>detuned, panned, velocity-crossfaded</strong>, or triggered as round-robin.</li>
+<li>Most factory patches already use 3–4 layers. &ldquo;Plectra Sub&rdquo; is a plucked-string layer plus a filtered sine sub plus a noise transient. Pre-stacked.</li>
+</ul>
+<p>The implication for Hebden: many Omnisphere presets are already layered subliminal kick-stacks in miniature. He is not skipping the layering work — someone did it for him at Spectrasonics.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-04">
+  <h1>Slide gd-omni-04 · gear deep dive</h1>
+  <h2>Annotated tour 3/5 — the FX chain page</h2>
+  
+  <div class="body"><h2>Annotated tour 3/5 — the FX chain page</h2>
+<p>Per-layer, per-part, and per-patch effect racks. 58 built-in effects in v2.8.</p>
+<ul>
+<li><strong>Layer FX</strong> (4 slots) — printed into the layer, so patch-internal.</li>
+<li><strong>Part FX</strong> (4 slots) — shared across the two layers of a Part.</li>
+<li><strong>Aux FX</strong> (4 slots) — global sends, shared across Parts.</li>
+<li>Common chain on Hebden-favorite bass patches: tape sim → wide chorus → plate reverb, all pre-baked.</li>
+</ul>
+<p>The effects are not optional garnish. They are part of what Hebden is selecting when he picks a preset. A &ldquo;Plectra Sub&rdquo; without its built-in stereo imager is a thinner, duller sound. The patch ships with its own mix decisions. <code>bib:spectrasonics_omnisphere_docs</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-05">
+  <h1>Slide gd-omni-05 · gear deep dive</h1>
+  <h2>Annotated tour 4/5 — Arpeggiator + Orb</h2>
+  
+  <div class="body"><h2>Annotated tour 4/5 — Arpeggiator + Orb</h2>
+<p>Two pages that matter for preset-driven producers who do not want to edit oscillators.</p>
+<ul>
+<li><strong>Arpeggiator page</strong> — per-step pattern editor, 32 steps, per-step pitch / velocity / duration / probability. Many factory &ldquo;Arps+BPM&rdquo; patches ship with intricate custom arp patterns that <em>are</em> the instrument.</li>
+<li><strong>Orb</strong> — a circular XY modulation surface. Drag the dot; it modulates pre-assigned parameters per patch. For a non-tweaker, Orb is the entire interactive edit interface.</li>
+</ul>
+<p>Hebden has not publicly discussed Orb or the arp page in interviews. But the &ldquo;Arps+BPM&rdquo; category is visible in his browser shots. Inference, not receipt — many of the &ldquo;Three&rdquo;-era sequencer-feel synth lines could be Omnisphere arp patches played live. Flag as inference.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-06">
+  <h1>Slide gd-omni-06 · gear deep dive</h1>
+  <h2>Annotated tour 5/5 — signal path in one line</h2>
+  
+  <div class="body"><h2>Annotated tour 5/5 — signal path in one line</h2>
+<p>Soundsource(s) + synth osc → per-layer filter → per-layer envelopes → Layer FX → Part filter → Part FX → Aux FX → master out.</p>
+<p>Most of those stages are bypassed on the default patch. The sounds you hear arrive via the Soundsource + Layer FX path. That is where the factory character lives.</p>
+<p>For Hebden, only two of those stages matter at session time:</p>
+<ol>
+<li><strong>Which patch</strong> — the whole top-of-chain decision.</li>
+<li><strong>Orb / mod-wheel</strong> — if anything, live expression only.</li>
+</ol>
+<p>The filter page, the envelope page, the oscillator edit view — unvisited. The whole box has been pre-patched by Spectrasonics programmers for him to browse past.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  S[Soundsources&lt;br/&gt;+ synth osc] --&gt; LF[Layer filter + env]
+  LF --&gt; LFX[Layer FX x4]
+  LFX --&gt; PF[Part filter]
+  PF --&gt; PFX[Part FX x4]
+  PFX --&gt; AFX[Aux FX x4]
+  AFX --&gt; OUT[master out]
+</div><div class="caption">Omnisphere per-patch signal chain. For Hebden, everything downstream of Soundsources is pre-baked by the preset author.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-07">
+  <h1>Slide gd-omni-07 · gear deep dive</h1>
+  <h2>Technique — Hebden&#x27;s alphabetical browse-and-grab</h2>
+  
+  <div class="body"><h2>Technique — Hebden&rsquo;s alphabetical browse-and-grab</h2>
+<p>Step by step, reconstructed from <code>Tape Notes #140</code> and album sleeve notes for <em>Three</em>.</p>
+<ol>
+<li>Open session. Drop a MIDI clip with a rough sketch — two-bar chord loop or a bass figure.</li>
+<li>Instantiate Omnisphere on the track. Browser opens by default.</li>
+<li>Pick category — <em>Bass</em> for a bass slot, <em>Pads</em> for texture, etc.</li>
+<li><strong>Browse alphabetically from the top.</strong> Arrow down through the list. Each preset previews on the sketch.</li>
+<li>Stop at the first one that &ldquo;fits.&rdquo; Commit. Close browser.</li>
+<li>Do <em>not</em> open the edit view. Do <em>not</em> audition patch B or patch C on the same slot once committed.</li>
+</ol>
+<p><em>&ldquo;Plectra Sub,&rdquo; &ldquo;Swaggering Around&rdquo;</em> — two patches named by Hebden <code>Tape Notes #140</code>. Both are deep in the alphabet, implying he lets the scroll run a long way before commit. Thirty-second decisions, not thirty-minute ones.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Skater</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/2zmpcYAM15byqlySCB64ua" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/1BPEhDTscqE" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Skater" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-08">
+  <h1>Slide gd-omni-08 · gear deep dive</h1>
+  <h2>Technique continued — interview receipts</h2>
+  
+  <div class="body"><h2>Technique continued — interview receipts</h2>
+<p>The claim &ldquo;Omnisphere presets, unedited&rdquo; is extraordinary. The receipts.</p>
+<ul>
+<li><code>Tape Notes #140</code> verbatim: <em>&ldquo;the synth, main synth plugin I use for absolutely everything.&rdquo;</em></li>
+<li>Same interview: <em>&ldquo;I pretty much only use presets on things. I don&rsquo;t really mess with&hellip; definitely not one of those people that&rsquo;s like, I&rsquo;m going to start with a sine wave.&rdquo;</em></li>
+<li>Same interview, on the specific &ldquo;Skater&rdquo; bass: <em>&ldquo;that was an Omnisphere preset called Plectra Sub, I think.&rdquo;</em></li>
+<li>Same interview, on &ldquo;Daydream Repeat&rdquo; lead: <em>&ldquo;another Omnisphere preset&rdquo;</em> — patch name not given, but Kontakt orchestral harp is the only named exception.</li>
+</ul>
+<p>The framing around it is the &ldquo;can&rsquo;t-be-bothered&rdquo; performance documented in <code>s03</code>. The production facts stand regardless of the framing. The palette is a preset browser. Full stop.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-09">
+  <h1>Slide gd-omni-09 · gear deep dive</h1>
+  <h2>Underlying algorithm — STEAM + wavetable hybrid</h2>
+  
+  <div class="body"><h2>Underlying algorithm — STEAM + wavetable hybrid</h2>
+<p>Omnisphere&rsquo;s engine is called <strong>STEAM</strong> (Spectrasonics&rsquo; internal name). Two parallel synthesis paths per layer, chosen per patch.</p>
+<ul>
+<li><strong>Sample path</strong> — multi-sampled instruments, granularized, reverse-playable, time-stretchable. Backed by a 64+ GB factory library on disk. <code>bib:spectrasonics_omnisphere_docs</code>.</li>
+<li><strong>Synth path</strong> — classic subtractive + wavetable + FM-like operator modulation, all under one oscillator page.</li>
+<li><strong>Hybrid mode</strong> — sample + synth summed per layer, with independent filters and envelopes each.</li>
+</ul>
+<p>The &ldquo;three layers per patch&rdquo; in practice: one sample layer for body, one wavetable for harmonic sparkle, one noise/texture for grain. Spectrasonics&rsquo; engineers pre-stack these combinations into every factory patch.</p>
+<p>Roads would call this concatenative and spectral hybrid synthesis. Hebden calls it &ldquo;the synth plugin.&rdquo; Both are correct. <code>Roads 1996</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-10">
+  <h1>Slide gd-omni-10 · gear deep dive</h1>
+  <h2>Algorithm continued — what the engine cannot do</h2>
+  
+  <div class="body"><h2>Algorithm continued — what the engine cannot do</h2>
+<p>Every synth has limits. Naming Omnisphere&rsquo;s limits defends against the &ldquo;everything machine&rdquo; framing.</p>
+<ul>
+<li><strong>CPU</strong> — stacked layers + Aux FX eat cores fast. Hebden&rsquo;s laptop-only workflow implies freezing patches to audio early. Not discussed on <code>Tape Notes #140</code>, but any laptop producer doing 40-track sessions is printing.</li>
+<li><strong>Sample library is fixed</strong> — no user soundsource import on v2.x without paid expansion packs. For a 2003-Hebden who <em>was</em> all about imported source material, Omnisphere would have been a prison.</li>
+<li><strong>No modular routing</strong> — the signal path is fixed per the slide-06 diagram. Contrast AudioMulch (next module), where routing <em>is</em> the instrument.</li>
+<li><strong>Preset-first by design</strong> — the oscillator page exists but is clearly an afterthought compared to the browser. The box <em>wants</em> you to not tweak.</li>
+</ul>
+<p>The constraint is load-bearing. Omnisphere is the right instrument for 2022-Hebden precisely because it blocks rabbit holes.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-11">
+  <h1>Slide gd-omni-11 · gear deep dive</h1>
+  <h2>Ableton bridge — Wavetable + Operator running presets</h2>
+  
+  <div class="body"><h2>Ableton bridge — Wavetable + Operator running presets</h2>
+<p>No native Omnisphere substitute, but the <em>discipline</em> ports with care.</p>
+<table>
+<thead>
+<tr>
+<th>Omnisphere move</th>
+<th>Ableton equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browse alphabetically, commit</td>
+<td>Wavetable factory library → sort by name, commit</td>
+</tr>
+<tr>
+<td>3-layer pre-stacked patch</td>
+<td>Instrument Rack with 3 chains, one Wavetable preset per chain</td>
+</tr>
+<tr>
+<td>FX chain baked into patch</td>
+<td>Audio Effect Rack on the instrument track, saved as default</td>
+</tr>
+<tr>
+<td>&ldquo;Plectra Sub&rdquo;-style plucked sub bass</td>
+<td>Operator preset <em>Bass &gt; Plucky Sub</em>, unedited</td>
+</tr>
+<tr>
+<td>Orb modulation</td>
+<td>Macro 1 + Macro 2 on the rack, assigned pre-save</td>
+</tr>
+</tbody>
+</table>
+<p>The hard rule: <strong>open the browser, commit, close the browser</strong>. If you edit a parameter you have broken the experiment. Drag in a Wavetable preset, play it, move on.</p>
+<p>Anti-pattern: producers who load Wavetable, spend 40 minutes sculpting a patch, and then build the track around it. That is the rabbit hole this lesson is immunizing against.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-12">
+  <h1>Slide gd-omni-12 · gear deep dive</h1>
+  <h2>Parallel Max for Live devices</h2>
+  
+  <div class="body"><h2>Parallel Max for Live devices</h2>
+<p>Nothing in Max for Live fully replaces Omnisphere, but a three-device stack emulates its palette logic.</p>
+<ul>
+<li><strong>Multisampler</strong> (Live 12, native) — any sample library becomes a playable instrument. Load a user multisample that imitates the Omnisphere &ldquo;Soundsource&rdquo; paradigm.</li>
+<li><strong>Wavetable</strong> (Live 10+, native) — covers the harmonic/synth side of a hybrid patch.</li>
+<li><strong>Granulator III</strong> by Robert Henke (free M4L device, Live 12 compatible) — the granular/textural slot. Mentioned in <code>s01</code> as the spiritual cousin of Omnisphere&rsquo;s granular engine. <code>bib:henke_granulator_iii</code>.</li>
+</ul>
+<p>Rack them into a single Instrument Rack on three chains with a Chain Selector wired to a single macro. That macro becomes the whole &ldquo;patch&rdquo; — one knob, three co-evolving timbres. Closest native analog to an Omnisphere layered preset.</p>
+<p>Save the rack as a default. Browse <em>racks</em>, not plugins. The browser discipline survives.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-13">
+  <h1>Slide gd-omni-13 · gear deep dive</h1>
+  <h2>Exercise A — replicate — three presets, 16 bars, no tweaking</h2>
+  
+  <div class="body"><h2>Exercise A — replicate: three presets, 16 bars, no tweaking</h2>
+<p><strong>Deliverable.</strong> A 16-bar sketch at any tempo. Three instrument tracks. One Omnisphere preset per track <em>or</em> one Ableton Wavetable preset per track if Omnisphere is unavailable. No parameter editing.</p>
+<p><strong>Rules.</strong></p>
+<ol>
+<li>Alphabetical browse. First pick that &ldquo;fits&rdquo; the chord sketch gets committed.</li>
+<li>No opening the edit page. No automating macros beyond volume.</li>
+<li>Mix with Utility + pan only. No EQ on the instrument tracks.</li>
+<li>Spend the saved time on arrangement — section changes, drops, texture layering.</li>
+</ol>
+<p><strong>Self-check.</strong> If you spent more than five minutes on any individual patch choice, you missed the exercise. The discipline is the <em>speed of the decision</em>, not the quality of the patch. <code>Tape Notes #140</code>.</p>
+<p>Bounce the 16 bars. Save the session named by preset names, not by vibe words.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 16-bar sketch using three Omnisphere (or Wavetable) presets, loaded alphabetically and committed without parameter edits. Bounce stereo WAV; session named by preset names.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-omni-14">
+  <h1>Slide gd-omni-14 · gear deep dive</h1>
+  <h2>Exercise B — explore — four-layer kick from Simpler + Operator only</h2>
+  
+  <div class="body"><h2>Exercise B — explore: four-layer kick from Simpler + Operator only</h2>
+<p><strong>Deliverable.</strong> Daydream Repeat&rsquo;s four-layer kick stack (see <code>s05</code>) recreated using only <strong>Ableton Simpler + Operator</strong> — no third-party, no factory Drum Rack kit.</p>
+<p><strong>Steps.</strong></p>
+<ol>
+<li><strong>Main kick</strong> — Simpler, Classic mode, any one-shot kick sample, pitched to F1.</li>
+<li><strong>Sub sine</strong> — Operator, single sine op, Ratio 0.5, release 120 ms, tuned to F1.</li>
+<li><strong>Transient click</strong> — Simpler with a noise/hat one-shot, band-passed 3–6 kHz, envelope 10 ms.</li>
+<li><strong>Sub body</strong> — Operator, sine op, Ratio 0.25, release 300 ms, LP at 120 Hz.</li>
+</ol>
+<p>Group the four tracks. Trigger all four off one MIDI clip via MIDI Routing or Clip send.</p>
+<p><strong>Constraint.</strong> No EQ beyond the click&rsquo;s band-pass. No compression. If the stack does not feel heavy, rebalance with track volume, not with plugins. This is the Hebden stack logic — layers are chosen to not fight, not EQed to not fight. <code>Tape Notes #140</code>.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A four-layer kick stack built only with Ableton Simpler + Operator, tuned to F1. Render four solo stems + the summed stack. Notes file naming each layer&#x27;s job.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-01">
+  <h1>Slide gd-audmulch-01 · gear deep dive</h1>
+  <h2>AudioMulch + Cool Edit Pro — the Rounds chain</h2>
+  
+  <div class="body"><h2>AudioMulch + Cool Edit Pro — the <em>Rounds</em> chain</h2>
+<p>Rewind to 2003. The Hebden in this module is not a preset browser. He is a sample mangler working out of a North London flat on Windows XP.</p>
+<ul>
+<li><strong>AudioMulch</strong> — modular live-audio patching host built by Ross Bencina, Australia, Windows only for most of its life. Peak IDM adoption ~2001–2006. <code>bib:audiomulch_docs</code>.</li>
+<li><strong>Cool Edit Pro</strong> — Syntrillium&rsquo;s destructive waveform editor. Adobe acquired it in 2003 and shipped the code as Audition 1.0. <code>bib:cool_edit_pro_legacy</code>.</li>
+<li>Estimated <em>Rounds</em> source samples per album: <strong>200–300</strong>, per-track <strong>20–30</strong>. Zak Handbook synthesis — flagged in <code>needs_bib</code>, not a confirmed primary interview number.</li>
+</ul>
+<p>Two dead tools. One alive discipline. The logic is worth excavating.</p></div>
+  <figure class="figure"><img src="assets/gear-audiomulch-canvas.jpg" alt="AudioMulch 2.x canvas with connected Contraptions."><figcaption>AudioMulch 2.x canvas with connected Contraptions.<div class="credit">Ross Bencina / audiomulch.com — fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-02">
+  <h1>Slide gd-audmulch-02 · gear deep dive</h1>
+  <h2>Annotated tour — the patching environment</h2>
+  
+  <div class="body"><h2>Annotated tour — the patching environment</h2>
+<p>AudioMulch is not a DAW. It is a node-graph for live audio.</p>
+<ul>
+<li><strong>Canvas</strong> — drag-and-drop &ldquo;Contraptions&rdquo; (AudioMulch&rsquo;s term for modules) onto a work surface, connect outputs to inputs with patch cables.</li>
+<li><strong>Contraption types</strong> — file player, live audio input, filter, granulator, delay, bit-crusher, reverb, gate, sequencer, routing-splitter, mixer, output.</li>
+<li><strong>Metasurface</strong> — XY control page that interpolates between named &ldquo;scenes&rdquo; of all module parameters. Morph between presets in real time with a mouse drag.</li>
+<li>No tracks, no timeline. The audio is a stream through the graph. You record the output stream as the &ldquo;take.&rdquo;</li>
+</ul>
+<p>The closest modern analog is Max/MSP or Bidule. Unlike them, AudioMulch is single-window, single-canvas, opinionated — and that opinion shaped a generation of IDM sample mangling. <code>bib:audiomulch_docs</code>.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-audiomulch-canvas.jpg" alt="Canvas + Metasurface — the instrument surface."><div class="callouts"><ol><li><strong>canvas</strong>: drag-and-drop Contraptions, patch with cables</li><li><strong>Metasurface</strong>: XY parameter-morph between named scenes</li><li><strong>output bus</strong>: always-capturable — the render is live audio</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-03">
+  <h1>Slide gd-audmulch-03 · gear deep dive</h1>
+  <h2>The paradigm shift — audio as a stream, not a clip</h2>
+  
+  <div class="body"><h2>The paradigm shift — audio as a stream, not a clip</h2>
+<p>The pedagogical point of this module.</p>
+<ul>
+<li><strong>DAW model</strong> (Ableton, Logic, Pro Tools) — audio is a <em>clip</em> on a <em>track</em>. You place, trim, warp, stack, and arrange clips on a timeline. Time is horizontal.</li>
+<li><strong>AudioMulch model</strong> — audio is a <em>stream</em> flowing through a <em>patch</em>. You route, process, morph, and print. Time is the duration of the render.</li>
+</ul>
+<p>For Hebden circa 2003, the workflow was:</p>
+<ol>
+<li>Record a source (guitar, harp, field recording, vinyl rip).</li>
+<li>Chop it in Cool Edit Pro — destructive, no undo beyond a handful of steps.</li>
+<li>Drop the chopped sample into an AudioMulch file-player contraption.</li>
+<li>Route it through 3–8 processing contraptions patched up for the session.</li>
+<li>Hit record. Play with the Metasurface while it prints. Capture the mangled stream as a new sample.</li>
+<li>Import the print into the arrangement as an audio clip.</li>
+</ol>
+<p>The print becomes source. The source is not recall-friendly. Commitment is forced by the chain.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[DAW model: audio = clip on timeline] -.contrast.-&gt; B[AudioMulch: audio = stream through patch]
+  B --&gt; C[source file]
+  C --&gt; D[contraption 1&lt;br/&gt;filter/granulate]
+  D --&gt; E[contraption 2&lt;br/&gt;delay/reverb]
+  E --&gt; F[print to disk&lt;br/&gt;as new sample]
+</div><div class="caption">Two paradigms side by side. The print becomes the source material for DAW arrangement later.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-04">
+  <h1>Slide gd-audmulch-04 · gear deep dive</h1>
+  <h2>Technique — the Rounds sample pipeline</h2>
+  
+  <div class="body"><h2>Technique — the <em>Rounds</em> sample pipeline</h2>
+<p>Reconstructed from the Zak Handbook synthesis + the <code>Tape Notes #140</code> quote on <em>Rounds</em> sample sources. Flagged in <code>needs_bib</code>.</p>
+<p>Per-track, estimated 20–30 source samples. The chain per sample:</p>
+<ol>
+<li>Source capture — acoustic guitar, harp, kalimba, field rec, broken CD skip, vinyl side-one of something obscure.</li>
+<li>Cool Edit Pro — reverse, time-stretch destructively, hand-edit slice points, ring-modulate, de-pitch.</li>
+<li>AudioMulch — load the Cool Edit print into a SouthPole or AutoFilter contraption, through a DLGranulator, through a Nasty FX stage, into a Reverb and stereo delay.</li>
+<li>Metasurface — drag between two named scenes during a 16-bar print to morph the chain&rsquo;s character mid-sample.</li>
+<li>Print to new WAV. Rename. Archive the Cool Edit source. Do not revisit.</li>
+</ol>
+<p>Hebden quote on <em>Rounds</em> sources, surfaced in <code>Tape Notes #140</code>: <em>&ldquo;a lot of the sounds you hear on Rounds are kind of misleading. You might hear something that sounds like a bass, but it&rsquo;s actually the sound of a guitar or harp or something that&rsquo;s being slowed down a lot and reversed and then manipulated.&rdquo;</em></p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Unspoken</span><span class="by"> — Four Tet</span><span class="links"><a href="https://open.spotify.com/track/69t0SrCVeudh7Ycxp9PxDr" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/5ViItcZyYBw" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Four%20Tet%20Unspoken" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-05">
+  <h1>Slide gd-audmulch-05 · gear deep dive</h1>
+  <h2>Underlying algorithm — modular routing as instrument</h2>
+  
+  <div class="body"><h2>Underlying algorithm — modular routing as instrument</h2>
+<p>AudioMulch&rsquo;s algorithmic identity is not any single DSP. It is the <strong>patch graph</strong> as the unit of composition.</p>
+<ul>
+<li><strong>Pull-based audio graph</strong> — downstream nodes pull samples from upstream nodes at audio rate. Identical to Max/MSP&rsquo;s gen~ or PureData&rsquo;s DSP chain. <code>Roads 1996</code> on patch-based DSP graphs.</li>
+<li><strong>Metasurface interpolation</strong> — all parameters of all modules can be keyframed into &ldquo;scenes,&rdquo; and Metasurface interpolates linearly between scenes based on XY position. A primitive version of modern DAW macro-morphing.</li>
+<li><strong>Live recording</strong> — the output bus is always-capturable, so any live gesture on the Metasurface while the graph is running becomes part of the take.</li>
+</ul>
+<p>The paradigm is real-time processing with live parameter morph, printed to tape. Closer to Jeskola Buzz or early Reaktor than to any DAW. Hebden&rsquo;s contribution was <em>not</em> innovating AudioMulch — it was using it as a pre-arrangement sample factory, not as a live performance tool.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-06">
+  <h1>Slide gd-audmulch-06 · gear deep dive</h1>
+  <h2>Constraints and why they mattered</h2>
+  
+  <div class="body"><h2>Constraints and why they mattered</h2>
+<p>AudioMulch&rsquo;s limits were load-bearing for the <em>Rounds</em> aesthetic.</p>
+<ul>
+<li><strong>Windows only</strong> — Mac users were locked out; the tool had a geographic dialect (Northern Europe + Australian IDM scenes).</li>
+<li><strong>Single-window canvas</strong> — no multi-canvas, no sub-patching in early versions. Every contraption lives on the same screen. Spatial memory of the patch = part of the instrument.</li>
+<li><strong>No VST host in early versions</strong> — you used AudioMulch&rsquo;s native contraptions or nothing. Constraint-driven timbre.</li>
+<li><strong>Crash-prone on heavy graphs</strong> — forced short chains and frequent printing to disk. Accidental commitment, not by design.</li>
+</ul>
+<p>Cool Edit Pro&rsquo;s constraints were complementary — destructive editing, tiny undo stack, no real-time plugin mixer. Every chop was irreversible unless you saved copies. Hebden chose both tools in part <em>because</em> they refused to let him stay reversible. Source: Zak Handbook synthesis, flagged in <code>needs_bib</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-07">
+  <h1>Slide gd-audmulch-07 · gear deep dive</h1>
+  <h2>Ableton bridge — Effect Rack with Chain Selector</h2>
+  
+  <div class="body"><h2>Ableton bridge — Effect Rack with Chain Selector</h2>
+<p>Closest native analog to AudioMulch&rsquo;s Metasurface morph.</p>
+<ul>
+<li><strong>Audio Effect Rack</strong> — multiple chains, each chain is an independent plugin sequence.</li>
+<li><strong>Chain Selector</strong> — a single knob/macro that crossfades between chains as it sweeps. Maps chain-position to signal routing.</li>
+<li><strong>Macro Controls</strong> (8 macros per rack) — each can be mapped to parameters across any chain. Map them to filter cutoffs, delay times, reverb sizes — and a single macro sweep morphs the whole processing character.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>AudioMulch concept</th>
+<th>Ableton equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contraption graph</td>
+<td>Effect Rack chain sequence</td>
+</tr>
+<tr>
+<td>Metasurface</td>
+<td>Chain Selector + multi-assigned Macro</td>
+</tr>
+<tr>
+<td>Live parameter morph</td>
+<td>Record automation on macros while playback runs</td>
+</tr>
+<tr>
+<td>Print to disk</td>
+<td>Render selected track, reimport</td>
+</tr>
+</tbody>
+</table>
+<p>This is the bridge. Not identical, but the gesture — <em>morph a processing chain across a 16-bar print</em> — is achievable.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-08">
+  <h1>Slide gd-audmulch-08 · gear deep dive</h1>
+  <h2>Max for Live as the truer parallel</h2>
+  
+  <div class="body"><h2>Max for Live as the truer parallel</h2>
+<p>For a 1:1 paradigm match, Max for Live is closer than any native Ableton device.</p>
+<ul>
+<li><strong>Max for Live</strong> — embed a Max/MSP patch as an Ableton device. Patch graph <em>is</em> the instrument, same logic as AudioMulch.</li>
+<li><strong>Community M4L devices</strong> in the AudioMulch spirit:</li>
+<li><em>Granulator III</em> (Henke, free) — granular playback of a sample, XY morph surface. Closest Metasurface-style gesture control in the Live ecosystem. <code>bib:henke_granulator_iii</code>.</li>
+<li><em>Buffer Shuffler</em> / <em>Convolution Reverb</em> / <em>Granulator</em> — all ship in Max for Live suite.</li>
+<li>Any Max patch you design yourself with <code>buffer~</code>, <code>sfplay~</code>, <code>gen~</code>, and Metasurface-style preset morph via <code>pattr</code> + <code>pattrstorage</code>.</li>
+</ul>
+<p>The paradigm survives in M4L. The specific early-2000s IDM flavor of AudioMulch does not — partly because M4L can do more, partly because the ergonomics of a single-window crash-prone Windows XP program are, on reflection, not worth recreating.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-09">
+  <h1>Slide gd-audmulch-09 · gear deep dive</h1>
+  <h2>What else did AudioMulch do in IDM</h2>
+  
+  <div class="body"><h2>What else did AudioMulch do in IDM</h2>
+<p>The tool&rsquo;s cultural footprint was bigger than Hebden alone. Some adjacent uses, for context.</p>
+<ul>
+<li><strong>Tom Jenkinson / Squarepusher</strong> — reportedly used AudioMulch for live performance in the early 2000s (forum consensus, not confirmed interview). The Metasurface was a live instrument for him, not a sample factory.</li>
+<li><strong>Ben Frost, Tim Hecker</strong> — community reports of AudioMulch use around <em>Theory of Machines</em> and <em>Harmony in Ultraviolet</em> era. Not primary-source confirmed.</li>
+<li><strong>Experimental live coders</strong> — the Metasurface predated most parameter-morph environments and drew a live-coding adjacent crowd.</li>
+</ul>
+<p>Hebden&rsquo;s use — batch sample pre-processing for later DAW arrangement — was <em>not</em> the tool&rsquo;s marketing-positioned use case. The developer pitched live performance. Hebden used it as a bounce chain. Instrument-for-purpose mismatches often produce the most distinctive records.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-10">
+  <h1>Slide gd-audmulch-10 · gear deep dive</h1>
+  <h2>Modern workflow parallels</h2>
+  
+  <div class="body"><h2>Modern workflow parallels</h2>
+<p>What the 2003 AudioMulch pipeline looks like in 2025.</p>
+<ul>
+<li><strong>Bitwig Studio&rsquo;s Grid</strong> — node-graph modular environment inside a modern DAW. Same paradigm, actively maintained.</li>
+<li><strong>VCV Rack + Host-FX</strong> — free Eurorack-in-software plus the ability to process external audio through a Rack patch. Closer to AudioMulch than any DAW rack.</li>
+<li><strong>Reaktor Blocks</strong> — NI&rsquo;s modular environment. Paradigm match, different ergonomics.</li>
+<li><strong>Pure Data + Jack routing</strong> — the Hebden 2003 workflow runs on 2025 Linux without much change.</li>
+</ul>
+<p>For an Ableton-centric producer, the simulation is: <strong>build a heavy Effect Rack, render the source through it, reimport the render, throw away the source session</strong>. That is the pre-arrangement sample factory gesture. What you lose vs AudioMulch is the Metasurface morph per render. What you gain is everything else about using a 2025 DAW.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-11">
+  <h1>Slide gd-audmulch-11 · gear deep dive</h1>
+  <h2>Exercise — three-stage Effect Rack with chain-swap morph</h2>
+  
+  <div class="body"><h2>Exercise — three-stage Effect Rack with chain-swap morph</h2>
+<p><strong>Deliverable.</strong> A single audio track with a three-chain Effect Rack. Each chain is a filter → saturator → reverb sequence, but each slot can be swapped to a different plugin via Chain Selector position.</p>
+<p><strong>Steps.</strong></p>
+<ol>
+<li>Load <code>moanin_glitch.wav</code> (from Stemforge w06) on an audio track.</li>
+<li>Insert an <strong>Audio Effect Rack</strong> on the track. Create three chains, name them <em>clean / crushed / wet-wide</em>.</li>
+<li>In <strong>chain 1</strong>: Auto Filter (LP 4 kHz) → Saturator (soft drive) → Reverb (room, small).</li>
+<li>In <strong>chain 2</strong>: EQ Eight (notch 200 Hz) → Overdrive → Echo (ping-pong dotted).</li>
+<li>In <strong>chain 3</strong>: Auto Pan → Roar (heavy) → Hybrid Reverb (shimmer, 4 sec tail).</li>
+<li>Map <strong>Chain Selector</strong> to Macro 1. Record automation on Macro 1 over a 16-bar loop, sweeping through all three chains.</li>
+<li>Render. Reimport the render as a new clip. Arrange with it.</li>
+</ol>
+<p><strong>Constraint.</strong> Do not A/B the render against the source. Once rendered, treat it as a new sample. This simulates the 2003 &ldquo;print and archive the source&rdquo; discipline.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 16-bar render of moanin_glitch.wav through a three-chain Audio Effect Rack, with Chain Selector automated across all three chains. Reimport the render, arrange with it, and do not re-audition the source.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-audmulch-12">
+  <h1>Slide gd-audmulch-12 · gear deep dive</h1>
+  <h2>Coda — two dead tools, one live question</h2>
+  
+  <div class="body"><h2>Coda — two dead tools, one live question</h2>
+<p>Neither AudioMulch nor Cool Edit Pro matters in 2025. Both have been superseded by native DAW features or by better modular environments. That is not the point of this module.</p>
+<p>The live question: <strong>does your tool force commitment, or does it preserve infinite revision?</strong></p>
+<ul>
+<li>2003 Hebden — AudioMulch + Cool Edit — commitment forced by the tool.</li>
+<li>2022 Hebden — Omnisphere presets + laptop-speaker mixing — commitment forced by the constraint.</li>
+<li>Default 2025 session — Ableton with unlimited undo, revertible everything, recall-friendly — commitment forced by nothing.</li>
+</ul>
+<p>The pedagogical takeaway is not to install AudioMulch on a VM. It is to notice when your session is in infinite-revision mode and to add artificial commitment points — render, rename, move on. The palette is negotiable. The discipline is not. Shrug, and close the session.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:audiomulch_docs">Ross Bencina — AudioMulch Documentation <a href="http://www.audiomulch.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:cool_edit_pro_legacy">Cool Edit Pro (Syntrillium / Adobe Audition lineage) <a href="https://en.wikipedia.org/wiki/Cool_Edit_Pro" target="_blank" rel="noopener">↗</a></li><li id="bib:henke_granulator_iii">Robert Henke — Granulator III <a href="https://roberthenke.com/technology/granulator.html" target="_blank" rel="noopener">↗</a></li><li id="bib:spectrasonics_omnisphere_docs">Spectrasonics — Omnisphere 2 Reference Guide <a href="https://www.spectrasonics.net/products/omnisphere/" target="_blank" rel="noopener">↗</a></li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:tape_notes_140_four_tet">Kieran Hebden (Four Tet) — Three — 2024 <a href="https://tapenotes.cc/" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 67300}, {"id": "ch001", "title": "Henke shipped a granulator, then mixed a record on laptop speakers", "start_ms": 67700, "end_ms": 177750}, {"id": "ch002", "title": "Preset discipline \u2014 Omnisphere as the whole palette", "start_ms": 178150, "end_ms": 296100}, {"id": "ch003", "title": "The can't-be-bothered framing is performative", "start_ms": 296500, "end_ms": 411750}, {"id": "ch004", "title": "Subliminal layering \u2014 the Fridge-era precedent", "start_ms": 412150, "end_ms": 528600}, {"id": "ch005", "title": "Daydream Repeat \u2014 the four-layer kick stack", "start_ms": 529000, "end_ms": 653550}, {"id": "ch006", "title": "Skater \u2014 the bell doubling the bass you cannot hear", "start_ms": 653950, "end_ms": 753650}, {"id": "ch007", "title": "Looking At Your Pager \u2014 15% velocity, 15% octave", "start_ms": 754050, "end_ms": 873350}, {"id": "ch008", "title": "Ableton wiring \u2014 Note Chance + Pitch Transformer", "start_ms": 873750, "end_ms": 1000450}, {"id": "ch009", "title": "Laptop-speaker mixing \u2014 the cost", "start_ms": 1000850, "end_ms": 1115350}, {"id": "ch010", "title": "Rounds-era Hebden \u2014 the same discipline, different decade", "start_ms": 1115750, "end_ms": 1237650}, {"id": "ch011", "title": "Stemforge glitch render on Moanin' \u2014 what to listen for", "start_ms": 1238050, "end_ms": 1362250}, {"id": "ch012", "title": "Build the four-layer kick on a Moanin' stem", "start_ms": 1362650, "end_ms": 1484550}, {"id": "ch013", "title": "Outro", "start_ms": 1484950, "end_ms": 1535600}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

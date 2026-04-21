@@ -1,0 +1,543 @@
+id: w03-simpler-basics
+week: 3
+title: "Week 3 — Simpler, Drum Rack, one-shots"
+duration_minutes: 45
+pillars: [sound_design_primitives, ableton_core]
+concepts:
+  - simpler_modes
+  - one_shot_drums
+  - slicing_to_midi
+  - drum_rack_chains
+  - drum_sampler_per_pad
+  - simpler_vs_sampler
+  - stemforge_loader
+  - mpc2kxl_resampling_ladder
+  - prefuse_73_chop_method
+ableton_surface:
+  - Simpler
+  - Sampler
+  - Drum Rack
+  - Drum Sampler
+  - Slice to New MIDI Track
+  - Velocity Shaper
+  - Ornament
+  - Time Warp
+  - StemForgeLoader.amxd
+  - Buffer Shuffler 2.0
+prereqs:
+  - w01-listen-subtract
+  - w02-subtraction
+
+teasers: []
+
+stemforge:
+  recipes:
+    - w03-express-oneshots
+
+references:
+  - bib:ableton_live_12_manual
+  - bib:stemforge_repo
+  - bib:tape_notes_140_four_tet
+  - bib:charnas_dilla_time
+  - bib:akai_mpc2000xl_manual
+  - bib:prefuse_73_xlr8r
+  - bib:roads_computer_music_tutorial
+
+needs_bib:
+  - title: "Ableton Live 12 Reference — Drum Sampler page (per-pad Velocity Shaper / Ornament / Time Warp)"
+    reason: "Currently folded under ableton_live_12_manual; dedicated anchor would be cleaner for slide s07 citations."
+  - title: "StemForgeLoader.amxd build notes"
+    reason: "No dedicated bibliography entry for the loader spec yet; slide s09 cites the stemforge_repo umbrella."
+  - title: "Akai MPC2000XL OS 1.7+ Resample page documentation"
+    reason: "Referenced in gd-mpc2kxl-03 and -04; the operator manual covers basic sampling but the Resample addendum is in the OS 1.7 update notes — separate citation would be cleaner."
+  - title: "Prefuse 73 / Scott Herren interview — MPC chopping method"
+    reason: "The XLR8R citation covers the quotes but a dedicated Wax Poetics or Red Bull Music Academy lecture citation would ground the ladder reconstruction more firmly."
+
+slides:
+  - id: s01
+    kind: title
+    heading: "Simpler is already most of the rack"
+    body_md: slides/s01-cold-open.md
+    script_md: script/s01-cold-open.md
+    visuals: []
+    audio_examples: []
+
+  - id: s02
+    kind: concept
+    heading: "Three modes, one device"
+    body_md: slides/s02-three-modes.md
+    script_md: script/s02-three-modes.md
+    visuals:
+      - type: screenshot
+        src: deferred/wave5/simpler-mode-tabs.png
+        caption: "Classic / One-Shot / Slicing — the three tabs above Simpler's waveform"
+
+  - id: sm01
+    kind: concept
+    heading: "Classic mode — chromatic play, warp on"
+    body_md: slides/sm01-classic-mode.md
+    images:
+      - src: deferred/wave5/simpler-classic-annotated.png
+        caption: "Simpler Classic — amp envelope, filter, LFO visible below the waveform"
+        license: "own-screenshot"
+
+  - id: sm02
+    kind: concept
+    heading: "One-Shot mode — no envelope, just the sample"
+    body_md: slides/sm02-one-shot-mode.md
+    images:
+      - src: deferred/wave5/simpler-oneshot-annotated.png
+        caption: "Simpler One-Shot — Trigger/Gate, Fade In, Fade Out, Snap"
+        license: "own-screenshot"
+
+  - id: sm03
+    kind: concept
+    heading: "Slicing mode — the sample becomes a drum rack"
+    body_md: slides/sm03-slicing-mode.md
+    images:
+      - src: deferred/wave5/simpler-slicing-annotated.png
+        caption: "Simpler Slicing — numbered markers on the waveform, slice list at right"
+        license: "own-screenshot"
+
+  - id: sm04
+    kind: concept
+    heading: "The three modes side-by-side"
+    body_md: slides/sm04-modes-compared.md
+    diagrams:
+      - mermaid: |
+          graph TD
+            A[Incoming MIDI note] --> B{Simpler mode?}
+            B -->|Classic| C[Pitch tracks note, Warp keeps time, Amp+Filter+LFO]
+            B -->|One-Shot| D[Fixed pitch, no envelope, Fade In/Out only]
+            B -->|Slicing| E[Note selects slice index, N markers on waveform]
+        caption: "Mode dispatch — same device, three signal paths"
+
+  - id: s03
+    kind: concept
+    heading: "One-Shot mode — drum hits without pitch drift"
+    body_md: slides/s03-one-shot.md
+    script_md: script/s03-one-shot.md
+    visuals:
+      - type: screenshot
+        src: deferred/wave5/simpler-one-shot-params.png
+        caption: "Fade In, Fade Out, Trigger vs Gate, Snap"
+
+  - id: d01
+    kind: concept
+    heading: "One-Shot envelope — what the fade sliders actually do"
+    body_md: slides/d01-oneshot-envelope.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+            <style>
+              .wf { fill: none; stroke: #555; stroke-width: 1.5; }
+              .env { fill: none; stroke: #c62; stroke-width: 2.5; }
+              .marker { stroke: #888; stroke-dasharray: 4 3; }
+              .lbl { font: 13px system-ui; fill: #333; }
+              .lbl-sm { font: 11px system-ui; fill: #666; }
+            </style>
+            <rect x="0" y="0" width="800" height="300" fill="#fafafa"/>
+            <path class="wf" d="M60,150 L80,60 L95,230 L110,90 L125,190 L145,140 L200,150 L260,145 L320,155 L380,150 L440,150 L500,150 L560,150 L620,150 L680,150 L720,150"/>
+            <path class="env" d="M60,260 L130,40 L620,40 L720,260"/>
+            <line class="marker" x1="60" y1="20" x2="60" y2="290"/>
+            <line class="marker" x1="130" y1="20" x2="130" y2="290"/>
+            <line class="marker" x1="620" y1="20" x2="620" y2="290"/>
+            <line class="marker" x1="720" y1="20" x2="720" y2="290"/>
+            <text class="lbl" x="65" y="285">Start</text>
+            <text class="lbl" x="135" y="285">Fade In end</text>
+            <text class="lbl" x="560" y="285">Fade Out start</text>
+            <text class="lbl" x="680" y="285">End</text>
+            <text class="lbl-sm" x="80" y="35">linear ramp up</text>
+            <text class="lbl-sm" x="640" y="35">linear ramp down</text>
+            <text class="lbl" x="300" y="35">Full gain plateau</text>
+          </svg>
+        caption: "Fade In / Fade Out are linear ramps, not ADSR stages. They suppress click at truncation points."
+
+  - id: s04
+    kind: concept
+    heading: "Slicing mode — Transient, Beat, Region, Manual"
+    body_md: slides/s04-slicing.md
+    script_md: script/s04-slicing.md
+    visuals:
+      - type: waveform
+        src: deferred/wave5/slicing-modes-comparison.png
+        caption: "Same bar, four different slice-marker distributions"
+
+  - id: d02
+    kind: concept
+    heading: "Slicing algorithms — how to pick the knife"
+    body_md: slides/d02-slicing-decision-tree.md
+    diagrams:
+      - mermaid: |
+          graph TD
+            A[Source sample] --> B{What kind of source?}
+            B -->|Drum loop, dry, clear onsets| C[Transient]
+            B -->|Warped clip, honest grid| D[Beat 1/16 or 1/8]
+            B -->|Pad, drone, field rec| E[Region N]
+            B -->|Detector wrong, I know better| F[Manual Cmd+I]
+            C --> G[Sensitivity controls aggression]
+            D --> H[1/16 default, 1/8 for half-time]
+            E --> I[1 to 64 equal divisions]
+            F --> J[Place markers by hand]
+        caption: "Slice-by dispatch — pick by source type, not by habit"
+
+  - id: s05
+    kind: concept
+    heading: "Slice to New MIDI Track"
+    body_md: slides/s05-slice-to-midi.md
+    script_md: script/s05-slice-to-midi.md
+    visuals:
+      - type: screenshot
+        src: deferred/wave5/slice-to-midi-context.png
+        caption: "Right-click warped clip → Slice to New MIDI Track"
+
+  - id: d04
+    kind: concept
+    heading: "Slice to New MIDI Track — the full flowchart"
+    body_md: slides/d04-slice-to-midi-flow.md
+    diagrams:
+      - mermaid: |
+          graph TD
+            A[Audio clip, warped] --> B[Right-click, Slice to New MIDI Track]
+            B --> C{Slice to:}
+            C -->|Warp Marker| D[Use existing warp markers]
+            C -->|Transient| E[Run onset detector]
+            C -->|Beat Division| F[1/32 through 1 bar grid]
+            D --> G[New MIDI track created]
+            E --> G
+            F --> G
+            G --> H[Drum Rack loaded, Simpler per pad]
+            H --> I[Slices mapped chromatic from C1]
+            I --> J[MIDI clip re-plays source position-for-position]
+            J --> K[Source clip unchanged, mute it]
+        caption: "What Ableton actually does when you click Slice to New MIDI Track"
+
+  - id: s06
+    kind: concept
+    heading: "Drum Rack — chains are the point"
+    body_md: slides/s06-drum-rack.md
+    script_md: script/s06-drum-rack.md
+    visuals:
+      - type: screenshot
+        src: deferred/wave5/drum-rack-chain-list.png
+        caption: "16 pads, each an independent device chain"
+
+  - id: i01
+    kind: concept
+    heading: "A populated Drum Rack — what you're building toward"
+    body_md: slides/i01-drum-rack-16-pads.md
+    images:
+      - src: deferred/wave5/drum-rack-16-pads-populated.png
+        caption: "A Drum Rack with 16 pads populated from a stemforge render"
+        license: "own-screenshot"
+
+  - id: d03
+    kind: concept
+    heading: "Drum Rack signal path — from MIDI to audio out"
+    body_md: slides/d03-drum-rack-signal-path.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            M[MIDI in] --> R1[Chain 1: Receive C1]
+            M --> R2[Chain 2: Receive C#1]
+            M --> R3[Chain N ...]
+            R1 --> S1[Simpler]
+            S1 --> FX1[Insert FX]
+            FX1 --> SEND[Sends to Return chains]
+            FX1 --> OUT[Rack audio out]
+            R2 --> S2[Simpler]
+            S2 --> FX2[Insert FX]
+            FX2 --> SEND
+            FX2 --> OUT
+            SEND --> RET[Reverb / Delay Returns]
+            RET --> OUT
+            CK[Choke groups] -.-> R1
+            CK -.-> R2
+        caption: "Chains run in parallel, each routed by MIDI note, summing to the rack output"
+
+  - id: i02
+    kind: concept
+    heading: "Simpler in Classic mode — the full instrument"
+    body_md: slides/i02-simpler-classic-screenshot.md
+    images:
+      - src: deferred/wave5/simpler-classic-full.png
+        caption: "Simpler, Classic mode selected — amp envelope, filter, LFO all visible"
+        license: "own-screenshot"
+
+  - id: i03
+    kind: concept
+    heading: "Simpler in One-Shot mode — the stripped-down drum device"
+    body_md: slides/i03-simpler-oneshot-screenshot.md
+    images:
+      - src: deferred/wave5/simpler-oneshot-full.png
+        caption: "Simpler, One-Shot mode — no envelope, just fade sliders"
+        license: "own-screenshot"
+
+  - id: i04
+    kind: concept
+    heading: "Simpler in Slicing mode — waveform with numbered markers"
+    body_md: slides/i04-simpler-slicing-screenshot.md
+    images:
+      - src: deferred/wave5/simpler-slicing-full.png
+        caption: "Simpler, Slicing mode — numbered markers on waveform, slice list at right"
+        license: "own-screenshot"
+
+  - id: s07
+    kind: concept
+    heading: "Drum Sampler — per-pad MIDI tools in Live 12"
+    body_md: slides/s07-drum-sampler.md
+    script_md: script/s07-drum-sampler.md
+    visuals:
+      - type: screenshot
+        src: deferred/wave5/drum-sampler-velshaper.png
+        caption: "Velocity Shaper, Ornament, Time Warp on a single pad"
+
+  - id: s08
+    kind: caveat
+    heading: "Simpler vs Sampler — pick the warp"
+    body_md: slides/s08-simpler-vs-sampler.md
+    script_md: script/s08-simpler-vs-sampler.md
+    visuals: []
+
+  - id: d05
+    kind: concept
+    heading: "Simpler vs Sampler — the feature matrix"
+    body_md: slides/d05-simpler-vs-sampler-matrix.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Need warp?] -->|yes| S1[Simpler]
+            A -->|no| B[Need multi-sample / round-robin / velocity zones?]
+            B -->|yes| S2[Sampler]
+            B -->|no| S1
+        caption: "Two-question decision tree; warp is the dominant axis"
+
+  - id: gd-mpc2kxl-01
+    kind: gear_deep_dive
+    heading: "Akai MPC2000XL — the Simpler predecessor"
+    body_md: slides/gd-mpc2kxl-01-title.md
+    images:
+      - src: deferred/wave5/gear-mpc2kxl-hero.jpg
+        caption: "Akai MPC2000XL, released 2000. 32-track sequencer + 16-voice sampler, 44.1 kHz 16-bit."
+        credit: "Wikimedia Commons / public domain product shot"
+        license: "CC-BY-SA-3.0"
+
+  - id: gd-mpc2kxl-02
+    kind: gear_deep_dive
+    heading: "Annotated tour (1/2) — the pad bank and its banks"
+    body_md: slides/gd-mpc2kxl-02-annotated-pads.md
+    gear_annotations:
+      - src: deferred/wave5/gear-mpc2kxl-pads.jpg
+        caption: "Right side of the faceplate — pad bank, Bank A/B/C/D, After, Note Variation slider"
+        callouts:
+          - label: "16 pads"
+            note: "A01-A16 velocity-sensitive. Held with Note Repeat, they retrigger at current TC value."
+          - label: "Bank A/B/C/D"
+            note: "Four banks = 64 total pad slots per program. Prefuse used A and B for vocal slices."
+          - label: "Note Variation"
+            note: "Assignable slider. Herren routed it to pitch for on-the-fly fragment shifting."
+          - label: "After button"
+            note: "Aftertouch on/off. Rarely used in hip-hop; critical for pad work."
+
+  - id: gd-mpc2kxl-03
+    kind: gear_deep_dive
+    heading: "Annotated tour (2/2) — chop mode, resample, track ghost"
+    body_md: slides/gd-mpc2kxl-03-annotated-signal.md
+    gear_annotations:
+      - src: deferred/wave5/gear-mpc2kxl-left-panel.jpg
+        caption: "Left side of the faceplate — mode buttons that make the chop workflow function"
+        callouts:
+          - label: "Sample/Record (MODE 6)"
+            note: "Enters sample-record. 44.1 kHz 16-bit from rear RCA inputs."
+          - label: "Trim/Edit (F4)"
+            note: "Chop Shop and 16-Levels pages. Auto-slice by threshold, regions, or chromatic."
+          - label: "Resample"
+            note: "OS 1.7+: hold during playback, MPC records its own stereo output to a new sample slot."
+          - label: "Track Mute"
+            note: "Solo-audition any of the 64 tracks from the pads during playback."
+
+  - id: gd-mpc2kxl-04
+    kind: gear_deep_dive
+    heading: "The 4-step resampling ladder"
+    body_md: slides/gd-mpc2kxl-04-technique-ladder.md
+    diagrams:
+      - mermaid: |
+          graph TD
+            A[Sample: 2-4s vocal phrase to one pad] --> B[Chop: Regions 16 or Threshold]
+            B --> C[Pitch: Note Variation slider ±3 to ±7 semi]
+            C --> D[Finger-drum new rhythm, record to MIDI track]
+            D --> E[Resample: capture stereo output to new pad]
+            E --> |loop back| A
+        caption: "Herren's ladder — each cycle makes the source less recognizable"
+
+  - id: gd-mpc2kxl-05
+    kind: gear_deep_dive
+    heading: "Interview receipts — Herren on limitation"
+    body_md: slides/gd-mpc2kxl-05-interview-receipts.md
+    visuals: []
+
+  - id: gd-mpc2kxl-06
+    kind: gear_deep_dive
+    heading: "Underlying algorithm — 44.1kHz, 16-bit, velocity curves"
+    body_md: slides/gd-mpc2kxl-06-algorithm.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+            <style>
+              .axis { stroke: #333; stroke-width: 1.5; fill: none; }
+              .grid { stroke: #ddd; stroke-width: 1; }
+              .curve-lin { stroke: #777; stroke-width: 2; fill: none; stroke-dasharray: 5 3; }
+              .curve-bent { stroke: #c62; stroke-width: 2.5; fill: none; }
+              .lbl { font: 13px system-ui; fill: #333; }
+              .lbl-sm { font: 11px system-ui; fill: #666; }
+            </style>
+            <rect x="0" y="0" width="800" height="350" fill="#fafafa"/>
+            <line class="grid" x1="80" y1="300" x2="720" y2="300"/>
+            <line class="grid" x1="80" y1="240" x2="720" y2="240"/>
+            <line class="grid" x1="80" y1="180" x2="720" y2="180"/>
+            <line class="grid" x1="80" y1="120" x2="720" y2="120"/>
+            <line class="grid" x1="80" y1="60" x2="720" y2="60"/>
+            <line class="axis" x1="80" y1="60" x2="80" y2="300"/>
+            <line class="axis" x1="80" y1="300" x2="720" y2="300"/>
+            <path class="curve-lin" d="M80,300 L720,60"/>
+            <path class="curve-bent" d="M80,300 Q200,290 350,250 Q500,190 600,130 Q680,80 720,60"/>
+            <text class="lbl" x="40" y="305">0</text>
+            <text class="lbl" x="30" y="65">127</text>
+            <text class="lbl" x="80" y="325">0</text>
+            <text class="lbl" x="700" y="325">127</text>
+            <text class="lbl" x="350" y="335">Incoming MIDI velocity</text>
+            <text class="lbl" x="15" y="180" transform="rotate(-90 15 180)">Amp gain / output</text>
+            <text class="lbl" x="550" y="80">Bent curve (Prefuse)</text>
+            <text class="lbl-sm" x="560" y="100">ghost → accent tier</text>
+            <text class="lbl" x="300" y="230">Default linear</text>
+          </svg>
+        caption: "Per-pad velocity-to-amp curve. Herren bent it so light touches become ghost hits."
+
+  - id: gd-mpc2kxl-07
+    kind: gear_deep_dive
+    heading: "Algorithm constraints — why the MPC sounds like the MPC"
+    body_md: slides/gd-mpc2kxl-07-algorithm-constraints.md
+    visuals: []
+
+  - id: gd-mpc2kxl-08
+    kind: gear_deep_dive
+    heading: "Ableton bridge — Drum Rack + Simpler Slicing + Resample track"
+    body_md: slides/gd-mpc2kxl-08-ableton-bridge.md
+    images:
+      - src: deferred/wave5/mpc-ableton-bridge-set.png
+        caption: "A three-track Live set — Source audio, Chop 1 (MIDI + Drum Rack), Resample (audio record-arm)"
+        license: "own-screenshot"
+
+  - id: gd-mpc2kxl-09
+    kind: gear_deep_dive
+    heading: "Parallel Max for Live devices"
+    body_md: slides/gd-mpc2kxl-09-max-devices.md
+    visuals: []
+
+  - id: gd-mpc2kxl-10
+    kind: gear_deep_dive
+    heading: "Creative uses beyond chopping vocals"
+    body_md: slides/gd-mpc2kxl-10-creative-uses.md
+    visuals: []
+
+  - id: gd-mpc2kxl-11
+    kind: gear_deep_dive
+    heading: "Parallel modern workflows — the method outlived the metal"
+    body_md: slides/gd-mpc2kxl-11-modern-parallels.md
+    visuals: []
+
+  - id: gd-mpc2kxl-12
+    kind: gear_deep_dive
+    heading: "Exercise A — replicate the Prefuse ladder in Ableton"
+    body_md: slides/gd-mpc2kxl-12-exercise-a.md
+    deliverable: "w03_<yourname>_prefuse_ladder.wav — 8 bars, one vocal source, two ladder cycles, no warp."
+
+  - id: gd-mpc2kxl-13
+    kind: gear_deep_dive
+    heading: "Exercise B — Buffer Shuffler + Drum Rack"
+    body_md: slides/gd-mpc2kxl-13-exercise-b.md
+    deliverable: "w03_<yourname>_shuffler_remix.wav — 16 bars, one drum loop reshuffled per bar, plus a programmed Drum Rack layer."
+
+  - id: s09
+    kind: reference
+    heading: "StemForgeLoader.amxd — the loader does the plumbing"
+    body_md: slides/s09-stemforge-loader.md
+    script_md: script/s09-stemforge-loader.md
+    visuals:
+      - type: screenshot
+        src: deferred/wave5/stemforge-loader-ui.png
+        caption: "Loader device — Phase 1 after templates present"
+
+  - id: i05
+    kind: reference
+    heading: "StemForgeLoader.amxd — the UI"
+    body_md: slides/i05-stemforge-loader.md
+    images:
+      - src: deferred/wave5/stemforge-loader-annotated.png
+        caption: "Loader device UI — manifest field, Build button, template list, operation log"
+        license: "own-screenshot"
+
+  - id: s10
+    kind: exercise
+    heading: "Exercise — four bars, three drums, one bounce"
+    body_md: slides/s10-exercise.md
+    script_md: script/s10-exercise.md
+    visuals: []
+    deliverable: "One .wav file, 4 bars at the project tempo, drums only from the stemforge w03-express-oneshots pack, per-pad Velocity Shaper applied. Bounced, source chain muted, file named `w03_<yourname>_4bar.wav`."
+
+images_needed:
+  - slug: gear-mpc2kxl-hero
+    description: "Akai MPC2000XL front panel, centered, on neutral background, 3/4 angle OK"
+    preferred_angle: "front"
+    lesson_context: "W3 gear deep-dive hero — gd-mpc2kxl-01"
+  - slug: gear-mpc2kxl-pads
+    description: "Akai MPC2000XL — right-side faceplate, focused on the 4x4 pad grid with Bank A/B/C/D buttons and the Note Variation slider visible"
+    preferred_angle: "close-up, top-down on pad area"
+    lesson_context: "W3 gear deep-dive annotated tour 1 — gd-mpc2kxl-02"
+  - slug: gear-mpc2kxl-left-panel
+    description: "Akai MPC2000XL — left-side faceplate, Sample/Record button, Trim button, Mode selector, the mode buttons that drive the chop workflow"
+    preferred_angle: "close-up, top-down on left mode buttons"
+    lesson_context: "W3 gear deep-dive annotated tour 2 — gd-mpc2kxl-03"
+  - slug: simpler-classic-full
+    description: "Ableton Simpler device, Classic mode selected, with sample loaded, amp envelope / filter / LFO all visible"
+    preferred_angle: "Ableton device view screenshot"
+    lesson_context: "W3 i02 — Simpler Classic"
+  - slug: simpler-oneshot-full
+    description: "Ableton Simpler device, One-Shot mode selected, with a drum sample loaded, fade sliders visible"
+    preferred_angle: "Ableton device view screenshot"
+    lesson_context: "W3 i03 — Simpler One-Shot"
+  - slug: simpler-slicing-full
+    description: "Ableton Simpler device, Slicing mode selected, with a drum loop loaded, numbered slice markers visible on the waveform"
+    preferred_angle: "Ableton device view screenshot"
+    lesson_context: "W3 i04 — Simpler Slicing"
+  - slug: simpler-classic-annotated
+    description: "Ableton Simpler Classic mode with callouts highlighting Voices selector, Warp toggle, filter section, amp envelope"
+    preferred_angle: "Ableton device view with annotation overlay"
+    lesson_context: "W3 sm01"
+  - slug: simpler-oneshot-annotated
+    description: "Ableton Simpler One-Shot mode with callouts highlighting Trigger/Gate, Fade In, Fade Out, Snap"
+    preferred_angle: "Ableton device view with annotation overlay"
+    lesson_context: "W3 sm02"
+  - slug: simpler-slicing-annotated
+    description: "Ableton Simpler Slicing mode with callouts highlighting Slice-by dropdown, Sensitivity, Playback mode, slices list"
+    preferred_angle: "Ableton device view with annotation overlay"
+    lesson_context: "W3 sm03"
+  - slug: drum-rack-16-pads-populated
+    description: "Ableton Drum Rack with 16 pads populated from a stemforge drum render — kicks on C1/C#1/D1, snares on E1/F1/F#1, hats above, names visible"
+    preferred_angle: "Ableton device view screenshot, showing pad labels and chain list"
+    lesson_context: "W3 i01"
+  - slug: mpc-ableton-bridge-set
+    description: "An Ableton Live set — three tracks visible: Source audio track with vocal clip, MIDI track named Chop 1 with a Drum Rack instance, audio track set to Resample input"
+    preferred_angle: "Live session view screenshot"
+    lesson_context: "W3 gd-mpc2kxl-08"
+  - slug: stemforge-loader-annotated
+    description: "StemForgeLoader.amxd device UI with callouts for Manifest path field, Build button, template list readout, operation log"
+    preferred_angle: "Ableton device view with annotation overlay; may be deferred if device UI is in flux"
+    lesson_context: "W3 i05 — possibly deferred to Wave 6"
+
+episode:
+  title: "IDM W3 — Simpler, Drum Rack, one-shots"
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

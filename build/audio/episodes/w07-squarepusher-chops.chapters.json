@@ -1,0 +1,80 @@
+[
+  {
+    "id": "ch000",
+    "title": "Intro",
+    "start_ms": 0,
+    "end_ms": 59150
+  },
+  {
+    "id": "ch001",
+    "title": "Jenkinson does not want you watching the screen",
+    "start_ms": 59550,
+    "end_ms": 184850
+  },
+  {
+    "id": "ch002",
+    "title": "The QY700 as brain \u2014 blind numeric sequencing",
+    "start_ms": 185250,
+    "end_ms": 318850
+  },
+  {
+    "id": "ch003",
+    "title": "Side note \u2014 the other anti-computer in the room",
+    "start_ms": 319250,
+    "end_ms": 402450
+  },
+  {
+    "id": "ch004",
+    "title": "Half-speed tape bass \u2014 Hard Normal Daddy's bionic swing",
+    "start_ms": 402850,
+    "end_ms": 564550
+  },
+  {
+    "id": "ch005",
+    "title": "Go Plastic \u2014 the no-computer rig, receipts",
+    "start_ms": 564950,
+    "end_ms": 728900
+  },
+  {
+    "id": "ch006",
+    "title": "Amen break in the S950 \u2014 and its Ableton translation",
+    "start_ms": 729300,
+    "end_ms": 903500
+  },
+  {
+    "id": "ch007",
+    "title": "Single-pass \u2014 program like a player",
+    "start_ms": 903900,
+    "end_ms": 1045600
+  },
+  {
+    "id": "ch008",
+    "title": "The Metallurgist \u2014 sidechain as composition",
+    "start_ms": 1046000,
+    "end_ms": 1218900
+  },
+  {
+    "id": "ch009",
+    "title": "Kronecker King \u2014 the 1\u20132ms snare, and what is unconfirmed",
+    "start_ms": 1219300,
+    "end_ms": 1386800
+  },
+  {
+    "id": "ch010",
+    "title": "Iambic 9 Poetry \u2014 when the Orville fights the grid",
+    "start_ms": 1387200,
+    "end_ms": 1536200
+  },
+  {
+    "id": "ch011",
+    "title": "Ship the chop \u2014 one pass, no undo",
+    "start_ms": 1536600,
+    "end_ms": 1674050
+  },
+  {
+    "id": "ch012",
+    "title": "Outro",
+    "start_ms": 1674450,
+    "end_ms": 1751200
+  }
+]

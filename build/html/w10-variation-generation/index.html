@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W10 — Week 10 — Variation generation, the five mutations</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W10</span>
+  <span class="title-chip">Week 10 — Variation generation, the five mutations</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>The parable before the method</h2>
+  
+  <div class="body"><h1>The parable before the method</h1>
+<p>Parable — in the summer of 1997, The Flaming Lips and Dave Fridmann decided to make an album that played on four CDs simultaneously. This was not a gimmick. It was an arrangement constraint: each CD had to carry a partial version of the song that only made sense in combination with the other three. Halfway through, they realized you cannot split a normal song across four CDs and threw out months of work. The record that shipped, <em>Zaireeka</em>, was the first project ever tracked at Tarbox Road. <Citation bib="zaireeka_wikipedia" /> <Citation bib="fridmann_davefridmann_com" /></p>
+<p>The lesson for our five-mutations framework this week: the constraint is the generator. If you are stuck, it is because your constraint is not strong enough.</p>
+<p>That is the whole week in one sentence. The rest is receipts and knob positions.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>The thesis — constraint is the generator</h2>
+  
+  <div class="body"><h1>The thesis — constraint is the generator</h1>
+<p>Week 2 was densest-first, mute-backward. This week is the inverse. <strong>One loop, five duplicates, five prescribed mutations.</strong> You do not pick the mutations. You apply them and ship.</p>
+<p>Lineage: Finish More Music calls it &ldquo;spawn from the same seed.&rdquo; <Citation bib="finish_more_music_variation" /> Spec A §5.4 calls it Variation Generation. Eno&rsquo;s <em>Oblique Strategies</em> — <em>&ldquo;Honor thy error as a hidden intention&rdquo;</em> — is the same idea with different packaging. <Citation bib="oblique_strategies_eno" /></p>
+<p><strong>Mechanically:</strong></p>
+<ol>
+<li>Duplicate your 16-bar loop five times along the Arrangement timeline.</li>
+<li>Apply one mutation per duplicate — drum swap, bass seed, filter sweep, reverse, new layer.</li>
+<li>Reorder for arc. Often 3–1–2–5–4 reads better than 1–2–3–4–5.</li>
+<li>Bounce. Move on.</li>
+</ol>
+<p>Five sections share DNA because they started identical. Coherence is baked in at the duplicate step.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s03">
+  <h1>Slide s03 · concept</h1>
+  <h2>The locator template, before you touch a sound</h2>
+  
+  <div class="body"><h1>The locator template, before you touch a sound</h1>
+<p>Spec A §5.2 is explicit: place locators before the first audio plays. Cmd-drop on the Arrangement timeline:</p>
+<ul>
+<li><strong>0:00</strong> — Intro (texture, filtered drums)</li>
+<li><strong>0:45</strong> — A section (core beat + one melodic element)</li>
+<li><strong>2:00</strong> — B section (second layer)</li>
+<li><strong>3:15</strong> — Reduction (strip to texture)</li>
+<li><strong>3:45</strong> — Peak (all elements + added chaos)</li>
+<li><strong>5:00</strong> — Outro (deconstruction, end ~5:45)</li>
+</ul>
+<p><Citation bib="ableton_live_12_manual" /></p>
+<p>The locators are suggestions, not contracts. Placing them converts the session from open-ended into finite.</p>
+<p>Hebden, Tape Notes 140: <em>&ldquo;Arrangement is just everything.&rdquo;</em> <Citation bib="tape_notes_140_four_tet" /></p>
+<p>Your five mutated loops map 1:1 to the sections between Intro and Outro. Intro and Outro are the same loop filtered down to texture. Five mutations, two bookends. Done.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>Mutation 1 — drum swap</h2>
+  
+  <div class="body"><h1>Mutation 1 — drum swap</h1>
+<p><strong>Rule:</strong> replace the drum pattern wholesale. Keep everything else identical.</p>
+<p>Two clean paths in Live 12:</p>
+<p><strong>Path A — MIDI Recombine.</strong> Select the drum MIDI clip. Right-click → Transform → <strong>Recombine → Shuffle</strong>. Live rotates and reshuffles the hits. Same kit, same velocities, new order. <Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Path B — Drum Rack hot-swap.</strong> Keep the MIDI, swap the entire Drum Rack. Same notes, unfamiliar voices. Spec A §5.4 permits either; Path B generates more contrast per minute.</p>
+<p><strong>Limitation.</strong> Drum-swap variations can feel like the drummer quit mid-song if you do not bridge them. Insert a one-bar crash or reversed cymbal on the bar before the swap. The edit point is where this mutation lives or dies.</p>
+<p>Do not tune the new kit to the track. That was Week 5. This week you are moving fast.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>Mutation 2 — bass seed</h2>
+  
+  <div class="body"><h1>Mutation 2 — bass seed</h1>
+<p><strong>Rule:</strong> rerun the bassline with a new Seed generator. Drums and everything above stay fixed.</p>
+<p>Live 12&rsquo;s <strong>Seed</strong> generator produces an acid-style bassline within a ±7 semitone range, constrained to key. <Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Duplicate the bass MIDI track. Mute the original.</li>
+<li>Drop a <strong>Seed</strong> generator on the duplicate. Pitch ±7. Density 50–70%.</li>
+<li>Hit <strong>Roll</strong>. Audition. Budget ten rolls.</li>
+<li>When you land one, <strong>Capture MIDI</strong> (Cmd+Shift+C) to freeze the seed output as editable notes.</li>
+</ol>
+<p><strong>Caveat.</strong> Seed is a dice-roller inside key constraints, not a composer. Half the rolls will be forgettable. Ten rolls, one pick, move on.</p>
+<p>Aphex&rsquo;s early rig used the R-8 pitched kick as the bass itself. <Citation bib="reverbmachine_rdj_gear" /> You already know that move from Week 5. Seed is the quick substitute when the pitched kick needs a counter-line above.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Mutation 3 — filter sweep across the whole section</h2>
+  
+  <div class="body"><h1>Mutation 3 — filter sweep across the whole section</h1>
+<p><strong>Rule:</strong> one Auto Filter, macro-controlled, across the 16-bar duplicate. Nothing else changes.</p>
+<p><strong>Setup:</strong></p>
+<ol>
+<li>Group the whole loop into a <strong>Group Track</strong>.</li>
+<li>Insert <strong>Auto Filter</strong> on the group. Low-pass 24 dB, Resonance 15%.</li>
+<li>Map Frequency to Macro 1.</li>
+<li>Draw a clip envelope on Macro 1 ramping fully closed at bar 1 to fully open at bar 16.</li>
+</ol>
+<p><strong>Unlinked-envelope trick.</strong> Set envelope loop to 7 bars while audio loops at 4. <Citation bib="ableton_live_12_manual" /> Sweep never lands in the same place twice — Autechre polymeter, one envelope. Spec A §5.7.</p>
+<p><strong>Limitation.</strong> A filter sweep alone is 2012 festival music. It earns its keep because the section is otherwise identical. You are selling the <em>return to full bandwidth</em> on the next downbeat.</p>
+<p>Automate one parameter. Not two.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>Mutation 4 — reverse one element</h2>
+  
+  <div class="body"><h1>Mutation 4 — reverse one element</h1>
+<p><strong>Rule:</strong> reverse <em>one</em> element. Not the whole loop. One.</p>
+<p>Candidates, ranked by impact-per-minute:</p>
+<ol>
+<li><strong>Reversed cymbal swell</strong> into the downbeat. Consolidate (Cmd+J), right-click → <strong>Reverse</strong>, slide to land on bar 1.</li>
+<li><strong>Reversed vocal chop.</strong> Week 9 vocal, 1-bar chunk, reversed, on beat 3 of bar 15.</li>
+<li><strong>Reversed snare tail.</strong> 2 bars consolidated, reversed, layered under the forward snare.</li>
+<li><strong>Reversed pad.</strong> Whole-section pad, reversed, crossfaded against the forward pad at the midpoint.</li>
+</ol>
+<p><Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Receipt.</strong> DJ Dahi on &ldquo;Money Trees&rdquo; reversed a Beach House sample for the hook. The whole track hangs on the backwards two-bar loop. <Citation bib="pitchfork_dj_dahi_money_trees" /> Human ears mark backwards audio as <em>coming from somewhere else</em>, which is what a variation needs to telegraph.</p>
+<p>Do not reverse the drum loop. That is next week&rsquo;s lesson, and it is its own category of pain.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s08">
+  <h1>Slide s08 · concept</h1>
+  <h2>Mutation 5 — new layer that was not in the original</h2>
+  
+  <div class="body"><h1>Mutation 5 — new layer that was not in the original</h1>
+<p><strong>Rule:</strong> introduce <em>one</em> sound absent from the original loop. One.</p>
+<p>Spec A §5.4 says one layer and means it. Every new layer costs a mix decision. One = variation; three = a song you did not write.</p>
+<p><strong>Candidates, effort-to-payoff:</strong></p>
+<ul>
+<li>Held sub-bass on the root. 16 bars, no movement. Weight without activity.</li>
+<li>Two-note ostinato on a new patch — Meld resonator, or Simpler with a field recording. <Citation bib="ableton_live_12_manual" /></li>
+<li>Reversed texture pad. Warp Texture, Flux 80%.</li>
+<li>Single vocal syllable from Week 9, pitched +7, on beat 1 and beat 9 only.</li>
+</ul>
+<p><strong>Caveat.</strong> The layer must have been <em>absent</em> from sections 1–4. If it reappears, it is a re-entry — those belong in the Peak.</p>
+<p><strong>Rule.</strong> Bounce inside the 45-minute time-box. Past 46 = rabbit hole. <Citation bib="rick_rubin_creative_act" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s09">
+  <h1>Slide s09 · reference</h1>
+  <h2>Heather — the source pool for Follow Actions 2.0</h2>
+  
+  <div class="body"><h1>Heather — the source pool for Follow Actions 2.0</h1>
+<p>stemforge recipe <code>w10-heather-variation-source</code> runs <em>Heather</em> (Billy Cobham) through section-stratified curation at 2-bar length. <Citation bib="stemforge_repo" /></p>
+<pre><code>stemforge forge grooves/Heather.wav \
+  --strategy section-stratified \
+  --n-bars 2
+</code></pre>
+<p>Output: <code>heather_loops/</code> tagged by region — <code>intro_*.wav</code>, <code>a_*.wav</code>, <code>b_*.wav</code>, <code>peak_*.wav</code>, <code>outro_*.wav</code>. Each 2-bar chunk is pre-curated for a structural role.</p>
+<p><strong>Why this material.</strong> Cobham&rsquo;s <em>Spectrum</em> era has long phrased sections that survive chopping. His drumming sits wide of the grid — the 2-bar chunks preserve swing without locking you into his kit.</p>
+<p><strong>How to use.</strong> Drop <code>a_*.wav</code> into Simpler Slicing mode, or onto an audio clip slot with <strong>Follow Actions 2.0</strong>. Next slide.</p>
+<p><strong>Caveat.</strong> The classifier guesses role from energy and spectral features. Re-audition. The tag is a hint, not a contract.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s10">
+  <h1>Slide s10 · concept</h1>
+  <h2>Follow Actions 2.0 — the non-repeating variation pool</h2>
+  
+  <div class="body"><h1>Follow Actions 2.0 — the non-repeating variation pool</h1>
+<p>Live 12 shipped <strong>Follow Actions 2.0</strong>: per-scene probability, legato, and an <strong>Any</strong> option that mixes a deck of clips non-repeatingly. <Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Recipe, Spec A §5.7:</strong></p>
+<ol>
+<li>Build 8–16 one-bar MIDI variants in one Session track. Small hand-edits — hat drops, ghost snares.</li>
+<li>Each clip: Follow Action <strong>Any</strong>, Chance <strong>20% Play Again / 60% Other / 20% Any</strong>. Trigger 1 bar.</li>
+<li>Hit play. Live deals variants.</li>
+<li>In Arrangement, arm and use <strong>Capture MIDI</strong>.</li>
+</ol>
+<p>Committed, non-repeating drum take. The pool is the instrument.</p>
+<p><strong>Stacked with unlinked envelopes.</strong> 4-bar audio, 7-bar envelope on filter cutoff. <Citation bib="sos_autechre_april_2004" /> Autechre polymeter, one checkbox.</p>
+<p><strong>Commit.</strong> <strong>Bounce Groups</strong> (12.3) prints the generative chain as a fixed stem.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s11">
+  <h1>Slide s11 · concept</h1>
+  <h2>The Resample-and-Mutate engine — Mr. Bill&#x27;s forcing function</h2>
+  
+  <div class="body"><h1>The Resample-and-Mutate engine — Mr. Bill&rsquo;s forcing function</h1>
+<p>Spec A §5.6. Mr. Bill describes this as a core loop, not a technique. <Citation bib="mr_bill_resample_tutorial" /></p>
+<p><strong>Every 8–16 bars:</strong></p>
+<ol>
+<li>Route drum bus (or full mix) to a new audio track — <strong>Audio From → Resampling</strong>, or the bus.</li>
+<li>Record 4–8 bars.</li>
+<li><strong>Delete the source MIDI.</strong></li>
+<li>Chop into slices. Drum Rack Slice-to-Transients, or Simpler Slicing.</li>
+<li>Pitch-shift, reverse, bit-crush a few. B and C section material.</li>
+</ol>
+<p><Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Why delete.</strong> Frozen audio is psychologically expensive to un-freeze. That expense is the feature.</p>
+<p><strong>Sample Offset envelope.</strong> Draw ±8 sixteenth-notes on the printed loop. New patterns from the same audio — MPC-style beat repeat.</p>
+<p><strong>Consolidate every 8–16 bars.</strong> Cmd+J. The bounce is the arrangement move.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s12">
+  <h1>Slide s12 · caveat</h1>
+  <h2>Versioning discipline — the gap both specs missed</h2>
+  
+  <div class="body"><h1>Versioning discipline — the gap both specs missed</h1>
+<p>Neither Spec A nor Spec B names this. Filling the gap.</p>
+<p><strong>Rule.</strong> Before every bounce, save a timestamped copy of the Live set:</p>
+<pre><code>~/IDM_COURSE_versions/YYYY-MM-DD_wNN_track_N.als
+</code></pre>
+<p>Example: <code>~/IDM_COURSE_versions/2026-04-20_w10_track_01.als</code>. Re-edit, re-save as <code>_02</code>, <code>_03</code>. Never overwrite. Disk is cheap.</p>
+<p><strong>Why here specifically.</strong> The five-mutations method and the Resample-and-Mutate engine both <em>delete the source</em>. That is the point — commitment forcing. But if you delete the source and later want Mutation 3 back with inverted sweep, you are stuck. The versioned <code>.als</code> is your one-way-back.</p>
+<p><strong>Autechre do this forever.</strong> Booth in <em>Sound on Sound</em> April 2004 describes persistent Max patches across albums. <Citation bib="sos_autechre_april_2004" /> The NTS Sessions reportedly used patches from 2011 — forum consensus, not confirmed. <Citation bib="nts_autechre_sessions" /> The archive is the instrument.</p>
+<p><strong>Pattern, one line.</strong> Save timestamped <code>.als</code>. Consolidate. Delete. Bounce. Move on.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s13">
+  <h1>Slide s13 · exercise</h1>
+  <h2>Ship it — five mutations, six minutes, one bounce</h2>
+  
+  <div class="body"><h1>Ship it — five mutations, six minutes, one bounce</h1>
+<p>Six minutes. One bounce. No second pass.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Pull your best 16-bar loop from any week so far. Not a new one.</li>
+<li>Arrangement View. Drop locators: <strong>0:00 Intro, 0:45 A, 2:00 B, 3:15 Reduction, 3:45 Peak, 5:00 Outro</strong>. <Citation bib="ableton_live_12_manual" /></li>
+<li>Duplicate the loop five times, one per named section between bookends.</li>
+<li>Apply the five mutations, one per duplicate, in an order that creates an arc:</li>
+<li><strong>Drum swap</strong> (Recombine → Shuffle, or swap the Drum Rack)</li>
+<li><strong>Bass seed</strong> (Seed ±7, Capture MIDI)</li>
+<li><strong>Filter sweep</strong> (Auto Filter + macro, unlinked envelope)</li>
+<li><strong>Reverse</strong> (one element only)</li>
+<li><strong>New layer</strong> (one sound absent from the original)</li>
+<li>Save <code>~/IDM_COURSE_versions/2026-04-20_w10_track_01.als</code> <strong>before</strong> bouncing.</li>
+<li>Bounce stereo, 44.1/24-bit, <code>w10_&lt;yourname&gt;_five-mutations.wav</code>.</li>
+</ol>
+<p><strong>Write this down:</strong> one sentence per mutation — which landed, which felt forced. <Citation bib="rick_rubin_creative_act" /></p>
+<p>No wrap-up. Ship.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 6-minute stereo bounce, 44.1 kHz / 24-bit, named w10_&lt;yourname&gt;_five-mutations.wav. Take your best 16-bar loop from any week so far. Duplicate it five times along the timeline. Apply the five prescribed mutations in any order — drum swap, bass seed, filter sweep, reverse, new layer — one per duplicate. Arrange them into the Spec A locator template: 0:00 Intro, 0:45 A, 2:00 B, 3:15 Reduction, 3:45 Peak, 5:00 Outro. Write one sentence per variation explaining which mutation landed and which one felt forced. Save the Live set as IDM_COURSE_versions/YYYY-MM-DD_w10_track_01.als before you bounce.</div>
+  
+</section>
+
+
+<section class="slide reference" id="slide-i01">
+  <h1>Slide i01 · reference</h1>
+  <h2>Zaireeka (Warner Bros., 1997) — the four-CD object</h2>
+  
+  <div class="body"><h1>Zaireeka — the constraint that broke, then worked</h1>
+<p><em>Zaireeka</em> (Warner Bros. 9 46804-2, October 28 1997) shipped on four separate CDs meant to play simultaneously on four stereos. The listener assembles the mix. <Citation bib="zaireeka_wikipedia" /></p>
+<p>Fridmann and the Lips tracked it at Tarbox Road — the studio&rsquo;s first project. <Citation bib="fridmann_davefridmann_com" /> The early sessions assumed they could split a normal four-piece arrangement across four discs. Halfway through they discovered the constraint forced them to write differently — <span class="term">interlocking rounds<span class="gloss"><strong>phase vocoder</strong> — An FFT-based algorithm that decomposes a signal into short overlapping spectral frames, allowing independent manipulation of time and pitch. The engine behind most time-stretch plugins — Ableton&#x27;s Complex and Complex Pro warp modes, Elastique, PaulStretch. <a href="https://en.wikipedia.org/wiki/Phase_vocoder" target="_blank" rel="noopener">wikipedia↗</a></span></span>, staggered vocals, deliberate gaps on one disc filled by another.</p>
+<p>Months of the first attempt were scrapped.</p>
+<p>The record that shipped is the second draft. The first draft is the lesson.</p></div>
+  <figure class="figure"><img src="assets/zaireeka-4cd-spread.jpg" alt="Zaireeka (Warner Bros. 9 46804-2, 1997). Four separate CDs, one album. Cover + disc spread."><figcaption>Zaireeka (Warner Bros. 9 46804-2, 1997). Four separate CDs, one album. Cover + disc spread.<div class="credit">Warner Bros. Records / Flaming Lips · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i02">
+  <h1>Slide i02 · reference</h1>
+  <h2>Tarbox Road Studios — Fridmann&#x27;s constraint machine</h2>
+  
+  <div class="body"><h1>Dave Fridmann at Tarbox Road</h1>
+<p>Tarbox Road Studios, Cassadaga NY. A converted dairy in the woods. Fridmann built it for Mercury Rev and the Lips, then it became the headquarters for records that refused to be made in LA. <Citation bib="fridmann_davefridmann_com" /></p>
+<p>Fridmann&rsquo;s method for <em>Zaireeka</em> was ruthless editing under constraint. Each CD had to be listenable alone <em>and</em> interlock with the other three. That is a four-way counterpoint problem, not a mix problem.</p>
+<p>The transferable move — the constraint decides the arrangement before the arranger does. Our five mutations do the same thing in miniature: the <em>rule</em> that you apply exactly one named mutation to each duplicate is the generator. You do not get to pick the mutation or combine two. The box draws the picture.</p></div>
+  <figure class="figure"><img src="assets/fridmann-tarbox-studio.jpg" alt="Dave Fridmann at Tarbox Road Studios, Cassadaga NY. A converted dairy turned tracking room."><figcaption>Dave Fridmann at Tarbox Road Studios, Cassadaga NY. A converted dairy turned tracking room.<div class="credit">Photo credit TBD (photo-sourcer) · editorial / fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i03">
+  <h1>Slide i03 · reference</h1>
+  <h2>Mr. Bill — the forcing-function producer</h2>
+  
+  <div class="body"><h1>Mr. Bill — the forcing-function producer</h1>
+<p>Bill Day, Melbourne-based, built a whole YouTube corpus around one idea: commit the loop to audio, delete the source, chop the printed file, repeat. <Citation bib="mr_bill_resample_tutorial" /></p>
+<p>His term for it varies across videos — <em>resample and mutate</em>, <em>bounce and chop</em>, <em>commit and delete</em>. Spec A §5.6 standardizes the name. The core loop is the same across three hours of his tutorials: you cannot tweak what no longer exists as MIDI.</p>
+<p>The whole Resample-and-Mutate mini-module below is just this loop, written down with screenshots.</p>
+<p>Caveat — Mr. Bill&rsquo;s Live sessions are <em>enormous</em>. He does not practice the versioning discipline we impose in s12. Follow the method, not the file-count.</p></div>
+  <figure class="figure"><img src="assets/mr-bill-studio.jpg" alt="Bill Day (Mr. Bill), Melbourne studio. YouTube corpus of Resample-and-Mutate tutorials."><figcaption>Bill Day (Mr. Bill), Melbourne studio. YouTube corpus of Resample-and-Mutate tutorials.<div class="credit">Mr. Bill / YouTube still · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i04">
+  <h1>Slide i04 · reference</h1>
+  <h2>Billy Cobham, Spectrum (1973) — why Heather survives chopping</h2>
+  
+  <div class="body"><h1>Billy Cobham, <em>Spectrum</em> (1973) — why Heather survives chopping</h1>
+<p><em>Spectrum</em> (Atlantic SD-7268, 1973). Cobham&rsquo;s solo debut. <em>Heather</em> sits in the ballad slot — long-phrased, wide-swing drumming, the kit sitting <em>behind</em> the grid rather than on it.</p>
+<p>Two-bar chunks from Heather preserve the off-grid feel without locking you into Cobham&rsquo;s kit voicing. That is why the stemforge recipe stratifies at 2 bars, not 4 or 8.</p>
+<p>The unexpected transferable property — when you drop an <code>a_*.wav</code> chunk into a <span class="term">Follow Actions pool<span class="gloss"><strong>Follow Actions 2.0</strong> — Ableton&#x27;s per-clip logic for triggering the next clip in a track. 2.0 (Live 11+) added per-scene follow actions, probability distributions, and legato launching. Set 8–16 drum variants to Any with mixed probabilities — non-repeating drum tracks built from hand-crafted parts. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span>, the off-grid swing survives even through Live&rsquo;s warp engine, provided you set Warp mode to Complex Pro with Preserve Transients off. Beats mode will quantize the swing back onto the grid. Week 4 receipts apply.</p></div>
+  <figure class="figure"><img src="assets/cobham-spectrum-cover.jpg" alt="Billy Cobham, Spectrum (Atlantic SD-7268, 1973). The album Heather is lifted from."><figcaption>Billy Cobham, Spectrum (Atlantic SD-7268, 1973). The album Heather is lifted from.<div class="credit">Atlantic Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d01">
+  <h1>Slide d01 · concept</h1>
+  <h2>Follow Actions — the state-machine diagram</h2>
+  
+  <div class="body"><h1>Follow Actions — the state machine, drawn</h1>
+<p>Each clip is a node. Each Action is a weighted edge. The trigger fires every N bars. Two edges out; Live rolls Chance A vs Chance B and takes one.</p>
+<p>Above — a simplified view of a three-clip pool with the Pattern 1 recipe (20% self, 80% other). Pool size N=3 gives roughly equal draw among the other clips.</p>
+<p><strong>Reading it:</strong></p>
+<ul>
+<li>The <strong>self-loop</strong> on each node is Play Again at Chance 20.</li>
+<li>The <strong>cross-edges</strong> are Other at Chance 80 / (N−1) = ~40 each.</li>
+<li><strong>Any</strong> (not drawn) would add a cross-edge back to the node itself.</li>
+</ul>
+<p><strong>Why this matters for variation generation</strong> — the five mutations produce five distinct 16-bar variants. Drop them into one Session column. Set each to Action A Play Again 10 / Action B Other 90. Now you have a variation pool <em>inside</em> the arrangement. Capture MIDI on the row-output gives you a committed Arrangement that never repeats. <Citation bib="ableton_live_12_manual" /></p>
+<p>The state machine is how Autechre-style non-repetition lives in a DAW without a single patch cord. <Citation bib="sos_autechre_april_2004" /></p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Clip 1] --&gt;|Play Again · 20| A
+  A --&gt;|Other · 80| B[Clip 2]
+  A --&gt;|Other · 80| C[Clip 3]
+  B --&gt;|Play Again · 20| B
+  B --&gt;|Other · 80| A
+  B --&gt;|Other · 80| C
+  C --&gt;|Play Again · 20| C
+  C --&gt;|Other · 80| A
+  C --&gt;|Other · 80| B
+</div><div class="caption">Three-clip Follow Actions pool with Pattern 1 weights (20% self, 80% other). Every trigger interval Live rolls the edge weights and dispatches.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d02">
+  <h1>Slide d02 · concept</h1>
+  <h2>Resample-and-Mutate — the pipeline</h2>
+  
+  <div class="body"><h1>Resample-and-Mutate — the pipeline, drawn</h1>
+<p>The Mr. Bill engine, rendered as a data flow. One-way arrows only; you cannot go back. <Citation bib="mr_bill_resample_tutorial" /></p>
+<p><strong>Reading the diagram:</strong></p>
+<ul>
+<li><strong>Source tracks</strong> on the left. MIDI drum + bass + pad.</li>
+<li><strong>Resample bus</strong> captures their sum.</li>
+<li><strong>Print</strong> — the bus is bounced to a new audio track. At this moment the MIDI is deletable.</li>
+<li><strong>Chop</strong> splits the printed audio to Simpler Slicing.</li>
+<li><strong>Mutate</strong> — pitch, reverse, bit-crush, Sample Offset envelope.</li>
+<li><strong>B/C section material</strong> — the chopped mutants are dropped back into the Arrangement as variation source.</li>
+</ul>
+<p>The dashed red line is the <strong>commitment boundary</strong>. Left of the line, MIDI is editable and the rabbit hole is open. Right of the line, audio is printed and the only moves are mutate or delete. <Citation bib="rick_rubin_creative_act" /></p>
+<p><strong>In Live 12.3</strong>, the whole pipeline collapses to Bounce Groups + Paste Bounced Audio. Before 12.3 you ran it manually with resample tracks. <Citation bib="ableton_live_12_manual" /></p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  M1[MIDI: drums] --&gt; RB[Resample bus]
+  M2[MIDI: bass] --&gt; RB
+  M3[MIDI: pad] --&gt; RB
+  RB --&gt;|Bounce Group 12.3| P[Printed audio]
+  P --&gt;|Delete source MIDI| X((commit))
+  X --&gt; CH[Chop · Simpler Slicing]
+  CH --&gt; MU[Mutate: pitch · reverse · crush · offset]
+  MU --&gt; BC[B and C section material]
+</div><div class="caption">The one-way pipeline. Commitment boundary sits at &#x27;Delete source MIDI&#x27; — no move back from this point. Live 12.3 Bounce Groups collapses the first three steps into one menu item.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d03">
+  <h1>Slide d03 · concept</h1>
+  <h2>The variation tree — one source × 5 mutations</h2>
+  
+  <div class="body"><h1>The variation tree — one source, five variants</h1>
+<p>One 16-bar loop. Five prescribed mutations. Five sibling variants that share DNA because they branched from the same root.</p>
+<p><strong>Reading the tree:</strong></p>
+<ul>
+<li><strong>Root</strong> — your source loop, unchanged.</li>
+<li><strong>Five branches</strong> — each branch applies exactly one named mutation. No combining.</li>
+<li><strong>Leaves</strong> — the five usable arrangement sections: drum-swap variant, bass-seed variant, filter-sweep variant, reverse variant, new-layer variant.</li>
+</ul>
+<p>Coherence is inherited. Because every variant started identical, the sections sound related even when the mutation is dramatic — the reversed cymbal swell in variant 4 and the held sub in variant 5 both sit over the same core arrangement underneath.</p>
+<p>This is the generative property. You do not need to <em>design</em> the sections to relate; you design one loop, and the branching does the relating. Spec A §5.4, Finish More Music. <Citation bib="finish_more_music_variation" /></p>
+<p><strong>Arrangement tip, again</strong> — often 3–1–2–5–4 reads better than 1–2–3–4–5. Filter sweep up top sets the entry, drum swap at the A, bass seed at the B, new layer at peak, reverse at outro.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  R[Source loop · 16 bars] --&gt; V1[Mutation 1 · drum swap]
+  R --&gt; V2[Mutation 2 · bass seed]
+  R --&gt; V3[Mutation 3 · filter sweep]
+  R --&gt; V4[Mutation 4 · reverse one element]
+  R --&gt; V5[Mutation 5 · new layer]
+  V1 --&gt; S1[Section A]
+  V2 --&gt; S2[Section B]
+  V3 --&gt; S3[Intro / Reduction]
+  V4 --&gt; S4[Outro bridge]
+  V5 --&gt; S5[Peak]
+</div><div class="caption">Five branches from one root. Leaves map to arrangement sections. Coherence is inherited from the shared root, not designed.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-fa-01">
+  <h1>Slide fa-01 · concept</h1>
+  <h2>Follow Actions 2.0 — state-machine architecture</h2>
+  
+  <div class="body"><h1>Follow Actions 2.0 — state-machine architecture</h1>
+<p>Follow Actions are not random. They are a two-action-per-clip state machine with weighted edges. Live 12 shipped the 2.0 revision with per-scene Follow Actions, <span class="term">probability<span class="gloss"><strong>Follow Actions 2.0</strong> — Ableton&#x27;s per-clip logic for triggering the next clip in a track. 2.0 (Live 11+) added per-scene follow actions, probability distributions, and legato launching. Set 8–16 drum variants to Any with mixed probabilities — non-repeating drum tracks built from hand-crafted parts. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span>, and legato support. <Citation bib="ableton_live_12_manual" /></p>
+<p>Every clip carries:</p>
+<ul>
+<li><strong>Action A</strong> + <strong>Chance A</strong></li>
+<li><strong>Action B</strong> + <strong>Chance B</strong></li>
+<li>a <strong>trigger interval</strong> (bars/beats/sixteenths)</li>
+</ul>
+<p>At each interval Live rolls Chance A vs Chance B, then dispatches to the chosen Action — Stop, Play Again, Previous, Next, First, Last, Any, Other, Jump-to-<clip>.</p>
+<p>The <em>pool</em> is the whole Session track column. The state machine selects within it.</p>
+<p>Key terms — <strong>Any</strong> draws uniformly from the column including the current clip. <strong>Other</strong> excludes the current clip, which is how you get non-repeating variation with zero code.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-fa-02">
+  <h1>Slide fa-02 · concept</h1>
+  <h2>Probability weights — Any vs specific jumps</h2>
+  
+  <div class="body"><h1>Probability weights — Any vs specific jumps</h1>
+<p>Three patterns cover 90% of generative use.</p>
+<p><strong>Pattern 1 — Non-repeating pool.</strong>
+- Action A: Play Again · Chance 20
+- Action B: Other · Chance 80</p>
+<p>Result — mostly variation, occasional self-repeat so the ear does not catch the rotation. Spec A §5.7 baseline. <Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Pattern 2 — Card shuffle.</strong>
+- Action A: Any · Chance 100</p>
+<p>Pure uniform draw. Any includes the current clip, so ~1-in-N chance of self-repeat in a pool of N.</p>
+<p><strong>Pattern 3 — Directed fills.</strong>
+- Main clip: Action A Next · Chance 10 · Action B Play Again · Chance 90
+- Fill clip: Action A First · Chance 100</p>
+<p>Main plays mostly itself with occasional advance to the next (a fill), which snaps back to First. That is a classic 4-bar-main-plus-every-Nth-fill pattern without writing the sequence. Spec B receipts. <Citation bib="sos_autechre_april_2004" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-fa-03">
+  <h1>Slide fa-03 · concept</h1>
+  <h2>Legato vs restart — the phase-preservation switch</h2>
+  
+  <div class="body"><h1>Legato vs restart — the phase-preservation switch</h1>
+<p>Each clip has a <strong>Legato</strong> toggle. It changes what happens at the moment of transition.</p>
+<p><strong>Legato off</strong> — the next clip starts from its own bar 1. Phase resets. Good for drum variants where you want the new pattern to begin cleanly.</p>
+<p><strong>Legato on</strong> — the next clip starts at the <em>current playhead position within the clip&rsquo;s length</em>. Phase rides through. This is the setting for pads, long melodic phrases, and any loop where you want the transition to feel like a mode-switch rather than a cut. <Citation bib="ableton_live_12_manual" /></p>
+<p>Legato plus <strong>Launch Mode: Gate</strong> gives you the Autechre move — hold the row change with a foot switch, release, clip restarts. Spec B 12.3 §4. <Citation bib="sos_autechre_april_2004" /></p>
+<p>Anti-pattern — legato on across drum variants with different rhythmic anchors. The downbeats slide and you get a phaser-on-kick problem. Legato off for drums, legato on for pads. Default answer.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-fa-04">
+  <h1>Slide fa-04 · concept</h1>
+  <h2>Combining Follow Actions with Clip Envelopes</h2>
+  
+  <div class="body"><h1>Combining Follow Actions with Clip Envelopes</h1>
+<p>Follow Actions gives you <em>which clip plays next</em>. Clip Envelopes give you <em>what the clip sounds like while it plays</em>. Stacked, you get generative arrangement from a small source.</p>
+<p><strong>Clip Envelopes unlinked from clip loop</strong> — set the envelope&rsquo;s loop length to a value different from the audio/MIDI loop. Live 12 manual §13. <Citation bib="ableton_live_12_manual" /></p>
+<p>Example — 4-bar audio clip. Filter-cutoff envelope set to 7-bar loop. The filter sweep never lands in the same place across four plays of the clip. Now stack this under Follow Actions: on each bar-1 trigger, FA may advance to a <em>different</em> 4-bar clip, at which point the 7-bar envelope continues from wherever it was.</p>
+<p>That is <span class="term">polymeter<span class="gloss"><strong>polymeter</strong> — Two or more parts cycling at different bar lengths over the same pulse — e.g., a 5/16 hi-hat pattern against a 4/4 kick. They drift out of alignment and reconverge after the least common multiple of their lengths. Autechre&#x27;s bread and butter. <a href="https://en.wikipedia.org/wiki/Metre_(music)" target="_blank" rel="noopener">wikipedia↗</a></span></span> on two axes — clip rotation on axis one, envelope phase on axis two. Autechre spent albums on this. <Citation bib="sos_autechre_april_2004" /> Live does it with two checkboxes.</p>
+<p>Sample Offset envelope on the printed loop is the same trick for drum playback — see ram-04.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-fa-05">
+  <h1>Slide fa-05 · concept</h1>
+  <h2>The Follow Actions panel — annotated</h2>
+  
+  <div class="body"><h1>The Follow Actions panel — annotated</h1>
+<p>Five fields matter. Ignore the rest on first pass.</p>
+<ol>
+<li><strong>Trigger</strong> — how often FA fires. Bars, Beats, or Sixteenths. 1 Bar for drums and sections. 1/16 for stutter-fills.</li>
+<li><strong>Action A / Action B</strong> — the two edges out of this clip&rsquo;s state.</li>
+<li><strong>Chance A / Chance B</strong> — the weights. Live normalizes, so 20/80 and 1/4 are equivalent.</li>
+<li><strong>Legato</strong> — phase preserve vs reset, per fa-03.</li>
+<li><strong>Linked</strong> (scene-level) — when on, all clips in the scene transition together. Off, each clip&rsquo;s FA fires independently. <Citation bib="ableton_live_12_manual" /></li>
+</ol>
+<p><strong>The scene-level FA</strong> is the per-scene sibling added in 12. Set it once at the scene header, and every clip in the scene inherits unless the clip overrides. That is where you control <em>section advance</em> (scene 1 → scene 2) separately from <em>within-section variation</em> (clip rotation inside scene 1). Spec B §4. <Citation bib="sos_autechre_april_2004" /></p>
+<p>Two-axis control — scene FA drives structure, clip FA drives texture.</p></div>
+  <figure class="figure"><img src="assets/ableton-follow-actions-panel.png" alt="Ableton Live 12 Follow Actions panel. Trigger, Action A/B, Chance A/B, Legato, Linked highlighted."><figcaption>Ableton Live 12 Follow Actions panel. Trigger, Action A/B, Chance A/B, Legato, Linked highlighted.<div class="credit">Ableton Live 12 screenshot, annotated · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ram-01">
+  <h1>Slide ram-01 · concept</h1>
+  <h2>Resample-and-Mutate — the core loop, step-by-step</h2>
+  
+  <div class="body"><h1>Resample-and-Mutate — the core loop, step-by-step</h1>
+<p>Mr. Bill&rsquo;s engine, written as a recipe. <Citation bib="mr_bill_resample_tutorial" /></p>
+<p><strong>The loop (every 8–16 bars):</strong></p>
+<ol>
+<li><strong>Route.</strong> Create a new audio track. Set <strong>Audio From → Resampling</strong> (or pick the drum bus directly).</li>
+<li><strong>Arm and record</strong> 4–8 bars while the source plays.</li>
+<li><strong>Mute or delete the source.</strong> Mute first if nervous. Delete after one play-through confirms the print.</li>
+<li><strong>Consolidate</strong> the printed clip (Cmd+J) so it becomes a single warped audio file.</li>
+<li><strong>Chop.</strong> Right-click → Slice to New MIDI Track → Simpler (Slicing mode, transient markers).</li>
+<li><strong>Mutate.</strong> Pitch ±12st on two slices, reverse one, bit-crush one, leave the rest.</li>
+<li><strong>Drop into B and C sections.</strong> <Citation bib="ableton_live_12_manual" /></li>
+</ol>
+<p>That is the whole engine. Repeat every 8–16 bars of finished material. The mutated output is the B and C sections you would otherwise have to compose.</p>
+<p><strong>The commitment</strong> is what makes this a workflow and not a toy. The printed audio survives undo stacks. The deleted MIDI does not.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ram-02">
+  <h1>Slide ram-02 · concept</h1>
+  <h2>Bounce Groups (Live 12.3) — the engine, natively</h2>
+  
+  <div class="body"><h1>Bounce Groups (Live 12.3) — the engine, natively</h1>
+<p>Before 12.3, Resample-and-Mutate meant routing tracks, arming Resampling, and watching a meter. Live 12.3 shipped <strong>Bounce Groups</strong> and <strong>Paste Bounced Audio</strong> — the loop as a right-click menu. <Citation bib="ableton_live_12_manual" /></p>
+<p><strong>The 12.3 path:</strong></p>
+<ol>
+<li>Select a group track in Arrangement.</li>
+<li>Right-click → <strong>Bounce Group</strong>. Dialog opens.</li>
+<li>Pick range, sample rate, bit depth, whether to include returns.</li>
+<li><strong>Delete source</strong> toggle — check it. This is the Mr. Bill move, native.</li>
+<li>Click Bounce. Live renders, inserts the printed audio, optionally clears the source MIDI.</li>
+</ol>
+<p>Spec B receipts — &ldquo;Bounce to New Track (12.2), Bounce Groups and Paste Bounced Audio (12.3) enable the bounce-and-arrange workflow as a native loop.&rdquo; <Citation bib="sos_autechre_april_2004" /></p>
+<p><strong>Caveat</strong> — Bounce Groups does not capture the state of <em>Follow Actions-driven</em> Session clips. For FA output you still need Capture MIDI → Arrangement first, <em>then</em> Bounce Groups on the Arrangement tracks.</p></div>
+  <figure class="figure"><img src="assets/ableton-bounce-groups-dialog.png" alt="Bounce Group dialog, Live 12.3. Delete-source toggle is the Mr. Bill move, native."><figcaption>Bounce Group dialog, Live 12.3. Delete-source toggle is the Mr. Bill move, native.<div class="credit">Ableton Live 12.3 screenshot · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-ram-03">
+  <h1>Slide ram-03 · caveat</h1>
+  <h2>Why delete — the anti-perfectionism machine</h2>
+  
+  <div class="body"><h1>Why delete — the anti-perfectionism machine</h1>
+<p>&ldquo;Bounce and delete&rdquo; sounds like a loss of power. It is a loss of <em>optionality</em>, which is a different thing.</p>
+<p>Undo is a procrastination engine. If your kick is one Cmd+Z away, you will spend thirty minutes flipping between versions. Print the kick bus, delete the source, and the decision is made. The only remaining move is <em>forward</em>. <Citation bib="mr_bill_resample_tutorial" /></p>
+<p>Rick Rubin, <em>The Creative Act</em> — &ldquo;The goal is to be <em>done</em>, not <em>perfect</em>.&rdquo; <Citation bib="rick_rubin_creative_act" /> The bounce is how you operationalize that sentence.</p>
+<p>Eno, Oblique Strategies — &ldquo;Discard an axiom.&rdquo; <Citation bib="oblique_strategies_eno" /> Same thing, phrased as a card.</p>
+<p><strong>The observable failure mode</strong> this prevents — spending ninety minutes tweaking a hi-hat inside a loop that has been finished for the first eight of those minutes. The loop is fine. You were in a rabbit hole.</p>
+<p><strong>One caveat, important.</strong> Versioning discipline (s12) is the safety net. Bounce and delete <em>within</em> the Live set. Save the set timestamped <em>outside</em> the Live set. The two disciplines hold each other up.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ram-04">
+  <h1>Slide ram-04 · concept</h1>
+  <h2>Sample Offset envelope — new patterns from one audio file</h2>
+  
+  <div class="body"><h1>Sample Offset envelope — new patterns from one audio file</h1>
+<p>Once the drum bus is printed as audio, you have a new parameter you did not have as MIDI — <strong>Sample Offset</strong>. Clip Envelope → Clip → Sample Offset. Grid set to 16ths. <Citation bib="ableton_live_12_manual" /></p>
+<p>Draw ±8 sixteenth-notes of offset over the 2-bar loop. At playback, Live jumps the playhead around inside the audio file at each 16th boundary. Same audio, new pattern.</p>
+<p><strong>Four shapes to try:</strong></p>
+<ol>
+<li><strong>Stutter every 4th 16th.</strong> Offset drops to −1/16, then snaps back. MPC beat-repeat.</li>
+<li><strong>Slow climb.</strong> Linear ramp +0 to +4 over 2 bars. The loop slides forward inside itself.</li>
+<li><strong>Random staircase.</strong> Steps at random values ±4. A whole new rhythm from the same file.</li>
+<li><strong>Unlinked loop length.</strong> Set the envelope&rsquo;s loop to 3 bars, audio loops 2 bars. Pattern never repeats inside eight bars.</li>
+</ol>
+<p>Stack this under Follow Actions — Sample Offset envelope on each clip in the pool, different shape per clip, FA rotating them. Three levels of indirection from one printed loop.</p>
+<p>Mutation 6, if we allowed a sixth. We do not. Save it for your own records.</p></div>
+  <figure class="figure"><img src="assets/ableton-sample-offset-envelope.png" alt="Clip Envelope → Clip → Sample Offset, drawn ±8 sixteenth-notes over 2 bars. Playhead-jump pattern."><figcaption>Clip Envelope → Clip → Sample Offset, drawn ±8 sixteenth-notes over 2 bars. Playhead-jump pattern.<div class="credit">Ableton Live 12 screenshot · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-m1a">
+  <h1>Slide m1a · concept</h1>
+  <h2>Drum swap — the Ableton walk-through</h2>
+  
+  <div class="body"><h1>Drum swap — the Ableton walk-through</h1>
+<p>Two named paths from s04, now as click-by-click.</p>
+<p><strong>Path A — MIDI Recombine → Shuffle.</strong></p>
+<ol>
+<li>Select the duplicate&rsquo;s drum MIDI clip.</li>
+<li>Right-click the clip → <strong>Transform → Recombine</strong>.</li>
+<li>In the dialog, enable <strong>Shuffle</strong>. Leave Pitch and Velocity off.</li>
+<li>Click <strong>Transform</strong>. Live rewrites the clip in place.</li>
+<li>Audition. If the result is too far, Cmd+Z once, re-open Recombine, reduce Shuffle amount. <Citation bib="ableton_live_12_manual" /></li>
+</ol>
+<p><strong>Path B — Drum Rack hot-swap.</strong></p>
+<ol>
+<li>Select the Drum Rack on the duplicate&rsquo;s drum track.</li>
+<li>Click the <strong>Hot-Swap</strong> button (headphone icon, top-right of the Rack header).</li>
+<li>Browser filters to Drum Racks. Arrow-key through options while the clip plays.</li>
+<li>Enter to commit. Cmd+Z to revert.</li>
+</ol>
+<p><strong>Do not tune the new kit.</strong> Week 5 move, not this week. Ship.</p>
+<p><strong>Limitation.</strong> Both paths break flow at the edit point unless bridged. Insert a 1-bar reversed cymbal or a half-beat silence on the bar <em>before</em> the duplicate. That sells the transition. Mutation 4 candidates also work for bridges.</p></div>
+  <figure class="figure"><img src="assets/ableton-recombine-shuffle.png" alt="Transform → Recombine → Shuffle dialog. Pitch/Velocity off, Shuffle on."><figcaption>Transform → Recombine → Shuffle dialog. Pitch/Velocity off, Shuffle on.<div class="credit">Ableton Live 12 screenshot · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-m2a">
+  <h1>Slide m2a · concept</h1>
+  <h2>Bass seed — the Ableton walk-through</h2>
+  
+  <div class="body"><h1>Bass seed — the Ableton walk-through</h1>
+<p>Seed is a MIDI <strong>Generator</strong>, not a Transform. It draws notes from scratch into the clip&rsquo;s grid under rule constraints. <Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Click-by-click:</strong></p>
+<ol>
+<li>Duplicate the bass MIDI track. Mute the original. Rename the duplicate <code>bass seed</code>.</li>
+<li>Draw an empty 2-bar MIDI clip. Set <strong>Scale</strong> on the clip to match the track&rsquo;s key.</li>
+<li>Open the clip. MIDI editor footer → <strong>Generators → Seed</strong>.</li>
+<li>Parameters: <strong>Pitch Range</strong> ±7 semitones. <strong>Density</strong> 60%. <strong>Note Length</strong> 1/16 or 1/8.</li>
+<li>Hit <strong>Roll</strong>. Live fills the clip.</li>
+<li>Audition. If bad, Roll again. Budget ten rolls.</li>
+<li>When one lands, close the Generator popover. The notes are now editable MIDI. Capture MIDI (Cmd+Shift+C) is a separate path if you Roll while the clip plays and want to keep what you heard. <Citation bib="ableton_live_12_manual" /></li>
+</ol>
+<p><strong>Receipts.</strong> Spec B 12.3 — &ldquo;Seed generator produces acid-style basslines within key constraints; combine with Chance 60–75% on hats for non-repeating patterns.&rdquo; <Citation bib="sos_autechre_april_2004" /></p>
+<p><strong>Caveat.</strong> Seed obeys the Scale setting on the <em>clip</em>. If the clip&rsquo;s scale is C-major but your track is D-minor, the result will clash. Check the clip scale before rolling.</p></div>
+  <figure class="figure"><img src="assets/ableton-seed-generator.png" alt="Seed generator footer in the MIDI editor. Pitch ±7, Density 60, Note Length 1/16."><figcaption>Seed generator footer in the MIDI editor. Pitch ±7, Density 60, Note Length 1/16.<div class="credit">Ableton Live 12 screenshot · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-m3a">
+  <h1>Slide m3a · concept</h1>
+  <h2>Filter sweep — the Ableton walk-through</h2>
+  
+  <div class="body"><h1>Filter sweep — the Ableton walk-through</h1>
+<p>One Auto Filter, one macro, one envelope. The whole trick is the unlinked envelope loop.</p>
+<p><strong>Setup:</strong></p>
+<ol>
+<li>Shift-select all tracks involved in the duplicate. Cmd+G to <strong>Group</strong>. Rename the group <code>var3 group</code>.</li>
+<li>Insert <strong>Auto Filter</strong> on the group&rsquo;s insert chain. Filter type <strong>LP24</strong> (Clean). Frequency 20 kHz, Resonance 15%.</li>
+<li>Cmd-right-click the Frequency knob → <strong>Map to Macro 1</strong>. The macro is now your sweep control.</li>
+<li>Right-click the group clip → <strong>Show Envelope</strong>. Envelope selector → <strong>Macro 1</strong>.</li>
+<li>Draw a ramp: bar 1 at macro 0 (closed), bar 16 at macro 100 (open). <Citation bib="ableton_live_12_manual" /></li>
+</ol>
+<p><strong>Unlinked envelope:</strong></p>
+<ol>
+<li>Click the Envelope pane&rsquo;s <strong>Linked/Unlinked</strong> toggle. Set envelope loop to <strong>7 bars</strong>. Audio loops 16.</li>
+<li>The sweep now never lands at the same position across repeats. Autechre polymeter trick. <Citation bib="sos_autechre_april_2004" /></li>
+</ol>
+<p><strong>Limitation.</strong> A 24 dB LP sweep eats low end before it reaches the bass register. If the kick disappears, switch to <strong>BP</strong> with Resonance 40% for a body-preserving sweep, or keep LP but side-chain-bypass the kick channel from the group.</p>
+<p>One parameter. Not two.</p></div>
+  <figure class="figure"><img src="assets/ableton-clip-envelope-unlinked.png" alt="Clip envelope pane with Linked/Unlinked toggle showing 7-bar envelope over 16-bar audio."><figcaption>Clip envelope pane with Linked/Unlinked toggle showing 7-bar envelope over 16-bar audio.<div class="credit">Ableton Live 12 screenshot · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:finish_more_music_variation">Finish More Music — Variation Generation / Spawn from the Same Seed — Finish More Music <a href="https://finishmoremusic.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:fridmann_davefridmann_com">Dave Fridmann — Dave Fridmann Archive <a href="https://www.davefridmann.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:mr_bill_resample_tutorial">Mr. Bill — Resample-and-Mutate workflow tutorials — YouTube <a href="https://www.youtube.com/@MrBill" target="_blank" rel="noopener">↗</a></li><li id="bib:oblique_strategies_eno">Brian Eno, Peter Schmidt — Oblique Strategies <a href="https://stoney.sb.org/eno/oblique.html" target="_blank" rel="noopener">↗</a></li><li id="bib:rick_rubin_creative_act">Rick Rubin — The Creative Act: A Way of Being — Penguin Press 2023</li><li id="bib:sos_autechre_april_2004">Sean Booth (interviewee) — Autechre — Recording Strategies — Sound on Sound 2004 <a href="https://www.soundonsound.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:tape_notes_140_four_tet">Kieran Hebden (Four Tet) — Three — 2024 <a href="https://tapenotes.cc/" target="_blank" rel="noopener">↗</a></li><li id="bib:zaireeka_wikipedia">Zaireeka — Wikipedia <a href="https://en.wikipedia.org/wiki/Zaireeka" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 86450}, {"id": "ch001", "title": "The parable before the method", "start_ms": 86850, "end_ms": 197100}, {"id": "ch002", "title": "The thesis \u2014 constraint is the generator", "start_ms": 197500, "end_ms": 315700}, {"id": "ch003", "title": "The locator template, before you touch a sound", "start_ms": 316100, "end_ms": 425150}, {"id": "ch004", "title": "Mutation 1 \u2014 drum swap", "start_ms": 425550, "end_ms": 538450}, {"id": "ch005", "title": "Mutation 2 \u2014 bass seed", "start_ms": 538850, "end_ms": 661400}, {"id": "ch006", "title": "Mutation 3 \u2014 filter sweep across the whole section", "start_ms": 661800, "end_ms": 780100}, {"id": "ch007", "title": "Mutation 4 \u2014 reverse one element", "start_ms": 780500, "end_ms": 885550}, {"id": "ch008", "title": "Mutation 5 \u2014 new layer that was not in the original", "start_ms": 885950, "end_ms": 1005100}, {"id": "ch009", "title": "Heather \u2014 the source pool for Follow Actions 2.0", "start_ms": 1005500, "end_ms": 1128350}, {"id": "ch010", "title": "Follow Actions 2.0 \u2014 the non-repeating variation pool", "start_ms": 1128750, "end_ms": 1248800}, {"id": "ch011", "title": "The Resample-and-Mutate engine \u2014 Mr. Bill's forcing function", "start_ms": 1249200, "end_ms": 1364050}, {"id": "ch012", "title": "Versioning discipline \u2014 the gap both specs missed", "start_ms": 1364450, "end_ms": 1499500}, {"id": "ch013", "title": "Ship it \u2014 five mutations, six minutes, one bounce", "start_ms": 1499900, "end_ms": 1628300}, {"id": "ch014", "title": "Outro", "start_ms": 1628700, "end_ms": 1709250}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

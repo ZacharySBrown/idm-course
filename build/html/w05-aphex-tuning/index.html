@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W5 — Week 5 — Aphex Pt.1, Tuning drums to the track</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W5</span>
+  <span class="title-chip">Week 5 — Aphex Pt.1, Tuning drums to the track</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>The confession before we touch a synth</h2>
+  
+  <div class="body"><h1>The confession before we touch a synth</h1>
+<p>Before we touch a synth this week — a confession. The reason Aphex&rsquo;s drums feel wrong when they&rsquo;re right isn&rsquo;t that he&rsquo;s a wizard. It&rsquo;s that he&rsquo;s been tuning kick drums to the root of the key since 1992.</p>
+<p>That&rsquo;s the whole lesson in one sentence. Everything after is the receipt.</p>
+<p>Specifically — Selected Ambient Works 85-92. &ldquo;Xtal.&rdquo; &ldquo;Ageispolis.&rdquo; The Roland R-8 with the 808 expansion card, running repitched kicks that double as the bassline. No secondary bass part. The kick <em>is</em> the bass. <Citation bib="reverbmachine_rdj_gear" /></p>
+<p>This week: you do the same, in Ableton, in thirty seconds, with one knob on Simpler.</p>
+<p><Citation bib="stemforge_repo" /> — <code>grooves/Express Yourself.wav</code> through the <code>idm_crushed</code> pipeline, dry vs tuned, recipe <code>w05-express-tuned-ab</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Ageispolis</span><span class="by"> — Aphex Twin</span><span class="links"><a href="https://open.spotify.com/track/7KRQoq9GeWeCm0ZAXg5XMb" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/oG7OXcczUZk" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Aphex%20Twin%20Ageispolis" target="_blank" rel="noopener">Apple</a> </span></div><div class="song-ref"><span class="title">Xtal</span><span class="by"> — Aphex Twin</span><span class="links"><a href="https://open.spotify.com/track/7o2AeQZzfCERsRmOM86EcB" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/sWcLccMuCA8" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Aphex%20Twin%20Xtal" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>Drums are harmonic content — the 1992 receipt</h2>
+  
+  <div class="body"><h1>Drums are harmonic content — the 1992 receipt</h1>
+<p>The technique is older than the term. Per Discogs and the contemporaneous Reverb Machine gear reconstruction — RDJ&rsquo;s early-London rig ran a Roland R-8 with the 808 expansion card, a Casio FZ-10M for ~80% of sampling, and a butchered SH-101. <Citation bib="discogs_syro" /> <Citation bib="reverbmachine_rdj_gear" /></p>
+<p>The R-8 had individual outs and individual tuning per pad. The 808 kick is a sine with a pitched envelope — detune it, and the fundamental moves. Detune it far enough and it stops being percussion and starts being a note.</p>
+<p>On &ldquo;Xtal&rdquo; and &ldquo;Ageispolis,&rdquo; that note is the bassline. There is no second bass part underneath. The kick is tuned to the root. The snare and hats sit on other scale degrees. The drum bus is carrying the harmony.</p>
+<p>This is not a mix decision. It is a composition decision made at the sampler.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Ageispolis</span><span class="by"> — Aphex Twin</span><span class="links"><a href="https://open.spotify.com/track/7KRQoq9GeWeCm0ZAXg5XMb" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/oG7OXcczUZk" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Aphex%20Twin%20Ageispolis" target="_blank" rel="noopener">Apple</a> </span></div><div class="song-ref"><span class="title">Xtal</span><span class="by"> — Aphex Twin</span><span class="links"><a href="https://open.spotify.com/track/7o2AeQZzfCERsRmOM86EcB" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/sWcLccMuCA8" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Aphex%20Twin%20Xtal" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide caveat" id="slide-s03">
+  <h1>Slide s03 · caveat</h1>
+  <h2>The quote everyone paraphrases — what he actually said</h2>
+  
+  <div class="body"><h1>The quote everyone paraphrases — what he actually said</h1>
+<p>The line pinned to producer forums — <em>&ldquo;when it&rsquo;s right in tune, something&rsquo;s off&rdquo;</em> — is a community paraphrase, not a verbatim quote. Flag it as such.</p>
+<p>The closest published version is in the 2017 Pitchfork piece tied to the Korg Monologue AFX launch. <Citation bib="aphex_pitchfork_microtuning" /> James, roughly: <em>&ldquo;A lot of composers before me have been on this mission to change the world by getting off equal temperament… When it&rsquo;s right in tune, it&rsquo;s like there&rsquo;s something slightly off.&rdquo;</em></p>
+<p>The received one-liner compresses that. Cite it with the asterisk.</p>
+<p>Why it matters: the real claim is not mystical. 12-TET — the default of every piano and synth you&rsquo;ve touched — is a compromise, and the compromise is audible if you stop obeying it.</p>
+<p>That is the pillar this week rests on.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>What microtuning actually is, in cents</h2>
+  
+  <div class="body"><h1>What microtuning actually is, in cents</h1>
+<p>One semitone = 100 cents. One octave = 1200 cents. Cents are linear; frequency is logarithmic.</p>
+<p>Three regimes worth naming:</p>
+<ul>
+<li><strong>±1–7 cents</strong> — animation range. The shimmer you hear when two oscillators are slightly detuned. Aphex uses this on sustained pad notes. <Citation bib="aphex_pitchfork_microtuning" /></li>
+<li><strong>±15–30 cents</strong> — non-12-TET territory. Just intonation, meantone, Bohlen-Pierce. Load these as Scala files into Live 12. <Citation bib="ableton_live_12_manual" /></li>
+<li><strong>±100 cents = ±1 semitone</strong> — transposition. The knob you turn for kicks.</li>
+</ul>
+<p>The Korg Monologue AFX has microtuning built in — per-key cent offsets, user-programmable scales, six RDJ-designed presets. <Citation bib="korg_monologue_afx_manual" /> You do not need the hardware. Simpler has the same knob.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-t01">
+  <h1>Slide t01 · concept</h1>
+  <h2>The cents number line — what you&#x27;re actually counting</h2>
+  
+  <div class="body"><h1>The cents number line — what you&rsquo;re actually counting</h1>
+<p>Before gear: the unit. <strong>One octave = 1200 cents. One semitone = 100 cents.</strong> Cents are linear where frequency is logarithmic — doubling Hz advances you 1200 cents, not 2×. <Citation bib="ableton_live_12_manual" /></p>
+<p>A worked example for the lesson&rsquo;s demo key (E minor):</p>
+<ul>
+<li><strong>E1</strong> fundamental: 41.20 Hz (the Express Yourself tuned-kick target).</li>
+<li><strong>B1</strong> the fifth: 61.74 Hz. That&rsquo;s E1 + 700 cents in 12-TET, or a clean 3:2 ratio (E1 × 1.5 = 61.80 Hz) in <span class="term">just intonation<span class="gloss"><strong>ratio (just intonation)</strong> — A tuning system where intervals are small-integer frequency ratios (3:2 for a perfect fifth, 5:4 for a major third) rather than equal divisions. Pure-sounding in a single key; wanders out of tune when you modulate. The ancestor system to equal temperament. <a href="https://en.wikipedia.org/wiki/Just_intonation" target="_blank" rel="noopener">wikipedia↗</a></span></span>.</li>
+<li><strong>G1</strong> the minor third: 49.00 Hz. 12-TET puts it at +300 cents. Pure JI minor third (6:5) puts it at 49.44 Hz — about +16 cents sharp of the tempered note.</li>
+</ul>
+<p>The sixteen-cent gap is audible on a sustained pad. It is inaudible on a 50ms kick transient. This is why <span class="term">microtuning<span class="gloss"><strong>microtuning</strong> — Per-note pitch offsets in cent-level increments — Aphex Twin&#x27;s per-Cirklon-step ±1–20 cent drift, Wendy Carlos&#x27;s Alpha scale, La Monte Young&#x27;s just intonation. Live 12&#x27;s Tuning Systems and per-note Pitch transformer make it accessible. RDJ: &#x27;Like casting light on a rough surface and seeing different patterns.&#x27; <a href="https://en.wikipedia.org/wiki/Microtonality" target="_blank" rel="noopener">wikipedia↗</a></span></span> kicks is mostly a transpose job, and microtuning pads is where the philosophy fight starts.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-t02">
+  <h1>Slide t02 · concept</h1>
+  <h2>12-EDO, 19-EDO, 17-EDO — the equal-division grid</h2>
+  
+  <div class="body"><h1>12-EDO, 19-EDO, 17-EDO — the equal-division grid</h1>
+<p><span class="term">Equal Division of the Octave<span class="gloss"><strong>EDO (equal divisions of the octave)</strong> — A tuning system dividing the octave into N equal steps. 12-EDO = standard Western temperament. 24-EDO = quarter tones. 31-EDO, 53-EDO approximate just intonation to varying degrees. Scala (.scl) files can describe any of them, and Live 12&#x27;s tuning systems can load them. <a href="https://en.wikipedia.org/wiki/Equal_temperament" target="_blank" rel="noopener">wikipedia↗</a></span></span> — the category that contains 12-TET as its most famous member. Divide the 1200-cent octave into N equal steps. N=12 is the piano. N=19 is a Renaissance favorite. N=17 is a common Arabic-classical approximation.</p>
+<ul>
+<li><strong>12-EDO</strong> — 100 cents per step. Every interval is a compromise against pure integer ratios.</li>
+<li><strong>19-EDO</strong> — 63.16 cents per step. Better minor thirds (315.8 cents ≈ the pure 5:4 at 315.6 cents — wait, that&rsquo;s a major third). Better at approximating 5-limit JI intervals than 12.</li>
+<li><strong>17-EDO</strong> — 70.59 cents per step. Sharp fifths (705.9 cents vs pure 701.96 cents), zero pure thirds. Jagged. Aphex&rsquo;s appetite.</li>
+<li><strong>24-EDO</strong> — quarter-tones. Middle Eastern maqam scales approximate here.</li>
+</ul>
+<p>Scala files (<code>.scl</code>) encode any EDO or non-EDO tuning as a flat text list of cent offsets or ratios. Live 12 reads them natively in the <strong>Tuning Systems</strong> dialog. <Citation bib="ableton_live_12_manual" /></p>
+<p>The Huygens-Fokker Stichting hosts ~5000 historical tunings as free <code>.scl</code> downloads. Most of them were not designed for drums. That is their opportunity.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-t03">
+  <h1>Slide t03 · concept</h1>
+  <h2>Just intonation vs equal temperament — the ratio war</h2>
+  
+  <div class="body"><h1>Just intonation vs equal temperament — the ratio war</h1>
+<p><span class="term">Just intonation<span class="gloss"><strong>ratio (just intonation)</strong> — A tuning system where intervals are small-integer frequency ratios (3:2 for a perfect fifth, 5:4 for a major third) rather than equal divisions. Pure-sounding in a single key; wanders out of tune when you modulate. The ancestor system to equal temperament. <a href="https://en.wikipedia.org/wiki/Just_intonation" target="_blank" rel="noopener">wikipedia↗</a></span></span> tunes every interval to a small-integer frequency ratio. Perfect fifth = 3:2. Major third = 5:4. Minor third = 6:5. Minor seventh = 7:4. Beat-free. Ancient.</p>
+<p>Equal temperament tunes every interval to a fixed 100-cent step. It is deliberately wrong on every interval except the octave, so that every <em>key</em> sounds equally acceptable.</p>
+<table>
+<thead>
+<tr>
+<th>Interval</th>
+<th>Just ratio</th>
+<th>Just (cents)</th>
+<th>12-TET (cents)</th>
+<th>Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Perfect fifth</td>
+<td>3:2</td>
+<td>701.96</td>
+<td>700.00</td>
+<td>−1.96¢</td>
+</tr>
+<tr>
+<td>Major third</td>
+<td>5:4</td>
+<td>386.31</td>
+<td>400.00</td>
+<td>+13.69¢</td>
+</tr>
+<tr>
+<td>Minor third</td>
+<td>6:5</td>
+<td>315.64</td>
+<td>300.00</td>
+<td>−15.64¢</td>
+</tr>
+<tr>
+<td>Minor seventh</td>
+<td>7:4</td>
+<td>968.83</td>
+<td>1000.00</td>
+<td>+31.17¢</td>
+</tr>
+</tbody>
+</table>
+<p>The minor-seventh row is where &ldquo;right in tune sounds slightly off&rdquo; stops being a vibe. A 12-TET dominant seventh chord is 31 cents sharp of the pure 7:4 harmonic. Aphex&rsquo;s 7-limit pitches on Syro-era pads are un-reachable from a piano keyboard. <Citation bib="aphex_pitchfork_microtuning" /></p>
+<p>Load a <code>.scl</code> with those ratios and your Operator plays them. That is the entire Tuning Systems story.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-t04">
+  <h1>Slide t04 · concept</h1>
+  <h2>The Pythagorean comma — why the piano lies</h2>
+  
+  <div class="body"><h1>The Pythagorean comma — why the piano lies</h1>
+<p>Stack twelve pure 3:2 fifths starting at C. You expect to land back on C, seven octaves up. You don&rsquo;t. You land <strong>23.46 cents sharp</strong> of C. That gap is the Pythagorean comma.</p>
+<p>The math: (3/2)^12 = 129.746. 2^7 = 128.000. The ratio 129.746 / 128.000 = 1.01364 = 23.46 cents.</p>
+<p>12-TET&rsquo;s founding move is to smear that comma equally across all twelve fifths — shrinking each pure 3:2 by 1.96 cents — so the circle of fifths closes. Every fifth is now 1.96 cents flat, and every third is 13.69 cents sharp, and the keyboard works in any key.</p>
+<p>It is a bookkeeping compromise from 1722. The piano has never been in tune. You have just never been told. <Citation bib="aphex_pitchfork_microtuning" /></p>
+<p>When RDJ says he wants to &ldquo;get off equal temperament,&rdquo; he means he wants his synth to keep the 3:2 pure and let the comma fall somewhere audible instead of everywhere inaudible. That is what the Monologue&rsquo;s user-programmable scales do, and what a Scala file in Live 12 does.</p>
+<p>The piano stays out of the session. The math comes with you.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-t05">
+  <h1>Slide t05 · concept</h1>
+  <h2>7-limit, 11-limit — where Aphex lives and 12-TET can&#x27;t follow</h2>
+  
+  <div class="body"><h1>7-limit, 11-limit — where Aphex lives and 12-TET can&rsquo;t follow</h1>
+<p>Prime limit in just intonation = the largest prime number used in any ratio of the scale. 5-limit uses 2, 3, 5 — the Western Renaissance palette. 7-limit adds the blues/barbershop 7:4 and 7:6 intervals. 11-limit adds the quarter-tone-ish 11:8 tritone and 11:9 neutral third.</p>
+<p>Why this matters for the lesson&rsquo;s theme:</p>
+<ul>
+<li><strong>5-limit</strong> — 12-TET approximates it with ≤14 cents of error. Listenable.</li>
+<li><strong>7-limit</strong> — 12-TET has no good approximation of 7:4. The tempered minor seventh is +31 cents sharp. This is the interval Aphex reaches for when the Syrobonkers interview mentions his Cirklon pattern carrying &ldquo;1–20 cent per-step micro-pitch offsets.&rdquo; The offsets are pulling the pattern toward 7-limit targets that 12-TET can&rsquo;t name. <Citation bib="aphex_syrobonkers_interview" /></li>
+<li><strong>11-limit</strong> — no approximation at all in 12-TET. A 11:8 tritone sits at 551 cents, 49 cents off from the piano&rsquo;s tritone. You can only get there with a loaded tuning.</li>
+</ul>
+<p>&ldquo;When it&rsquo;s right in tune, something&rsquo;s slightly off&rdquo; — when the tuning is 7-limit JI, the tempered piano part next to it sounds wrong, not the JI part. <Citation bib="aphex_pitchfork_microtuning" /></p>
+<p>Flag: the forum-pinned paraphrase compresses this into a mystical one-liner. The actual claim is arithmetic.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-t06">
+  <h1>Slide t06 · concept</h1>
+  <h2>Scala, TUN, MTS — the three file formats that carry tunings</h2>
+  
+  <div class="body"><h1>Scala, TUN, MTS — the three file formats that carry tunings</h1>
+<p>Before the deep-dives: know the file extensions.</p>
+<ul>
+<li><strong><code>.scl</code> (Scala)</strong> — plain-text scale definition. Lists the pitches as either cent offsets or integer ratios from the root. Does <strong>not</strong> specify what the root is; pair with a <code>.kbm</code> keyboard-mapping file to pin scale degree 1 to a MIDI note. Origin: Manuel Op de Coul&rsquo;s Scala program, 1990s. Live 12 reads <code>.scl</code> natively in <strong>Tuning Systems</strong>. <Citation bib="ableton_live_12_manual" /></li>
+<li><strong><code>.tun</code> (AnaMark TUN)</strong> — binary-style 128-entry table, one cent offset per MIDI note. Absolute — each MIDI note gets its own frequency. Used by older VSTs (Zebra 2, some Synth1 builds). Live 12 does not read <code>.tun</code> directly; convert via Scala software.</li>
+<li><strong><code>.mts</code> / MTS-ESP</strong> — MIDI Tuning Standard, runtime MTS-ESP protocol from ODDSound. Sends tuning as SysEx/MIDI messages to any compatible plugin in real time. Lets one master clock retune every synth in the session simultaneously. Live 12&rsquo;s Tuning Systems is MTS-ESP-compatible per the 12.2 manual.</li>
+</ul>
+<p>The practical default: free <code>.scl</code> from Huygens-Fokker, drag into Tuning Systems, done. The practical upgrade: MTS-ESP for live tuning modulation — you can automate the <em>scale itself</em>, not just the pitch played in it.</p>
+<p>Every format is public and documented. Ignorance is a skill issue, not a gatekeeper.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s05">
+  <h1>Slide s05 · reference</h1>
+  <h2>Express Yourself — dry kick vs tuned kick, on tape</h2>
+  
+  <div class="body"><h1>Express Yourself — dry kick vs tuned kick, on tape</h1>
+<p>Two renders, both from Charles Wright&rsquo;s &ldquo;Express Yourself&rdquo; through the stemforge <code>idm_crushed</code> pipeline. One is the kick at source pitch. The other is the same kick transposed until the fundamental lands on E1 — ~41 Hz, the root of the demo track.</p>
+<p>Listen for the low end to resolve. Not get louder. <em>Resolve.</em></p>
+<p><Citation bib="stemforge_repo" /> — recipe <code>w05-express-tuned-ab</code>, dry and wet renders written to <code>build/audio/stemforge-renders/w05/</code>.</p>
+<p>The spectrograms tell the story faster than the A/B. The dry render shows a broadband transient — sub-thump, click, body — with no stable fundamental. The tuned render shows the same transient plus a sustained fundamental line at ~41 Hz that didn&rsquo;t exist in the source.</p>
+<p>That line is the bassline. It came from the kick. Nothing else in the session changed.</p>
+<p>This is the entire lesson, rendered. The rest is how.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Express Yourself — dry kick vs tuned-to-root kick</div><div class="controls"><button data-src="stemforge/express_dry.wav" class="active">A — dry</button><button data-src="stemforge/express_tuned.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/express_dry.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Simpler, Transpose, Detune — the three knobs that matter</h2>
+  
+  <div class="body"><h1>Simpler, Transpose, Detune — the three knobs that matter</h1>
+<p>Load a kick one-shot into Simpler. Set mode to <strong>Classic</strong> — pitch and time linked, the way the R-8 did it in 1989.</p>
+<p>Three controls own the outcome. <Citation bib="ableton_live_12_manual" /></p>
+<ul>
+<li><strong>Transpose</strong> (±48 semitones) — the coarse knob. A kick at C3, transposed down to E1, is your bassline seed.</li>
+<li><strong>Detune</strong> (±50 cents) — the fine knob. Pull the transposed kick in tune after your ear flags it.</li>
+<li><strong>Spread</strong> (0–100%) — leave at 0 for kicks. On snares at +7 semitones, push to ~15% for a slightly-detuned chorus.</li>
+</ul>
+<p>In a Drum Rack, every pad is its own Simpler. Each pad has its own Transpose and Detune — the same affordance the R-8 exposed per pad in hardware, forty years later.</p>
+<p>You already own it.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>Live 12 Tuning Systems and the Scale device</h2>
+  
+  <div class="body"><h1>Live 12 Tuning Systems and the Scale device</h1>
+<p>Live 12 shipped a feature Ableton under-sold: a global tuning system. Load a <strong>Scala (.scl)</strong> file as the active tuning. Operator, Wavetable, Meld, and Drift all play the loaded scale. <Citation bib="ableton_live_12_manual" /></p>
+<p>The Huygens-Fokker archive has thousands of free historical tunings.</p>
+<p>Two different tools, don&rsquo;t confuse them.</p>
+<ul>
+<li><strong>Tuning Systems</strong> (top-right toolbar) — the instrument-side fix. Changes what the synth plays.</li>
+<li><strong>Scale device</strong> (MIDI effect, rack-droppable) — the sequencer-side fix. Constrains incoming MIDI before the instrument sees it.</li>
+</ul>
+<p>For tuned drums you need neither. Simpler transposes the sample from the MIDI note number. For melodic content later, load the track&rsquo;s key as a Scala file and stop hitting wrong notes.</p>
+<p>Second-order: the Pitch MIDI transformation (Live 12.2+) applies per-note cent offsets to committed clips.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s08">
+  <h1>Slide s08 · concept</h1>
+  <h2>Snare to the fifth — harmony from the backbeat</h2>
+  
+  <div class="body"><h1>Snare to the fifth — harmony from the backbeat</h1>
+<p>Kick to root is the headline move. Snare to the fifth is what makes the drum bus sound composed rather than sampled.</p>
+<p>Load a snare one-shot in a Drum Rack pad, Simpler, Classic. If the track is in E minor, the fifth is B. Transpose until the snare body lands there — usually +5 to +9 semitones, then 10–20 cents of Detune.</p>
+<p>Listen on the 2 and 4. The backbeat stops being impact — it suggests the chord. You now have drums carrying the root (kick) and the fifth (snare). A power chord played by percussion. <Citation bib="aphex_pitchfork_microtuning" /></p>
+<p>Extensions, once it works:</p>
+<ul>
+<li>Hats to the octave — high-pass at 3 kHz.</li>
+<li>Tom fills to scale degrees.</li>
+<li>Second kick layer at root −12 for sub.</li>
+</ul>
+<p>Then stop. Over-tuning turns drums into a chime.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s09">
+  <h1>Slide s09 · reference</h1>
+  <h2>Live set — w05-drum-tuning-demo.als</h2>
+  
+  <div class="body"><h1>Live set — w05-drum-tuning-demo.als</h1>
+<p>The demo session lives at <code>live-sets/w05-drum-tuning-demo.als</code>. Open it before the exercise.</p>
+<p>What&rsquo;s in it:</p>
+<ul>
+<li>One muted audio track — the dry <code>express_dry.wav</code> reference, for A/B.</li>
+<li>One MIDI track with a Drum Rack — kick on C1, snare on D1, hat on F#1. Simpler Classic on each pad.</li>
+<li>Locators at 0:00 (dry) and 0:15 (tuned). Matches the exercise geometry.</li>
+<li>A reference marker showing the track&rsquo;s root (E1).</li>
+</ul>
+<p>The tuning values are deliberately wrong at session start. Your job is to move them. Transpose the kick to land at ~E1. Detune the snare to the fifth.</p>
+<p>Bounce via <strong>Export Audio/Video</strong> or Freeze-and-Flatten the Drum Rack. <Citation bib="ableton_live_12_manual" /></p>
+<p>The session is a scaffold, not a solution. The solution is your ear.</p></div>
+  
+  
+  
+  
+  <div class="als"><a href="../../../lessons/w05-aphex-tuning/live-sets/w05-drum-tuning-demo.als">w05-drum-tuning-demo.als</a></div>
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s10">
+  <h1>Slide s10 · caveat</h1>
+  <h2>The cost of tuned drums — what you give up</h2>
+  
+  <div class="body"><h1>The cost of tuned drums — what you give up</h1>
+<p>Every technique has a price. Name this one before you commit. <Citation bib="ableton_live_12_manual" /></p>
+<ul>
+<li><strong>Modulation gets louder.</strong> Key changes break the tuning. Fix: re-bounce per key change, or Scale-device a live transpose. Both are work.</li>
+<li><strong>Snare body thins.</strong> Pitching up 5–9 semitones via Classic mode shortens it and raises the formants. Layer an untuned snare at −6 dB underneath for chest.</li>
+<li><strong>The low end gets crowded.</strong> Kick at E1 + bass at E1 masks. Either sidechain, or drop the kick to E0.</li>
+<li><strong>Over-tuning kills groove.</strong> Every drum tuned and the ear hears melody, not rhythm. Stop at kick + snare.</li>
+</ul>
+<p>Aphex&rsquo;s records sound like Aphex&rsquo;s records because the arrangement earns it. Tuned drums on a weak arrangement sound like tuned drums on a weak arrangement.</p>
+<p>Caveat logged. Move on.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Xtal</span><span class="by"> — Aphex Twin</span><span class="links"><a href="https://open.spotify.com/track/7o2AeQZzfCERsRmOM86EcB" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/sWcLccMuCA8" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Aphex%20Twin%20Xtal" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mnlg-01">
+  <h1>Slide gd-mnlg-01 · gear deep dive</h1>
+  <h2>Korg Monologue (AFX edition) — the microtuner with James&#x27; name on it</h2>
+  
+  <div class="body"><h1>Korg Monologue (AFX edition) — the microtuner with James&rsquo; name on it</h1>
+<p>Released January 2017. Monophonic analog, two VCOs, one filter, sixteen-step sequencer, built-in <strong>microtuning</strong> per-patch. The AFX-branded firmware ships with six user scales programmed by Richard D. James himself — loadable per-preset. <Citation bib="korg_monologue_afx_manual" /></p>
+<p>The Monologue is not the interesting box. Every mid-range analog synth in 2017 had a monophonic engine and a 16-step sequencer. The interesting box is the one Korg engineer <strong>Kazuki Saita</strong> built to hand-deliver custom MIDI microtuning to Aphex&rsquo;s rig — and which got folded back into the Monologue&rsquo;s public firmware as the hook. <Citation bib="aphex_syrobonkers_interview" /></p>
+<p>The consumer product is a memorial to a one-off. You can buy the memorial for $300. The original is still in James&rsquo; studio.</p>
+<p>This deep-dive: how the microtuning actually works, what &ldquo;RDJ-designed scales&rdquo; means, how to translate it to Ableton without buying the hardware.</p></div>
+  <figure class="figure"><img src="assets/gear-mnlg-hero.jpg" alt="Korg Monologue, AFX edition — graphite body, red knobs, panel screen-printed with RDJ&#x27;s signature."><figcaption>Korg Monologue, AFX edition — graphite body, red knobs, panel screen-printed with RDJ&#x27;s signature.<div class="credit">Korg product photo · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Flim</span><span class="by"> — Aphex Twin</span><span class="links"><a href="https://open.spotify.com/track/3JJ4BoL9WVHk4Yye2EGJC7" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/l7bEkyk-DhA" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Aphex%20Twin%20Flim" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mnlg-02">
+  <h1>Slide gd-mnlg-02 · gear deep dive</h1>
+  <h2>The five controls that matter on the Monologue panel</h2>
+  
+  <div class="body"><h1>The five controls that matter on the Monologue panel</h1>
+<p>Ignore the LFO, the amp envelope, the drive — every mid-range analog has those. The microtuning-specific controls, in order of how you use them: <Citation bib="korg_monologue_afx_manual" /></p>
+<ul>
+<li><strong>EDIT MODE button</strong> — hold + turn the program dial → parameter 17 is <strong>Microtuning</strong>. Here you pick from 12-TET, equal-temperament user 1–6, or &ldquo;scale user&rdquo; 1–6. Six slots of user microtuning per program.</li>
+<li><strong>Microtuning edit page</strong> — accessible via EDIT MODE + key group. Per-key cent offsets from −75 to +75, in 1-cent steps. This is the heart of the machine: a 25-key piano where every key carries its own cent offset.</li>
+<li><strong>PROGRAM EDIT → SLIDE TIME</strong> — separate per-patch, affects how microtuned targets glide. Short slide + microtuning = the &ldquo;chopped, slightly wrong&rdquo; Aphex lead.</li>
+<li><strong>Sequencer STEP mode</strong> — per-step microtuning <em>and</em> parameter motion. A single step can play the current scale&rsquo;s 7-limit third; the next step can detune that by an additional motion-sequenced 15 cents.</li>
+<li><strong>MICROTUNING COPY</strong> — SysEx-dumpable. This is how <code>.scl</code>-equivalent data moves between the Monologue and a DAW; you need Korg&rsquo;s Sound Librarian + the MTS-ESP conversion chain.</li>
+</ul>
+<p>Everything else is wallpaper.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-mnlg-panel.jpg" alt="Front panel callouts — microtuning-specific controls only."><div class="callouts"><ol><li><strong>EDIT MODE</strong>: Hold + program dial → parameter 17 is Microtuning. Selects 12-TET, ET user 1–6, scale user 1–6.</li><li><strong>PROGRAM dial</strong>: Doubles as parameter-picker in EDIT MODE. This is the gate to the microtuning edit page.</li><li><strong>key group / 25 keys</strong>: Each key carries its own ±75 cent offset. Twelve offsets per user scale.</li><li><strong>SLIDE TIME</strong>: Per-patch portamento time. Short slide + microtuning = Aphex lead texture.</li><li><strong>sequencer STEP mode</strong>: Per-step pitch + motion sequencing. One step: scale degree. Next step: +15¢ via motion.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mnlg-03">
+  <h1>Slide gd-mnlg-03 · gear deep dive</h1>
+  <h2>How Aphex programs a microtuning, step by zero</h2>
+  
+  <div class="body"><h1>How Aphex programs a microtuning, step by zero</h1>
+<p>The Korg manual documents the surface. The method is from the Pitchfork piece and the Syrobonkers interview: <Citation bib="aphex_pitchfork_microtuning" /> <Citation bib="aphex_syrobonkers_interview" /></p>
+<ol>
+<li><strong>Pick a reference pitch</strong> — not A=440. RDJ&rsquo;s SoundCloud dumps carry patches tuned to A=432 or A=444 depending on the track. The Monologue&rsquo;s master tune (±50 cents) sets the global offset before the scale does anything.</li>
+<li><strong>Load or write a scale</strong> — James uses six slots. Scales are not transposed versions of 12-TET; they are idiosyncratic per-track constructions. Typical move: build a scale where the 3rd and 7th degrees are 7-limit JI, the rest is 12-TET, then motion-sequence 1–20 cent offsets on sustained steps.</li>
+<li><strong>&ldquo;Like casting light on a rough surface.&rdquo;</strong> That&rsquo;s his phrase from the Cirklon interview. The microtuning is not a system — it is a texture applied to the same pattern played twice, producing different patterns of beating. <Citation bib="aphex_syrobonkers_interview" /></li>
+<li><strong>The patch dictates the scale</strong> — every Monologue preset carries its scale as part of the sound. You don&rsquo;t pick a scale and play patches in it. You recall a patch and the scale arrives pre-bound.</li>
+</ol>
+<p>The &ldquo;right in tune sounds slightly off&rdquo; one-liner is shorthand for this workflow. The <em>sound</em> is the tuning, and the tuning belongs to the patch, and the patch belongs to the song. <Citation bib="aphex_pitchfork_microtuning" /></p>
+<p>Three levels of binding. One knob.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mnlg-04">
+  <h1>Slide gd-mnlg-04 · gear deep dive</h1>
+  <h2>The algorithm — cent math inside the Monologue&#x27;s MCU</h2>
+  
+  <div class="body"><h1>The algorithm — cent math inside the Monologue&rsquo;s MCU</h1>
+<p>Under the panel: a microcontroller that converts MIDI note numbers to pitch control voltages for two VCOs. The microtuning layer is a lookup table inserted between MIDI-in and CV-out. <Citation bib="korg_monologue_afx_manual" /></p>
+<p>For MIDI note N arriving at the synth:
+1. Compute base CV = <code>(N − 69) × (1 V / octave) / 12</code> — the default 12-TET mapping.
+2. Look up the scale&rsquo;s offset for <code>N mod 12</code> — a signed integer in ±75 cents.
+3. Scale-adjust the CV: <code>cv += offset_cents × (1 V / 1200)</code>.
+4. If a motion sequence is active on this step, add its cent offset to the running total.</p>
+<p>All math is done in the microcontroller before the CV reaches the DAC feeding the VCOs. Korg&rsquo;s spec sheet lists <strong>16-bit pitch resolution</strong> internally; the microtuning edit page exposes <strong>1-cent user offsets</strong> — well below perceptual threshold. The Monologue&rsquo;s limitation is not precision but <em>scope</em> — six user scales per program, 12 cent offsets per scale. 7-limit JI fits comfortably. 19-EDO does not (needs 19 steps per octave; the Monologue only offers 12). <Citation bib="korg_monologue_afx_manual" /></p>
+<p>The same lookup-table pattern lives inside Ableton Live 12&rsquo;s Tuning Systems engine, just in 32-bit float and polyphonic. <Citation bib="ableton_live_12_manual" /></p>
+<p>The hardware is not magical. The file format is the technology.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[MIDI note N] --&gt; B[base CV&lt;br/&gt;12-TET lookup]
+  B --&gt; C[add scale offset&lt;br/&gt;±75¢]
+  C --&gt; D[add motion-seq offset&lt;br/&gt;±75¢]
+  D --&gt; E[16-bit pitch resolution&lt;br/&gt;1¢ user-facing offsets]
+  E --&gt; F[VCO 1 + VCO 2]
+</div><div class="caption">MIDI-to-CV dispatch inside the Monologue. The microtuning layer is a lookup-table insert between note-in and voltage-out.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mnlg-05">
+  <h1>Slide gd-mnlg-05 · gear deep dive</h1>
+  <h2>The Ableton bridge — Tuning Systems + Operator + Scale device</h2>
+  
+  <div class="body"><h1>The Ableton bridge — Tuning Systems + Operator + Scale device</h1>
+<p>The Monologue feature set ports to Live 12 in three devices working together. <Citation bib="ableton_live_12_manual" /></p>
+<ul>
+<li><strong>Tuning Systems (top-right toolbar)</strong> — load a <code>.scl</code> file. The six RDJ scales from the Monologue firmware are not publicly shipped as <code>.scl</code> files, but the Korg Sound Librarian exports them as SysEx; the Surge Synth Team&rsquo;s Scale Workbench converts. For the exercise: the Huygens-Fokker <code>7-limit-just.scl</code> is the closest publicly-available match to James&rsquo; documented preferences.</li>
+<li><strong>Operator (4-op FM)</strong> — the Ableton stand-in for the Monologue&rsquo;s VCO pair. Tuning Systems applies globally; Operator plays the loaded scale on every note.</li>
+<li><strong>Scale device (MIDI effect)</strong> — MIDI-side filter; rides in front of Operator. Use it to constrain incoming notes to scale degrees when the Tuning Systems scale is non-12-EDO.</li>
+</ul>
+<p>Parameter table — Monologue → Live:</p>
+<table>
+<thead>
+<tr>
+<th>Monologue</th>
+<th>Live 12 equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Master Tune ±50¢</td>
+<td>Preferences → Tuning → Master Tune</td>
+</tr>
+<tr>
+<td>Microtuning slot</td>
+<td>Tuning Systems loaded <code>.scl</code></td>
+</tr>
+<tr>
+<td>Per-key offset</td>
+<td>Cells in Tuning Systems&rsquo; edit grid</td>
+</tr>
+<tr>
+<td>Motion sequence on pitch</td>
+<td>Live 12.2 Pitch MIDI transformation</td>
+</tr>
+<tr>
+<td>6 user scales per program</td>
+<td>6 instances of a Rack macro-swapping Tuning</td>
+</tr>
+</tbody>
+</table>
+<p>Crucial caveat: Tuning Systems is <strong>global to the set</strong>, not per-track. For per-track tunings you either split into multiple sets or use MTS-ESP with a router plugin like ODDSound&rsquo;s MTS-ESP Mini.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mnlg-06">
+  <h1>Slide gd-mnlg-06 · gear deep dive</h1>
+  <h2>What else the Monologue-pattern does — creative uses beyond leads</h2>
+  
+  <div class="body"><h1>What else the Monologue-pattern does — creative uses beyond leads</h1>
+<p>Microtuning is not only for leads. Four moves past the stereotype:</p>
+<ul>
+<li><strong>Tuned drum rack</strong> — load the same <code>.scl</code> you used for the lead synth into Tuning Systems. Map kick one-shots across a Drum Rack at different MIDI notes. Because Simpler respects Tuning Systems&rsquo; semitone quantization on melodic mode (not Classic), dropping into Melodic mode + loading a JI scale + placing kicks at scale-degree notes gives you scale-degree-tuned kicks for free.</li>
+<li><strong>Drone beds in 17-EDO</strong> — a sustained Operator note under a 12-TET drum kit. The 17-EDO neutral third clashes with the kit&rsquo;s tempered harmonics and creates audible beating — a drone that pulses without a LFO.</li>
+<li><strong>Microtuning as modulation</strong> — automate Tuning Systems&rsquo; load-slot (Live 12.2+) or use MTS-ESP to swap scales mid-phrase. Same melody, three different tunings, back-to-back. The listener hears modulation that has no conventional name.</li>
+<li><strong>The Novation Bass Station II &ldquo;AFX Mode&rdquo; sibling</strong> — same per-key parameter lock philosophy; James advised Novation too. <Citation bib="novation_bass_station_ii_afx" /></li>
+</ul>
+<p>Stop treating microtuning as a one-shot effect. It is a <em>scale</em> you compose against.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mnlg-07">
+  <h1>Slide gd-mnlg-07 · gear deep dive</h1>
+  <h2>Exercise A — load a Scala file, tune a kick to root, play four bars</h2>
+  
+  <div class="body"><h1>Exercise A — load a Scala file, tune a kick to root, play four bars</h1>
+<p>Replicate the Monologue&rsquo;s microtuning feature in Ableton, from scratch, on drums. <Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Setup (10 min):</strong>
+1. Download <code>7-limit-just-intonation.scl</code> from the Huygens-Fokker archive.
+2. Open a new Live 12 set. Top-right → Tuning Systems → Load → pick the <code>.scl</code>. Set root note to E.
+3. New MIDI track → Drum Rack → Simpler on pad C1 with a kick one-shot. Switch Simpler to <strong>Melodic</strong> mode (not Classic) so Tuning Systems applies.
+4. Program a four-bar MIDI clip — kick on every downbeat.
+5. Transpose Simpler so the kick lands at E1 (~41 Hz fundamental).</p>
+<p><strong>The move (10 min):</strong>
+6. On bar 2, MIDI-nudge a kick onto scale degree 3 (G in E-min JI). On bar 3, degree 5 (B). On bar 4, degree 7 (D natural, 7-limit so ~31¢ flat of tempered D).
+7. Render. Listen for the fundamental tracking the melody.</p>
+<p><strong>Deliverable.</strong> A 15-second WAV showing the kick-as-JI-arpeggio. One sentence: <em>what did the 7-limit seventh sound like against a normal 12-TET bass?</em> (Hint: it sounds like the bass is wrong. The bass is not wrong.)</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 15-second WAV of a kick played as a 4-bar JI arpeggio in E-min. One sentence describing what the 7-limit seventh sounded like against a 12-TET bass.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mnlg-08">
+  <h1>Slide gd-mnlg-08 · gear deep dive</h1>
+  <h2>Exercise B — build your own microtuning, then write against it</h2>
+  
+  <div class="body"><h1>Exercise B — build your own microtuning, then write against it</h1>
+<p>Past replication. Compose your own scale — 17-EDO or custom JI — and write a 30-second bass riff that works in it.</p>
+<p><strong>Setup (15 min):</strong>
+1. In Tuning Systems, create a new user scale. Pick one:
+   - <strong>17-EDO</strong> — twelve of the seventeen steps, distributed as a &ldquo;5-limit pseudo-diatonic&rdquo;: steps 0, 3, 5, 7, 9, 12, 14 (cents: 0, 212, 353, 494, 635, 847, 988).
+   - <strong>Custom 7-limit JI</strong> — your own seven pitches using only ratios with prime factors ≤7. Example: 1/1, 9/8, 7/6, 4/3, 3/2, 7/4, 2/1.
+2. Save. Load into Tuning Systems.</p>
+<p><strong>The move (30 min):</strong>
+3. New Operator track. Simple sine patch. Write a 30-second bass riff — eight bars, root on the 1, scale-degree landmarks on the 3, 5, 7 of each bar.
+4. Add a kick tuned to root (same Simpler-into-Tuning-Systems move from Exercise A).
+5. Bounce.</p>
+<p><strong>Deliverable.</strong> The 30-second WAV + one paragraph: <em>what intervals in your scale felt inevitable, and which felt like you were fighting them?</em> The inevitable ones are doing the compositional work. <Citation bib="aphex_pitchfork_microtuning" /></p>
+<p>Forty-five minutes total. Commit. Next week we stop tuning and start feedback.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 30-second stereo WAV in a user-built 17-EDO or 7-limit JI scale. Bass riff + kick tuned to root. One paragraph identifying which intervals felt inevitable vs forced.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-disk-01">
+  <h1>Slide gd-disk-01 · gear deep dive</h1>
+  <h2>Yamaha Disklavier — a MIDI-driven acoustic piano</h2>
+  
+  <div class="body"><h1>Yamaha Disklavier — a MIDI-driven acoustic piano</h1>
+<p>Yamaha&rsquo;s Disklavier line, launched 1987, is an acoustic grand (or upright) with solenoids under every key and pedal. Send it MIDI; the solenoids play the keys; the strings speak. The piano is a real piano with real hammers and real strings — the difference is the motor. <Citation bib="wikipedia_disklavier" /></p>
+<p>The Drukqs-era Aphex signature: send a MIDI sequence that no human has fingers for, then <strong>mic the piano body, not the soundboard</strong>. Every key-strike ends with a solenoid click. Those clicks become the record&rsquo;s secondary rhythm track. &ldquo;Avril 14th,&rdquo; &ldquo;Nanou 2&rdquo; — listen past the melody; the clicks are playing a pattern of their own.</p>
+<p>From RDJ&rsquo;s SoundCloud metadata: <em>&ldquo;played &amp; programmed customised Yamaha Disklavier Pro, Recorded To Nagra IVS 5.&rdquo;</em> The Nagra tape is the color. The Disklavier is the rhythm section.</p>
+<p>This deep-dive: how the solenoid behaves, what &ldquo;prepared Disklavier&rdquo; means after John Cage, and how to fake the click-rhythm layer without owning a Disklavier.</p></div>
+  <figure class="figure"><img src="assets/gear-disklavier-hero.jpg" alt="Yamaha Disklavier grand — solenoid-driven acoustic piano. Drukqs-era Aphex used a MkIV Pro with mics placed inside the body cavity."><figcaption>Yamaha Disklavier grand — solenoid-driven acoustic piano. Drukqs-era Aphex used a MkIV Pro with mics placed inside the body cavity.<div class="credit">Yamaha promotional photo / fair-use · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Avril 14th</span><span class="by"> — Aphex Twin</span><span class="links"><a href="https://open.spotify.com/track/1uaGSDFsLdReQgg8p7Obwh" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/MBFXJw7n-fU" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Aphex%20Twin%20Avril%2014th" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-disk-02">
+  <h1>Slide gd-disk-02 · gear deep dive</h1>
+  <h2>What&#x27;s under the lid — the annotated mechanism</h2>
+  
+  <div class="body"><h1>What&rsquo;s under the lid — the annotated mechanism</h1>
+<p>Three systems stacked into one piano: <Citation bib="wikipedia_disklavier" /></p>
+<ul>
+<li><strong>MIDI input jack</strong> — DIN-5 on early models, USB on Mark IV and later. Takes any standard MIDI stream: 16 channels, note-on/off, velocity, CC1, CC64 (sustain pedal), CC66 (sostenuto), CC67 (soft pedal). The piano accepts SMF and XG-extended files. Velocity range: 1–127, mapped to solenoid drive current.</li>
+<li><strong>Solenoid bank under the keys</strong> — 88 solenoids, one per key. Each solenoid is an electromagnet that pulls a plunger upward, which presses the key from below. The key&rsquo;s downward travel pushes the hammer action — the physical linkage is unchanged from a normal grand. Key-strike latency is ~30ms on Mark IV, &lt;10ms on Enspire Pro. The click is the plunger seating.</li>
+<li><strong>Pedal solenoids</strong> — three, mounted behind the pedal lyre. Sustain, sostenuto, soft. These click the loudest. When Aphex mics inside the body, the pedal solenoids become a percussion voice distinct from the string hits.</li>
+</ul>
+<p>What&rsquo;s <em>not</em> instrumented: microtuning. The Disklavier is 12-TET to the bone; the keyboard layout is fixed, one hammer per string, no per-key detune. You layer microtuning on top in the DAW after recording.</p>
+<p>The Drukqs technique is not about pitch. It is about the mechanical noise the piano makes when played by a machine.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-disklavier-interior.jpg" alt="Cutaway of a Disklavier MkIV showing solenoid bank, pedal solenoids, and MIDI I/O."><div class="callouts"><ol><li><strong>solenoid bank</strong>: 88 solenoids, one per key. Plunger seats with an audible metallic click at end of travel.</li><li><strong>pedal solenoids</strong>: Three — sustain, sostenuto, soft. Loudest mechanical noise in the instrument.</li><li><strong>MIDI DIN / USB</strong>: Accepts standard SMF + XG-extended. Velocity 1–127 maps to solenoid drive current.</li><li><strong>body cavity mic position</strong>: Aphex placed condensers under the lid, not above the soundboard. Captures click + body woof.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-disk-03">
+  <h1>Slide gd-disk-03 · gear deep dive</h1>
+  <h2>The Drukqs technique — solenoid click as rhythmic layer</h2>
+  
+  <div class="body"><h1>The Drukqs technique — solenoid click as rhythmic layer</h1>
+<p>How Aphex made &ldquo;Avril 14th&rdquo; sound like a music box that knows about percussion: <Citation bib="aphex_bleep_qa_2017" /></p>
+<ol>
+<li><strong>Write the sequence in a tracker</strong> — Drukqs was &ldquo;mostly written in PlayerPro for the mac, my fave tracker&rdquo; per James&rsquo; July 2017 Bleep Q&amp;A. Step-time; no real-time performance. This is why the note density is physically impossible. <Citation bib="aphex_bleep_qa_2017" /></li>
+<li><strong>Send the tracker MIDI to the Disklavier</strong> — via a dedicated MIDI-to-SMF converter. The Disklavier plays the notes at the velocities written.</li>
+<li><strong>Mic INSIDE the piano body</strong> — not above the soundboard. Two condensers under the lid, aimed at the action/hammers, not the strings. This is the key decision. Regular piano recording places mics 20–40cm above the strings. Aphex placed them at the mechanism.</li>
+<li><strong>Record to Nagra IVS 5 at 15 IPS</strong> — two-track, reel-to-reel. The tape saturation folds solenoid clicks into the noise floor just enough to integrate them with the piano tone.</li>
+<li><strong>Prepare the strings, John Cage style</strong> — screws, bolts, felt strips between strings on some Drukqs tracks. Changes timbre without affecting pitch tracking.</li>
+</ol>
+<p>The rhythmic layer that results: <strong>solenoid click on every note-on, louder pedal click on every sustain-engage</strong>. Against the piano melody, that click pattern has its own rhythm. Same notes, two voices, one instrument. <Citation bib="wikipedia_disklavier" /></p>
+<p>Community note, worth flagging: the &ldquo;Aphex built MIDI solenoid drum machines himself&rdquo; claim comes from forum lore not confirmed in a primary interview. The Disklavier technique is confirmed by his own SoundCloud notes.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Avril 14th</span><span class="by"> — Aphex Twin</span><span class="links"><a href="https://open.spotify.com/track/1uaGSDFsLdReQgg8p7Obwh" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/MBFXJw7n-fU" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Aphex%20Twin%20Avril%2014th" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-disk-04">
+  <h1>Slide gd-disk-04 · gear deep dive</h1>
+  <h2>The algorithm — velocity-to-solenoid and why the click is velocity-dependent</h2>
+  
+  <div class="body"><h1>The algorithm — velocity-to-solenoid and why the click is velocity-dependent</h1>
+<p>The Disklavier&rsquo;s velocity curve is the model. <Citation bib="wikipedia_disklavier" /></p>
+<p>MIDI velocity V arriving at the piano:
+1. Lookup: solenoid drive current I = f(V) where f is a calibrated curve — nonlinear, approximating a trained pianist&rsquo;s force-to-velocity map. Typical: V=1 produces ~0.3A pull, V=127 produces ~1.1A pull.
+2. Solenoid pulls for a duration T = g(V) — shorter at high velocity (faster strike), longer at low velocity (slower, more controlled).
+3. The plunger accelerates toward the key. Mechanical impact: two audible events — the key-bottoming (soft thump) and the solenoid seating at end-of-travel (metallic click). Higher velocity = louder click <em>and</em> louder string.
+4. The hammer, driven by the key, strikes the string. The string vibrates as a <strong>Helmholtz resonator</strong> — fundamental f = (1/2L)√(T/μ), where L is string length, T is tension, μ is linear density. <Citation bib="roads_computer_music_tutorial" />
+5. The soundboard radiates the string vibration. The body cavity resonates at ~60–80 Hz regardless of which note is played — a body resonance that adds a low-end &ldquo;woof&rdquo; to every note.</p>
+<p>The click and the string are <strong>independent signals that share a cause</strong>. Velocity controls both, but mic placement controls their relative level. Under-lid miking flips the ratio. Body-cavity miking captures the ~70 Hz thud separately from either.</p>
+<p>Three layers from one MIDI note. That is the mechanical receipt for why Drukqs sounds three-dimensional.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  A[MIDI note V velocity] --&gt; B[lookup: solenoid current I=f V]
+  A --&gt; C[lookup: pull duration T=g V]
+  B --&gt; D[plunger accelerates]
+  C --&gt; D
+  D --&gt; E[key-bottom thump]
+  D --&gt; F[solenoid seating click]
+  D --&gt; G[hammer strikes string]
+  G --&gt; H[string resonance&lt;br/&gt;Helmholtz f=1/2L·√ T over μ]
+  G --&gt; I[body cavity woof ~70 Hz]
+</div><div class="caption">Three independent acoustic signals from one MIDI note: the click, the string, the body cavity. Mic placement chooses the mix.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-disk-05">
+  <h1>Slide gd-disk-05 · gear deep dive</h1>
+  <h2>The Ableton bridge — Collision, piano VST, parallel click bus</h2>
+  
+  <div class="body"><h1>The Ableton bridge — Collision, piano VST, parallel click bus</h1>
+<p>Simulate the Disklavier in Live 12 without owning one. <Citation bib="ableton_live_12_manual" /></p>
+<p>Signal flow:</p>
+<pre><code>MIDI clip ─┬─&gt; Piano VST (NI Noire or Ableton Grand Piano)  ─┐
+           │                                                  ├──&gt; Master
+           └─&gt; Collision (tuned for solenoid click)  ─&gt; HPF ──┘
+                    + Drum Rack of piano-mechanism samples
+</code></pre>
+<p>Device breakdown:</p>
+<ul>
+<li><strong>Collision</strong> — Live&rsquo;s built-in physical-modelling instrument. Set Mallet layer ON, Mallet Stiffness 95%, Mallet Noise 40%. Resonator type: Plate, Decay 200ms, Material 80%. This is the solenoid click — short, metallic, velocity-scaled. <Citation bib="ableton_live_12_manual" /></li>
+<li><strong>Piano VST</strong> — NI Noire or any felted-piano patch carries the tone; Collision carries the mechanism. <Citation bib="ni_noire_docs" /></li>
+<li><strong>Parallel click bus</strong> — route Collision to its own audio return. HPF at 600 Hz so it reads as click, not pitched note. Sidechain the return&rsquo;s compressor off the kick if needed.</li>
+<li><strong>Velocity mapping</strong> — duplicate the MIDI clip onto both tracks so Collision and the piano always fire together. Use Velocity Shaper (Max for Live) to send low velocities to Collision-only — the simulated &ldquo;soft-pedal click without full hammer strike.&rdquo;</li>
+</ul>
+<p>What this will not capture: the body-cavity ~70 Hz woof. Add a Drum Rack with low-velocity kick samples pitched to ~70 Hz on a parallel send to fake it. Not identical. Close enough.</p>
+<p>Budget-$0 Disklavier. The tradeoff: no physical strings, no Helmholtz, no Nagra tape saturation. All three matter; none are showstoppers for a demo.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[MIDI clip] --&gt; B[Piano VST&lt;br/&gt;Noire / Grand Piano]
+  A --&gt; C[Collision&lt;br/&gt;Mallet + Plate, Decay 200ms]
+  C --&gt; D[Return B&lt;br/&gt;HPF 600 Hz + Glue]
+  A --&gt; E[Drum Rack&lt;br/&gt;70 Hz body-cavity kick]
+  B --&gt; F[Master]
+  D --&gt; F
+  E --&gt; F
+</div><div class="caption">Three-way parallel bus recreating the Drukqs under-lid miking: string tone, solenoid click, body cavity woof.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-disk-06">
+  <h1>Slide gd-disk-06 · gear deep dive</h1>
+  <h2>What else Collision-as-Disklavier does — past the piano stereotype</h2>
+  
+  <div class="body"><h1>What else Collision-as-Disklavier does — past the piano stereotype</h1>
+<p>Stop using Collision for piano-like tones. It is a better <strong>percussion engine</strong> than most drum synths. Four moves:</p>
+<ul>
+<li><strong>Collision as tuned wood-block kit</strong> — Mallet layer only, Resonator type: Beam, Material 100%, Decay 500ms. Play chromatically; it sounds like a Balinese gamelan sampled through a physical model. Pair with a trap-style MIDI pattern; the contrast is the point.</li>
+<li><strong>Collision as detuned marimba</strong> — Resonator type: Membrane, Ratio set to 7:4 or another 7-limit JI interval. Now the model resonates at a non-tempered pitch. Layer with a Tuning-Systems-loaded Operator for coherent JI drums.</li>
+<li><strong>Collision as percussion-only shell</strong> — mute the Mallet layer entirely, use external MIDI CC to modulate the impact. The resonator &ldquo;rings&rdquo; without being struck. This is the sound Autechre often chases in Max/MSP. <Citation bib="autechre_watmm_ama_2013" /></li>
+<li><strong>Collision as solenoid-click printer</strong> — strip the resonator completely (Decay 20ms, Ratio 0.01). What&rsquo;s left is the mallet attack. Layer that over any drum bus and you get the Drukqs &ldquo;mechanical noise bed&rdquo; — cheap, per-note-triggered.</li>
+</ul>
+<p>The Disklavier technique generalizes: <strong>the attack mechanism and the resonator are separable</strong>, and separating them is where the interesting percussion lives. Aphex figured this out with microphone placement. You figure it out with Collision&rsquo;s two-layer architecture.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-disk-07">
+  <h1>Slide gd-disk-07 · gear deep dive</h1>
+  <h2>Exercise A — layer Collision clicks under a piano VST</h2>
+  
+  <div class="body"><h1>Exercise A — layer Collision clicks under a piano VST</h1>
+<p>Replicate Drukqs-style solenoid-click-as-rhythm without a Disklavier.</p>
+<p><strong>Setup (10 min):</strong>
+1. New Live 12 set. Track 1: MIDI → NI Noire or Ableton&rsquo;s built-in Grand Piano. Track 2: MIDI → Collision. <Citation bib="ni_noire_docs" />
+2. Collision settings: Mallet ON, Stiffness 95%, Noise 40%. Resonator: Plate, Decay 200ms, Material 80%. Mallet layer level: +0dB. Resonator level: −12dB.
+3. Route Track 2 to a new return (Return B). Return B insert: HPF at 600 Hz, Glue Compressor 4:1, makeup +3dB.</p>
+<p><strong>The move (15 min):</strong>
+4. Import a MIDI piano file — any Chopin prelude, any Satie piece, or write a 16-bar melody in Piano Roll. Drop it on both tracks simultaneously.
+5. Play. You now hear piano tone from Track 1 and solenoid clicks from Return B, synchronous.
+6. Modulate Collision&rsquo;s Mallet velocity response via a Velocity Shaper M4L device — send MIDI velocities &lt;60 to Collision only (fake soft-pedal click without hammer).
+7. Add a subtle Drum Rack on Track 2 with a ~70 Hz kick sample triggered at low velocity — the body cavity &ldquo;woof.&rdquo;</p>
+<p><strong>Deliverable.</strong> 20-second WAV. One sentence per layer: <em>what did removing Collision sound like? What did removing the piano sound like?</em> <Citation bib="ableton_live_12_manual" /></p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">20-second WAV of a piano MIDI part running through both Noire (tone) and Collision (solenoid clicks). One sentence per layer on what removing it sounded like.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-disk-08">
+  <h1>Slide gd-disk-08 · gear deep dive</h1>
+  <h2>Exercise B — Collision as a drum synth, not a piano surrogate</h2>
+  
+  <div class="body"><h1>Exercise B — Collision as a drum synth, not a piano surrogate</h1>
+<p>Past replication. Use Collision as the percussion source for a full drum pattern. No piano. No Disklavier reference. Just the physical model doing what physical models do. <Citation bib="ableton_live_12_manual" /></p>
+<p><strong>Setup (15 min):</strong>
+1. New MIDI track with a Drum Rack. Drop one Collision instance onto pad C1, another on D1, a third on F#1 (kick, snare, hat).
+2. For each Collision: different Resonator type. C1 = Membrane (kick-ish), D1 = Plate (snare-ish), F#1 = String (hat-ish). Tune the Ratio parameter per-pad to taste.
+3. On each pad, set Mallet Stiffness 70%, Noise 50%, Decay 40ms. You want short, wood-tone attacks — not pretty piano hits.</p>
+<p><strong>The move (30 min):</strong>
+4. Program a four-bar break pattern — any grid, any tempo. The Drum Rack fires Collision on each pad.
+5. Tune each pad to a scale degree via Ratio parameter or via the Pitch MIDI transformation. Match the exercise: kick to root, snare to fifth.
+6. Listen to the timbre. Collision&rsquo;s attack is harder than a 808 sample and softer than a drum synth. It has a characteristic &ldquo;wooden&rdquo; tone that is unmistakably physical-modeled.
+7. Bounce 30 seconds.</p>
+<p><strong>Deliverable.</strong> 30-second WAV + one paragraph on the timbral difference between Collision drums and your normal sample-based drum rack. <em>What did the physical model give you that a sample didn&rsquo;t? What did it fail to give you that a sample did?</em></p>
+<p>Aphex made drums from a piano. You can make drums from a beam, a plate, and a membrane. The physical modeling is the point. <Citation bib="wikipedia_disklavier" /></p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">30-second WAV of a drum pattern where kick/snare/hat are all Collision instances (Membrane/Plate/String resonators). One paragraph contrasting physical-model drums with sample-based drums.</div>
+  
+</section>
+
+
+<section class="slide teaser" id="slide-s11">
+  <h1>Slide s11 · teaser</h1>
+  <h2>For further listening — the Fredonia pipeline</h2>
+  
+  <div class="body"><h1>For further listening — the Fredonia pipeline</h1>
+<p>For further listening — if the microtuning bug has bitten, there&rsquo;s a program at SUNY Fredonia called Sound Recording Technology that takes forty students every two years and turns out working engineers. They run a mastering lab where precision is treated as craft, not afterthought. One of the professors, Bernd Gottinger, has a pile of GRAMMY nominations for classical and orchestral work. Another alumnus, Matt Estep, is Fridmann&rsquo;s full-time assistant at Tarbox Road. The program does not advertise the pipeline. But it exists.</p>
+<p><Citation bib="fredonia_srt_program" /> <Citation bib="fredonia_grammy_announcement" /></p>
+<p>Precision tuning as a discipline — not a gesture. Gottinger hears what&rsquo;s slightly off. RDJ imposes tuning where none existed.</p>
+<p>Same muscle. Different room. We pick up the thread in Week 12.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s12">
+  <h1>Slide s12 · exercise</h1>
+  <h2>Ship it — kick to root, snare to fifth, thirty seconds</h2>
+  
+  <div class="body"><h1>Ship it — kick to root, snare to fifth, thirty seconds</h1>
+<p>Tune a kick to the root and a snare to the fifth. Thirty seconds. Bounce. Ship. <Citation bib="stemforge_repo" /></p>
+<p><strong>The deliverable.</strong></p>
+<ol>
+<li>Open <code>live-sets/w05-drum-tuning-demo.als</code>, or your own session with a kick and snare in a Drum Rack.</li>
+<li>Pick a root. E minor is fine.</li>
+<li>First 15 seconds — drums at source pitch.</li>
+<li>Second 15 seconds — kick at the root, snare at the fifth.</li>
+<li>Export a 30-second stereo WAV. File name <code>w05_&lt;yourname&gt;_tuned-ab.wav</code>.</li>
+</ol>
+<p><strong>The write-up.</strong> One sentence per drum. What appeared in the low end when you detuned — not what you <em>wanted</em>, what you <em>heard</em>.</p>
+<p><strong>The time box.</strong> Forty-five minutes. If you are still tweaking Transpose at minute 40, you are designing the kick, not shipping the lesson. Commit. Bounce.</p>
+<p>Next week we layer.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Your deliverable template — dry 15s into tuned 15s</div><div class="controls"><button data-src="stemforge/express_dry.wav" class="active">A — dry</button><button data-src="stemforge/express_tuned.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/express_dry.wav"></audio></div>
+  
+  <div class="deliverable">A 30-second stereo bounce. First 15 seconds: drums at source pitch. Second 15 seconds: kick transposed to the root of your track, snare detuned to the fifth. No other changes. File named w05_&lt;yourname&gt;_tuned-ab.wav. Write one sentence per drum explaining what you heard appear in the low end when you detuned it.</div>
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:aphex_pitchfork_microtuning">Aphex Twin on microtuning and the Monologue — Pitchfork 2017 <a href="https://pitchfork.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:discogs_syro">Aphex Twin — Syro credits — Discogs <a href="https://www.discogs.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:fredonia_grammy_announcement">SUNY Fredonia&#x27;s Gottinger and alumnus among GRAMMY nominees — SUNY Fredonia <a href="https://www.fredonia.edu/news/articles/suny-fredonia%E2%80%99s-gottinger-and-alumnus-among-grammy-nominees" target="_blank" rel="noopener">↗</a></li><li id="bib:fredonia_srt_program">SUNY Fredonia — Sound Recording Technology Program <a href="https://www.fredonia.edu/academics/colleges-schools/school-music/program/sound-recording-technology" target="_blank" rel="noopener">↗</a></li><li id="bib:korg_monologue_afx_manual">Korg Inc. — Monologue (Aphex Twin Edition) — Microtuning Guide — 2017 <a href="https://www.korg.com/us/support/download/product/1/562/" target="_blank" rel="noopener">↗</a></li><li id="bib:reverbmachine_rdj_gear">Aphex Twin gear reconstruction — Reverb Machine <a href="https://reverbmachine.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:sos_autechre_april_2004">Sean Booth (interviewee) — Autechre — Recording Strategies — Sound on Sound 2004 <a href="https://www.soundonsound.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 88250}, {"id": "ch001", "title": "The confession before we touch a synth", "start_ms": 88650, "end_ms": 170350}, {"id": "ch002", "title": "Drums are harmonic content \u2014 the 1992 receipt", "start_ms": 170750, "end_ms": 274600}, {"id": "ch003", "title": "The quote everyone paraphrases \u2014 what he actually said", "start_ms": 275000, "end_ms": 385750}, {"id": "ch004", "title": "What microtuning actually is, in cents", "start_ms": 386150, "end_ms": 504300}, {"id": "ch005", "title": "Express Yourself \u2014 dry kick vs tuned kick, on tape", "start_ms": 504700, "end_ms": 603400}, {"id": "ch006", "title": "Simpler, Transpose, Detune \u2014 the three knobs that matter", "start_ms": 603800, "end_ms": 719200}, {"id": "ch007", "title": "Live 12 Tuning Systems and the Scale device", "start_ms": 719600, "end_ms": 836450}, {"id": "ch008", "title": "Snare to the fifth \u2014 harmony from the backbeat", "start_ms": 836850, "end_ms": 943700}, {"id": "ch009", "title": "Live set \u2014 w05-drum-tuning-demo.als", "start_ms": 944100, "end_ms": 1044900}, {"id": "ch010", "title": "The cost of tuned drums \u2014 what you give up", "start_ms": 1045300, "end_ms": 1162550}, {"id": "ch011", "title": "For further listening \u2014 the Fredonia pipeline", "start_ms": 1162950, "end_ms": 1269350}, {"id": "ch012", "title": "Ship it \u2014 kick to root, snare to fifth, thirty seconds", "start_ms": 1269750, "end_ms": 1375450}, {"id": "ch013", "title": "Outro", "start_ms": 1375850, "end_ms": 1442850}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

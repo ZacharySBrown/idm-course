@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ch000",
+    "title": "Intro",
+    "start_ms": 0,
+    "end_ms": 74950
+  },
+  {
+    "id": "ch001",
+    "title": "Autechre \u2014 generative, not random",
+    "start_ms": 75350,
+    "end_ms": 176750
+  },
+  {
+    "id": "ch002",
+    "title": "Procedural, not random \u2014 the Booth distinction",
+    "start_ms": 177150,
+    "end_ms": 276850
+  },
+  {
+    "id": "ch003",
+    "title": "Confield (2001) \u2014 nested sequencers and fluid math",
+    "start_ms": 277250,
+    "end_ms": 393000
+  },
+  {
+    "id": "ch004",
+    "title": "The screen-off quote \u2014 flagged",
+    "start_ms": 393400,
+    "end_ms": 497300
+  },
+  {
+    "id": "ch005",
+    "title": "Draft 7.30 (2005) \u2014 the discipline of pulling back",
+    "start_ms": 497700,
+    "end_ms": 608750
+  },
+  {
+    "id": "ch006",
+    "title": "NTS Sessions (2018) \u2014 versioning as practice",
+    "start_ms": 609150,
+    "end_ms": 735500
+  },
+  {
+    "id": "ch007",
+    "title": "The four-commit procedural MIDI chain",
+    "start_ms": 735900,
+    "end_ms": 868550
+  },
+  {
+    "id": "ch008",
+    "title": "Euclidean + clip envelopes unlinked = polymeter",
+    "start_ms": 868950,
+    "end_ms": 981400
+  },
+  {
+    "id": "ch009",
+    "title": "Roar as the Ableton-native feedback matrix",
+    "start_ms": 981800,
+    "end_ms": 1110350
+  },
+  {
+    "id": "ch010",
+    "title": "Detour \u2014 MGMT's cheap-compressor assault",
+    "start_ms": 1110750,
+    "end_ms": 1217050
+  },
+  {
+    "id": "ch011",
+    "title": "The Max for Live ecosystem \u2014 chaos, Markov, probability",
+    "start_ms": 1217450,
+    "end_ms": 1345000
+  },
+  {
+    "id": "ch012",
+    "title": "CPU, Freeze, Bounce in Place \u2014 the unglamorous part",
+    "start_ms": 1345400,
+    "end_ms": 1456500
+  },
+  {
+    "id": "ch013",
+    "title": "Build it \u2014 four commits, 32 bars, Moanin' ambient kit",
+    "start_ms": 1456900,
+    "end_ms": 1585599
+  },
+  {
+    "id": "ch014",
+    "title": "Outro",
+    "start_ms": 1585999,
+    "end_ms": 1660699
+  }
+]

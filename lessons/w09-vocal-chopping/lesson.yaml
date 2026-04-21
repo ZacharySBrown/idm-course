@@ -1,0 +1,592 @@
+id: w09-vocal-chopping
+week: 9
+title: 'Week 9 — Vocal chopping: Prefuse, Dilla, Kanye, Premier'
+duration_minutes: 45
+pillars:
+- hip_hop_integration
+- vocal_processing
+concepts:
+- vocal_chopping
+- micro_chopping
+- chipmunk_soul
+- resample_ladder
+- per_pad_swing
+- vocal_stack_detune
+- self_scratched_loop
+ableton_surface:
+- simpler_slicing_1_32
+- re_pitch_warp
+- slice_to_midi_drum_rack
+- soundtoys_microshift
+- soundtoys_little_alterboy
+- note_repeat_swing
+- bounce_and_delete_source
+prereqs:
+- w03-simpler-basics
+- w04-warp-modes
+teasers: []
+stemforge:
+  recipes:
+  - w09-hot-pants-vocal-stem
+references:
+- bib:charnas_dilla_time
+- bib:prefuse_73_xlr8r
+- bib:akai_mpc2000xl_manual
+- bib:akai_mpc3000_manual
+- bib:smithsonian_dilla_mpc3000
+- bib:rbma_just_blaze_lecture
+- bib:premier_ten_crack_scratches
+- bib:soundtoys_microshift_manual
+- bib:soundtoys_little_alterboy_manual
+- bib:ableton_live_12_manual
+- bib:stemforge_repo
+- bib:whosampled_db
+needs_bib:
+- title: Mike Dean interview on Auto-Tune retune-speed 0 (808s & Heartbreak / MBDTF)
+  reason: Used as receipt for the retune-speed 0 talk-box trick; none of the current bib entries cite this directly.
+- title: E-mu SP-1200 Operator's Manual / Service Manual (1987)
+  reason: Used for the 12-bit companded PCM, 26.04 kHz sample rate, 2.5-second-per-pad RAM division, and no-anti-alias-filter input/output claims across the SP-1200 deep-dive. Currently asserted against the spec and producer interviews; no primary E-mu document is in bibliography.json.
+- title: Dave Rossum / E-mu Systems interview on SP-1200 design decisions
+  reason: The companded-ADC curve and deliberate sample-rate choice at 26.04 kHz are load-bearing claims. Dave Rossum has spoken about them in podcasts and trade mags; no single citable interview currently in bib.
+- title: Pad Swing and MPC Groove (Max for Live) — author and current version
+  reason: Named in gd-mpc3k-09 as MPC3000 per-pad-swing analogues. maxforlive.com hosts multiple devices with this name; no single canonical cite chosen yet.
+- title: Mike Dean / Kanye West — SP-1200 routing on MBDTF sessions
+  reason: gd-sp1200-10 flags the "ran modern DAW mix through a hardware SP-1200" claim as unconfirmed; needs a primary interview source or should be downgraded to rumor.
+- title: Questlove — Dilla's Sloppy Precision (primary interview source)
+  reason: bib:questlove_dilla_quote exists as a stub; the exact interview (magazine, podcast, or documentary) for the canonical quote should be locked down.
+slides:
+- id: s01
+  kind: title
+  heading: 'Vocal chopping: four producers, four methods'
+  body_md: slides/s01-cold-open.md
+  script_md: script/s01-cold-open.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:biggie_ten_crack
+- id: s02
+  kind: concept
+  heading: The stem you're working from
+  body_md: slides/s02-stemforge-source.md
+  script_md: script/s02-stemforge-source.md
+  visuals:
+  - type: waveform
+    src: build/audio/stemforge-renders/w09/hp_vocals.wav
+    caption: Hot Pants (JB) vocal, LALAL isolate — w09-hot-pants-vocal-stem
+- id: s03
+  kind: concept
+  heading: Prefuse 73 — the four-step resample ladder
+  body_md: slides/s03-prefuse-ladder.md
+  script_md: script/s03-prefuse-ladder.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: Source vs third-resample pass
+    a: build/audio/stemforge-renders/w09/hp_vocals.wav
+- id: s04
+  kind: concept
+  heading: Dilla time — 1/32 micro-chops and per-pad drift
+  body_md: slides/s04-dilla-microchop.md
+  script_md: script/s04-dilla-microchop.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:dilla_dont_cry
+- id: s05
+  kind: caveat
+  heading: Correcting the Donuts SP-303 myth
+  body_md: slides/s05-donuts-caveat.md
+  script_md: script/s05-donuts-caveat.md
+  visuals: []
+- id: s06
+  kind: concept
+  heading: Chipmunk soul — Re-Pitch, not time-stretch
+  body_md: slides/s06-chipmunk-soul.md
+  script_md: script/s06-chipmunk-soul.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: Re-Pitch +5 vs Complex Pro +5 on same phrase
+    a: build/audio/stemforge-renders/w09/hp_vocals.wav
+- id: s07
+  kind: concept
+  heading: Kanye/Mike Dean — 6–12 vocal stack, MicroShift, retune-speed zero
+  body_md: slides/s07-mbdtf-stack.md
+  script_md: script/s07-mbdtf-stack.md
+  visuals: []
+- id: s08
+  kind: concept
+  heading: Little AlterBoy — three settings worth memorizing
+  body_md: slides/s08-alterboy-three-moves.md
+  script_md: script/s08-alterboy-three-moves.md
+  visuals: []
+- id: s09
+  kind: concept
+  heading: DJ Premier — scratch the loop, then sample yourself
+  body_md: slides/s09-premier-scratch.md
+  script_md: script/s09-premier-scratch.md
+  visuals: []
+  song_refs:
+  - song:biggie_ten_crack
+- id: s10
+  kind: reference
+  heading: The chopped-vocal signal path, committed
+  body_md: slides/s10-signal-path.md
+  script_md: script/s10-signal-path.md
+  visuals: []
+- id: s11
+  kind: exercise
+  heading: Three methods, one phrase, three exports
+  body_md: slides/s11-exercise.md
+  script_md: script/s11-exercise.md
+  deliverable: Three mono bounces of the same four-bar Hot Pants phrase — (a) Dilla 1/32 micro-chop rearrangement, (b) Kanye chipmunk +5 semitones Re-Pitch, (c) Prefuse three-pass resample ladder — plus a one-line note naming which bounce is most unrecognizable and why.
+
+# ----- Gear deep-dive A: Akai MPC3000 (the Dilla machine) -----
+- id: gd-mpc3k-01
+  kind: gear_deep_dive
+  heading: "Akai MPC3000 — the machine Dilla actually used"
+  body_md: slides/gd-mpc3k-01-title.md
+  images:
+  - src: assets/gear-mpc3000-hero.jpg
+    caption: "Akai MPC3000, 1994. 16 velocity-sensitive pads, 32-voice polyphony. Designed with Roger Linn."
+    credit: "Photo: Smithsonian NMAAHC / fair-use commentary"
+    license: "fair-use commentary"
+  references:
+  - bib:akai_mpc3000_manual
+  - bib:smithsonian_dilla_mpc3000
+  - bib:charnas_dilla_time
+
+- id: gd-mpc3k-02
+  kind: gear_deep_dive
+  heading: "Annotated tour, 1/2 — pads, swing, note repeat"
+  body_md: slides/gd-mpc3k-02-tour-pads.md
+  gear_annotations:
+  - src: assets/gear-mpc3000-panel.jpg
+    caption: "MPC3000 front panel — the four controls that make Dilla time possible."
+    callouts:
+    - label: "16 pads"
+      note: "Each pad is one voice with independent timing params."
+    - label: "Swing %"
+      note: "Per-pad, not global. Hats at 62%, kicks at 50%, snare at 50%."
+    - label: "Note Repeat"
+      note: "Hold pad + Note Repeat to fire at current subdivision. Hi-hat rolls without a piano roll."
+    - label: "Timing Correct %"
+      note: "Quantize strength. Dilla set this to 0 on most pads and nudged by ear."
+  references:
+  - bib:akai_mpc3000_manual
+  - bib:charnas_dilla_time
+
+- id: gd-mpc3k-03
+  kind: gear_deep_dive
+  heading: "Annotated tour, 2/2 — sample edit and signal path"
+  body_md: slides/gd-mpc3k-03-tour-sample.md
+  references:
+  - bib:akai_mpc3000_manual
+
+- id: gd-mpc3k-04
+  kind: gear_deep_dive
+  heading: "How Dilla executed the technique"
+  body_md: slides/gd-mpc3k-04-technique.md
+  references:
+  - bib:charnas_dilla_time
+  - bib:questlove_dilla_quote
+
+- id: gd-mpc3k-05
+  kind: gear_deep_dive
+  heading: "Technique continued — receipts and track-level evidence"
+  body_md: slides/gd-mpc3k-05-technique-receipts.md
+  song_refs:
+  - song:dilla_dont_cry
+  references:
+  - bib:charnas_dilla_time
+
+- id: gd-mpc3k-06
+  kind: gear_deep_dive
+  heading: "Underlying algorithm — per-pad timing on a 96 PPQN grid"
+  body_md: slides/gd-mpc3k-06-algorithm.md
+  diagrams:
+  - mermaid: |
+      graph LR
+        A[Pattern playback] --> B[Timing Correct %]
+        B --> C[Per-pad Timing Shift<br/>± N ticks]
+        C --> D[Per-pad Swing %]
+        D --> E[Voice assigned]
+        E --> F[Varispeed pitch]
+        F --> G[2-pole LPF]
+        G --> H[DAC out]
+    caption: "Per-pad timing chain on the MPC3000. Timing shift and swing are set independently per pad."
+  references:
+  - bib:akai_mpc3000_manual
+
+- id: gd-mpc3k-07
+  kind: gear_deep_dive
+  heading: "Algorithm continued — varispeed playback and the DAC"
+  body_md: slides/gd-mpc3k-07-algorithm-varispeed.md
+  references:
+  - bib:roads_computer_music_tutorial
+  - bib:akai_mpc3000_manual
+
+- id: gd-mpc3k-08
+  kind: gear_deep_dive
+  heading: "Ableton bridge — Drum Rack + per-pad Groove Pool"
+  body_md: slides/gd-mpc3k-08-ableton-bridge.md
+  references:
+  - bib:ableton_live_12_manual
+
+- id: gd-mpc3k-09
+  kind: gear_deep_dive
+  heading: "Max for Live parallels — Pad Swing, MPC Groove, Humanize"
+  body_md: slides/gd-mpc3k-09-m4l-parallels.md
+  references:
+  - bib:alkman_euclidean_pro
+  - bib:ableton_live_12_manual
+
+- id: gd-mpc3k-10
+  kind: gear_deep_dive
+  heading: "Beyond Dilla — what else the MPC3000 does"
+  body_md: slides/gd-mpc3k-10-creative-uses.md
+  references:
+  - bib:charnas_dilla_time
+
+- id: gd-mpc3k-11
+  kind: gear_deep_dive
+  heading: "Modern workflows — who's still using this approach"
+  body_md: slides/gd-mpc3k-11-modern-parallels.md
+  references:
+  - bib:ableton_push_3_docs
+  - bib:charnas_dilla_time
+
+- id: gd-mpc3k-12
+  kind: gear_deep_dive
+  heading: "Exercise A — replicate Dilla swing, snare-only"
+  body_md: slides/gd-mpc3k-12-exercise-replicate.md
+  deliverable: "Two mono bounces (hp_baseline.wav and hp_dillaswing.wav) of the same 4-bar boom-bap pattern — one fully quantized, one with a +50 ms snare drag via a groove file applied only to the snare chain. Plus one sentence naming which bounce reads as alive."
+  references:
+  - bib:charnas_dilla_time
+
+- id: gd-mpc3k-13
+  kind: gear_deep_dive
+  heading: "Exercise B — per-pad drift everywhere"
+  body_md: slides/gd-mpc3k-13-exercise-explore.md
+  deliverable: "Two bounces of a 1-bar pattern (hp_drift.wav with kicks at 0/+5/-3/+10 ms offsets; hp_nodrift.wav with all kicks at 0) plus a paragraph comparing the random-signed drift to a same-direction drift and identifying which feels deliberate."
+
+- id: gd-mpc3k-14
+  kind: gear_deep_dive
+  heading: "Diagram — Dilla swing visualized on the 96 PPQN grid"
+  body_md: slides/gd-mpc3k-14-diagram-swing.md
+  diagrams:
+  - svg_content: |
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="300" fill="#f8f8f5"/>
+        <text x="20" y="30" font-family="monospace" font-size="14" fill="#222">Dilla time at 90 BPM, 96 PPQN (1 tick = 6.94 ms)</text>
+        <!-- 16th grid -->
+        <g stroke="#ccc" stroke-width="1">
+          <line x1="60" y1="60" x2="780" y2="60"/>
+          <line x1="60" y1="120" x2="780" y2="120"/>
+          <line x1="60" y1="180" x2="780" y2="180"/>
+        </g>
+        <!-- 16th tick marks -->
+        <g stroke="#bbb" stroke-width="1">
+          <line x1="60" y1="55" x2="60" y2="195"/>
+          <line x1="105" y1="55" x2="105" y2="195"/>
+          <line x1="150" y1="55" x2="150" y2="195"/>
+          <line x1="195" y1="55" x2="195" y2="195"/>
+          <line x1="240" y1="55" x2="240" y2="195"/>
+          <line x1="285" y1="55" x2="285" y2="195"/>
+          <line x1="330" y1="55" x2="330" y2="195"/>
+          <line x1="375" y1="55" x2="375" y2="195"/>
+          <line x1="420" y1="55" x2="420" y2="195"/>
+          <line x1="465" y1="55" x2="465" y2="195"/>
+          <line x1="510" y1="55" x2="510" y2="195"/>
+          <line x1="555" y1="55" x2="555" y2="195"/>
+          <line x1="600" y1="55" x2="600" y2="195"/>
+          <line x1="645" y1="55" x2="645" y2="195"/>
+          <line x1="690" y1="55" x2="690" y2="195"/>
+          <line x1="735" y1="55" x2="735" y2="195"/>
+        </g>
+        <!-- HAT row label -->
+        <text x="20" y="65" font-family="monospace" font-size="12" fill="#222">HAT</text>
+        <!-- hats at 64% swing — every odd 16th pushed ~8 ticks -->
+        <g fill="#3b6ea5">
+          <circle cx="60" cy="60" r="6"/>
+          <circle cx="119" cy="60" r="6"/>
+          <circle cx="150" cy="60" r="6"/>
+          <circle cx="209" cy="60" r="6"/>
+          <circle cx="240" cy="60" r="6"/>
+          <circle cx="299" cy="60" r="6"/>
+          <circle cx="330" cy="60" r="6"/>
+          <circle cx="389" cy="60" r="6"/>
+        </g>
+        <!-- SNARE row -->
+        <text x="20" y="125" font-family="monospace" font-size="12" fill="#222">SNR</text>
+        <!-- snares at beat 2 and 4, pulled 3 ticks early (-20 ms) -->
+        <g fill="#b03030">
+          <circle cx="177" cy="120" r="6"/>
+          <circle cx="357" cy="120" r="6"/>
+        </g>
+        <line x1="180" y1="105" x2="180" y2="135" stroke="#b03030" stroke-dasharray="2,2"/>
+        <line x1="360" y1="105" x2="360" y2="135" stroke="#b03030" stroke-dasharray="2,2"/>
+        <text x="180" y="100" font-family="monospace" font-size="10" fill="#b03030" text-anchor="middle">grid</text>
+        <!-- KICK row -->
+        <text x="20" y="185" font-family="monospace" font-size="12" fill="#222">KCK</text>
+        <!-- kicks: beat 1 +5ms, beat 3 -3ms -->
+        <g fill="#2d7d46">
+          <circle cx="65" cy="180" r="6"/>
+          <circle cx="237" cy="180" r="6"/>
+        </g>
+        <line x1="60" y1="165" x2="60" y2="195" stroke="#2d7d46" stroke-dasharray="2,2"/>
+        <line x1="240" y1="165" x2="240" y2="195" stroke="#2d7d46" stroke-dasharray="2,2"/>
+        <text x="60" y="215" font-family="monospace" font-size="10" fill="#2d7d46" text-anchor="middle">+5ms</text>
+        <text x="240" y="215" font-family="monospace" font-size="10" fill="#2d7d46" text-anchor="middle">-3ms</text>
+        <!-- Legend -->
+        <text x="20" y="255" font-family="monospace" font-size="11" fill="#444">hat = swing 64%   snr = -3 ticks (~-20 ms)   kck = ± few ms, inconsistent direction</text>
+        <text x="20" y="275" font-family="monospace" font-size="11" fill="#666">rule: different offsets per pad, all in the same 4-bar pattern.</text>
+      </svg>
+    caption: "Dilla time on the 96 PPQN grid. Hats swung, snare pulled early, kicks drifting ±, all independently."
+
+# ----- Gear deep-dive B: E-mu SP-1200 (RZA / Premier / Pete Rock / Kanye-era) -----
+- id: gd-sp1200-01
+  kind: gear_deep_dive
+  heading: "E-mu SP-1200 — the grit machine"
+  body_md: slides/gd-sp1200-01-title.md
+  images:
+  - src: assets/gear-sp1200-hero.jpg
+    caption: "E-mu SP-1200, 1987. Designed by Dave Rossum. 12-bit proprietary companded PCM at 26.04 kHz, 2.5 s per pad, famously permissive anti-alias filter (gentle analog roll-off, not absent)."
+    credit: "Photo: manufacturer / fair-use commentary"
+    license: "fair-use commentary"
+  references:
+  - bib:charnas_dilla_time
+
+- id: gd-sp1200-02
+  kind: gear_deep_dive
+  heading: "Annotated tour, 1/2 — sample rate, pitch, truncate"
+  body_md: slides/gd-sp1200-02-tour-controls.md
+  gear_annotations:
+  - src: assets/gear-sp1200-panel.jpg
+    caption: "SP-1200 front panel — the four controls that define the sound."
+    callouts:
+    - label: "SR 26.04 kHz"
+      note: "Not user-adjustable. Nyquist at ~13 kHz. Everything above folds back."
+    - label: "Pitch (semi + fine)"
+      note: "Per-pad varispeed. Pitch-and-time coupled."
+    - label: "Truncate"
+      note: "Sample-level head/tail crop. 2.5 s per pad is a RAM division, not a setting."
+    - label: "Individual outs"
+      note: "Skip the stereo summing bus. Preserves more high-freq aliasing — the 'aliasing switch'."
+
+- id: gd-sp1200-03
+  kind: gear_deep_dive
+  heading: "Annotated tour, 2/2 — signal path and output routing"
+  body_md: slides/gd-sp1200-03-tour-signal.md
+
+- id: gd-sp1200-04
+  kind: gear_deep_dive
+  heading: "How the RZA / Premier / Pete Rock method worked"
+  body_md: slides/gd-sp1200-04-technique.md
+  references:
+  - bib:charnas_dilla_time
+  - bib:rbma_rza_lecture
+  - bib:premier_ten_crack_scratches
+
+- id: gd-sp1200-05
+  kind: gear_deep_dive
+  heading: "Technique continued — the 2.5-second constraint as composition force"
+  body_md: slides/gd-sp1200-05-technique-receipts.md
+  references:
+  - bib:charnas_dilla_time
+  - bib:rbma_rza_lecture
+
+- id: gd-sp1200-06
+  kind: gear_deep_dive
+  heading: "Underlying algorithm — 12-bit companded ADC"
+  body_md: slides/gd-sp1200-06-algorithm-companding.md
+  diagrams:
+  - svg_content: |
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="320" fill="#f8f8f5"/>
+        <text x="20" y="30" font-family="monospace" font-size="14" fill="#222">Companded ADC curve — linear 12-bit vs SP-1200 proprietary (µ-law-like shape)</text>
+        <!-- axes -->
+        <g stroke="#888" stroke-width="1" fill="none">
+          <line x1="80" y1="270" x2="760" y2="270"/>
+          <line x1="80" y1="270" x2="80" y2="60"/>
+        </g>
+        <text x="400" y="300" font-family="monospace" font-size="11" fill="#444" text-anchor="middle">input amplitude (0 → full-scale)</text>
+        <text x="40" y="170" font-family="monospace" font-size="11" fill="#444" transform="rotate(-90 40 170)">quantization level density</text>
+        <!-- linear line (diagonal) -->
+        <line x1="80" y1="270" x2="760" y2="60" stroke="#3b6ea5" stroke-width="2"/>
+        <text x="560" y="100" font-family="monospace" font-size="11" fill="#3b6ea5">linear 12-bit (even)</text>
+        <!-- companded curve (logarithmic-ish) -->
+        <path d="M 80 270 Q 180 110 400 90 T 760 70" stroke="#b03030" stroke-width="2" fill="none"/>
+        <text x="180" y="140" font-family="monospace" font-size="11" fill="#b03030">SP-1200 proprietary 12→8-bit (µ-law-like shape, not G.711)</text>
+        <!-- labels -->
+        <text x="100" y="260" font-family="monospace" font-size="10" fill="#222">dense near zero</text>
+        <text x="600" y="80" font-family="monospace" font-size="10" fill="#222">sparse near full-scale</text>
+        <text x="20" y="310" font-family="monospace" font-size="11" fill="#666">consequence: crunchy transient attacks, cleaner quiet tails. quantization noise is signal-dependent.</text>
+      </svg>
+    caption: "Companded ADC — dense quantization near zero, sparse near full-scale. The signature 'crunchy transient, clean tail' shape."
+  references:
+  - bib:roads_computer_music_tutorial
+
+- id: gd-sp1200-07
+  kind: gear_deep_dive
+  heading: "Algorithm continued — aliasing and the 13 kHz cliff"
+  body_md: slides/gd-sp1200-07-algorithm-aliasing.md
+  diagrams:
+  - svg_content: |
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="320" fill="#f8f8f5"/>
+        <text x="20" y="30" font-family="monospace" font-size="14" fill="#222">SP-1200 aliasing — 26.04 kHz, famously permissive AA filter (gentle ~1-pole from ~10 kHz)</text>
+        <!-- axes -->
+        <g stroke="#888" stroke-width="1" fill="none">
+          <line x1="80" y1="260" x2="760" y2="260"/>
+          <line x1="80" y1="260" x2="80" y2="60"/>
+        </g>
+        <text x="400" y="290" font-family="monospace" font-size="11" fill="#444" text-anchor="middle">frequency (kHz)</text>
+        <text x="140" y="275" font-family="monospace" font-size="10" fill="#444">0</text>
+        <text x="340" y="275" font-family="monospace" font-size="10" fill="#444">13 (Nyquist)</text>
+        <text x="540" y="275" font-family="monospace" font-size="10" fill="#444">20</text>
+        <text x="720" y="275" font-family="monospace" font-size="10" fill="#444">26</text>
+        <!-- source flat to 20 kHz -->
+        <line x1="80" y1="150" x2="540" y2="150" stroke="#3b6ea5" stroke-width="2"/>
+        <line x1="540" y1="150" x2="540" y2="260" stroke="#3b6ea5" stroke-width="2"/>
+        <text x="260" y="140" font-family="monospace" font-size="11" fill="#3b6ea5">source spectrum (flat to 20 kHz)</text>
+        <!-- Nyquist cliff -->
+        <line x1="340" y1="60" x2="340" y2="260" stroke="#b03030" stroke-width="1" stroke-dasharray="4,3"/>
+        <!-- aliased ghost (mirror of source above Nyquist, folded back) -->
+        <line x1="340" y1="200" x2="540" y2="200" stroke="#b03030" stroke-width="2" stroke-dasharray="5,3"/>
+        <line x1="340" y1="200" x2="140" y2="200" stroke="#b03030" stroke-width="2" stroke-dasharray="5,3"/>
+        <text x="220" y="215" font-family="monospace" font-size="11" fill="#b03030">folded aliasing</text>
+        <!-- SP-1200 output = source + alias -->
+        <text x="20" y="310" font-family="monospace" font-size="11" fill="#666">content above 13 kHz folds back into the audible band. permanently printed into the sample.</text>
+      </svg>
+    caption: "Aliasing cliff at 13 kHz. Any source content above Nyquist folds back as an inverted-image ghost, added to the sample."
+  references:
+  - bib:roads_computer_music_tutorial
+
+- id: gd-sp1200-08
+  kind: gear_deep_dive
+  heading: "Ableton bridge — Redux + TAL-Bitcrusher + 13 kHz LPF"
+  body_md: slides/gd-sp1200-08-ableton-bridge.md
+  references:
+  - bib:ableton_live_12_manual
+  - bib:tal_bitcrusher
+  - bib:decimort_2
+
+- id: gd-sp1200-09
+  kind: gear_deep_dive
+  heading: "Alternative paths — Decimort 2, Roar Bitgrunge, and the 'don't bother'"
+  body_md: slides/gd-sp1200-09-m4l-alternatives.md
+  references:
+  - bib:decimort_2
+  - bib:ableton_live_12_manual
+
+- id: gd-sp1200-10
+  kind: gear_deep_dive
+  heading: "Beyond the boom-bap — creative SP-1200 moves"
+  body_md: slides/gd-sp1200-10-creative-uses.md
+  references:
+  - bib:charnas_dilla_time
+
+- id: gd-sp1200-11
+  kind: gear_deep_dive
+  heading: "Modern parallels — who still sounds like this"
+  body_md: slides/gd-sp1200-11-modern-parallels.md
+  references:
+  - bib:charnas_dilla_time
+
+- id: gd-sp1200-12
+  kind: gear_deep_dive
+  heading: "Exercise A — process a modern sample into SP-1200 territory"
+  body_md: slides/gd-sp1200-12-exercise-replicate.md
+  deliverable: "Two bounces of the same stemforge Hot Pants phrase (hp_sp1200.wav through Redux + TAL-Bitcrusher + 13 kHz LPF; hp_clean.wav untreated) plus a paragraph naming which artifacts the chain removed (top-end detail) vs added (aliased mid-range, companded transient crunch)."
+  references:
+  - bib:stemforge_repo
+  - bib:roads_computer_music_tutorial
+
+- id: gd-sp1200-13
+  kind: gear_deep_dive
+  heading: "Exercise B — the 2.5-second constraint, self-imposed"
+  body_md: slides/gd-sp1200-13-exercise-explore.md
+  deliverable: "Two bounces of a 4-bar beat (hp_2p5sec.wav using only samples ≤2.5 s; hp_unlimited.wav with no length constraint) plus a paragraph naming the specific musical decisions the 2.5-second limit forced — more chops, shorter phrases, more retriggers, denser patterns."
+  references:
+  - bib:charnas_dilla_time
+
+- id: gd-sp1200-14
+  kind: gear_deep_dive
+  heading: "Diagram — the aliasing cliff and the companding curve"
+  body_md: slides/gd-sp1200-14-diagram-aliasing.md
+  references:
+  - bib:roads_computer_music_tutorial
+
+images_needed:
+- slug: gear-mpc3000-hero
+  description: "Akai MPC3000 front panel, centered, on neutral background. Prefer the Smithsonian-archived Dilla unit if available."
+  preferred_angle: "front, slightly elevated"
+  lesson_context: "W9 gd-mpc3k-01 title slide"
+  license_target: "fair-use commentary / museum editorial"
+- slug: gear-mpc3000-panel
+  description: "MPC3000 front panel close-up with the 16 pads, swing knob, Note Repeat button, and Timing Correct display visible."
+  preferred_angle: "top-down, all controls readable"
+  lesson_context: "W9 gd-mpc3k-02 annotated tour"
+  license_target: "fair-use commentary"
+- slug: gear-sp1200-hero
+  description: "E-mu SP-1200 front panel, centered, on neutral background."
+  preferred_angle: "front"
+  lesson_context: "W9 gd-sp1200-01 title slide"
+  license_target: "fair-use commentary"
+- slug: gear-sp1200-panel
+  description: "E-mu SP-1200 front panel close-up with the 8 pads, pitch/semitone/fine displays, truncate buttons, and individual output jacks on the back visible."
+  preferred_angle: "top-down + rear-quarter inset for outputs"
+  lesson_context: "W9 gd-sp1200-02 annotated tour"
+  license_target: "fair-use commentary"
+- slug: dilla-portrait
+  description: "J Dilla editorial portrait. Any era acceptable; preferred context is at the MPC3000."
+  lesson_context: "W9 gd-mpc3k-04 technique slide"
+  license_target: "editorial / fair-use commentary"
+- slug: dilla-smithsonian-mpc3000
+  description: "The Smithsonian NMAAHC-archived J Dilla MPC3000 on display."
+  lesson_context: "W9 gd-mpc3k-01 title and s05 Donuts caveat"
+  license_target: "museum editorial / fair-use commentary"
+- slug: premier-portrait
+  description: "DJ Premier in studio, ideally at an MPC60 or Technics 1200s."
+  lesson_context: "W9 s09 Premier-scratch slide + gd-sp1200-04"
+  license_target: "editorial / fair-use commentary"
+- slug: kanye-mike-dean-console
+  description: "Kanye West and Mike Dean at a studio console — MBDTF/YEEZUS-era session photo acceptable."
+  lesson_context: "W9 s07 MBDTF vocal stack"
+  license_target: "editorial / fair-use commentary"
+- slug: scott-herren-prefuse
+  description: "Scott Herren / Prefuse 73 editorial portrait, ideally at an MPC2000XL."
+  lesson_context: "W9 s03 Prefuse ladder slide"
+  license_target: "editorial / fair-use commentary"
+- slug: album-donuts
+  description: "Album cover — J Dilla, Donuts (Stones Throw, 2006)."
+  lesson_context: "W9 s05 Donuts caveat + s04 Dilla microchop"
+  license_target: "fair-use commentary"
+- slug: album-fantastic-vol-2
+  description: "Album cover — Slum Village, Fantastic Vol. 2 (2000)."
+  lesson_context: "W9 gd-mpc3k-05 track-level evidence"
+  license_target: "fair-use commentary"
+- slug: album-illmatic
+  description: "Album cover — Nas, Illmatic (1994)."
+  lesson_context: "W9 gd-sp1200-04 Premier / boom-bap receipts"
+  license_target: "fair-use commentary"
+- slug: album-36-chambers
+  description: "Album cover — Wu-Tang Clan, Enter the Wu-Tang (36 Chambers) (1993)."
+  lesson_context: "W9 gd-sp1200-04 RZA receipts"
+  license_target: "fair-use commentary"
+- slug: album-one-word-extinguisher
+  description: "Album cover — Prefuse 73, One Word Extinguisher (Warp, 2003)."
+  lesson_context: "W9 s03 Prefuse ladder"
+  license_target: "fair-use commentary"
+- slug: album-madvillainy
+  description: "Album cover — Madvillain, Madvillainy (Stones Throw, 2004)."
+  lesson_context: "W9 s01 cold-open context"
+  license_target: "fair-use commentary"
+
+episode:
+  title: 'IDM W9 — Vocal chopping: Prefuse, Dilla, Kanye, Premier'
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

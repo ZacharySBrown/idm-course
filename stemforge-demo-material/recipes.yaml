@@ -1,0 +1,103 @@
+# stemforge invocation recipes, per lesson.
+# Only tools/stemforge_runner.py writes to build/audio/stemforge-renders/.
+# Lesson authoring agents may propose additional recipes by adding entries
+# here; the runner picks them up on next invocation.
+
+version: 1
+stemforge_root: /Users/zak/zacharysbrown/stemforge
+
+recipes:
+
+  - recipe_id: w01-benjamins-stems
+    lesson: w01-listen-subtract
+    cmd: stemforge split {input} --pipeline default --no-slice
+    input: ${stemforge_root}/benjamins.wav
+    renders:
+      drums: build/audio/stemforge-renders/w01/benjamins_drums.wav
+      bass:  build/audio/stemforge-renders/w01/benjamins_bass.wav
+      vocals: build/audio/stemforge-renders/w01/benjamins_vocals.wav
+      other: build/audio/stemforge-renders/w01/benjamins_other.wav
+    teaching: Full-stem A/B vs original mix. Intro to listening-per-stem.
+
+  - recipe_id: w02-little-by-little-stems
+    lesson: w02-subtraction
+    cmd: stemforge split {input} --pipeline default
+    input: ${stemforge_root}/little_by_little.wav
+    renders:
+      drums: build/audio/stemforge-renders/w02/lbl_drums.wav
+      bass:  build/audio/stemforge-renders/w02/lbl_bass.wav
+      vocals: build/audio/stemforge-renders/w02/lbl_vocals.wav
+      other: build/audio/stemforge-renders/w02/lbl_other.wav
+    teaching: Drop-one-stem demos to teach the Subtraction arrangement method.
+
+  - recipe_id: w03-express-oneshots
+    lesson: w03-simpler-basics
+    cmd: stemforge forge {input} --strategy max-diversity --n-bars 4
+    input: ${stemforge_root}/grooves/04 - Express Yourself.wav
+    renders:
+      oneshots_dir: build/audio/stemforge-renders/w03/express_oneshots/
+    teaching: Per-drum one-shots extracted with LarsNet classification — populate a Drum Rack.
+
+  - recipe_id: w04-hallogallo-warp-ab
+    lesson: w04-warp-modes
+    cmd: stemforge split {input} --pipeline default --no-slice
+    input: ${stemforge_root}/grooves/01 - Hallogallo (Stephen Morris and Gabe Gurnsey Remix).wav
+    renders:
+      drums: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+      other: build/audio/stemforge-renders/w04/hallogallo_other.wav
+    teaching: Complex Pro vs Beats warp comparison on a motorik drone groove.
+
+  - recipe_id: w05-express-tuned-ab
+    lesson: w05-aphex-tuning
+    cmd: stemforge split {input} --pipeline idm_crushed --no-slice
+    input: ${stemforge_root}/grooves/04 - Express Yourself.wav
+    renders:
+      dry: build/audio/stemforge-renders/w05/express_dry.wav
+      wet: build/audio/stemforge-renders/w05/express_tuned.wav
+    teaching: Untuned vs tuned-to-root kick. The W5 MVP exemplar.
+
+  - recipe_id: w06-moanin-glitch-layers
+    lesson: w06-fourtet-layering
+    cmd: stemforge split {input} --pipeline glitch
+    input: ${stemforge_root}/grooves/01 - Moanin'.wav
+    renders:
+      dry: build/audio/stemforge-renders/w06/moanin_dry.wav
+      wet: build/audio/stemforge-renders/w06/moanin_glitch.wav
+    teaching: Subliminal-layer demo. Bell under bass, second kick under first.
+
+  - recipe_id: w07-funky-fanfare-amen
+    lesson: w07-squarepusher-chops
+    cmd: stemforge split {input} --pipeline idm_crushed
+    input: ${stemforge_root}/grooves/18 - Funky Fanfare.wav
+    renders:
+      drums: build/audio/stemforge-renders/w07/ff_drums.wav
+      chops_dir: build/audio/stemforge-renders/w07/ff_chops/
+    teaching: Amen-style chopping raw material. Beat-sliced for a Drum Rack.
+
+  - recipe_id: w08-moanin-ambient-feedback
+    lesson: w08-autechre-feedback
+    cmd: stemforge split {input} --pipeline ambient
+    input: ${stemforge_root}/grooves/01 - Moanin'.wav
+    renders:
+      dry: build/audio/stemforge-renders/w08/moanin_dry.wav
+      wet: build/audio/stemforge-renders/w08/moanin_ambient.wav
+    teaching: Textural recombination. Roar multiband feedback loop input material.
+
+  - recipe_id: w09-hot-pants-vocal-stem
+    lesson: w09-vocal-chopping
+    cmd: stemforge split {input} --backend lalal --pipeline default
+    input: ${stemforge_root}/grooves/09 - Hot Pants... I'm Coming I'm Coming.wav
+    renders:
+      vocals: build/audio/stemforge-renders/w09/hp_vocals.wav
+    teaching: Clean vocal stem for chromatic chopping (Prefuse/Dilla/Premier method).
+    determinism_note: LALAL is non-deterministic. Run once, commit output as source-of-truth.
+
+  - recipe_id: w10-heather-variation-source
+    lesson: w10-variation-generation
+    cmd: stemforge forge {input} --strategy section-stratified --n-bars 2
+    input: ${stemforge_root}/grooves/06 - Heather.wav
+    renders:
+      loops_dir: build/audio/stemforge-renders/w10/heather_loops/
+    teaching: Follow Actions 2.0 source pool. Section-stratified curation.
+
+  # W11, W12 are student-driven; no default stemforge recipes.

@@ -1,0 +1,3355 @@
+{
+  "_meta": {
+    "version": "0.3.0",
+    "generated": "2026-04-21",
+    "tier_note": "Wave 9.0 registry; Wave 10 image fetcher will download + optimize to local_path",
+    "licensing_posture": "CC preferred; fair-use commentary with attribution accepted per course owner direction",
+    "notes": [
+      "Hardware entries point to Wikimedia Commons category pages or specific file URLs. Wave 10 fetcher should resolve category URLs to the best single-file front-panel photo at download time.",
+      "Album art entries point to the Wikipedia article for the album; covers on Wikipedia are hosted as non-free fair-use media and are legitimate for educational commentary on individual tracks / albums.",
+      "Ableton device screenshots point to ableton.com manual/features pages — screenshots pulled from the vendor's own product pages are used under fair-use editorial commentary.",
+      "Entries keyed by img:<slug>. All source_url values verified via WebSearch 2026-04 except where noted 'manufacturer_press' (fair-use justification supplied)."
+    ],
+    "totals": {
+      "hardware": 26,
+      "album_art": 29,
+      "artist": 8,
+      "studio": 3,
+      "ableton_device": 15,
+      "total": 81
+    },
+    "album_art_coverage_note": "songs.json has 33 tracks but only 29 distinct albums — several albums host multiple referenced tracks (SAW 85-92: 2 tracks; Drukqs: 2 tracks; Confield: 2 tracks; Donuts + Fantastic Vol.2 + Labcabin + Illmatic + Mecca + Madvillainy + Life After Death + Exmilitary + Money Store + Untrue + Oracular + Three + Rounds + Big Loada + Go Plastic + Hello Everything + Ultravisitor + Ufabulum + Come To Daddy + Windowlicker + I Care Because You Do + Syro + LP5 + NTS Sessions = all 1:1). Count matches expected output.",
+    "note": " | Wave 10.1 auto-seed: 145 heuristic entries (via Wikipedia URL guess, fetch_images.py follows og:image). Photo-sourcer agent stalled — manual pickups flagged in entries with auto_seeded:true."
+  },
+  "img:gear_qy700": {
+    "category": "hardware",
+    "subject": "Yamaha QY700",
+    "description": "Front panel of the Yamaha QY700 hardware sequencer (used by Squarepusher)",
+    "source_url": "https://www.vintagesynth.com/yamaha/qy700-sequencer",
+    "attribution": "Vintage Synth Explorer (editorial photo)",
+    "license": "fair-use commentary",
+    "license_note": "No high-res Wikimedia Commons file located for QY700. Vintage Synth Explorer editorial photo used for educational commentary with attribution. Alternative: Yamaha press photo from usa.yamaha.com/files/download/other_assets/0/327080/QY700E1.pdf cover.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/gear-qy700.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 1
+  },
+  "img:gear_tx81z": {
+    "category": "hardware",
+    "subject": "Yamaha TX81Z",
+    "description": "Yamaha TX81Z FM rack synth, front panel",
+    "source_url": "https://en.wikipedia.org/wiki/Yamaha_TX81Z",
+    "attribution": "Photo on Wikipedia article; resolve to Commons file at fetch time",
+    "license": "CC or fair-use (resolve at fetch)",
+    "license_note": "Wikipedia article contains hero image; Wave 10 should resolve to the underlying Commons/fair-use page.",
+    "local_path": "references/images/shared/gear-tx81z.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 1
+  },
+  "img:gear_fs1r": {
+    "category": "hardware",
+    "subject": "Yamaha FS1R",
+    "description": "Yamaha FS1R formant/FM synth module",
+    "source_url": "https://en.wikipedia.org/wiki/Yamaha_FS1R",
+    "attribution": "Wikipedia article hero image",
+    "license": "fair-use commentary",
+    "license_note": "No CC Commons file confirmed; Wikipedia lead image reused under fair-use editorial commentary.",
+    "local_path": "references/images/shared/gear-fs1r.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:gear_dx7": {
+    "category": "hardware",
+    "subject": "Yamaha DX7",
+    "description": "Yamaha DX7 FM digital synthesizer, front panel",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Yamaha_DX7",
+    "attribution": "See Commons category (multiple CC-licensed uploads)",
+    "license": "CC-BY-SA (resolve specific file)",
+    "license_note": "Commons category has 50 files; Wave 10 should pick the cleanest front-panel shot.",
+    "local_path": "references/images/shared/gear-dx7.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:gear_disklavier": {
+    "category": "hardware",
+    "subject": "Yamaha Disklavier",
+    "description": "Yamaha Disklavier reproducing piano",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Disklavier",
+    "attribution": "See Commons category",
+    "license": "CC (resolve specific file)",
+    "license_note": "Commons category has 9 files.",
+    "local_path": "references/images/shared/gear-disklavier.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2
+  },
+  "img:gear_akai_s950": {
+    "category": "hardware",
+    "subject": "Akai S950",
+    "description": "Akai S950 12-bit sampler, front panel",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:AKAI_S_series",
+    "attribution": "See Commons category (e.g., 'Akai S950 fully expanded by Michelle Weston.jpg')",
+    "license": "CC-BY-SA-3.0 or similar (resolve)",
+    "license_note": "Commons AKAI S series category confirmed to contain S950 photos.",
+    "local_path": "references/images/shared/gear-akai-s950.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops",
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:gear_akai_s6000": {
+    "category": "hardware",
+    "subject": "Akai S6000",
+    "description": "Akai S6000 rackmount sampler, front panel",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:AKAI_S_series",
+    "attribution": "See Commons category",
+    "license": "CC (resolve file)",
+    "license_note": "S series category contains multiple AKAI sampler files.",
+    "local_path": "references/images/shared/gear-akai-s6000.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2
+  },
+  "img:gear_mpc3000": {
+    "category": "hardware",
+    "subject": "Akai MPC3000",
+    "description": "Akai MPC3000 sampler/sequencer — the J Dilla machine",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Akai_MPC3000.jpg",
+    "attribution": "Wikimedia Commons uploader",
+    "license": "CC-BY-SA-3.0",
+    "license_note": "File page confirmed in Category:Akai MPC series (58 files).",
+    "local_path": "lessons/w09-vocal-chopping/assets/gear-mpc3000.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping",
+      "w11-beat-switch"
+    ],
+    "priority": 1
+  },
+  "img:gear_mpc2000xl": {
+    "category": "hardware",
+    "subject": "Akai MPC2000XL",
+    "description": "Akai MPC2000XL MIDI production center",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Akai_MPC_series",
+    "attribution": "Commons uploader (resolve file)",
+    "license": "CC-BY-SA",
+    "license_note": "Category confirmed to contain MPC2000XL files.",
+    "local_path": "references/images/shared/gear-mpc2000xl.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:gear_mpc60": {
+    "category": "hardware",
+    "subject": "Akai MPC60 II",
+    "description": "Akai MPC60 II — the DJ Shadow Entroducing machine",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Akai_MPC_series",
+    "attribution": "Commons uploader (resolve file)",
+    "license": "CC-BY-SA (resolve)",
+    "license_note": "MPC60 images in Akai MPC series Commons category.",
+    "local_path": "lessons/w01-listen-subtract/assets/gear-mpc60.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract",
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:gear_sp1200": {
+    "category": "hardware",
+    "subject": "E-mu SP-1200",
+    "description": "E-mu SP-1200 12-bit drum machine/sampler, front of machine",
+    "source_url": "https://en.wikipedia.org/wiki/File:Sp1200_front_of_machine.JPG",
+    "attribution": "Commons/Wikipedia uploader",
+    "license": "CC-BY-SA (resolve on Commons)",
+    "license_note": "High-res file (3264x2448) confirmed in search.",
+    "local_path": "references/images/shared/gear-sp1200.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:gear_asr10": {
+    "category": "hardware",
+    "subject": "Ensoniq ASR-10",
+    "description": "Ensoniq ASR-10 sampling keyboard (desert-storm studio workhorse)",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Ensoniq",
+    "attribution": "Commons uploader (resolve file)",
+    "license": "CC (resolve)",
+    "license_note": "Ensoniq Commons category confirmed to host ASR-10R / related photos.",
+    "local_path": "references/images/shared/gear-asr10.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:gear_eps16plus": {
+    "category": "hardware",
+    "subject": "Ensoniq EPS-16 Plus",
+    "description": "Ensoniq EPS-16 Plus sampling keyboard (RZA, DJ Premier era)",
+    "source_url": "https://en.wikipedia.org/wiki/Ensoniq_EPS-16_Plus",
+    "attribution": "Wikipedia article hero image",
+    "license": "fair-use commentary",
+    "license_note": "No clearly-CC Commons file confirmed; Wikipedia article hero used.",
+    "local_path": "references/images/shared/gear-eps16plus.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2
+  },
+  "img:gear_sp303": {
+    "category": "hardware",
+    "subject": "Boss SP-303 Dr. Sample",
+    "description": "Boss SP-303 handheld sampler (Donuts-era Dilla)",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Boss_SP-303.jpg",
+    "attribution": "Wikimedia Commons uploader",
+    "license": "CC-BY-SA (resolve)",
+    "license_note": "Direct Commons file confirmed.",
+    "local_path": "lessons/w09-vocal-chopping/assets/gear-sp303.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:gear_sp404": {
+    "category": "hardware",
+    "subject": "Boss SP-404",
+    "description": "Boss/Roland SP-404 groovebox sampler",
+    "source_url": "https://en.wikipedia.org/wiki/Boss_SP-303",
+    "attribution": "Wikipedia SP-303 article (SP-404 discussed)",
+    "license": "fair-use commentary",
+    "license_note": "Use manufacturer Roland press photo if Commons lookup fails.",
+    "local_path": "references/images/shared/gear-sp404.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping",
+      "w11-beat-switch"
+    ],
+    "priority": 2
+  },
+  "img:gear_dr660": {
+    "category": "hardware",
+    "subject": "Boss DR-660 Dr. Rhythm",
+    "description": "Boss DR-660 drum machine (Aphex Twin-era gear)",
+    "source_url": "https://equipboard.com/items/boss-dr-rhythm-dr-660",
+    "attribution": "Equipboard editorial",
+    "license": "fair-use commentary",
+    "license_note": "No Commons file confirmed. Fall back to manufacturer archive or archive.org DR-660 manual cover.",
+    "local_path": "references/images/shared/gear-dr660.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 3
+  },
+  "img:gear_monologue_afx": {
+    "category": "hardware",
+    "subject": "Korg Monologue (AFX edition)",
+    "description": "Korg Monologue Aphex Twin edition — microtuning",
+    "source_url": "https://www.korg.com/us/products/synthesizers/monologue/",
+    "attribution": "Korg Inc. press photography",
+    "license": "fair-use commentary",
+    "license_note": "Commercially published manufacturer press photo, used for educational commentary under fair-use doctrine; full attribution to Korg Inc.",
+    "local_path": "lessons/w05-aphex-tuning/assets/gear-monologue-afx.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 1
+  },
+  "img:gear_ms20": {
+    "category": "hardware",
+    "subject": "Korg MS-20",
+    "description": "Korg MS-20 semi-modular analog synth, front panel",
+    "source_url": "https://www.vintagesynth.com/korg/ms-20",
+    "attribution": "Vintage Synth Explorer editorial photo",
+    "license": "fair-use commentary",
+    "license_note": "Commons has MS-20 photos in Korg category; Wave 10 should resolve. VSE as fallback.",
+    "local_path": "references/images/shared/gear-ms20.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning",
+      "w02-subtraction"
+    ],
+    "priority": 2
+  },
+  "img:gear_tb303": {
+    "category": "hardware",
+    "subject": "Roland TB-303",
+    "description": "Roland TB-303 Bass Line — silver panel, iconic",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Roland_TB-303_Bass_Line_Computer_Controlled.jpg",
+    "attribution": "Wikimedia Commons uploader",
+    "license": "CC-BY-SA (resolve)",
+    "license_note": "File confirmed in Category:Roland_TB-303; alternate 'Roland TB-303 Panel.jpg' (1656x814) also available.",
+    "local_path": "references/images/shared/gear-tb303.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning",
+      "w02-subtraction"
+    ],
+    "priority": 2
+  },
+  "img:gear_casio_fz10m": {
+    "category": "hardware",
+    "subject": "Casio FZ-10M",
+    "description": "Casio FZ-10M rack sampler (FZ-1 rack variant)",
+    "source_url": "https://www.vintagesynth.com/casio/fz-1",
+    "attribution": "Vintage Synth Explorer editorial",
+    "license": "fair-use commentary",
+    "license_note": "No Commons file confirmed for FZ-10M specifically. Fall back to Casio vintage brochure scans.",
+    "local_path": "references/images/shared/gear-casio-fz10m.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 3
+  },
+  "img:gear_orville": {
+    "category": "hardware",
+    "subject": "Eventide Orville",
+    "description": "Eventide Orville multichannel effects processor",
+    "source_url": "https://www.eventideaudio.com/rackmount/orville/",
+    "attribution": "Eventide, Inc. press photo",
+    "license": "fair-use commentary",
+    "license_note": "Manufacturer press photo; educational commentary use.",
+    "local_path": "references/images/shared/gear-orville.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:gear_dsp4000": {
+    "category": "hardware",
+    "subject": "Eventide DSP4000",
+    "description": "Eventide DSP4000 Ultra-Harmonizer",
+    "source_url": "https://www.eventideaudio.com/rackmount/dsp4000/",
+    "attribution": "Eventide, Inc. press photo",
+    "license": "fair-use commentary",
+    "license_note": "Manufacturer press photo; educational commentary use.",
+    "local_path": "references/images/shared/gear-dsp4000.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:gear_machinedrum": {
+    "category": "hardware",
+    "subject": "Elektron Machinedrum",
+    "description": "Elektron Machinedrum SPS-1UW MKII",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Elektron_Machinedrum",
+    "attribution": "Commons uploader (resolve file)",
+    "license": "CC-BY-SA (resolve)",
+    "license_note": "Commons category confirmed.",
+    "local_path": "references/images/shared/gear-machinedrum.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 1
+  },
+  "img:gear_monomachine": {
+    "category": "hardware",
+    "subject": "Elektron Monomachine",
+    "description": "Elektron Monomachine SFX-6/MKII synth",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Elektron_Monomachine",
+    "attribution": "Commons uploader (resolve file)",
+    "license": "CC-BY-SA (resolve)",
+    "license_note": "Commons category confirmed.",
+    "local_path": "references/images/shared/gear-monomachine.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 1
+  },
+  "img:gear_nord_g2x": {
+    "category": "hardware",
+    "subject": "Nord Modular G2X",
+    "description": "Clavia Nord Modular G2X keyboard modular synth",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Nord_Modular_G2",
+    "attribution": "Commons uploader ('Nord Modular G2 (angled).jpg')",
+    "license": "CC-BY-SA (resolve)",
+    "license_note": "File 1353x1595 confirmed.",
+    "local_path": "references/images/shared/gear-nord-g2x.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:gear_technics_sl1200": {
+    "category": "hardware",
+    "subject": "Technics SL-1200",
+    "description": "Technics SL-1200 MK2 turntable",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Technics_SL-1200",
+    "attribution": "Commons uploader (resolve file)",
+    "license": "CC-BY-SA (resolve)",
+    "license_note": "Category contains 41 files.",
+    "local_path": "references/images/shared/gear-technics-sl1200.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract",
+      "w09-vocal-chopping"
+    ],
+    "priority": 2
+  },
+  "img:album_aphex_saw85_92": {
+    "category": "album_art",
+    "subject": "Aphex Twin — Selected Ambient Works 85-92",
+    "description": "Album cover (orange logo on beige)",
+    "source_url": "https://en.wikipedia.org/wiki/Selected_Ambient_Works_85%E2%80%9392",
+    "attribution": "Cover art © R&S Records / Aphex Twin; design Paul Nicholson / Richard D. James",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia hosts low-res cover under non-free fair-use media rationale; used for album-level educational commentary.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-aphex-saw85-92.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 1
+  },
+  "img:album_aphex_come_to_daddy": {
+    "category": "album_art",
+    "subject": "Aphex Twin — Come To Daddy EP",
+    "description": "EP cover",
+    "source_url": "https://en.wikipedia.org/wiki/Come_to_Daddy",
+    "attribution": "Cover art © Warp Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use non-free media.",
+    "local_path": "references/images/shared/album-aphex-come-to-daddy.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning",
+      "w08-autechre-feedback"
+    ],
+    "priority": 1
+  },
+  "img:album_aphex_windowlicker": {
+    "category": "album_art",
+    "subject": "Aphex Twin — Windowlicker EP",
+    "description": "EP cover (iconic face)",
+    "source_url": "https://en.wikipedia.org/wiki/Windowlicker",
+    "attribution": "Cover art © Warp Records; design The Designers Republic",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-aphex-windowlicker.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2
+  },
+  "img:album_aphex_drukqs": {
+    "category": "album_art",
+    "subject": "Aphex Twin — Drukqs",
+    "description": "Album cover (green/cyan woven pattern)",
+    "source_url": "https://en.wikipedia.org/wiki/Drukqs",
+    "attribution": "Cover art © Warp Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-aphex-drukqs.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning",
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:album_aphex_syro": {
+    "category": "album_art",
+    "subject": "Aphex Twin — Syro",
+    "description": "Album cover (green spreadsheet)",
+    "source_url": "https://en.wikipedia.org/wiki/Syro",
+    "attribution": "Cover art © Warp Records; design The Designers Republic",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-aphex-syro.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2
+  },
+  "img:album_aphex_icare": {
+    "category": "album_art",
+    "subject": "Aphex Twin — ...I Care Because You Do",
+    "description": "Album cover (self-portrait painting)",
+    "source_url": "https://en.wikipedia.org/wiki/...I_Care_Because_You_Do",
+    "attribution": "Cover art © Warp Records; self-portrait by Richard D. James",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "references/images/shared/album-aphex-icare.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 3
+  },
+  "img:album_autechre_confield": {
+    "category": "album_art",
+    "subject": "Autechre — Confield",
+    "description": "Album cover (geometric dissection)",
+    "source_url": "https://en.wikipedia.org/wiki/Confield",
+    "attribution": "Cover art © Warp Records; design The Designers Republic",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w08-autechre-feedback/assets/album-autechre-confield.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 1
+  },
+  "img:album_autechre_lp5": {
+    "category": "album_art",
+    "subject": "Autechre — LP5",
+    "description": "Album cover (embossed coarse cardboard, untitled)",
+    "source_url": "https://en.wikipedia.org/wiki/LP5",
+    "attribution": "Cover art © Warp Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w08-autechre-feedback/assets/album-autechre-lp5.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:album_autechre_nts": {
+    "category": "album_art",
+    "subject": "Autechre — NTS Sessions 1-4",
+    "description": "NTS Sessions box set cover",
+    "source_url": "https://en.wikipedia.org/wiki/NTS_Sessions_1%E2%80%934",
+    "attribution": "Cover art © Warp Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "references/images/shared/album-autechre-nts.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 3
+  },
+  "img:album_fourtet_three": {
+    "category": "album_art",
+    "subject": "Four Tet — Three",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Three_(Four_Tet_album)",
+    "attribution": "Cover art © Text Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w06-fourtet-layering/assets/album-fourtet-three.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 1
+  },
+  "img:album_fourtet_rounds": {
+    "category": "album_art",
+    "subject": "Four Tet — Rounds",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Rounds_(Four_Tet_album)",
+    "attribution": "Cover art © Domino Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w06-fourtet-layering/assets/album-fourtet-rounds.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2
+  },
+  "img:album_fourtet_pager": {
+    "category": "album_art",
+    "subject": "KH — Looking At Your Pager",
+    "description": "Single sleeve (KH alias, 2022)",
+    "source_url": "https://en.wikipedia.org/wiki/Looking_at_Your_Pager",
+    "attribution": "Cover art © Text Records / KH",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w06-fourtet-layering/assets/album-fourtet-pager.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2
+  },
+  "img:album_squarepusher_bigloada": {
+    "category": "album_art",
+    "subject": "Squarepusher — Big Loada",
+    "description": "EP cover",
+    "source_url": "https://en.wikipedia.org/wiki/Big_Loada",
+    "attribution": "Cover art © Warp Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/album-squarepusher-bigloada.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 1
+  },
+  "img:album_squarepusher_goplastic": {
+    "category": "album_art",
+    "subject": "Squarepusher — Go Plastic",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Go_Plastic",
+    "attribution": "Cover art © Warp Records; design The Designers Republic",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/album-squarepusher-goplastic.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2
+  },
+  "img:album_squarepusher_hello_everything": {
+    "category": "album_art",
+    "subject": "Squarepusher — Hello Everything",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Hello_Everything",
+    "attribution": "Cover art © Warp Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/album-squarepusher-hello-everything.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2
+  },
+  "img:album_squarepusher_ultravisitor": {
+    "category": "album_art",
+    "subject": "Squarepusher — Ultravisitor",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Ultravisitor",
+    "attribution": "Cover art © Warp Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/album-squarepusher-ultravisitor.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2
+  },
+  "img:album_squarepusher_ufabulum": {
+    "category": "album_art",
+    "subject": "Squarepusher — Ufabulum",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Ufabulum",
+    "attribution": "Cover art © Warp Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/album-squarepusher-ufabulum.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 3
+  },
+  "img:album_dilla_donuts": {
+    "category": "album_art",
+    "subject": "J Dilla — Donuts",
+    "description": "Album cover — 'Smile' photograph by MED shoot, art direction Jeff Jank",
+    "source_url": "https://en.wikipedia.org/wiki/Donuts_(album)",
+    "attribution": "Cover art © Stones Throw Records; art direction Jeff Jank",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use non-free media.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-dilla-donuts.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:album_slum_fantastic_vol2": {
+    "category": "album_art",
+    "subject": "Slum Village — Fantastic, Vol. 2",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Fantastic,_Vol._2",
+    "attribution": "Cover art © GoodVibe Recordings",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-slum-fantastic-vol2.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping",
+      "w11-beat-switch"
+    ],
+    "priority": 2
+  },
+  "img:album_pharcyde_labcabin": {
+    "category": "album_art",
+    "subject": "The Pharcyde — Labcabincalifornia",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Labcabincalifornia",
+    "attribution": "Cover art © Delicious Vinyl",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-pharcyde-labcabin.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2
+  },
+  "img:album_djshadow_entroducing": {
+    "category": "album_art",
+    "subject": "DJ Shadow — Endtroducing.....",
+    "description": "Album cover — crate-digging photo by B+ (Brian Cross)",
+    "source_url": "https://en.wikipedia.org/wiki/Endtroducing.....",
+    "attribution": "Cover art © Mo' Wax; photograph by B+ (Brian Cross)",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use non-free media.",
+    "local_path": "lessons/w01-listen-subtract/assets/album-djshadow-entroducing.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 1
+  },
+  "img:album_burial_untrue": {
+    "category": "album_art",
+    "subject": "Burial — Untrue",
+    "description": "Album cover — artwork by Georgina Cook",
+    "source_url": "https://en.wikipedia.org/wiki/Untrue_(album)",
+    "attribution": "Cover art © Hyperdub; artwork by Georgina Cook",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w11-beat-switch/assets/album-burial-untrue.jpg",
+    "used_by_lessons": [
+      "w11-beat-switch"
+    ],
+    "priority": 1
+  },
+  "img:album_peterock_mecca": {
+    "category": "album_art",
+    "subject": "Pete Rock & CL Smooth — Mecca and the Soul Brother",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Mecca_and_the_Soul_Brother",
+    "attribution": "Cover art © Elektra Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-peterock-mecca.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 3
+  },
+  "img:album_nas_illmatic": {
+    "category": "album_art",
+    "subject": "Nas — Illmatic",
+    "description": "Album cover (Nas as a child, NYC overlay)",
+    "source_url": "https://en.wikipedia.org/wiki/Illmatic",
+    "attribution": "Cover art © Columbia Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-nas-illmatic.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 3
+  },
+  "img:album_biggie_life_after_death": {
+    "category": "album_art",
+    "subject": "The Notorious B.I.G. — Life After Death",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Life_After_Death",
+    "attribution": "Cover art © Bad Boy Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-biggie-life-after-death.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 3
+  },
+  "img:album_madvillain_madvillainy": {
+    "category": "album_art",
+    "subject": "Madvillain — Madvillainy",
+    "description": "Album cover (MF DOOM mask)",
+    "source_url": "https://en.wikipedia.org/wiki/Madvillainy",
+    "attribution": "Cover art © Stones Throw Records; photograph by Eric Coleman",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-madvillain-madvillainy.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 3
+  },
+  "img:album_death_grips_exmilitary": {
+    "category": "album_art",
+    "subject": "Death Grips — Exmilitary",
+    "description": "Mixtape cover",
+    "source_url": "https://en.wikipedia.org/wiki/Exmilitary",
+    "attribution": "Cover art © Third Worlds",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-death-grips-exmilitary.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 3
+  },
+  "img:album_death_grips_money_store": {
+    "category": "album_art",
+    "subject": "Death Grips — The Money Store",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/The_Money_Store",
+    "attribution": "Cover art © Epic Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-death-grips-money-store.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 3
+  },
+  "img:album_mgmt_oracular": {
+    "category": "album_art",
+    "subject": "MGMT — Oracular Spectacular",
+    "description": "Album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Oracular_Spectacular",
+    "attribution": "Cover art © Columbia Records",
+    "license": "fair-use commentary",
+    "license_note": "Wikipedia fair-use.",
+    "local_path": "lessons/w04-warp-modes/assets/album-mgmt-oracular.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes",
+      "w08-autechre-feedback"
+    ],
+    "priority": 3
+  },
+  "img:artist_aphex_twin": {
+    "category": "artist",
+    "subject": "Aphex Twin (Richard D. James) — portrait",
+    "description": "Artist portrait",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Aphex_Twin",
+    "attribution": "Commons uploader (resolve specific file — e.g., 'Aphex Twin.jpg' 640x480)",
+    "license": "CC (resolve)",
+    "license_note": "Commons category confirmed.",
+    "local_path": "lessons/w05-aphex-tuning/assets/artist-aphex-twin.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 1
+  },
+  "img:artist_autechre": {
+    "category": "artist",
+    "subject": "Autechre — Sean Booth + Rob Brown",
+    "description": "Live/duo photo",
+    "source_url": "https://en.wikipedia.org/wiki/Autechre",
+    "attribution": "Wikipedia article hero image",
+    "license": "fair-use commentary",
+    "license_note": "Autechre notoriously camera-shy; Commons has very few images. Fall back to Warp promo photo.",
+    "local_path": "lessons/w08-autechre-feedback/assets/artist-autechre.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:artist_fourtet": {
+    "category": "artist",
+    "subject": "Four Tet / Kieran Hebden — portrait",
+    "description": "Live performance shot (Circulo de Bellas Artes, Madrid 2008)",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Kieran_Hebden_(Four_Tet)_Circulo_de_Bellas_Artes_1.JPG",
+    "attribution": "Commons uploader — Red Bull Music Academy Madrid 2008",
+    "license": "CC-BY-SA-3.0",
+    "license_note": "Confirmed CC-licensed.",
+    "local_path": "lessons/w06-fourtet-layering/assets/artist-fourtet.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 1
+  },
+  "img:artist_squarepusher": {
+    "category": "artist",
+    "subject": "Squarepusher / Tom Jenkinson — portrait",
+    "description": "Live/portrait photo",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:Squarepusher",
+    "attribution": "Commons uploader (resolve file)",
+    "license": "CC (resolve)",
+    "license_note": "Commons category confirmed.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/artist-squarepusher.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 1
+  },
+  "img:artist_j_dilla": {
+    "category": "artist",
+    "subject": "J Dilla (James Dewitt Yancey) — portrait",
+    "description": "Portrait, ideally studio/MPC shot",
+    "source_url": "https://commons.wikimedia.org/wiki/Category:J_Dilla",
+    "attribution": "Commons uploader (resolve file — 4 files in category)",
+    "license": "CC (resolve)",
+    "license_note": "Commons category confirmed (4 files).",
+    "local_path": "lessons/w09-vocal-chopping/assets/artist-j-dilla.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:artist_j_dilla_mpc3000_smithsonian": {
+    "category": "artist",
+    "subject": "J Dilla's MPC3000 at the Smithsonian NMAAHC",
+    "description": "Exhibition photo of Dilla's actual MPC3000 and Moog Voyager donated to NMAAHC",
+    "source_url": "https://nmaahc.si.edu/object/nmaahc_2014.205.1.1",
+    "attribution": "Smithsonian National Museum of African American History and Culture",
+    "license": "fair-use commentary",
+    "license_note": "Smithsonian collection photo; educational commentary. NMAAHC allows non-commercial educational reuse with attribution.",
+    "local_path": "lessons/w09-vocal-chopping/assets/artist-j-dilla-mpc3000-smithsonian.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:artist_djshadow": {
+    "category": "artist",
+    "subject": "DJ Shadow (Josh Davis) — portrait",
+    "description": "Portrait",
+    "source_url": "https://commons.wikimedia.org/wiki/DJ_Shadow",
+    "attribution": "Commons uploader (resolve file)",
+    "license": "CC (resolve)",
+    "license_note": "Commons gallery confirmed.",
+    "local_path": "lessons/w01-listen-subtract/assets/artist-djshadow.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2
+  },
+  "img:artist_dave_fridmann": {
+    "category": "artist",
+    "subject": "Dave Fridmann — producer portrait",
+    "description": "Portrait, ideally at Tarbox console",
+    "source_url": "https://www.davefridmann.com/",
+    "attribution": "Dave Fridmann personal archive",
+    "license": "fair-use commentary",
+    "license_note": "No Commons image located. Editorial commentary use of artist-site photo with attribution.",
+    "local_path": "references/images/shared/artist-dave-fridmann.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 3
+  },
+  "img:studio_tarbox_exterior": {
+    "category": "studio",
+    "subject": "Tarbox Road Studios — exterior",
+    "description": "Exterior of Tarbox Road Studios, Cassadaga NY",
+    "source_url": "http://www.tarboxroadstudios.com/",
+    "attribution": "Tarbox Road Studios / Dave Fridmann",
+    "license": "fair-use commentary",
+    "license_note": "Studio-site photo used for educational commentary.",
+    "local_path": "references/images/shared/studio-tarbox-exterior.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 3
+  },
+  "img:studio_tarbox_console": {
+    "category": "studio",
+    "subject": "Tarbox Road Studios — console room",
+    "description": "SSL console / live room at Tarbox",
+    "source_url": "http://www.tarboxroadstudios.com/equipment.html",
+    "attribution": "Tarbox Road Studios",
+    "license": "fair-use commentary",
+    "license_note": "Studio-site photo; educational commentary use.",
+    "local_path": "references/images/shared/studio-tarbox-console.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 3
+  },
+  "img:studio_fredonia_srt": {
+    "category": "studio",
+    "subject": "SUNY Fredonia Sound Recording Technology — Bernd Gottinger / control room",
+    "description": "Control room at SUNY Fredonia SRT program (Gottinger if locatable)",
+    "source_url": "https://www.fredonia.edu/academics/colleges-schools/school-music/program/sound-recording-technology",
+    "attribution": "SUNY Fredonia",
+    "license": "fair-use commentary",
+    "license_note": "Institution-site photo; educational commentary use. If no Gottinger-specific photo, use SRT program stock.",
+    "local_path": "references/images/shared/studio-fredonia-srt.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 3
+  },
+  "img:ableton_simpler": {
+    "category": "ableton_device",
+    "subject": "Ableton Simpler — Classic mode",
+    "description": "Simpler interface in Classic mode (single sample, ADSR)",
+    "source_url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+    "attribution": "Ableton AG — Live 12 Reference Manual",
+    "license": "fair-use commentary",
+    "license_note": "Vendor documentation screenshot used for educational commentary.",
+    "local_path": "lessons/w03-simpler-basics/assets/ableton-simpler-classic.png",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 1
+  },
+  "img:ableton_simpler_oneshot": {
+    "category": "ableton_device",
+    "subject": "Ableton Simpler — One-Shot mode",
+    "description": "Simpler in One-Shot playback mode",
+    "source_url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+    "attribution": "Ableton AG — Live 12 Reference Manual",
+    "license": "fair-use commentary",
+    "license_note": "Vendor documentation screenshot used for educational commentary.",
+    "local_path": "lessons/w03-simpler-basics/assets/ableton-simpler-oneshot.png",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 1
+  },
+  "img:ableton_simpler_slicing": {
+    "category": "ableton_device",
+    "subject": "Ableton Simpler — Slicing mode",
+    "description": "Simpler in Slicing mode (chops across a Drum Rack)",
+    "source_url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+    "attribution": "Ableton AG — Live 12 Reference Manual",
+    "license": "fair-use commentary",
+    "license_note": "Vendor documentation screenshot used for educational commentary.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/ableton-simpler-slicing.png",
+    "used_by_lessons": [
+      "w03-simpler-basics",
+      "w07-squarepusher-chops",
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:ableton_drum_rack": {
+    "category": "ableton_device",
+    "subject": "Ableton Drum Rack",
+    "description": "Drum Rack interface with 16 pads",
+    "source_url": "https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/",
+    "attribution": "Ableton AG — Live 12 Reference Manual",
+    "license": "fair-use commentary",
+    "license_note": "Vendor documentation screenshot used for educational commentary.",
+    "local_path": "references/images/shared/ableton-drum-rack.png",
+    "used_by_lessons": [
+      "w03-simpler-basics",
+      "w07-squarepusher-chops",
+      "w09-vocal-chopping"
+    ],
+    "priority": 1
+  },
+  "img:ableton_roar": {
+    "category": "ableton_device",
+    "subject": "Ableton Roar — multiband distortion/saturation",
+    "description": "Roar in multiband routing view",
+    "source_url": "https://www.ableton.com/en/live/all-new-features/",
+    "attribution": "Ableton AG — Live 12 feature page",
+    "license": "fair-use commentary",
+    "license_note": "Vendor feature-page screenshot used for editorial commentary.",
+    "local_path": "lessons/w08-autechre-feedback/assets/ableton-roar.png",
+    "used_by_lessons": [
+      "w08-autechre-feedback",
+      "w11-beat-switch"
+    ],
+    "priority": 1
+  },
+  "img:ableton_meld": {
+    "category": "ableton_device",
+    "subject": "Ableton Meld — MPE synthesizer",
+    "description": "Meld bi-timbral synth interface",
+    "source_url": "https://www.ableton.com/en/live/all-new-features/",
+    "attribution": "Ableton AG — Live 12 feature page",
+    "license": "fair-use commentary",
+    "license_note": "Vendor feature-page screenshot used for editorial commentary.",
+    "local_path": "lessons/w05-aphex-tuning/assets/ableton-meld.png",
+    "used_by_lessons": [
+      "w05-aphex-tuning",
+      "w08-autechre-feedback"
+    ],
+    "priority": 1
+  },
+  "img:ableton_granulator_iii": {
+    "category": "ableton_device",
+    "subject": "Ableton Granulator III",
+    "description": "Granulator III granular synthesis instrument (Robert Henke)",
+    "source_url": "https://www.ableton.com/en/packs/granulator/",
+    "attribution": "Ableton AG / Robert Henke",
+    "license": "fair-use commentary",
+    "license_note": "Vendor pack page screenshot used for editorial commentary.",
+    "local_path": "lessons/w06-fourtet-layering/assets/ableton-granulator-iii.png",
+    "used_by_lessons": [
+      "w06-fourtet-layering",
+      "w08-autechre-feedback"
+    ],
+    "priority": 1
+  },
+  "img:ableton_operator": {
+    "category": "ableton_device",
+    "subject": "Ableton Operator — FM synthesizer",
+    "description": "Operator 4-operator FM synth interface",
+    "source_url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+    "attribution": "Ableton AG — Live 12 Reference Manual",
+    "license": "fair-use commentary",
+    "license_note": "Vendor documentation screenshot used for educational commentary.",
+    "local_path": "lessons/w08-autechre-feedback/assets/ableton-operator.png",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 1
+  },
+  "img:ableton_follow_actions": {
+    "category": "ableton_device",
+    "subject": "Ableton Follow Actions pane",
+    "description": "Clip Follow Actions UI (Live 12 per-note follow actions)",
+    "source_url": "https://www.ableton.com/en/live/all-new-features/",
+    "attribution": "Ableton AG — Live 12 feature page",
+    "license": "fair-use commentary",
+    "license_note": "Vendor feature-page screenshot used for editorial commentary.",
+    "local_path": "lessons/w10-variation-generation/assets/ableton-follow-actions.png",
+    "used_by_lessons": [
+      "w10-variation-generation",
+      "w11-beat-switch"
+    ],
+    "priority": 1
+  },
+  "img:ableton_tuning_systems": {
+    "category": "ableton_device",
+    "subject": "Ableton Tuning Systems dialog",
+    "description": "Live 12 microtuning / Tuning Systems dialog (Scala-compatible)",
+    "source_url": "https://www.ableton.com/en/live/all-new-features/",
+    "attribution": "Ableton AG — Live 12 feature page",
+    "license": "fair-use commentary",
+    "license_note": "Vendor feature-page screenshot used for editorial commentary.",
+    "local_path": "lessons/w05-aphex-tuning/assets/ableton-tuning-systems.png",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 1
+  },
+  "img:ableton_cv_tools": {
+    "category": "ableton_device",
+    "subject": "Ableton CV Tools",
+    "description": "CV Tools pack devices (CV Instrument, CV Triggers, etc.)",
+    "source_url": "https://www.ableton.com/en/packs/cv-tools/",
+    "attribution": "Ableton AG — CV Tools pack page",
+    "license": "fair-use commentary",
+    "license_note": "Vendor pack-page screenshot used for editorial commentary.",
+    "local_path": "references/images/shared/ableton-cv-tools.png",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:ableton_warp_modes": {
+    "category": "ableton_device",
+    "subject": "Ableton Warp Modes",
+    "description": "Clip view showing Warp mode selector (Beats / Tones / Texture / Re-Pitch / Complex / Complex Pro)",
+    "source_url": "https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/",
+    "attribution": "Ableton AG — Live 12 Reference Manual",
+    "license": "fair-use commentary",
+    "license_note": "Vendor documentation screenshot used for educational commentary.",
+    "local_path": "lessons/w04-warp-modes/assets/ableton-warp-modes.png",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 1
+  },
+  "img:ableton_push3": {
+    "category": "ableton_device",
+    "subject": "Ableton Push 3",
+    "description": "Push 3 controller hardware (standalone)",
+    "source_url": "https://www.ableton.com/en/manual/push-3-introduction/",
+    "attribution": "Ableton AG press photo",
+    "license": "fair-use commentary",
+    "license_note": "Vendor press photo used for educational commentary.",
+    "local_path": "references/images/shared/ableton-push3.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops",
+      "w11-beat-switch"
+    ],
+    "priority": 2
+  },
+  "img:ableton_sampler": {
+    "category": "ableton_device",
+    "subject": "Ableton Sampler",
+    "description": "Sampler instrument (multisample, modulation matrix)",
+    "source_url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+    "attribution": "Ableton AG — Live 12 Reference Manual",
+    "license": "fair-use commentary",
+    "license_note": "Vendor documentation screenshot used for educational commentary.",
+    "local_path": "references/images/shared/ableton-sampler.png",
+    "used_by_lessons": [
+      "w03-simpler-basics",
+      "w09-vocal-chopping"
+    ],
+    "priority": 2
+  },
+  "img:ableton_wavetable": {
+    "category": "ableton_device",
+    "subject": "Ableton Wavetable",
+    "description": "Wavetable synth interface",
+    "source_url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+    "attribution": "Ableton AG — Live 12 Reference Manual",
+    "license": "fair-use commentary",
+    "license_note": "Vendor documentation screenshot used for educational commentary.",
+    "local_path": "references/images/shared/ableton-wavetable.png",
+    "used_by_lessons": [
+      "w02-subtraction",
+      "w08-autechre-feedback"
+    ],
+    "priority": 2
+  },
+  "img:benjamins-cover": {
+    "category": "album_art",
+    "subject": "Benjamins Cover",
+    "description": "Benjamins album art, square cover, 1400x1400 minimum",
+    "source_url": "https://en.wikipedia.org/wiki/None",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w01-listen-subtract/assets/benjamins-cover.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:five-axes-icons": {
+    "category": "other",
+    "subject": "Five Axes Icons",
+    "description": "Five small icons or glyphs representing low-end, stereo width, vocal clarity, transient sharpness, reverb depth — aligned horizontally",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w01-listen-subtract/assets/five-axes-icons.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:notebook-timer": {
+    "category": "other",
+    "subject": "Notebook Timer",
+    "description": "Overhead photo of a paper notebook with pen and a mechanical kitchen timer on a desk, laptop closed in background",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w01-listen-subtract/assets/notebook-timer.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:spectrogram-4stem": {
+    "category": "other",
+    "subject": "Spectrogram 4Stem",
+    "description": "Stacked spectrogram of a song broken into four stems (drums/bass/vocals/other), 30 seconds, labeled",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w01-listen-subtract/assets/spectrogram-4stem.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:master-state-diagram": {
+    "category": "other",
+    "subject": "Master State Diagram",
+    "description": "Simple arrangement diagram with a central 'master state' bar and arrows showing intro/A/B/breakdown/peak/outro as mutes of it",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w01-listen-subtract/assets/master-state-diagram.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:tape-op-89-cover": {
+    "category": "album_art",
+    "subject": "Tape Op 89 Cover",
+    "description": "Tape Op magazine issue 89 cover (Squarepusher feature)",
+    "source_url": "https://en.wikipedia.org/wiki/Squarepusher",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w01-listen-subtract/assets/tape-op-89-cover.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:sos-april-2004-cover": {
+    "category": "album_art",
+    "subject": "Sos April 2004 Cover",
+    "description": "Sound on Sound magazine April 2004 cover (Autechre feature)",
+    "source_url": "https://en.wikipedia.org/wiki/Autechre",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w01-listen-subtract/assets/sos-april-2004-cover.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:level-match-meter": {
+    "category": "other",
+    "subject": "Level Match Meter",
+    "description": "Screenshot of a LUFS meter showing two tracks matched within 0.5 dB",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w01-listen-subtract/assets/level-match-meter.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-yamaha-hs5": {
+    "category": "hardware",
+    "subject": "Gear Yamaha Hs5",
+    "description": "Yamaha HS5 studio monitor, single unit, front three-quarter angle, neutral background",
+    "source_url": "https://en.wikipedia.org/wiki/Three_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w01-listen-subtract/assets/gear-yamaha-hs5.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-neumann-kh80": {
+    "category": "hardware",
+    "subject": "Gear Neumann Kh80",
+    "description": "Neumann KH80 DSP studio monitor, single unit, front three-quarter angle, neutral background",
+    "source_url": "https://en.wikipedia.org/wiki/Three_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w01-listen-subtract/assets/gear-neumann-kh80.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-akg-k371": {
+    "category": "hardware",
+    "subject": "Gear Akg K371",
+    "description": "AKG K371 closed-back headphones on stand, side profile",
+    "source_url": "https://en.wikipedia.org/wiki/AKG_Acoustics",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w01-listen-subtract/assets/gear-akg-k371.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-sennheiser-hd600": {
+    "category": "hardware",
+    "subject": "Gear Sennheiser Hd600",
+    "description": "Sennheiser HD600 open-back headphones on stand, side profile",
+    "source_url": "https://en.wikipedia.org/wiki/Sennheiser_HD_600",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w01-listen-subtract/assets/gear-sennheiser-hd600.jpg",
+    "used_by_lessons": [
+      "w01-listen-subtract"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:burial-untrue-cover": {
+    "category": "album_art",
+    "subject": "Burial Untrue Cover",
+    "description": "Album cover of Burial's Untrue (Hyperdub, 2007) — centered, full-bleed.",
+    "source_url": "https://en.wikipedia.org/wiki/Untrue",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w02-subtraction/assets/burial-untrue-cover.jpg",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:rubin-creative-act-cover": {
+    "category": "album_art",
+    "subject": "Rubin Creative Act Cover",
+    "description": "Book cover of Rick Rubin, The Creative Act: A Way of Being (Penguin Press, 2023).",
+    "source_url": "https://en.wikipedia.org/wiki/The_Creative_Act:_A_Way_of_Being",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w02-subtraction/assets/rubin-creative-act-cover.jpg",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:rubin-studio-shangri-la": {
+    "category": "studio",
+    "subject": "Rubin Studio Shangri La",
+    "description": "Photograph of Rick Rubin in a studio environment — ideally Shangri-La, Malibu. Any editorial photo suitable for commentary.",
+    "source_url": "https://en.wikipedia.org/wiki/Rick_Rubin",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w02-subtraction/assets/rubin-studio-shangri-la.jpg",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:four-tet-rounds-cover": {
+    "category": "album_art",
+    "subject": "Four Tet Rounds Cover",
+    "description": "Album cover of Four Tet, Rounds (Domino, 2003).",
+    "source_url": "https://en.wikipedia.org/wiki/Rounds_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w02-subtraction/assets/four-tet-rounds-cover.jpg",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:dilla-donuts-cover": {
+    "category": "album_art",
+    "subject": "Dilla Donuts Cover",
+    "description": "Album cover of J Dilla, Donuts (Stones Throw, 2006).",
+    "source_url": "https://en.wikipedia.org/wiki/Donuts_(album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w02-subtraction/assets/dilla-donuts-cover.jpg",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:arrangement-dynamics-arc-example": {
+    "category": "other",
+    "subject": "Arrangement Dynamics Arc Example",
+    "description": "Ableton Arrangement View screenshot of a finished track with a clear dynamics arc — thinning toward edges, dense Peak, one-bar silence visible. Dilla/Burial/Four Tet reference recording ideal; any well-subtracted arrangement acceptable.",
+    "source_url": "https://en.wikipedia.org/wiki/Four_Tet",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w02-subtraction/assets/arrangement-dynamics-arc-example.jpg",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-locators-pane": {
+    "category": "ableton_device",
+    "subject": "Ableton Locators Pane",
+    "description": "Ableton Live 12 Arrangement View screenshot, locators pane visible, with the seven-locator Subtraction template placed (Intro / A / B / Reduction / Peak / Outro / End).",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w02-subtraction/assets/ableton-locators-pane.png",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-bounce-groups-dialog": {
+    "category": "ableton_device",
+    "subject": "Ableton Bounce Groups Dialog",
+    "description": "Screenshot of the Bounce Group dialog introduced in Ableton Live 12.3 — parameter fields visible.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w02-subtraction/assets/ableton-bounce-groups-dialog.png",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-group-track-header": {
+    "category": "ableton_device",
+    "subject": "Ableton Group Track Header",
+    "description": "Close-up of an Ableton group-track header with Track Activator, Solo, Mute, and clip-level activator annotated.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w02-subtraction/assets/ableton-group-track-header.png",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:arrangement-locators-6min": {
+    "category": "ableton_device",
+    "subject": "Arrangement Locators 6Min",
+    "description": "Ableton Arrangement View with six locators at Intro 0:00, A 0:45, B 2:00, Reduction 3:15, Peak 3:45, Outro 5:00, End 5:45 — referenced from existing s03 slide.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w02-subtraction/assets/arrangement-locators-6min.png",
+    "used_by_lessons": [
+      "w02-subtraction"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-mpc2kxl-hero": {
+    "category": "hardware",
+    "subject": "Gear Mpc2Kxl Hero",
+    "description": "Akai MPC2000XL front panel, centered, on neutral background, 3/4 angle OK",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC2000XL",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w03-simpler-basics/assets/gear-mpc2kxl-hero.jpg",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-mpc2kxl-pads": {
+    "category": "hardware",
+    "subject": "Gear Mpc2Kxl Pads",
+    "description": "Akai MPC2000XL — right-side faceplate, focused on the 4x4 pad grid with Bank A/B/C/D buttons and the Note Variation slider visible",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC2000XL",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w03-simpler-basics/assets/gear-mpc2kxl-pads.jpg",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-mpc2kxl-left-panel": {
+    "category": "hardware",
+    "subject": "Gear Mpc2Kxl Left Panel",
+    "description": "Akai MPC2000XL — left-side faceplate, Sample/Record button, Trim button, Mode selector, the mode buttons that drive the chop workflow",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC2000XL",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w03-simpler-basics/assets/gear-mpc2kxl-left-panel.jpg",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:simpler-classic-full": {
+    "category": "ableton_device",
+    "subject": "Simpler Classic Full",
+    "description": "Ableton Simpler device, Classic mode selected, with sample loaded, amp envelope / filter / LFO all visible",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w03-simpler-basics/assets/simpler-classic-full.png",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:simpler-oneshot-full": {
+    "category": "ableton_device",
+    "subject": "Simpler Oneshot Full",
+    "description": "Ableton Simpler device, One-Shot mode selected, with a drum sample loaded, fade sliders visible",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w03-simpler-basics/assets/simpler-oneshot-full.png",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:simpler-slicing-full": {
+    "category": "ableton_device",
+    "subject": "Simpler Slicing Full",
+    "description": "Ableton Simpler device, Slicing mode selected, with a drum loop loaded, numbered slice markers visible on the waveform",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w03-simpler-basics/assets/simpler-slicing-full.png",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:simpler-classic-annotated": {
+    "category": "hardware",
+    "subject": "Simpler Classic Annotated",
+    "description": "Ableton Simpler Classic mode with callouts highlighting Voices selector, Warp toggle, filter section, amp envelope",
+    "source_url": "https://en.wikipedia.org/wiki/Warp_(record_label)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w03-simpler-basics/assets/simpler-classic-annotated.jpg",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:simpler-oneshot-annotated": {
+    "category": "hardware",
+    "subject": "Simpler Oneshot Annotated",
+    "description": "Ableton Simpler One-Shot mode with callouts highlighting Trigger/Gate, Fade In, Fade Out, Snap",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w03-simpler-basics/assets/simpler-oneshot-annotated.jpg",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:simpler-slicing-annotated": {
+    "category": "hardware",
+    "subject": "Simpler Slicing Annotated",
+    "description": "Ableton Simpler Slicing mode with callouts highlighting Slice-by dropdown, Sensitivity, Playback mode, slices list",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w03-simpler-basics/assets/simpler-slicing-annotated.jpg",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:drum-rack-16-pads-populated": {
+    "category": "ableton_device",
+    "subject": "Drum Rack 16 Pads Populated",
+    "description": "Ableton Drum Rack with 16 pads populated from a stemforge drum render — kicks on C1/C#1/D1, snares on E1/F1/F#1, hats above, names visible",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w03-simpler-basics/assets/drum-rack-16-pads-populated.png",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:mpc-ableton-bridge-set": {
+    "category": "ableton_device",
+    "subject": "Mpc Ableton Bridge Set",
+    "description": "An Ableton Live set — three tracks visible: Source audio track with vocal clip, MIDI track named Chop 1 with a Drum Rack instance, audio track set to Resample input",
+    "source_url": "https://en.wikipedia.org/wiki/Three_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w03-simpler-basics/assets/mpc-ableton-bridge-set.png",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:stemforge-loader-annotated": {
+    "category": "hardware",
+    "subject": "Stemforge Loader Annotated",
+    "description": "StemForgeLoader.amxd device UI with callouts for Manifest path field, Build button, template list readout, operation log",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w03-simpler-basics/assets/stemforge-loader-annotated.jpg",
+    "used_by_lessons": [
+      "w03-simpler-basics"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:tarbox-exterior": {
+    "category": "studio",
+    "subject": "Tarbox Exterior",
+    "description": "Tarbox Road Studios exterior, Cassadaga NY — converted dairy building, daytime",
+    "source_url": "https://en.wikipedia.org/wiki/Dave_Fridmann",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/tarbox-exterior.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:tarbox-neve-88rs": {
+    "category": "studio",
+    "subject": "Tarbox Neve 88Rs",
+    "description": "Neve 88RS console interior shot at Tarbox Road, wide enough to annotate mic pre / EQ / inserts / bus section",
+    "source_url": "https://en.wikipedia.org/wiki/Neve_Electronics",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/tarbox-neve-88rs.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:dorrough-610-front": {
+    "category": "other",
+    "subject": "Dorrough 610 Front",
+    "description": "Dorrough 610 Discriminate Audio Processor front panel, close enough to read the three-band threshold controls",
+    "source_url": "https://en.wikipedia.org/wiki/Three_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/dorrough-610-front.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:fridmann-at-desk": {
+    "category": "other",
+    "subject": "Fridmann At Desk",
+    "description": "Dave Fridmann seated at the Tarbox console, preferably mid-session",
+    "source_url": "https://en.wikipedia.org/wiki/Dave_Fridmann",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/fridmann-at-desk.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:studer-a80-vu": {
+    "category": "other",
+    "subject": "Studer A80 Vu",
+    "description": "Studer A80 VU II 2-inch tape machine at Tarbox, transport and VU bank visible",
+    "source_url": "https://en.wikipedia.org/wiki/Studer",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/studer-a80-vu.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-glue-saturator": {
+    "category": "ableton_device",
+    "subject": "Ableton Glue Saturator",
+    "description": "Ableton Live 12 Glue Compressor and Saturator devices side-by-side in a track view, default skin",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w04-warp-modes/assets/ableton-glue-saturator.png",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:decapitator-style-n": {
+    "category": "other",
+    "subject": "Decapitator Style N",
+    "description": "SoundToys Decapitator interface with Style set to N (Neve germanium), Drive approx 7, Punish on",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w04-warp-modes/assets/decapitator-style-n.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:warp-mode-dropdown": {
+    "category": "ableton_device",
+    "subject": "Warp Mode Dropdown",
+    "description": "Ableton Live 12 Sample tab warp-mode dropdown expanded — Beats / Tones / Texture / Re-Pitch / Complex / Complex Pro visible",
+    "source_url": "https://en.wikipedia.org/wiki/Warp_(record_label)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/warp-mode-dropdown.png",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:complex-pro-params": {
+    "category": "other",
+    "subject": "Complex Pro Params",
+    "description": "Complex Pro warp mode control strip, Formants and Envelope controls visible",
+    "source_url": "https://en.wikipedia.org/wiki/Warp_(record_label)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/complex-pro-params.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:beats-mode-params": {
+    "category": "other",
+    "subject": "Beats Mode Params",
+    "description": "Beats warp mode control strip — Preserve, Transient Loop Mode, Transient Envelope",
+    "source_url": "https://en.wikipedia.org/wiki/Warp_(record_label)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/beats-mode-params.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:texture-flux-params": {
+    "category": "other",
+    "subject": "Texture Flux Params",
+    "description": "Texture warp mode control strip — Grain Size and Flux",
+    "source_url": "https://en.wikipedia.org/wiki/Warp_(record_label)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/texture-flux-params.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:kick-transient-smear": {
+    "category": "other",
+    "subject": "Kick Transient Smear",
+    "description": "Side-by-side kick waveform — Complex Pro (top, rounded attack) vs Beats (bottom, sharp attack)",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w04-warp-modes/assets/kick-transient-smear.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:neu-1972-cover": {
+    "category": "album_art",
+    "subject": "Neu 1972 Cover",
+    "description": "NEU debut album cover (1972, Brain Records) — the red script logo on white",
+    "source_url": "https://en.wikipedia.org/wiki/Neu!",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/neu-1972-cover.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:flaming-lips-soft-bulletin": {
+    "category": "other",
+    "subject": "Flaming Lips Soft Bulletin",
+    "description": "The Flaming Lips — The Soft Bulletin (1999) album cover",
+    "source_url": "https://en.wikipedia.org/wiki/The_Soft_Bulletin",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/flaming-lips-soft-bulletin.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:mercury-rev-deserters-songs": {
+    "category": "other",
+    "subject": "Mercury Rev Deserters Songs",
+    "description": "Mercury Rev — Deserter's Songs (1998) album cover",
+    "source_url": "https://en.wikipedia.org/wiki/Deserter's_Songs",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w04-warp-modes/assets/mercury-rev-deserters-songs.jpg",
+    "used_by_lessons": [
+      "w04-warp-modes"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-mnlg-hero": {
+    "category": "hardware",
+    "subject": "Gear Mnlg Hero",
+    "description": "Korg Monologue (AFX edition) hero shot — graphite body, red knobs, front-panel screen-print, neutral background.",
+    "source_url": "https://en.wikipedia.org/wiki/Korg_Monologue",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/gear-mnlg-hero.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-mnlg-panel": {
+    "category": "hardware",
+    "subject": "Gear Mnlg Panel",
+    "description": "Korg Monologue AFX top-down panel photo, high-res, suitable for callout overlays on EDIT MODE, microtuning edit page, sequencer.",
+    "source_url": "https://en.wikipedia.org/wiki/Korg_Monologue",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/gear-mnlg-panel.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-disklavier-hero": {
+    "category": "hardware",
+    "subject": "Gear Disklavier Hero",
+    "description": "Yamaha Disklavier grand (MkIV or Enspire Pro), full instrument, lid open, in a studio/recital context.",
+    "source_url": "https://en.wikipedia.org/wiki/Disklavier",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/gear-disklavier-hero.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-disklavier-interior": {
+    "category": "hardware",
+    "subject": "Gear Disklavier Interior",
+    "description": "Cutaway or under-the-lid photo of a Disklavier showing solenoid bank below keys + pedal solenoids. Ideally a service/manual diagram.",
+    "source_url": "https://en.wikipedia.org/wiki/Disklavier",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/gear-disklavier-interior.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-art-saw-85-92": {
+    "category": "album_art",
+    "subject": "Album Art Saw 85 92",
+    "description": "Selected Ambient Works 85-92 cover art — Aphex Twin logo stencil, 1992. Fair-use at 480px max.",
+    "source_url": "https://en.wikipedia.org/wiki/Selected_Ambient_Works_85–92",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-art-saw-85-92.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-art-drukqs": {
+    "category": "album_art",
+    "subject": "Album Art Drukqs",
+    "description": "Drukqs album cover art — 2001, Warp. Fair-use at 480px max.",
+    "source_url": "https://en.wikipedia.org/wiki/Drukqs",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-art-drukqs.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-art-syro": {
+    "category": "album_art",
+    "subject": "Album Art Syro",
+    "description": "Syro album cover art — 2014, Warp, typographic gear list cover. Fair-use at 480px max.",
+    "source_url": "https://en.wikipedia.org/wiki/Syro",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-art-syro.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-art-i-care-because-you-do": {
+    "category": "other",
+    "subject": "Album Art I Care Because You Do",
+    "description": "...I Care Because You Do album cover art — 1995, Warp. Fair-use at 480px max.",
+    "source_url": "https://en.wikipedia.org/wiki/...I_Care_Because_You_Do",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-art-i-care-because-you-do.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-art-come-to-daddy": {
+    "category": "other",
+    "subject": "Album Art Come To Daddy",
+    "description": "Come To Daddy EP cover art — 1997, Warp. Fair-use at 480px max.",
+    "source_url": "https://en.wikipedia.org/wiki/Come_to_Daddy",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-art-come-to-daddy.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-art-windowlicker": {
+    "category": "other",
+    "subject": "Album Art Windowlicker",
+    "description": "Windowlicker EP cover art — 1999, Warp. Fair-use at 480px max.",
+    "source_url": "https://en.wikipedia.org/wiki/Windowlicker",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/album-art-windowlicker.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:portrait-aphex-come-to-daddy-mask": {
+    "category": "artist",
+    "subject": "Portrait Aphex Come To Daddy Mask",
+    "description": "Aphex Twin portrait wearing the toothy-grin mask from the Come To Daddy video (1997, Chris Cunningham). Fair-use screengrab or promo still.",
+    "source_url": "https://en.wikipedia.org/wiki/Come_to_Daddy",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/portrait-aphex-come-to-daddy-mask.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:rdj-soundcloud-screenshot": {
+    "category": "ableton_device",
+    "subject": "Rdj Soundcloud Screenshot",
+    "description": "Screenshot of user18081971 SoundCloud page showing track list with #disklavier / #nagra hashtags visible. Can be user-captured screenshot.",
+    "source_url": "https://en.wikipedia.org/wiki/Disklavier",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w05-aphex-tuning/assets/rdj-soundcloud-screenshot.png",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:spectrogram-microtuned-kick": {
+    "category": "other",
+    "subject": "Spectrogram Microtuned Kick",
+    "description": "Spectrogram of a microtuned kick (E1 fundamental, ~41 Hz) showing the sustained fundamental line locked to the track root. Derivable from stemforge renders.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w05-aphex-tuning/assets/spectrogram-microtuned-kick.jpg",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:live12-tuning-systems": {
+    "category": "ableton_device",
+    "subject": "Live12 Tuning Systems",
+    "description": "Ableton Live 12 Tuning Systems dialog, screenshot, with a 7-limit-just.scl loaded, root E1 highlighted.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w05-aphex-tuning/assets/live12-tuning-systems.png",
+    "used_by_lessons": [
+      "w05-aphex-tuning"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:hebden-portrait": {
+    "category": "artist",
+    "subject": "Hebden Portrait",
+    "description": "Kieran Hebden portrait, Three (2024) promo cycle, laptop + HD25s framing preferred",
+    "source_url": "https://en.wikipedia.org/wiki/Three_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w06-fourtet-layering/assets/hebden-portrait.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:three-cover": {
+    "category": "album_art",
+    "subject": "Three Cover",
+    "description": "Four Tet — Three (2024) official album art, 1:1 square, hi-res",
+    "source_url": "https://en.wikipedia.org/wiki/Three_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w06-fourtet-layering/assets/three-cover.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:rounds-cover": {
+    "category": "album_art",
+    "subject": "Rounds Cover",
+    "description": "Four Tet — Rounds (2003) official album art, 1:1 square, hi-res",
+    "source_url": "https://en.wikipedia.org/wiki/Rounds_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w06-fourtet-layering/assets/rounds-cover.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-omnisphere-browser-hero": {
+    "category": "hardware",
+    "subject": "Gear Omnisphere Browser Hero",
+    "description": "Omnisphere 2.8 preset browser screenshot, showing alphabetical category list prominent",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/gear-omnisphere-browser-hero.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-omnisphere-browser": {
+    "category": "hardware",
+    "subject": "Gear Omnisphere Browser",
+    "description": "Omnisphere browser closeup for annotated tour — category pane + preset list + Sound Match + favorites visible",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/gear-omnisphere-browser.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-omnisphere-layers": {
+    "category": "hardware",
+    "subject": "Gear Omnisphere Layers",
+    "description": "Omnisphere edit page showing Part A / Part B + two Layers per part architecture",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/gear-omnisphere-layers.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-omnisphere-fx": {
+    "category": "hardware",
+    "subject": "Gear Omnisphere Fx",
+    "description": "Omnisphere FX page with Layer / Part / Aux slots populated",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/gear-omnisphere-fx.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-omnisphere-orb": {
+    "category": "hardware",
+    "subject": "Gear Omnisphere Orb",
+    "description": "Omnisphere Orb page — circular modulation XY surface",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/gear-omnisphere-orb.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-audiomulch-canvas": {
+    "category": "hardware",
+    "subject": "Gear Audiomulch Canvas",
+    "description": "AudioMulch 2.x canvas screenshot with Contraptions patched end-to-end and Metasurface visible",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/gear-audiomulch-canvas.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:cool-edit-pro-ui": {
+    "category": "other",
+    "subject": "Cool Edit Pro Ui",
+    "description": "Cool Edit Pro waveform editor screenshot circa 2003 for Rounds-era context",
+    "source_url": "https://en.wikipedia.org/wiki/Rounds_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w06-fourtet-layering/assets/cool-edit-pro-ui.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-note-chance": {
+    "category": "ableton_device",
+    "subject": "Ableton Note Chance",
+    "description": "Ableton Live 12 clip editor with Chance and Velocity Range handles visible on selected notes",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/ableton-note-chance.png",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-pitch-transformer": {
+    "category": "ableton_device",
+    "subject": "Ableton Pitch Transformer",
+    "description": "Ableton Live 12 Clip Transform → Pitch dialog with probabilistic shift enabled",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/ableton-pitch-transformer.png",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:kick-spectrogram": {
+    "category": "other",
+    "subject": "Kick Spectrogram",
+    "description": "Spectrogram of a four-layer kick stack rendered — four distinct frequency bands visible over time",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w06-fourtet-layering/assets/kick-spectrogram.jpg",
+    "used_by_lessons": [
+      "w06-fourtet-layering"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:qy700-hero": {
+    "category": "hardware",
+    "subject": "Qy700 Hero",
+    "description": "Yamaha QY700 (1996) front panel, centered, neutral background, full front view",
+    "source_url": "https://en.wikipedia.org/wiki/Yamaha_QY700",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/qy700-hero.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:qy700-panel-grid": {
+    "category": "hardware",
+    "subject": "Qy700 Panel Grid",
+    "description": "Yamaha QY700 front panel close-up on the step sequencer grid + velocity editor area, callouts will annotate",
+    "source_url": "https://en.wikipedia.org/wiki/Yamaha_QY700",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/qy700-panel-grid.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:qy700-rear": {
+    "category": "other",
+    "subject": "Qy700 Rear",
+    "description": "Yamaha QY700 rear panel — MIDI In/Out A/Out B, Sync Out, stereo out jacks visible",
+    "source_url": "https://en.wikipedia.org/wiki/Yamaha_QY700",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/qy700-rear.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:push3-step-mode": {
+    "category": "other",
+    "subject": "Push3 Step Mode",
+    "description": "Ableton Push 3 in step sequencer mode with pads lit, showing the 16-pad grid",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w07-squarepusher-chops/assets/push3-step-mode.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:s950-dr660-hero": {
+    "category": "hardware",
+    "subject": "S950 Dr660 Hero",
+    "description": "Akai S950 rack sampler (1988) and Boss DR-660 drum machine (1992) side by side, neutral background",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_S950",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/s950-dr660-hero.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:s950-panel": {
+    "category": "hardware",
+    "subject": "S950 Panel",
+    "description": "Akai S950 front panel close-up showing LCD, numeric keypad, edit buttons, 8 output jacks visible",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_S950",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/s950-panel.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:dr660-panel": {
+    "category": "hardware",
+    "subject": "Dr660 Panel",
+    "description": "Boss DR-660 front panel — pattern grid pads, sync out, MIDI out jack visible",
+    "source_url": "https://en.wikipedia.org/wiki/Boss_DR-660",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/dr660-panel.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:drumrack-bitcrush-chain": {
+    "category": "other",
+    "subject": "Drumrack Bitcrush Chain",
+    "description": "Ableton Drum Rack UI screenshot with Auto Filter LPF + Redux + Glue Compressor chain visible on the return",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w07-squarepusher-chops/assets/drumrack-bitcrush-chain.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:amen-break-waveform": {
+    "category": "other",
+    "subject": "Amen Break Waveform",
+    "description": "Amen break waveform, 4 bars, with transient markers annotated for 16-pad assignment (kick, snare, hat, pickup bar 3-4 highlighted)",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w07-squarepusher-chops/assets/amen-break-waveform.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:jenkinson-portrait": {
+    "category": "artist",
+    "subject": "Jenkinson Portrait",
+    "description": "Tom Jenkinson (Squarepusher) portrait, studio or live context, bass guitar if possible",
+    "source_url": "https://en.wikipedia.org/wiki/Squarepusher",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/jenkinson-portrait.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:go-plastic-album-art": {
+    "category": "album_art",
+    "subject": "Go Plastic Album Art",
+    "description": "Squarepusher — Go Plastic (2001) album cover art",
+    "source_url": "https://en.wikipedia.org/wiki/Go_Plastic",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/go-plastic-album-art.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:big-loada-album-art": {
+    "category": "album_art",
+    "subject": "Big Loada Album Art",
+    "description": "Squarepusher — Big Loada (1997) EP cover art",
+    "source_url": "https://en.wikipedia.org/wiki/Big_Loada",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/big-loada-album-art.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:hello-everything-album-art": {
+    "category": "album_art",
+    "subject": "Hello Everything Album Art",
+    "description": "Squarepusher — Hello Everything (2006) album cover art",
+    "source_url": "https://en.wikipedia.org/wiki/Hello_Everything",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/hello-everything-album-art.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ultravisitor-album-art": {
+    "category": "album_art",
+    "subject": "Ultravisitor Album Art",
+    "description": "Squarepusher — Ultravisitor (2004) album cover art",
+    "source_url": "https://en.wikipedia.org/wiki/Ultravisitor",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/ultravisitor-album-art.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:tx81z-fs1r-hero": {
+    "category": "hardware",
+    "subject": "Tx81Z Fs1R Hero",
+    "description": "Yamaha TX81Z (1987) and FS1R (1998) FM rack synths, side by side",
+    "source_url": "https://en.wikipedia.org/wiki/Yamaha_TX81Z",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/tx81z-fs1r-hero.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:s6000-hero": {
+    "category": "hardware",
+    "subject": "S6000 Hero",
+    "description": "Akai S6000 rack sampler (1998) front panel",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_S6000",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/s6000-hero.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:eventide-orville-hero": {
+    "category": "hardware",
+    "subject": "Eventide Orville Hero",
+    "description": "Eventide Orville (2000) rack front panel with screen on",
+    "source_url": "https://en.wikipedia.org/wiki/Eventide_H9",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w07-squarepusher-chops/assets/eventide-orville-hero.jpg",
+    "used_by_lessons": [
+      "w07-squarepusher-chops"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:elektron-hero": {
+    "category": "hardware",
+    "subject": "Elektron Hero",
+    "description": "Elektron Machinedrum SPS-1UW MKII and Monomachine SFX-60 MKII side by side on a studio desk, front-facing",
+    "source_url": "https://en.wikipedia.org/wiki/Elektron_Machinedrum",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/elektron-hero.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:machinedrum-panel": {
+    "category": "hardware",
+    "subject": "Machinedrum Panel",
+    "description": "Machinedrum front panel close-up with room for callout labels on trig keys, param encoders, machine selector, kit bank",
+    "source_url": "https://en.wikipedia.org/wiki/Elektron_Machinedrum",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/machinedrum-panel.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:monomachine-panel": {
+    "category": "hardware",
+    "subject": "Monomachine Panel",
+    "description": "Monomachine SFX-60 MKII front panel close-up, top-down, with room for callouts",
+    "source_url": "https://en.wikipedia.org/wiki/Elektron_Monomachine",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/monomachine-panel.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:nord-modular-g2": {
+    "category": "other",
+    "subject": "Nord Modular G2",
+    "description": "Nord Modular G2 (or G2X) in Autechre live context — either on stage or in studio",
+    "source_url": "https://en.wikipedia.org/wiki/Autechre",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/nord-modular-g2.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:maxmsp-patcher": {
+    "category": "other",
+    "subject": "Maxmsp Patcher",
+    "description": "Dense Max/MSP patcher screenshot — multiple subpatches, tilde objects, jitter matrix objects. Either user-created or a Cycling '74 demo screenshot.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w08-autechre-feedback/assets/maxmsp-patcher.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:booth-brown-studio": {
+    "category": "studio",
+    "subject": "Booth Brown Studio",
+    "description": "Sean Booth and Rob Brown in the studio, preferably mid-2000s or later. Black-and-white or color.",
+    "source_url": "https://en.wikipedia.org/wiki/Autechre",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/booth-brown-studio.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:booth-brown-live": {
+    "category": "other",
+    "subject": "Booth Brown Live",
+    "description": "Autechre live at a festival or club, typical screen-off dark-stage setup, one or both visible at the rig",
+    "source_url": "https://en.wikipedia.org/wiki/Autechre",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/booth-brown-live.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:confield-cover": {
+    "category": "album_art",
+    "subject": "Confield Cover",
+    "description": "Autechre — Confield (2001) album art, Warp Records cover",
+    "source_url": "https://en.wikipedia.org/wiki/Confield",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/confield-cover.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:draft-730-cover": {
+    "category": "album_art",
+    "subject": "Draft 730 Cover",
+    "description": "Autechre — Draft 7.30 (2003) album art, Warp Records cover",
+    "source_url": "https://en.wikipedia.org/wiki/Autechre",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/draft-730-cover.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:lp5-cover": {
+    "category": "album_art",
+    "subject": "Lp5 Cover",
+    "description": "Autechre — LP5 (1998) album art, Warp Records cover",
+    "source_url": "https://en.wikipedia.org/wiki/LP5_(Autechre_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/lp5-cover.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:tri-repetae-cover": {
+    "category": "album_art",
+    "subject": "Tri Repetae Cover",
+    "description": "Autechre — Tri Repetae (1995) album art, Warp Records cover",
+    "source_url": "https://en.wikipedia.org/wiki/Tri_Repetae",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/tri-repetae-cover.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:quaristice-cover": {
+    "category": "album_art",
+    "subject": "Quaristice Cover",
+    "description": "Autechre — Quaristice (2008) album art, Warp Records cover",
+    "source_url": "https://en.wikipedia.org/wiki/Quaristice",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/quaristice-cover.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:nts-sessions-cover": {
+    "category": "album_art",
+    "subject": "Nts Sessions Cover",
+    "description": "Autechre — NTS Sessions 1-4 (2018) album art, Warp Records box-set cover",
+    "source_url": "https://en.wikipedia.org/wiki/NTS_Sessions_1–4",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w08-autechre-feedback/assets/nts-sessions-cover.jpg",
+    "used_by_lessons": [
+      "w08-autechre-feedback"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-mpc3000-hero": {
+    "category": "hardware",
+    "subject": "Gear Mpc3000 Hero",
+    "description": "Akai MPC3000 front panel, centered, on neutral background. Prefer the Smithsonian-archived Dilla unit if available.",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC3000",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/gear-mpc3000-hero.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-mpc3000-panel": {
+    "category": "hardware",
+    "subject": "Gear Mpc3000 Panel",
+    "description": "MPC3000 front panel close-up with the 16 pads, swing knob, Note Repeat button, and Timing Correct display visible.",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC3000",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/gear-mpc3000-panel.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-sp1200-hero": {
+    "category": "hardware",
+    "subject": "Gear Sp1200 Hero",
+    "description": "E-mu SP-1200 front panel, centered, on neutral background.",
+    "source_url": "https://en.wikipedia.org/wiki/E-mu_SP-1200",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/gear-sp1200-hero.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gear-sp1200-panel": {
+    "category": "hardware",
+    "subject": "Gear Sp1200 Panel",
+    "description": "E-mu SP-1200 front panel close-up with the 8 pads, pitch/semitone/fine displays, truncate buttons, and individual output jacks on the back visible.",
+    "source_url": "https://en.wikipedia.org/wiki/E-mu_SP-1200",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/gear-sp1200-panel.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:dilla-portrait": {
+    "category": "artist",
+    "subject": "Dilla Portrait",
+    "description": "J Dilla editorial portrait. Any era acceptable; preferred context is at the MPC3000.",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC3000",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/dilla-portrait.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:dilla-smithsonian-mpc3000": {
+    "category": "other",
+    "subject": "Dilla Smithsonian Mpc3000",
+    "description": "The Smithsonian NMAAHC-archived J Dilla MPC3000 on display.",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC3000",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/dilla-smithsonian-mpc3000.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:premier-portrait": {
+    "category": "artist",
+    "subject": "Premier Portrait",
+    "description": "DJ Premier in studio, ideally at an MPC60 or Technics 1200s.",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC60",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/premier-portrait.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:kanye-mike-dean-console": {
+    "category": "other",
+    "subject": "Kanye Mike Dean Console",
+    "description": "Kanye West and Mike Dean at a studio console — MBDTF/YEEZUS-era session photo acceptable.",
+    "source_url": "https://en.wikipedia.org/wiki/My_Beautiful_Dark_Twisted_Fantasy",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/kanye-mike-dean-console.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:scott-herren-prefuse": {
+    "category": "other",
+    "subject": "Scott Herren Prefuse",
+    "description": "Scott Herren / Prefuse 73 editorial portrait, ideally at an MPC2000XL.",
+    "source_url": "https://en.wikipedia.org/wiki/Akai_MPC2000XL",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/scott-herren-prefuse.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-donuts": {
+    "category": "album_art",
+    "subject": "Album Donuts",
+    "description": "Album cover — J Dilla, Donuts (Stones Throw, 2006).",
+    "source_url": "https://en.wikipedia.org/wiki/Donuts_(album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-donuts.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-fantastic-vol-2": {
+    "category": "other",
+    "subject": "Album Fantastic Vol 2",
+    "description": "Album cover — Slum Village, Fantastic Vol. 2 (2000).",
+    "source_url": "https://en.wikipedia.org/wiki/Fantastic,_Vol._2",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-fantastic-vol-2.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-illmatic": {
+    "category": "other",
+    "subject": "Album Illmatic",
+    "description": "Album cover — Nas, Illmatic (1994).",
+    "source_url": "https://en.wikipedia.org/wiki/Illmatic",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-illmatic.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-36-chambers": {
+    "category": "other",
+    "subject": "Album 36 Chambers",
+    "description": "Album cover — Wu-Tang Clan, Enter the Wu-Tang (36 Chambers) (1993).",
+    "source_url": "https://en.wikipedia.org/wiki/Enter_the_Wu-Tang_(36_Chambers)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-36-chambers.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-one-word-extinguisher": {
+    "category": "other",
+    "subject": "Album One Word Extinguisher",
+    "description": "Album cover — Prefuse 73, One Word Extinguisher (Warp, 2003).",
+    "source_url": "https://en.wikipedia.org/wiki/One_Word_Extinguisher",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-one-word-extinguisher.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:album-madvillainy": {
+    "category": "other",
+    "subject": "Album Madvillainy",
+    "description": "Album cover — Madvillain, Madvillainy (Stones Throw, 2004).",
+    "source_url": "https://en.wikipedia.org/wiki/Madvillainy",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w09-vocal-chopping/assets/album-madvillainy.jpg",
+    "used_by_lessons": [
+      "w09-vocal-chopping"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:zaireeka-4cd-spread": {
+    "category": "album_art",
+    "subject": "Zaireeka 4Cd Spread",
+    "description": "Flaming Lips, Zaireeka (Warner Bros., 1997) — four-CD box or disc spread, all four discs visible. Hero image for the opening parable.",
+    "source_url": "https://en.wikipedia.org/wiki/Zaireeka",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w10-variation-generation/assets/zaireeka-4cd-spread.jpg",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:fridmann-tarbox-studio": {
+    "category": "studio",
+    "subject": "Fridmann Tarbox Studio",
+    "description": "Dave Fridmann in Tarbox Road Studios (Cassadaga NY). Any editorial photo of Fridmann at the console or in the live room. Sound on Sound ran a feature in 2012 with usable images.",
+    "source_url": "https://en.wikipedia.org/wiki/Dave_Fridmann",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w10-variation-generation/assets/fridmann-tarbox-studio.jpg",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:mr-bill-studio": {
+    "category": "studio",
+    "subject": "Mr Bill Studio",
+    "description": "Bill Day (Mr. Bill) in his studio or at the DAW. YouTube thumbnail-style still from his Resample-and-Mutate tutorial corpus acceptable.",
+    "source_url": "https://en.wikipedia.org/wiki/Mr._Bill",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w10-variation-generation/assets/mr-bill-studio.jpg",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:cobham-spectrum-cover": {
+    "category": "album_art",
+    "subject": "Cobham Spectrum Cover",
+    "description": "Album cover of Billy Cobham, Spectrum (Atlantic SD-7268, 1973). Pink/orange Gene Brownell portrait cover.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w10-variation-generation/assets/cobham-spectrum-cover.jpg",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-follow-actions-panel": {
+    "category": "hardware",
+    "subject": "Ableton Follow Actions Panel",
+    "description": "Ableton Live 12 Follow Actions panel (the clip-properties box), open and populated with two actions, probability weights, trigger interval, and Legato visible. Preferably with Scene FA visible at the header.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w10-variation-generation/assets/ableton-follow-actions-panel.jpg",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-sample-offset-envelope": {
+    "category": "ableton_device",
+    "subject": "Ableton Sample Offset Envelope",
+    "description": "Clip Envelope pane in Ableton Live 12 showing a Sample Offset envelope drawn over 2 bars of an audio clip. Grid set to 16ths. The draw shows ±8/16 displacement.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w10-variation-generation/assets/ableton-sample-offset-envelope.png",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-recombine-shuffle": {
+    "category": "ableton_device",
+    "subject": "Ableton Recombine Shuffle",
+    "description": "Ableton Live 12 Transform → Recombine dialog with Shuffle enabled, Pitch/Velocity disabled.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w10-variation-generation/assets/ableton-recombine-shuffle.png",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-seed-generator": {
+    "category": "ableton_device",
+    "subject": "Ableton Seed Generator",
+    "description": "Ableton Live 12 MIDI editor with the Seed generator popover open, Pitch ±7, Density 60, Note Length 1/16.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w10-variation-generation/assets/ableton-seed-generator.png",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-clip-envelope-unlinked": {
+    "category": "ableton_device",
+    "subject": "Ableton Clip Envelope Unlinked",
+    "description": "Ableton Live 12 clip-envelope pane showing a filter-cutoff envelope with Unlinked loop set to 7 bars over a 16-bar audio clip.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w10-variation-generation/assets/ableton-clip-envelope-unlinked.png",
+    "used_by_lessons": [
+      "w10-variation-generation"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gkmc-cover": {
+    "category": "album_art",
+    "subject": "Gkmc Cover",
+    "description": "Album cover of Kendrick Lamar's good kid, m.A.A.d city (Interscope, 2012). Centered, full-bleed.",
+    "source_url": "https://en.wikipedia.org/wiki/Good_Kid,_M.A.A.D_City",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w11-beat-switch/assets/gkmc-cover.jpg",
+    "used_by_lessons": [
+      "w11-beat-switch"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:dj-dahi-portrait": {
+    "category": "artist",
+    "subject": "Dj Dahi Portrait",
+    "description": "Editorial / press photo of producer DJ Dahi (Dacoury Dahi Natche). Studio environment preferred; any editorial photo suitable for commentary acceptable.",
+    "source_url": "https://en.wikipedia.org/wiki/DJ_Dahi",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w11-beat-switch/assets/dj-dahi-portrait.jpg",
+    "used_by_lessons": [
+      "w11-beat-switch"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:beach-house-teen-dream-cover": {
+    "category": "album_art",
+    "subject": "Beach House Teen Dream Cover",
+    "description": "Album cover of Beach House, Teen Dream (Sub Pop, 2010). 'Silver Soul' is track 2, the Money Trees source sample.",
+    "source_url": "https://en.wikipedia.org/wiki/Teen_Dream",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w11-beat-switch/assets/beach-house-teen-dream-cover.jpg",
+    "used_by_lessons": [
+      "w11-beat-switch"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:aphex-come-to-daddy-cover": {
+    "category": "album_art",
+    "subject": "Aphex Come To Daddy Cover",
+    "description": "Single cover of Aphex Twin, Come to Daddy (Warp WAP94, 1997).",
+    "source_url": "https://en.wikipedia.org/wiki/Come_to_Daddy",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w11-beat-switch/assets/aphex-come-to-daddy-cover.jpg",
+    "used_by_lessons": [
+      "w11-beat-switch"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-chain-selector-annotated": {
+    "category": "hardware",
+    "subject": "Ableton Chain Selector Annotated",
+    "description": "Ableton Live 12.2 Instrument Rack screenshot with Chain Selector ruler, chain zones, Macros bar, and Macro Variations drawer visible and annotated.",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w11-beat-switch/assets/ableton-chain-selector-annotated.jpg",
+    "used_by_lessons": [
+      "w11-beat-switch"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:ableton-macro-variations-drawer": {
+    "category": "ableton_device",
+    "subject": "Ableton Macro Variations Drawer",
+    "description": "Ableton Live 12.2 Macro Variations drawer, showing at least three named snapshots stored on a single Rack.",
+    "source_url": "https://en.wikipedia.org/wiki/Three_(Four_Tet_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w11-beat-switch/assets/ableton-macro-variations-drawer.png",
+    "used_by_lessons": [
+      "w11-beat-switch"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:itu-bs1770-k-weighting": {
+    "category": "other",
+    "subject": "Itu Bs1770 K Weighting",
+    "description": "Diagram of ITU-R BS.1770-4 K-weighting filter magnitude response; high-pass + high-shelf, x-axis 20 Hz to 20 kHz log, y-axis dB",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w12-ship-two-tracks/assets/itu-bs1770-k-weighting.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:intersample-peak-reconstruction": {
+    "category": "other",
+    "subject": "Intersample Peak Reconstruction",
+    "description": "Waveform diagram showing digital samples just below 0 dBFS with the reconstructed analog waveform rising above 0 dBFS between samples",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w12-ship-two-tracks/assets/intersample-peak-reconstruction.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:youlean-ab-levelmatched": {
+    "category": "other",
+    "subject": "Youlean Ab Levelmatched",
+    "description": "Screenshot of Ableton Live arrangement view with four audio tracks, Utility on each, Youlean Loudness Meter 2 showing matched integrated LUFS",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w12-ship-two-tracks/assets/youlean-ab-levelmatched.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:youlean-span-master-chain": {
+    "category": "other",
+    "subject": "Youlean Span Master Chain",
+    "description": "Side-by-side screenshot of Youlean Loudness Meter 2 (integrated, short-term, true peak) and Voxengo SPAN (spectrum analyzer, long-time averaging)",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w12-ship-two-tracks/assets/youlean-span-master-chain.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:bandcamp-upload-dialog": {
+    "category": "ableton_device",
+    "subject": "Bandcamp Upload Dialog",
+    "description": "Screenshot of Bandcamp artist-dashboard album upload form, showing privacy toggle, artwork slot, track title fields",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w12-ship-two-tracks/assets/bandcamp-upload-dialog.png",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:gottinger-mastering-studio": {
+    "category": "studio",
+    "subject": "Gottinger Mastering Studio",
+    "description": "Bernd Gottinger at SUNY Fredonia mastering lab / Buffalo Philharmonic session control room; press photo or editorial portrait",
+    "source_url": "https://en.wikipedia.org/wiki/Bernd_Gottinger",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w12-ship-two-tracks/assets/gottinger-mastering-studio.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:buffalo-philharmonic-session": {
+    "category": "other",
+    "subject": "Buffalo Philharmonic Session",
+    "description": "Buffalo Philharmonic orchestral recording session — wide shot of the orchestra in a recording hall with microphone setup",
+    "source_url": null,
+    "attribution": null,
+    "license": null,
+    "license_note": "No Wikipedia match found — manual pickup required",
+    "local_path": "lessons/w12-ship-two-tracks/assets/buffalo-philharmonic-session.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:fredonia-srt-facilities": {
+    "category": "studio",
+    "subject": "Fredonia Srt Facilities",
+    "description": "SUNY Fredonia Sound Recording Technology program — mastering lab, studio, or program facilities exterior/interior",
+    "source_url": "https://en.wikipedia.org/wiki/State_University_of_New_York_at_Fredonia",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w12-ship-two-tracks/assets/fredonia-srt-facilities.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  },
+  "img:fridmann-tarbox-chair": {
+    "category": "studio",
+    "subject": "Fridmann Tarbox Chair",
+    "description": "Dave Fridmann at Tarbox Road Studios — chair in the woods, rural New York aesthetic; the 'finished or not mastered' attribution photo",
+    "source_url": "https://en.wikipedia.org/wiki/The_Woods_(Sleater-Kinney_album)",
+    "attribution": "Wikipedia (fair-use commentary)",
+    "license": "fair-use commentary",
+    "license_note": "Auto-seeded with Wikipedia article URL; fetch_images.py follows og:image. Manual curation if Wikipedia page missing.",
+    "local_path": "lessons/w12-ship-two-tracks/assets/fridmann-tarbox-chair.jpg",
+    "used_by_lessons": [
+      "w12-ship-two-tracks"
+    ],
+    "priority": 2,
+    "auto_seeded": true
+  }
+}

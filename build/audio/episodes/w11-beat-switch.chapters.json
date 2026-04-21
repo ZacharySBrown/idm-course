@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ch000",
+    "title": "Intro",
+    "start_ms": 0,
+    "end_ms": 94850
+  },
+  {
+    "id": "ch001",
+    "title": "The drop is a subtraction problem",
+    "start_ms": 95250,
+    "end_ms": 203750
+  },
+  {
+    "id": "ch002",
+    "title": "TDE beat switches \u2014 punctuation, not disruption",
+    "start_ms": 204150,
+    "end_ms": 327300
+  },
+  {
+    "id": "ch003",
+    "title": "DJ Dahi's reversal \u2014 Beach House into Money Trees",
+    "start_ms": 327700,
+    "end_ms": 460750
+  },
+  {
+    "id": "ch004",
+    "title": "The rub \u2014 Bob Power's friction, Dilla's bassline",
+    "start_ms": 461150,
+    "end_ms": 592800
+  },
+  {
+    "id": "ch005",
+    "title": "Inverse drop \u2014 Burial Archangel, Aphex Come to Daddy Dub",
+    "start_ms": 593200,
+    "end_ms": 727100
+  },
+  {
+    "id": "ch006",
+    "title": "Scene-launch the switch \u2014 Session to Arrangement on a bar boundary",
+    "start_ms": 727500,
+    "end_ms": 865300
+  },
+  {
+    "id": "ch007",
+    "title": "Chain Selector + Macro Variations \u2014 the patch-flip alternative",
+    "start_ms": 865700,
+    "end_ms": 998350
+  },
+  {
+    "id": "ch008",
+    "title": "Commit the pre-switch section before you flip chains",
+    "start_ms": 998750,
+    "end_ms": 1128400
+  },
+  {
+    "id": "ch009",
+    "title": "Four tracks to rip apart this week",
+    "start_ms": 1128800,
+    "end_ms": 1260050
+  },
+  {
+    "id": "ch010",
+    "title": "The dullest eight bars \u2014 pick one of three moves",
+    "start_ms": 1260450,
+    "end_ms": 1391550
+  },
+  {
+    "id": "ch011",
+    "title": "Outro",
+    "start_ms": 1391950,
+    "end_ms": 1453100
+  }
+]

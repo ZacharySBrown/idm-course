@@ -1,0 +1,106 @@
+title: "IDM Production — 12 Weeks, 12 Tracks"
+owner: zak@raindog.ai
+version: 0.1.0-mvp
+philosophy: |
+  Constraint + recombination beats sound-design rabbit holes.
+  Completion > perfection. Ship 12 tracks in 12 weeks.
+  Reverse-engineer artist methods rather than feature-tour Ableton.
+
+weeks:
+  - id: w01-listen-subtract
+    week: 1
+    title: "Listen like an engineer, subtract like a producer"
+    pillars: [meta_listening]
+    stemforge_pipeline: "default --no-slice"
+    stemforge_source: "benjamins.wav"
+    teasers: []
+
+  - id: w02-subtraction
+    week: 2
+    title: "The Subtraction method — finish by removing"
+    pillars: [arrangement]
+    stemforge_pipeline: "default"
+    stemforge_source: "little_by_little.wav"
+    teasers: []
+    easter_eggs: ["fridmann_bass_drop_in"]  # throwaway mention, payoff in W4
+
+  - id: w03-simpler-basics
+    week: 3
+    title: "Simpler, Drum Rack, one-shots"
+    pillars: [sound_design_primitives, ableton_core]
+    stemforge_pipeline: "default + oneshot"
+    stemforge_source: "grooves/Express Yourself.wav"
+    teasers: []
+
+  - id: w04-warp-modes
+    week: 4
+    title: "Warp modes as sound design — Complex Pro, Beats, Texture"
+    pillars: [warp, sound_design_primitives]
+    stemforge_pipeline: "default"
+    stemforge_source: "grooves/Hallogallo (NEU!).wav"
+    teasers: [tarbox_road]
+
+  - id: w05-aphex-tuning
+    week: 5
+    title: "Aphex Pt.1 — Tuning drums to the track"
+    pillars: [aphex_twin, microtuning]
+    stemforge_pipeline: "idm_crushed --no-slice"
+    stemforge_source: "grooves/Express Yourself.wav"
+    teasers: [fredonia_srt]
+    mvp: true
+
+  - id: w06-fourtet-layering
+    week: 6
+    title: "Four Tet — subliminal layering & preset discipline"
+    pillars: [four_tet, layering]
+    stemforge_pipeline: "glitch"
+    stemforge_source: "grooves/Moanin' (Blakey).wav"
+    teasers: []
+
+  - id: w07-squarepusher-chops
+    week: 7
+    title: "Squarepusher — hardware hostility & Amen chopping"
+    pillars: [squarepusher, breakbeat]
+    stemforge_pipeline: "idm_crushed"
+    stemforge_source: "grooves/Funky Fanfare.wav"
+    teasers: [tame_impala_boss]
+
+  - id: w08-autechre-feedback
+    week: 8
+    title: "Autechre — generative, not random"
+    pillars: [autechre, generative_midi, max_for_live]
+    stemforge_pipeline: "ambient"
+    stemforge_source: "grooves/Moanin' (Blakey).wav"
+    teasers: [mgmt_kids_distortion]
+
+  - id: w09-vocal-chopping
+    week: 9
+    title: "Vocal chopping — Prefuse, Dilla, Kanye, Premier"
+    pillars: [hip_hop_integration, vocal_processing]
+    stemforge_pipeline: "default --stems lalal"
+    stemforge_source: "grooves/Hot Pants (JB).wav"
+    teasers: []
+
+  - id: w10-variation-generation
+    week: 10
+    title: "Variation generation — the five mutations"
+    pillars: [arrangement, resample_and_mutate]
+    stemforge_pipeline: "glitch + oneshot"
+    stemforge_source: "grooves/Heather.wav"
+    teasers: [zaireeka_4cd]
+
+  - id: w11-beat-switch
+    week: 11
+    title: "Beat switches, inverse drops, and the rub"
+    pillars: [arrangement, hip_hop_integration]
+    stemforge_pipeline: "student"
+    stemforge_source: "student_upload"
+    teasers: []
+
+  - id: w12-ship-two-tracks
+    week: 12
+    title: "Ship two tracks — mastering, metadata, delivery"
+    pillars: [mastering, release_discipline, voice_consistency]
+    stemforge_pipeline: "student"
+    stemforge_source: "student_upload"
+    teasers: [gottinger_alumni]

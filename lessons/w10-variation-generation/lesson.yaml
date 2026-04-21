@@ -1,0 +1,476 @@
+id: w10-variation-generation
+week: 10
+title: "Week 10 — Variation generation, the five mutations"
+duration_minutes: 45
+pillars: [arrangement, resample_and_mutate]
+concepts:
+  - five_mutations_method
+  - drum_swap_mutation
+  - bass_seed_mutation
+  - filter_sweep_mutation
+  - reverse_mutation
+  - new_layer_mutation
+  - resample_and_mutate_engine
+  - commit_and_delete_source
+  - follow_actions_generative_pool
+  - clip_envelopes_unlinked
+  - sample_offset_envelope
+  - bounce_in_place_commit
+  - consolidate_every_8_16_bars
+  - spec_a_locator_template
+  - versioning_discipline
+ableton_surface:
+  - follow_actions_2_0
+  - seed_generator
+  - auto_filter_macro
+  - clip_envelopes_unlinked
+  - sample_offset_envelope
+  - bounce_in_place
+  - bounce_groups_12_3
+  - consolidate_cmd_j
+  - capture_midi
+  - recombine_shuffle
+prereqs:
+  - w02-subtraction
+  - w05-aphex-tuning
+  - w08-autechre-feedback
+
+teasers:
+  - zaireeka_4cd
+
+stemforge:
+  recipes:
+    - w10-heather-variation-source
+
+references:
+  - bib:zaireeka_wikipedia
+  - bib:fridmann_davefridmann_com
+  - bib:finish_more_music_variation
+  - bib:mr_bill_resample_tutorial
+  - bib:ableton_live_12_manual
+  - bib:stemforge_repo
+  - bib:rick_rubin_creative_act
+  - bib:oblique_strategies_eno
+  - bib:tape_notes_140_four_tet
+  - bib:sos_autechre_april_2004
+
+needs_bib:
+  - title: "Mr. Bill — specific Resample-and-Mutate lecture with timestamps"
+    reason: "The YouTube channel entry exists but no single canonical video is cited. A specific video with timestamped resample/chop/delete-source steps would strengthen §5.6 attribution."
+  - title: "Flaming Lips / Fridmann interview on the Zaireeka false-starts"
+    reason: "The parable cites months of discarded work. A primary-source interview confirming the scrapped early sessions would replace the Wikipedia-only citation."
+
+slides:
+  - id: s01
+    kind: title
+    heading: "The parable before the method"
+    body_md: slides/s01-zaireeka-parable.md
+    script_md: script/s01-zaireeka-parable.md
+    visuals: []
+    audio_examples: []
+
+  - id: s02
+    kind: concept
+    heading: "The thesis — constraint is the generator"
+    body_md: slides/s02-constraint-thesis.md
+    script_md: script/s02-constraint-thesis.md
+    visuals: []
+    audio_examples: []
+
+  - id: s03
+    kind: concept
+    heading: "The locator template, before you touch a sound"
+    body_md: slides/s03-locator-template.md
+    script_md: script/s03-locator-template.md
+    visuals: []
+    audio_examples: []
+
+  - id: s04
+    kind: concept
+    heading: "Mutation 1 — drum swap"
+    body_md: slides/s04-mutation-drum-swap.md
+    script_md: script/s04-mutation-drum-swap.md
+    visuals: []
+    audio_examples: []
+
+  - id: s05
+    kind: concept
+    heading: "Mutation 2 — bass seed"
+    body_md: slides/s05-mutation-bass-seed.md
+    script_md: script/s05-mutation-bass-seed.md
+    visuals: []
+    audio_examples: []
+
+  - id: s06
+    kind: concept
+    heading: "Mutation 3 — filter sweep across the whole section"
+    body_md: slides/s06-mutation-filter-sweep.md
+    script_md: script/s06-mutation-filter-sweep.md
+    visuals: []
+    audio_examples: []
+
+  - id: s07
+    kind: concept
+    heading: "Mutation 4 — reverse one element"
+    body_md: slides/s07-mutation-reverse.md
+    script_md: script/s07-mutation-reverse.md
+    visuals: []
+    audio_examples: []
+
+  - id: s08
+    kind: concept
+    heading: "Mutation 5 — new layer that was not in the original"
+    body_md: slides/s08-mutation-new-layer.md
+    script_md: script/s08-mutation-new-layer.md
+    visuals: []
+    audio_examples: []
+
+  - id: s09
+    kind: reference
+    heading: "Heather — the source pool for Follow Actions 2.0"
+    body_md: slides/s09-heather-stemforge.md
+    script_md: script/s09-heather-stemforge.md
+    visuals:
+      - type: waveform
+        src: "stemforge:w10:w10-heather-variation-source:loops_dir"
+        caption: "Section-stratified curation. Each loop is a 2-bar candidate tagged to an arrangement region (intro, A, B, peak, outro)."
+    audio_examples: []
+
+  - id: s10
+    kind: concept
+    heading: "Follow Actions 2.0 — the non-repeating variation pool"
+    body_md: slides/s10-follow-actions.md
+    script_md: script/s10-follow-actions.md
+    visuals: []
+    audio_examples: []
+
+  - id: s11
+    kind: concept
+    heading: "The Resample-and-Mutate engine — Mr. Bill's forcing function"
+    body_md: slides/s11-resample-mutate.md
+    script_md: script/s11-resample-mutate.md
+    visuals: []
+    audio_examples: []
+
+  - id: s12
+    kind: caveat
+    heading: "Versioning discipline — the gap both specs missed"
+    body_md: slides/s12-versioning.md
+    script_md: script/s12-versioning.md
+    visuals: []
+    audio_examples: []
+
+  - id: s13
+    kind: exercise
+    heading: "Ship it — five mutations, six minutes, one bounce"
+    body_md: slides/s13-exercise.md
+    script_md: script/s13-exercise.md
+    visuals: []
+    audio_examples: []
+    deliverable: "A 6-minute stereo bounce, 44.1 kHz / 24-bit, named w10_<yourname>_five-mutations.wav. Take your best 16-bar loop from any week so far. Duplicate it five times along the timeline. Apply the five prescribed mutations in any order — drum swap, bass seed, filter sweep, reverse, new layer — one per duplicate. Arrange them into the Spec A locator template: 0:00 Intro, 0:45 A, 2:00 B, 3:15 Reduction, 3:45 Peak, 5:00 Outro. Write one sentence per variation explaining which mutation landed and which one felt forced. Save the Live set as IDM_COURSE_versions/YYYY-MM-DD_w10_track_01.als before you bounce."
+
+  # ---------------------------------------------------------------------------
+  # Image-anchored reference slides
+  # ---------------------------------------------------------------------------
+
+  - id: i01
+    kind: reference
+    heading: "Zaireeka (Warner Bros., 1997) — the four-CD object"
+    body_md: slides/i01-zaireeka-4cd.md
+    images:
+      - src: assets/zaireeka-4cd-spread.jpg
+        caption: "Zaireeka (Warner Bros. 9 46804-2, 1997). Four separate CDs, one album. Cover + disc spread."
+        credit: "Warner Bros. Records / Flaming Lips"
+        license: "fair-use commentary"
+    references:
+      - bib:zaireeka_wikipedia
+      - bib:fridmann_davefridmann_com
+
+  - id: i02
+    kind: reference
+    heading: "Tarbox Road Studios — Fridmann's constraint machine"
+    body_md: slides/i02-fridmann-tarbox.md
+    images:
+      - src: assets/fridmann-tarbox-studio.jpg
+        caption: "Dave Fridmann at Tarbox Road Studios, Cassadaga NY. A converted dairy turned tracking room."
+        credit: "Photo credit TBD (photo-sourcer)"
+        license: "editorial / fair-use commentary"
+    references:
+      - bib:fridmann_davefridmann_com
+
+  - id: i03
+    kind: reference
+    heading: "Mr. Bill — the forcing-function producer"
+    body_md: slides/i03-mr-bill-studio.md
+    images:
+      - src: assets/mr-bill-studio.jpg
+        caption: "Bill Day (Mr. Bill), Melbourne studio. YouTube corpus of Resample-and-Mutate tutorials."
+        credit: "Mr. Bill / YouTube still"
+        license: "fair-use commentary"
+    references:
+      - bib:mr_bill_resample_tutorial
+
+  - id: i04
+    kind: reference
+    heading: "Billy Cobham, Spectrum (1973) — why Heather survives chopping"
+    body_md: slides/i04-heather-cobham.md
+    images:
+      - src: assets/cobham-spectrum-cover.jpg
+        caption: "Billy Cobham, Spectrum (Atlantic SD-7268, 1973). The album Heather is lifted from."
+        credit: "Atlantic Records"
+        license: "fair-use commentary"
+    references:
+      - bib:stemforge_repo
+
+  # ---------------------------------------------------------------------------
+  # Diagram slides
+  # ---------------------------------------------------------------------------
+
+  - id: d01
+    kind: concept
+    heading: "Follow Actions — the state-machine diagram"
+    body_md: slides/d01-follow-actions-state-machine.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Clip 1] -->|Play Again · 20| A
+            A -->|Other · 80| B[Clip 2]
+            A -->|Other · 80| C[Clip 3]
+            B -->|Play Again · 20| B
+            B -->|Other · 80| A
+            B -->|Other · 80| C
+            C -->|Play Again · 20| C
+            C -->|Other · 80| A
+            C -->|Other · 80| B
+        caption: "Three-clip Follow Actions pool with Pattern 1 weights (20% self, 80% other). Every trigger interval Live rolls the edge weights and dispatches."
+    references:
+      - bib:ableton_live_12_manual
+      - bib:sos_autechre_april_2004
+
+  - id: d02
+    kind: concept
+    heading: "Resample-and-Mutate — the pipeline"
+    body_md: slides/d02-resample-mutate-pipeline.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            M1[MIDI: drums] --> RB[Resample bus]
+            M2[MIDI: bass] --> RB
+            M3[MIDI: pad] --> RB
+            RB -->|Bounce Group 12.3| P[Printed audio]
+            P -->|Delete source MIDI| X((commit))
+            X --> CH[Chop · Simpler Slicing]
+            CH --> MU[Mutate: pitch · reverse · crush · offset]
+            MU --> BC[B and C section material]
+        caption: "The one-way pipeline. Commitment boundary sits at 'Delete source MIDI' — no move back from this point. Live 12.3 Bounce Groups collapses the first three steps into one menu item."
+    references:
+      - bib:mr_bill_resample_tutorial
+      - bib:ableton_live_12_manual
+
+  - id: d03
+    kind: concept
+    heading: "The variation tree — one source × 5 mutations"
+    body_md: slides/d03-variation-tree.md
+    diagrams:
+      - mermaid: |
+          graph TD
+            R[Source loop · 16 bars] --> V1[Mutation 1 · drum swap]
+            R --> V2[Mutation 2 · bass seed]
+            R --> V3[Mutation 3 · filter sweep]
+            R --> V4[Mutation 4 · reverse one element]
+            R --> V5[Mutation 5 · new layer]
+            V1 --> S1[Section A]
+            V2 --> S2[Section B]
+            V3 --> S3[Intro / Reduction]
+            V4 --> S4[Outro bridge]
+            V5 --> S5[Peak]
+        caption: "Five branches from one root. Leaves map to arrangement sections. Coherence is inherited from the shared root, not designed."
+    references:
+      - bib:finish_more_music_variation
+
+  # ---------------------------------------------------------------------------
+  # Follow Actions 2.0 — technical mini-module (fa-)
+  # ---------------------------------------------------------------------------
+
+  - id: fa-01
+    kind: concept
+    heading: "Follow Actions 2.0 — state-machine architecture"
+    body_md: slides/fa-01-state-machine.md
+    references:
+      - bib:ableton_live_12_manual
+
+  - id: fa-02
+    kind: concept
+    heading: "Probability weights — Any vs specific jumps"
+    body_md: slides/fa-02-probability-weights.md
+    references:
+      - bib:ableton_live_12_manual
+      - bib:sos_autechre_april_2004
+
+  - id: fa-03
+    kind: concept
+    heading: "Legato vs restart — the phase-preservation switch"
+    body_md: slides/fa-03-legato-vs-restart.md
+    references:
+      - bib:ableton_live_12_manual
+      - bib:sos_autechre_april_2004
+
+  - id: fa-04
+    kind: concept
+    heading: "Combining Follow Actions with Clip Envelopes"
+    body_md: slides/fa-04-clip-envelopes-unlinked.md
+    references:
+      - bib:ableton_live_12_manual
+      - bib:sos_autechre_april_2004
+
+  - id: fa-05
+    kind: concept
+    heading: "The Follow Actions panel — annotated"
+    body_md: slides/fa-05-panel-annotated.md
+    images:
+      - src: assets/ableton-follow-actions-panel.png
+        caption: "Ableton Live 12 Follow Actions panel. Trigger, Action A/B, Chance A/B, Legato, Linked highlighted."
+        credit: "Ableton Live 12 screenshot, annotated"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+
+  # ---------------------------------------------------------------------------
+  # Resample-and-Mutate mini-module (ram-)
+  # ---------------------------------------------------------------------------
+
+  - id: ram-01
+    kind: concept
+    heading: "Resample-and-Mutate — the core loop, step-by-step"
+    body_md: slides/ram-01-workflow-steps.md
+    references:
+      - bib:mr_bill_resample_tutorial
+      - bib:ableton_live_12_manual
+
+  - id: ram-02
+    kind: concept
+    heading: "Bounce Groups (Live 12.3) — the engine, natively"
+    body_md: slides/ram-02-bounce-groups.md
+    images:
+      - src: assets/ableton-bounce-groups-dialog.png
+        caption: "Bounce Group dialog, Live 12.3. Delete-source toggle is the Mr. Bill move, native."
+        credit: "Ableton Live 12.3 screenshot"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+      - bib:sos_autechre_april_2004
+
+  - id: ram-03
+    kind: caveat
+    heading: "Why delete — the anti-perfectionism machine"
+    body_md: slides/ram-03-commitment-anti-perfectionism.md
+    references:
+      - bib:mr_bill_resample_tutorial
+      - bib:rick_rubin_creative_act
+      - bib:oblique_strategies_eno
+
+  - id: ram-04
+    kind: concept
+    heading: "Sample Offset envelope — new patterns from one audio file"
+    body_md: slides/ram-04-sample-offset.md
+    images:
+      - src: assets/ableton-sample-offset-envelope.png
+        caption: "Clip Envelope → Clip → Sample Offset, drawn ±8 sixteenth-notes over 2 bars. Playhead-jump pattern."
+        credit: "Ableton Live 12 screenshot"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+
+  # ---------------------------------------------------------------------------
+  # Per-mutation Ableton walk-throughs (m-)
+  # ---------------------------------------------------------------------------
+
+  - id: m1a
+    kind: concept
+    heading: "Drum swap — the Ableton walk-through"
+    body_md: slides/m1a-drum-swap-walkthrough.md
+    images:
+      - src: assets/ableton-recombine-shuffle.png
+        caption: "Transform → Recombine → Shuffle dialog. Pitch/Velocity off, Shuffle on."
+        credit: "Ableton Live 12 screenshot"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+
+  - id: m2a
+    kind: concept
+    heading: "Bass seed — the Ableton walk-through"
+    body_md: slides/m2a-bass-seed-walkthrough.md
+    images:
+      - src: assets/ableton-seed-generator.png
+        caption: "Seed generator footer in the MIDI editor. Pitch ±7, Density 60, Note Length 1/16."
+        credit: "Ableton Live 12 screenshot"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+      - bib:sos_autechre_april_2004
+
+  - id: m3a
+    kind: concept
+    heading: "Filter sweep — the Ableton walk-through"
+    body_md: slides/m3a-filter-sweep-walkthrough.md
+    images:
+      - src: assets/ableton-clip-envelope-unlinked.png
+        caption: "Clip envelope pane with Linked/Unlinked toggle showing 7-bar envelope over 16-bar audio."
+        credit: "Ableton Live 12 screenshot"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+      - bib:sos_autechre_april_2004
+
+images_needed:
+  - slug: zaireeka-4cd-spread
+    description: "Flaming Lips, Zaireeka (Warner Bros., 1997) — four-CD box or disc spread, all four discs visible. Hero image for the opening parable."
+    preferred_angle: "all four CDs arranged in a 2×2 grid or fan, label art visible"
+    lesson_context: "W10 i01, opening parable hero"
+    license_target: "fair-use commentary"
+  - slug: fridmann-tarbox-studio
+    description: "Dave Fridmann in Tarbox Road Studios (Cassadaga NY). Any editorial photo of Fridmann at the console or in the live room. Sound on Sound ran a feature in 2012 with usable images."
+    preferred_angle: "console, live room, or exterior (converted dairy)"
+    lesson_context: "W10 i02, Zaireeka constraint parable"
+    license_target: "editorial / fair-use commentary"
+  - slug: mr-bill-studio
+    description: "Bill Day (Mr. Bill) in his studio or at the DAW. YouTube thumbnail-style still from his Resample-and-Mutate tutorial corpus acceptable."
+    lesson_context: "W10 i03, Resample-and-Mutate attribution"
+    license_target: "fair-use commentary"
+  - slug: cobham-spectrum-cover
+    description: "Album cover of Billy Cobham, Spectrum (Atlantic SD-7268, 1973). Pink/orange Gene Brownell portrait cover."
+    lesson_context: "W10 i04, source-material provenance"
+    license_target: "fair-use commentary"
+  - slug: ableton-follow-actions-panel
+    description: "Ableton Live 12 Follow Actions panel (the clip-properties box), open and populated with two actions, probability weights, trigger interval, and Legato visible. Preferably with Scene FA visible at the header."
+    preferred_angle: "full panel, readable labels"
+    lesson_context: "W10 fa-05, Follow Actions annotated tour"
+    license_target: "fair-use commentary"
+  - slug: ableton-bounce-groups-dialog
+    description: "Screenshot of the Bounce Group dialog introduced in Ableton Live 12.3 — parameter fields visible, Delete Source toggle highlighted."
+    lesson_context: "W10 ram-02, Bounce Groups native support"
+    license_target: "fair-use commentary"
+  - slug: ableton-sample-offset-envelope
+    description: "Clip Envelope pane in Ableton Live 12 showing a Sample Offset envelope drawn over 2 bars of an audio clip. Grid set to 16ths. The draw shows ±8/16 displacement."
+    lesson_context: "W10 ram-04, Sample Offset trick"
+    license_target: "fair-use commentary"
+  - slug: ableton-recombine-shuffle
+    description: "Ableton Live 12 Transform → Recombine dialog with Shuffle enabled, Pitch/Velocity disabled."
+    lesson_context: "W10 m1a, drum-swap Path A"
+    license_target: "fair-use commentary"
+  - slug: ableton-seed-generator
+    description: "Ableton Live 12 MIDI editor with the Seed generator popover open, Pitch ±7, Density 60, Note Length 1/16."
+    lesson_context: "W10 m2a, bass-seed walk-through"
+    license_target: "fair-use commentary"
+  - slug: ableton-clip-envelope-unlinked
+    description: "Ableton Live 12 clip-envelope pane showing a filter-cutoff envelope with Unlinked loop set to 7 bars over a 16-bar audio clip."
+    lesson_context: "W10 m3a, filter-sweep walk-through"
+    license_target: "fair-use commentary"
+
+episode:
+  title: "IDM W10 — Variation generation, the five mutations"
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

@@ -1,0 +1,1628 @@
+{
+  "_meta": {
+    "version": "0.1.0",
+    "generated": "2026-04-21",
+    "term_count": 134,
+    "categories": {
+      "dsp_primitive": 31,
+      "mix_master": 18,
+      "time_rhythm": 13,
+      "signal_path": 8,
+      "ableton_specific": 18,
+      "hardware_history": 11,
+      "sampling": 10,
+      "named_technique": 16,
+      "artist_studio": 5,
+      "music_theory": 4
+    },
+    "note": "Glossary backs <term key='...'> tooltips in decks + standalone HTML at build/html/glossary.html + PDF export for reMarkable. URLs verified against Wikipedia where possible; named techniques with no Wikipedia page (boomsauce, Fridmann bass, Burial inverse drop, the rub, subliminal layering, resample-and-mutate, Subtraction/Skeleton/Variation methods, Bounce-and-Arrange, beat switch, micro-chopping) cite the source spec, bibliography entry, or interview instead."
+  },
+
+  "fm_synthesis": {
+    "term": "FM synthesis",
+    "category": "dsp_primitive",
+    "definition": "Frequency-modulation synthesis — one oscillator (the modulator) varies the frequency of another (the carrier) at audio rate, producing sidebands that extend far beyond the original two pitches. Commercialized by Yamaha on the DX7 in 1983 under license from John Chowning's 1967 Stanford work. Cheap to compute, rich in inharmonic content, notoriously hard to dial in by ear.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Frequency_modulation_synthesis",
+    "alt_links": ["https://ccrma.stanford.edu/~jos/pasp/FM_Synthesis.html"],
+    "bib_refs": ["bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["operator", "sideband", "carrier", "modulator", "phase_modulation", "additive_synthesis"],
+    "first_used_in_lesson": "w08-autechre-feedback"
+  },
+
+  "am_synthesis": {
+    "term": "AM synthesis",
+    "category": "dsp_primitive",
+    "definition": "Amplitude-modulation synthesis — one signal scales the amplitude of another at audio rate. Produces two sidebands (sum and difference frequencies) around the carrier. Simpler spectrum than FM; closely related to ring modulation, which is AM without the DC component.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Amplitude_modulation",
+    "alt_links": [],
+    "bib_refs": ["bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["ring_modulation", "fm_synthesis", "sideband"],
+    "first_used_in_lesson": null
+  },
+
+  "phase_modulation": {
+    "term": "phase modulation",
+    "category": "dsp_primitive",
+    "definition": "Modulating the phase — rather than the frequency — of a carrier oscillator with another signal. Mathematically equivalent to FM in steady state, and it is what every DX-family Yamaha synth actually does under the hood. Chowning called it FM because the patent was easier to write that way.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Phase_modulation",
+    "alt_links": ["https://ccrma.stanford.edu/~jos/pasp/FM_Synthesis.html"],
+    "bib_refs": ["bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["fm_synthesis", "operator", "carrier"],
+    "first_used_in_lesson": null
+  },
+
+  "additive_synthesis": {
+    "term": "additive synthesis",
+    "category": "dsp_primitive",
+    "definition": "Building complex sounds by summing sinusoids at independently controlled frequencies, amplitudes, and phases. The Fourier-theorem approach to synthesis: in principle any periodic timbre can be reconstructed from enough sines. In practice expensive, which is why most synths cheat with subtractive or FM instead.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Additive_synthesis",
+    "alt_links": [],
+    "bib_refs": ["bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["subtractive_synthesis", "fft", "wavetable_synthesis"],
+    "first_used_in_lesson": null
+  },
+
+  "subtractive_synthesis": {
+    "term": "subtractive synthesis",
+    "category": "dsp_primitive",
+    "definition": "Start with a harmonically rich waveform (saw, square, noise), sculpt it with filters. The classic analog-synth approach — Minimoog, MS-20, SH-101. Sound design is mostly filter design.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Subtractive_synthesis",
+    "alt_links": [],
+    "bib_refs": ["bib:korg_ms20_manual", "bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["filter", "filter_slope", "resonance", "additive_synthesis"],
+    "first_used_in_lesson": null
+  },
+
+  "wavetable_synthesis": {
+    "term": "wavetable synthesis",
+    "category": "dsp_primitive",
+    "definition": "Sound generation via an indexed table of single-cycle waveforms, interpolating between them over time. Popularized by the PPG Wave and Waldorf; in Ableton, it is the Wavetable instrument. Sweeping through the table is how you get the morphing timbre that defines a lot of modern bass music.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Wavetable_synthesis",
+    "alt_links": [],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["additive_synthesis", "granular_synthesis"],
+    "first_used_in_lesson": null
+  },
+
+  "granular_synthesis": {
+    "term": "granular synthesis",
+    "category": "dsp_primitive",
+    "definition": "Sound built from thousands of short grains (1–100 ms slices) of a source, scattered in time and pitch. Theorized by Iannis Xenakis, formalized by Curtis Roads. In practice: feed any field recording to Granulator III and turn the Scan knob.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Granular_synthesis",
+    "alt_links": ["https://roberthenke.com/technology/granulator.html"],
+    "bib_refs": ["bib:roads_computer_music_tutorial", "bib:henke_granulator_iii"],
+    "song_refs": [],
+    "see_also": ["sampler", "phase_vocoder", "paulstretch"],
+    "first_used_in_lesson": null
+  },
+
+  "sampler": {
+    "term": "sampler",
+    "category": "dsp_primitive",
+    "definition": "A digital instrument that plays back recorded audio — usually pitched and triggered by MIDI. Fairlight CMI (1979), E-mu Emulator, Akai S900/S950, MPC line. In Ableton, Simpler and Sampler. The shape of popular music from 1985 onward.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Sampler_(musical_instrument)",
+    "alt_links": [],
+    "bib_refs": ["bib:akai_mpc3000_manual", "bib:ensoniq_asr10_manual"],
+    "song_refs": [],
+    "see_also": ["simpler_modes", "slice_to_midi", "resample", "one_shot"],
+    "first_used_in_lesson": "w03-simpler-basics"
+  },
+
+  "synthesizer": {
+    "term": "synthesizer",
+    "category": "dsp_primitive",
+    "definition": "An electronic instrument that generates sound from first principles — oscillators, filters, envelopes, modulation. As opposed to a sampler, which plays recordings. Moog, Buchla, ARP, Prophet, DX7, Meld.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Synthesizer",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["subtractive_synthesis", "fm_synthesis", "wavetable_synthesis", "sampler"],
+    "first_used_in_lesson": null
+  },
+
+  "nyquist_frequency": {
+    "term": "Nyquist frequency",
+    "category": "dsp_primitive",
+    "definition": "Half the sample rate — the highest frequency a digital system can represent without aliasing. At 44.1 kHz, that's 22.05 kHz. Push content above it and the system folds it back down as inharmonic garbage unless you low-pass first.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Nyquist_frequency",
+    "alt_links": [],
+    "bib_refs": ["bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["aliasing", "sample_rate", "anti_aliasing_filter"],
+    "first_used_in_lesson": null
+  },
+
+  "aliasing": {
+    "term": "aliasing",
+    "category": "dsp_primitive",
+    "definition": "What happens when a signal contains frequencies above the Nyquist frequency: they fold back down into the audible range as spurious tones. On an Akai S950 this is part of the aesthetic — Squarepusher explicitly treats crude S950 repitching as a feature of drum & bass. On a mastering limiter it is a defect.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Aliasing",
+    "alt_links": [],
+    "bib_refs": ["bib:tape_op_89", "bib:roads_computer_music_tutorial"],
+    "song_refs": ["song:squarepusher_come_on"],
+    "see_also": ["nyquist_frequency", "sample_rate", "anti_aliasing_filter", "varispeed"],
+    "first_used_in_lesson": "w07-squarepusher-chops"
+  },
+
+  "sample_rate": {
+    "term": "sample rate",
+    "category": "dsp_primitive",
+    "definition": "Number of samples per second used to represent a continuous signal digitally. CD = 44.1 kHz. Pro audio usually 48/96 kHz. Higher sample rates buy you headroom above the audible band (and fewer aliasing artifacts from nonlinear processing), not 'more detail' in the music.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Sampling_(signal_processing)",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["nyquist_frequency", "bit_depth", "aliasing"],
+    "first_used_in_lesson": null
+  },
+
+  "bit_depth": {
+    "term": "bit depth",
+    "category": "dsp_primitive",
+    "definition": "Number of bits per sample — sets the dynamic range. 16-bit = 96 dB, 24-bit = 144 dB, 32-bit float = effectively unlimited for intermediate processing. The SP-1200's 12-bit/26 kHz constraint is what makes every hip-hop record from 1987–1993 sound like it does.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Audio_bit_depth",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["sample_rate", "float_32", "bitcrush"],
+    "first_used_in_lesson": null
+  },
+
+  "filter": {
+    "term": "filter",
+    "category": "dsp_primitive",
+    "definition": "A circuit or algorithm that lets some frequencies through and attenuates others. Four basic types: low-pass (LP), high-pass (HP), band-pass (BP), notch (band-reject). The dominant sound-design tool of subtractive synthesis and of every mixer's EQ.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Filter_(signal_processing)",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["filter_slope", "resonance", "q_factor", "eq", "subtractive_synthesis"],
+    "first_used_in_lesson": null
+  },
+
+  "filter_slope": {
+    "term": "filter slope",
+    "category": "dsp_primitive",
+    "definition": "How steeply a filter attenuates past its cutoff, measured in dB per octave. 6 dB/oct is gentle (one-pole). 12 dB/oct is the classic Korg MS-20 and Oberheim sound. 24 dB/oct is the Moog ladder. Steeper is not better — it is more surgical and less musical.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Filter_(signal_processing)",
+    "alt_links": [],
+    "bib_refs": ["bib:korg_ms20_manual"],
+    "song_refs": [],
+    "see_also": ["filter", "resonance"],
+    "first_used_in_lesson": null
+  },
+
+  "resonance": {
+    "term": "resonance",
+    "category": "dsp_primitive",
+    "definition": "Emphasis of frequencies at a filter's cutoff point. Push resonance high and the filter begins to self-oscillate into a pure sine. This is the squelch of a TB-303 and the scream of an MS-20 HPF.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Resonance",
+    "alt_links": [],
+    "bib_refs": ["bib:korg_ms20_manual"],
+    "song_refs": [],
+    "see_also": ["filter", "q_factor", "filter_slope"],
+    "first_used_in_lesson": null
+  },
+
+  "q_factor": {
+    "term": "Q factor",
+    "category": "dsp_primitive",
+    "definition": "Quality factor — the narrowness of a filter's peak or notch. High Q = narrow, surgical. Low Q = broad, musical. On a parametric EQ, Q is the knob that decides whether you're sculpting or drawing.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Q_factor",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["filter", "resonance", "eq"],
+    "first_used_in_lesson": null
+  },
+
+  "operator": {
+    "term": "operator (FM)",
+    "category": "dsp_primitive",
+    "definition": "The unit cell of an FM synth: a sine oscillator with its own envelope generator. On the DX7 there are six; they can be routed as carriers, modulators, or feedback paths via one of 32 algorithms. Ableton's Operator instrument keeps the name and the topology.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Yamaha_DX7",
+    "alt_links": ["https://www.ableton.com/en/manual/live-instrument-reference/#operator"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["fm_synthesis", "carrier", "modulator", "sideband"],
+    "first_used_in_lesson": null
+  },
+
+  "sideband": {
+    "term": "sideband",
+    "category": "dsp_primitive",
+    "definition": "A frequency component produced by modulation, sitting at sum and difference of carrier and modulator frequencies. FM produces an infinite series of sidebands whose amplitudes follow Bessel functions. That is why FM sounds metallic even at simple ratios.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Sideband",
+    "alt_links": [],
+    "bib_refs": ["bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["fm_synthesis", "am_synthesis", "carrier", "modulator"],
+    "first_used_in_lesson": null
+  },
+
+  "carrier": {
+    "term": "carrier",
+    "category": "dsp_primitive",
+    "definition": "In FM/AM synthesis, the oscillator being modulated — the one whose output you hear. Contrast with modulator, the one doing the modulating. On a DX7 algorithm diagram, carriers sit at the bottom of the stack.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Frequency_modulation_synthesis",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["modulator", "fm_synthesis", "operator"],
+    "first_used_in_lesson": null
+  },
+
+  "modulator": {
+    "term": "modulator",
+    "category": "dsp_primitive",
+    "definition": "In FM/AM synthesis, the oscillator that modulates another. Its frequency relative to the carrier (the ratio) determines harmonicity; its amplitude determines how many sidebands get produced. Hide a modulator behind a carrier to get bell tones; expose it to get noise.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Frequency_modulation_synthesis",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["carrier", "fm_synthesis", "operator"],
+    "first_used_in_lesson": null
+  },
+
+  "phase_vocoder": {
+    "term": "phase vocoder",
+    "category": "dsp_primitive",
+    "definition": "An FFT-based algorithm that decomposes a signal into short overlapping spectral frames, allowing independent manipulation of time and pitch. The engine behind most time-stretch plugins — Ableton's Complex and Complex Pro warp modes, Elastique, PaulStretch.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Phase_vocoder",
+    "alt_links": [],
+    "bib_refs": ["bib:roads_computer_music_tutorial", "bib:paulxstretch_docs"],
+    "song_refs": [],
+    "see_also": ["fft", "time_stretching", "pitch_shifting", "complex_pro_warp"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "fft": {
+    "term": "FFT",
+    "category": "dsp_primitive",
+    "definition": "Fast Fourier Transform — an O(N log N) algorithm that decomposes a signal into its frequency components. The underlying math of every spectrogram, EQ analyzer, and phase vocoder in your session.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Fast_Fourier_transform",
+    "alt_links": [],
+    "bib_refs": ["bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["ifft", "phase_vocoder", "convolution", "additive_synthesis"],
+    "first_used_in_lesson": null
+  },
+
+  "ifft": {
+    "term": "IFFT",
+    "category": "dsp_primitive",
+    "definition": "Inverse FFT — converts frequency-domain data back to the time domain. Always paired with an FFT on the way out of a spectral process. In image-to-sound tools like MetaSynth or Photosounder, the IFFT is where the drawing becomes audio.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Fast_Fourier_transform",
+    "alt_links": ["https://uisoftware.com/MetaSynth/"],
+    "bib_refs": ["bib:metasynth_uisoftware", "bib:photosounder_docs"],
+    "song_refs": [],
+    "see_also": ["fft", "phase_vocoder"],
+    "first_used_in_lesson": null
+  },
+
+  "linear_interpolation": {
+    "term": "linear interpolation",
+    "category": "dsp_primitive",
+    "definition": "Reconstructing sample values between known samples by drawing a straight line. Cheap, fast, audibly compromised at high pitch-shift ratios — you hear it as the grain in old samplers. The SP-1200 and S950 sound is partly this.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Linear_interpolation",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["sinc_interpolation", "sampler", "aliasing"],
+    "first_used_in_lesson": null
+  },
+
+  "sinc_interpolation": {
+    "term": "sinc interpolation",
+    "category": "dsp_primitive",
+    "definition": "Theoretically perfect reconstruction of a band-limited signal using the sinc function as a kernel. In practice everyone uses a windowed approximation (Lanczos, Kaiser). This is what a high-quality pitch-shifter uses where SP-1200 uses crude point-resample.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Whittaker%E2%80%93Shannon_interpolation_formula",
+    "alt_links": [],
+    "bib_refs": ["bib:roads_computer_music_tutorial"],
+    "song_refs": [],
+    "see_also": ["linear_interpolation", "pitch_shifting", "aliasing"],
+    "first_used_in_lesson": null
+  },
+
+  "noise_colors": {
+    "term": "noise (white/pink/brownian)",
+    "category": "dsp_primitive",
+    "definition": "White noise is equal power per hertz (flat spectrum). Pink noise is equal power per octave — the canonical test signal for room calibration because it matches human frequency weighting. Brownian (red) noise drops another 3 dB/oct lower still, rumbly and deep. All three are standard sources in Meld and Roar.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Colors_of_noise",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["subtractive_synthesis"],
+    "first_used_in_lesson": null
+  },
+
+  "ring_modulation": {
+    "term": "ring modulation",
+    "category": "dsp_primitive",
+    "definition": "Multiplication of two audio signals — produces sum and difference sidebands only, no original carriers. The source of all metallic bell and robot-voice timbres; staple of 1970s BBC Radiophonic Workshop and of every sci-fi film sound ever.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ring_modulation",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["am_synthesis", "sideband", "fm_synthesis"],
+    "first_used_in_lesson": null
+  },
+
+  "physical_modeling": {
+    "term": "physical modeling",
+    "category": "dsp_primitive",
+    "definition": "Synthesis by simulating the physics of real instruments — bowed strings, struck membranes, plucked bars. Yamaha VL1 (1993) was the first commercial example. Ableton's Collision and Tension (and the resonator models in Meld — Plate, Membrane) are modern examples.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Physical_modelling_synthesis",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["formant", "convolution"],
+    "first_used_in_lesson": null
+  },
+
+  "formant": {
+    "term": "formant",
+    "category": "dsp_primitive",
+    "definition": "A concentration of acoustic energy at a particular frequency — the resonances of the vocal tract that make 'ah' sound different from 'ee' at the same pitch. When you pitch-shift a voice without preserving formants, you get chipmunks. When you preserve them, you get plausible transposition.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Formant",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["pitch_shifting", "little_alterboy", "complex_pro_warp"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "convolution": {
+    "term": "convolution",
+    "category": "dsp_primitive",
+    "definition": "A mathematical operation that applies one signal (an impulse response) as a filter to another. Convolution reverbs use a room's recorded impulse to re-imprint that room's acoustics on arbitrary audio. Also the basis of FFT-based filtering.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Convolution",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["fft", "filter"],
+    "first_used_in_lesson": null
+  },
+
+  "lufs": {
+    "term": "LUFS",
+    "category": "mix_master",
+    "definition": "Loudness Units relative to Full Scale — the EBU R128 / ITU-R BS.1770 standard for perceived loudness, measured over time with K-weighting. Streaming platforms target roughly -14 LUFS integrated (Spotify, Apple Music); mastering for vinyl or club -8 to -10. Replaced RMS as the honest loudness metric.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/LUFS",
+    "alt_links": ["https://tech.ebu.ch/loudness"],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["true_peak", "dbfs", "rms", "loudness_war", "normalization"],
+    "first_used_in_lesson": "w12-ship-two-tracks"
+  },
+
+  "true_peak": {
+    "term": "true peak",
+    "category": "mix_master",
+    "definition": "Inter-sample peak — the actual analog peak a digital signal will produce after reconstruction, which can exceed the sample-peak reading by several dB. A limiter that only watches sample peaks will clip on playback. Streaming ceilings are specified at -1 dBTP for this reason.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/LUFS",
+    "alt_links": [],
+    "bib_refs": ["bib:fabfilter_prol2_docs"],
+    "song_refs": [],
+    "see_also": ["lufs", "dbfs", "normalization"],
+    "first_used_in_lesson": "w12-ship-two-tracks"
+  },
+
+  "dbfs": {
+    "term": "dBFS",
+    "category": "mix_master",
+    "definition": "Decibels relative to full scale — the scale on every digital meter. 0 dBFS is the maximum representable sample; everything below is negative. Not the same as SPL (sound pressure level) and not the same as LUFS (perceived loudness).",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/DBFS",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["lufs", "true_peak", "rms"],
+    "first_used_in_lesson": null
+  },
+
+  "rms": {
+    "term": "RMS",
+    "category": "mix_master",
+    "definition": "Root-mean-square level — a measure of average signal power, closer to perceived loudness than peak but crude compared to LUFS. Pro compressors and meters show both peak and RMS; the gap between them is your crest factor.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Root_mean_square",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["lufs", "dbfs"],
+    "first_used_in_lesson": null
+  },
+
+  "sidechain_compression": {
+    "term": "sidechain compression",
+    "category": "mix_master",
+    "definition": "Using one signal to trigger a compressor on another — typically a kick ducking a bass or pad. Ableton's Compressor exposes the external sidechain natively. Squarepusher treats it as compositional ('on The Metallurgist, the bass drum is the sidechain source'), not as a corrective tool.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+    "alt_links": [],
+    "bib_refs": ["bib:tape_op_89"],
+    "song_refs": [],
+    "see_also": ["gating", "multiband_compression"],
+    "first_used_in_lesson": "w07-squarepusher-chops"
+  },
+
+  "gating": {
+    "term": "gating",
+    "category": "mix_master",
+    "definition": "Muting a signal below a threshold. Opposite of a compressor in directional feel: compressors pull loud things down, gates kill quiet things off. Useful for cleaning drum bleed and for creating hard, stuttery rhythmic FX when keyed from MIDI or another signal.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Noise_gate",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["sidechain_compression", "transient_shaping"],
+    "first_used_in_lesson": null
+  },
+
+  "transient_shaping": {
+    "term": "transient shaping",
+    "category": "mix_master",
+    "definition": "Level-adjusting the attack portion of a sound independently of its sustain — boost attack to sharpen a snare, reduce it to soften. Works by envelope-following rather than threshold. Ableton's Drum Buss has this baked in.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Transient_(acoustics)",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["gating", "kronecker_king_snare"],
+    "first_used_in_lesson": null
+  },
+
+  "multiband_compression": {
+    "term": "multiband compression",
+    "category": "mix_master",
+    "definition": "Splits a signal into frequency bands, compresses each independently, recombines. Useful for taming a boomy low end without squashing a bright top. FabFilter Pro-MB, iZotope Ozone. Overuse it and your mix sounds like glass.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+    "alt_links": [],
+    "bib_refs": ["bib:izotope_ozone_maximizer_docs"],
+    "song_refs": [],
+    "see_also": ["sidechain_compression", "eq"],
+    "first_used_in_lesson": null
+  },
+
+  "eq": {
+    "term": "EQ",
+    "category": "mix_master",
+    "definition": "Equalization — shaping frequency balance via filters. Standard shapes: shelf (boost/cut everything above or below a corner), bell/peak (boost/cut around a center), notch (very narrow bell), pass (HP/LP with slope). Ableton EQ Eight offers all four.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Equalization_(audio)",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["filter", "q_factor", "filter_slope"],
+    "first_used_in_lesson": null
+  },
+
+  "equal_loudness_contour": {
+    "term": "equal loudness contour",
+    "category": "mix_master",
+    "definition": "Curves (Fletcher-Munson 1933, refined as ISO 226) showing which sound pressure levels are perceived as equally loud across frequency. The reason mixes sound bass- and treble-heavy at low volumes — human hearing compresses its range down there. Why you check mixes at multiple listening levels.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Equal-loudness_contour",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["lufs", "headphone_translation"],
+    "first_used_in_lesson": "w12-ship-two-tracks"
+  },
+
+  "haas_effect": {
+    "term": "Haas effect",
+    "category": "mix_master",
+    "definition": "Also called the precedence effect or law of the first wavefront. When the same sound reaches you twice within about 2–40 ms, you perceive one event, localized to the first arrival. Delay one side of a stereo source by 15 ms and the mono signal appears to shift toward the undelayed ear — an old mixing trick for cheap width.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Precedence_effect",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["phase_cancellation", "stereo_imaging", "mid_side"],
+    "first_used_in_lesson": null
+  },
+
+  "phase_cancellation": {
+    "term": "phase cancellation",
+    "category": "mix_master",
+    "definition": "When two identical or near-identical signals sum out of phase, they cancel. Two perfectly inverted signals = silence. Partial cancellation is what makes multi-mic drum recordings and layered kicks sound thin. Align transients within ±2 ms and you're mostly safe.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Wave_interference",
+    "alt_links": [],
+    "bib_refs": ["bib:attack_magazine_drum_layering"],
+    "song_refs": [],
+    "see_also": ["haas_effect", "stereo_imaging"],
+    "first_used_in_lesson": "w06-fourtet-layering"
+  },
+
+  "stereo_imaging": {
+    "term": "stereo imaging",
+    "category": "mix_master",
+    "definition": "The perceived left/right placement and width of a mix. Controlled by pan, level, Haas delay, mid-side balance, and short early reflections. Mono compatibility still matters because phone speakers and club PAs both collapse the sides.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Stereo_imaging",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["mid_side", "haas_effect", "microshift"],
+    "first_used_in_lesson": null
+  },
+
+  "mid_side": {
+    "term": "mid-side",
+    "category": "mix_master",
+    "definition": "A stereo representation in two channels: mid = L+R, side = L-R. Letting you EQ or compress the center independently of the stereo sides. The trick for gluing a bass to mono while keeping reverb wide.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Joint_(audio_engineering)",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["stereo_imaging", "eq"],
+    "first_used_in_lesson": null
+  },
+
+  "loudness_war": {
+    "term": "loudness war",
+    "category": "mix_master",
+    "definition": "The multi-decade trend (peaking roughly 1995–2010) of masters getting louder at the expense of dynamic range, driven by the assumption louder = better on radio. Streaming loudness normalization (Spotify, YouTube, Apple) ended the commercial incentive. Most competent mastering now targets LUFS, not peak.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Loudness_war",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["lufs", "normalization", "true_peak"],
+    "first_used_in_lesson": "w12-ship-two-tracks"
+  },
+
+  "normalization": {
+    "term": "normalization",
+    "category": "mix_master",
+    "definition": "Scaling a signal so a chosen metric hits a chosen target. Peak normalization: loudest sample = 0 dBFS (or some ceiling). Loudness normalization: integrated LUFS = target. Streaming services apply the latter at playback; it is why your overcompressed master will not sound louder than a dynamic one.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Audio_normalization",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["lufs", "loudness_war", "true_peak"],
+    "first_used_in_lesson": null
+  },
+
+  "bpm": {
+    "term": "BPM",
+    "category": "time_rhythm",
+    "definition": "Beats per minute. At 120 BPM one beat is 500 ms; one 16th is 125 ms. Everyone knows this. The point of writing it down is that every delay time, every Haas offset, every swing in milliseconds only means something relative to BPM.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Tempo",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["quantization", "swing", "microtiming"],
+    "first_used_in_lesson": null
+  },
+
+  "quantization": {
+    "term": "quantization",
+    "category": "time_rhythm",
+    "definition": "Snapping MIDI (or audio transients) to a grid. Straight quantization is the robot baseline; partial quantization at 50–80% strength pulls performances toward the grid without killing feel. J Dilla's signature is recorded with quantize disabled entirely.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Quantization_(music)",
+    "alt_links": [],
+    "bib_refs": ["bib:charnas_dilla_time"],
+    "song_refs": [],
+    "see_also": ["swing", "microtiming", "dilla_time", "groove_pool"],
+    "first_used_in_lesson": null
+  },
+
+  "swing": {
+    "term": "swing",
+    "category": "time_rhythm",
+    "definition": "Delaying every other 16th (or 8th) to produce a triplet-feel lilt. 50% = straight. 66% = hard triplet swing. The MPC's per-pad swing — different amounts on different voices within a single bar — is the mechanism Dilla exploited.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Swing_(jazz_performance_style)",
+    "alt_links": [],
+    "bib_refs": ["bib:charnas_dilla_time", "bib:akai_mpc3000_manual"],
+    "song_refs": [],
+    "see_also": ["quantization", "microtiming", "dilla_time", "groove_pool"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "microtiming": {
+    "term": "microtiming",
+    "category": "time_rhythm",
+    "definition": "Sub-grid timing deviations — 5, 10, 20 ms ahead of or behind the beat. Dilla drags snares 20–30 ms late. Four Tet applies 15% MIDI randomization to velocity and octave. Microtiming is where groove lives and where quantize kills it.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Swing_(jazz_performance_style)",
+    "alt_links": [],
+    "bib_refs": ["bib:charnas_dilla_time", "bib:tape_notes_140_four_tet"],
+    "song_refs": ["song:dilla_dont_cry"],
+    "see_also": ["quantization", "swing", "dilla_time"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "polyrhythm": {
+    "term": "polyrhythm",
+    "category": "time_rhythm",
+    "definition": "Two or more rhythmic cycles with different subdivisions played simultaneously, most commonly 3-against-2 or 4-against-3. Distinct from polymeter, which is different bar lengths at a shared pulse.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Polyrhythm",
+    "alt_links": [],
+    "bib_refs": ["bib:ali_jamieson_polyrhythm", "bib:polyrhythmus_m4l"],
+    "song_refs": [],
+    "see_also": ["polymeter", "microtiming"],
+    "first_used_in_lesson": "w08-autechre-feedback"
+  },
+
+  "polymeter": {
+    "term": "polymeter",
+    "category": "time_rhythm",
+    "definition": "Two or more parts cycling at different bar lengths over the same pulse — e.g., a 5/16 hi-hat pattern against a 4/4 kick. They drift out of alignment and reconverge after the least common multiple of their lengths. Autechre's bread and butter.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Metre_(music)",
+    "alt_links": [],
+    "bib_refs": ["bib:ali_jamieson_polyrhythm"],
+    "song_refs": ["song:autechre_parhelic"],
+    "see_also": ["polyrhythm", "clip_envelopes"],
+    "first_used_in_lesson": "w08-autechre-feedback"
+  },
+
+  "time_stretching": {
+    "term": "time stretching",
+    "category": "time_rhythm",
+    "definition": "Changing the duration of audio without changing pitch. Usually accomplished via phase vocoder (Complex, Complex Pro), granular resynthesis (Texture mode), or transient-preserving resampling (Beats mode). Every stretch algorithm has an aesthetic; pick one for its artifacts.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Audio_time_stretching_and_pitch_scaling",
+    "alt_links": [],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["pitch_shifting", "phase_vocoder", "complex_pro_warp", "beats_warp", "warp"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "pitch_shifting": {
+    "term": "pitch shifting",
+    "category": "time_rhythm",
+    "definition": "Changing pitch without changing duration (or vice versa). Mechanically tape does the opposite — varispeed links pitch and tempo. Modern pitch shifters decouple them via phase vocoder or granular techniques, with optional formant preservation.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Audio_time_stretching_and_pitch_scaling",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["time_stretching", "formant", "varispeed", "repitch_warp"],
+    "first_used_in_lesson": null
+  },
+
+  "warp": {
+    "term": "warp",
+    "category": "time_rhythm",
+    "definition": "Ableton's umbrella term for its time-stretch engine — warp markers anchor moments of audio to grid positions, and the chosen warp mode decides how the algorithm fills between them. Simpler has Warp; Sampler does not.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["complex_pro_warp", "beats_warp", "repitch_warp", "texture_warp", "time_stretching"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "transient_detection": {
+    "term": "transient detection",
+    "category": "time_rhythm",
+    "definition": "Automated identification of note onsets in audio via short-time energy analysis. The basis of Ableton's Slice to MIDI, Beats warp mode, and Groove Pool extraction. Bad transient detection on a mushy kick is where the work happens.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Onset_(audio)",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["slice_to_midi", "beats_warp", "beat_tracking"],
+    "first_used_in_lesson": "w03-simpler-basics"
+  },
+
+  "beat_tracking": {
+    "term": "beat tracking",
+    "category": "time_rhythm",
+    "definition": "Algorithmic estimation of BPM and beat locations in audio. What happens when you drag an untempo'd clip into an Ableton session — the software runs a beat tracker and draws warp markers. Failure modes: half-tempo detection, phase-slip on tracks without strong kick.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Beat_detection",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["warp", "bpm", "tempo_mapping"],
+    "first_used_in_lesson": null
+  },
+
+  "tempo_mapping": {
+    "term": "tempo mapping",
+    "category": "time_rhythm",
+    "definition": "Placing tempo changes along a timeline so a DAW's grid follows a performance rather than forcing the performance to the grid. Useful when importing live drum takes or rubato pianos. Ableton 11+ added this via the Arrangement tempo track.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Tempo",
+    "alt_links": [],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["bpm", "beat_tracking", "warp"],
+    "first_used_in_lesson": null
+  },
+
+  "pre_post_fader": {
+    "term": "pre-fader / post-fader",
+    "category": "signal_path",
+    "definition": "Whether a send is tapped before the channel fader (level-independent — classic for cue mixes and feedback routing) or after (level follows the fader — standard for effects sends). In Ableton each send has a Pre toggle.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Mixing_console",
+    "alt_links": [],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["insert_send_return", "bus", "gain_staging"],
+    "first_used_in_lesson": null
+  },
+
+  "insert_send_return": {
+    "term": "insert / send / return",
+    "category": "signal_path",
+    "definition": "Insert: an effect placed in-line on a channel — 100% wet, the signal flows through. Send/Return: the channel taps a copy into an aux bus (send), that bus hosts the effect (return), the two are mixed back together. Reverbs and delays live on sends; EQ and compression live on inserts.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Effects_unit",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["pre_post_fader", "bus", "gain_staging"],
+    "first_used_in_lesson": null
+  },
+
+  "gain_staging": {
+    "term": "gain staging",
+    "category": "signal_path",
+    "definition": "Managing level at every point in the signal path so each stage gets the right input without clipping and without buried signal. With 32-bit float internals, clipping inside the DAW is not catastrophic — but analog-modeled plugins still respond to input level, so discipline still pays.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Gain_staging",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["dbfs", "true_peak", "float_32"],
+    "first_used_in_lesson": null
+  },
+
+  "bus": {
+    "term": "bus",
+    "category": "signal_path",
+    "definition": "A routing node in a mixer that combines multiple channels into one — typically for group processing (drum bus, vocal bus, master bus). In Ableton, Group Tracks are buses.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Mixing_console",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["group", "insert_send_return", "bounce_groups"],
+    "first_used_in_lesson": null
+  },
+
+  "group": {
+    "term": "group",
+    "category": "signal_path",
+    "definition": "A folded set of tracks sharing a parent bus, with a single fader and insert chain. Ctrl/Cmd+G in Ableton. Groups can be nested; they are how you gate a whole bus from one sidechain or apply one master EQ to the drum family.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Mixing_console",
+    "alt_links": ["https://www.ableton.com/en/manual/tracks/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["bus", "bounce_groups"],
+    "first_used_in_lesson": null
+  },
+
+  "freeze": {
+    "term": "freeze",
+    "category": "signal_path",
+    "definition": "Ableton's render-in-place for CPU relief: the track's audio output is temporarily baked to disk; the devices are bypassed until unfrozen. Freeze alone keeps the devices live; Flatten discards them and commits the audio permanently. Burial's workflow leans on this.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/arrangement-view/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["bounce_in_place", "consolidate", "bounce_groups"],
+    "first_used_in_lesson": null
+  },
+
+  "bounce_in_place": {
+    "term": "bounce in place",
+    "category": "signal_path",
+    "definition": "Ableton 11's 'Freeze + Flatten' on one click — takes a track's current output and replaces it with a committed audio clip, clearing the devices. Functionally identical to the classic tape-recorder bounce. In 12.3 it extends to Bounce Groups (bouncing grouped tracks to stems in a single gesture).",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/arrangement-view/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["freeze", "consolidate", "bounce_groups"],
+    "first_used_in_lesson": "w10-variation-generation"
+  },
+
+  "consolidate": {
+    "term": "consolidate",
+    "category": "signal_path",
+    "definition": "Cmd/Ctrl+J in Ableton — merges a selection of clips into a single new audio clip, warp-locked. Use it to commit an arrangement section before destructive edits. Preserves the underlying warp as the new source.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/arrangement-view/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["freeze", "bounce_in_place"],
+    "first_used_in_lesson": null
+  },
+
+  "simpler_modes": {
+    "term": "Simpler modes (Classic / One-Shot / Slicing)",
+    "category": "ableton_specific",
+    "definition": "Ableton Simpler's three playback modes. Classic: pitch/time linked (SP-1200 character), chromatic playback. One-Shot: trigger or gate, no loop, ideal for drum hits with short Fade envelopes. Slicing: chop on transients, beats, regions, or manual markers — triggerable as a Drum Rack.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/live-instrument-reference/#simpler"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["one_shot", "slice_to_midi", "sampler", "drum_rack"],
+    "first_used_in_lesson": "w03-simpler-basics"
+  },
+
+  "complex_pro_warp": {
+    "term": "Complex Pro warp",
+    "category": "ableton_specific",
+    "definition": "Ableton's highest-fidelity phase-vocoder warp mode. Preserves formants at heavy pitch shifts (dial 0–100%), with an Envelope parameter that tunes window size — 64 for hats, 256 for bass. Softens kick transients as a side effect; nudge markers pre-kick or layer Beats mode to fix.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["warp", "beats_warp", "texture_warp", "repitch_warp", "phase_vocoder"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "beats_warp": {
+    "term": "Beats warp",
+    "category": "ableton_specific",
+    "definition": "Warp mode that slices on transients and retriggers each slice at grid — preserving attack, introducing audible tails or gaps between hits. Default for drum loops. Preserve 1/4 with Transient Envelope 0 gives choppy stretched segments. Fast, low-CPU, honest about its artifacts.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["complex_pro_warp", "warp", "transient_detection"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "repitch_warp": {
+    "term": "Re-Pitch warp",
+    "category": "ableton_specific",
+    "definition": "Warp mode that links pitch and tempo the way tape varispeed does — stretching a clip to half length takes it up an octave. The authentic chipmunk-soul artifact. Time-stretch modes lose this character because they preserve pitch.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["varispeed", "chipmunk_soul", "warp", "complex_pro_warp"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "texture_warp": {
+    "term": "Texture warp",
+    "category": "ableton_specific",
+    "definition": "Granular warp mode. Grain parameter controls window size (10 ms glitchy, 50 ms smooth). Flux adds random variation between grains — 0 for stable, 80–100% for evolving cloud. The mode that turns any source into a pad.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["warp", "granular_synthesis", "complex_pro_warp"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "follow_actions": {
+    "term": "Follow Actions 2.0",
+    "category": "ableton_specific",
+    "definition": "Ableton's per-clip logic for triggering the next clip in a track. 2.0 (Live 11+) added per-scene follow actions, probability distributions, and legato launching. Set 8–16 drum variants to Any with mixed probabilities — non-repeating drum tracks built from hand-crafted parts.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/clips/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["capture_midi", "note_chance"],
+    "first_used_in_lesson": "w10-variation-generation"
+  },
+
+  "capture_midi": {
+    "term": "Capture MIDI",
+    "category": "ableton_specific",
+    "definition": "Ableton's retroactive MIDI recorder — it keeps a rolling buffer so you can play something you weren't recording and then grab it. In 12.3 the buffer no longer clears when a clip is playing back, which makes improvising over a generative patch actually survivable.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/recording-new-clips/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["follow_actions", "ableton_generators"],
+    "first_used_in_lesson": "w08-autechre-feedback"
+  },
+
+  "bounce_groups": {
+    "term": "Bounce Groups",
+    "category": "ableton_specific",
+    "definition": "Live 12.3 feature — bounce an entire group track to a new audio track in one action, with optional Paste Bounced Audio back into place. Turns bounce-and-arrange from a manual ritual into a keyboard shortcut.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/arrangement-view/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["bounce_in_place", "group", "freeze"],
+    "first_used_in_lesson": "w10-variation-generation"
+  },
+
+  "note_chance": {
+    "term": "Note Chance",
+    "category": "ableton_specific",
+    "definition": "Per-note probability (0–100%) that a MIDI note actually triggers on playback. Introduced in Live 11. Hi-hat at Chance 60–75% with a hand-programmed pattern never plays the same bar twice and still keeps its musical logic.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/midi-notes-and-velocities/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["follow_actions", "ableton_generators"],
+    "first_used_in_lesson": null
+  },
+
+  "ableton_generators": {
+    "term": "MIDI Generators (Rhythm / Seed / Shape / Stacks / Euclidean)",
+    "category": "ableton_specific",
+    "definition": "Live 12's non-destructive MIDI generation tools, chainable and re-runnable. Rhythm builds step-based drum patterns. Seed does polyphonic random notes. Shape draws monophonic contours. Stacks makes chords. Euclidean distributes pulses evenly — classic 16/5 hat patterns in one click.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/midi-notes-and-velocities/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["pitch_midi_transformer", "capture_midi", "follow_actions"],
+    "first_used_in_lesson": "w08-autechre-feedback"
+  },
+
+  "pitch_midi_transformer": {
+    "term": "Pitch MIDI Transformer",
+    "category": "ableton_specific",
+    "definition": "Live 12 MIDI transformation that redraws pitch contour across a selection — curve, invert, randomize, quantize to scale. Combined with the Scale device globally, you can re-pitch without breaking key.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/midi-notes-and-velocities/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["scale_device", "ableton_generators"],
+    "first_used_in_lesson": null
+  },
+
+  "scale_device": {
+    "term": "Scale Device",
+    "category": "ableton_specific",
+    "definition": "A MIDI effect (and in Live 12, a session-wide scale setting) that forces incoming notes into a chosen scale. Lets you play freely on a keyboard and have nothing come out wrong. Works with Tuning Systems to do the same thing in non-12-tone scales.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/live-midi-effect-reference/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["tuning_systems", "microtuning", "pitch_midi_transformer"],
+    "first_used_in_lesson": "w05-aphex-tuning"
+  },
+
+  "clip_envelopes": {
+    "term": "Clip Envelopes",
+    "category": "ableton_specific",
+    "definition": "Per-clip modulation curves (volume, filter, send, device parameter) that can run at a different length from the clip's audio loop. A 4-bar audio clip with a 7-bar filter envelope never repeats identically — cheap polymeter for free.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/clip-envelopes/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["polymeter", "chain_selector"],
+    "first_used_in_lesson": "w08-autechre-feedback"
+  },
+
+  "tuning_systems": {
+    "term": "Tuning Systems",
+    "category": "ableton_specific",
+    "definition": "Live 12's global tuning engine. Load Scala (.scl) files or build custom pitch tables; instrument devices that support it (Operator, Meld, Drift, Wavetable, Sampler, Simpler) respond per-note. The mechanism that lets you implement Aphex-style microtonal drum tunings without sampling each pitch.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Musical_tuning",
+    "alt_links": ["https://www.ableton.com/en/manual/live-s-tuning-systems/"],
+    "bib_refs": ["bib:ableton_live_12_manual", "bib:korg_monologue_afx_manual"],
+    "song_refs": [],
+    "see_also": ["microtuning", "cent", "scale_device", "equal_temperament"],
+    "first_used_in_lesson": "w05-aphex-tuning"
+  },
+
+  "chain_selector": {
+    "term": "Chain Selector",
+    "category": "ableton_specific",
+    "definition": "An Instrument/Effect Rack's Zone control that routes MIDI or audio to different chains based on a macro value. Combined with Macro Variations (Live 12.2+), gives you recallable snapshots — an Autechre-style patch-flipper in a single rack.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["macro_variations", "clip_envelopes"],
+    "first_used_in_lesson": "w11-beat-switch"
+  },
+
+  "macro_variations": {
+    "term": "Macro Variations",
+    "category": "ableton_specific",
+    "definition": "Recallable snapshots of a Rack's macro values (Live 12.2+). Eight macros, sixteen variations, one-click morph between them. Used as a compositional device this is how you do beat-switches from inside a single device instead of across tracks.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["chain_selector"],
+    "first_used_in_lesson": "w11-beat-switch"
+  },
+
+  "arrangement_mixer": {
+    "term": "Arrangement Mixer",
+    "category": "ableton_specific",
+    "definition": "Live 12.3 feature (⌥⌘M) — docks mixer strips beside the Arrangement timeline so you can ride faders and sends without tab-switching. Small UI change, meaningful for the bounce-and-arrange workflow.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/arrangement-view/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["bounce_groups", "bounce_in_place"],
+    "first_used_in_lesson": null
+  },
+
+  "stem_separation": {
+    "term": "Stem Separation",
+    "category": "ableton_specific",
+    "definition": "Live 12.3's local ML-based source separation — splits a clip into Vocals / Drums / Bass / Others. Suite-only; GPU-accelerated on macOS 26.3+ Apple Silicon. Feed it a messy break, slice the isolated drums to MIDI without bass bleed.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Signal_separation",
+    "alt_links": ["https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"],
+    "bib_refs": ["bib:ableton_live_12_manual", "bib:stemforge_repo"],
+    "song_refs": [],
+    "see_also": ["slice_to_midi", "sampler"],
+    "first_used_in_lesson": "w03-simpler-basics"
+  },
+
+  "midi_cc": {
+    "term": "MIDI CC",
+    "category": "hardware_history",
+    "definition": "Continuous Controller — one of 128 MIDI messages carrying 7-bit (0–127) or 14-bit continuous data. CC1 is modwheel, CC7 volume, CC11 expression, CC64 sustain pedal. Mapping CC to plugin parameters is how hardware controllers talk to software.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/MIDI",
+    "alt_links": ["https://www.midi.org/specifications-old/item/table-3-control-change-messages-data-bytes-2"],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["midi_sysex", "mpe", "cv_gate"],
+    "first_used_in_lesson": null
+  },
+
+  "midi_sysex": {
+    "term": "MIDI SysEx",
+    "category": "hardware_history",
+    "definition": "System Exclusive — a manufacturer-specific MIDI message type used for patch dumps, firmware updates, and bespoke parameter control. Squarepusher's Eventide Orville patches, written in VSIG, were transferred via SysEx. Still the only way to save state on many older synths.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/MIDI",
+    "alt_links": [],
+    "bib_refs": ["bib:eventide_vsig_docs"],
+    "song_refs": [],
+    "see_also": ["midi_cc", "mpe"],
+    "first_used_in_lesson": null
+  },
+
+  "mpe": {
+    "term": "MPE",
+    "category": "hardware_history",
+    "definition": "MIDI Polyphonic Expression — an extension that gives every held note its own channel, so pitch-bend, pressure, and slide can be per-note. Supported by ROLI Seaboard, LinnStrument, Push 3, and any modern synth worth having (Meld, Wavetable, Operator, Simpler all support it).",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/MIDI",
+    "alt_links": ["https://www.midi.org/midi-articles/midi-polyphonic-expression-mpe"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["midi_cc", "midi_sysex"],
+    "first_used_in_lesson": null
+  },
+
+  "cv_gate": {
+    "term": "CV/gate",
+    "category": "hardware_history",
+    "definition": "Pre-MIDI analog control — a Control Voltage line sets pitch (typically 1 V per octave), a Gate line triggers note on/off. Still the lingua franca of modular synths. Ableton's CV Tools (free for Suite) plus a DC-coupled interface let you talk to a Eurorack case from Live.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/CV/gate",
+    "alt_links": ["https://www.ableton.com/en/packs/cv-tools/"],
+    "bib_refs": ["bib:ableton_cv_tools"],
+    "song_refs": [],
+    "see_also": ["din_sync", "midi_cc"],
+    "first_used_in_lesson": null
+  },
+
+  "din_sync": {
+    "term": "DIN sync",
+    "category": "hardware_history",
+    "definition": "Pre-MIDI clock standard from Roland — a 5-pin DIN cable carrying a 24 pulses-per-quarter clock plus start/stop. The TR-808, TR-909, TB-303, and MC-202 speak it. Modern interfaces (Squarp, Innerclock, Korg SQ-1) convert DIN sync to MIDI clock in both directions.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/DIN_sync",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["cv_gate", "midi_cc"],
+    "first_used_in_lesson": null
+  },
+
+  "float_32": {
+    "term": "24-bit vs 32-bit float",
+    "category": "hardware_history",
+    "definition": "24-bit integer files hold 144 dB of dynamic range — the pro delivery standard. 32-bit float files store effectively unlimited internal headroom and can survive post-hoc gain-down even when they look clipped. Ableton's engine is 32-bit float internally; you can push a channel past 0 dBFS without audible damage until you hit the master output.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Audio_bit_depth",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["bit_depth", "dbfs", "gain_staging"],
+    "first_used_in_lesson": null
+  },
+
+  "awm_sampling": {
+    "term": "AWM sampling",
+    "category": "hardware_history",
+    "definition": "Advanced Wave Memory — Yamaha's sample-playback architecture, the engine behind the Motif, S-series, and most post-DX Yamaha workstations. A late-1980s counterpart to Roland's LA synthesis and E-mu's PCM sampling. Historical, but the multisample techniques carry forward into every modern soft-sampler.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Sample-based_synthesis",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["sampler", "companded_adc"],
+    "first_used_in_lesson": null
+  },
+
+  "companded_adc": {
+    "term": "companded ADC",
+    "category": "hardware_history",
+    "definition": "An analog-to-digital converter that compresses the signal before quantization and expands on playback, stretching the effective dynamic range of low bit depths. The SP-1200 (12-bit µ-law) uses this; it's part of why a 12-bit Dilla kick sounds thicker than math says it should.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/%CE%9C-law_algorithm",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["bit_depth", "ad_da", "dsp_chip"],
+    "first_used_in_lesson": null
+  },
+
+  "dsp_chip": {
+    "term": "DSP chip",
+    "category": "hardware_history",
+    "definition": "A microprocessor specialized for real-time signal processing — Motorola 56000, Analog Devices SHARC, TI TMS320. The chip inside every Eventide, every early Kurzweil, the Korg Oasys. Squarepusher writes custom patches for dual Orvilles (SHARC-based) via Eventide VSIG.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Digital_signal_processor",
+    "alt_links": [],
+    "bib_refs": ["bib:eventide_dsp4000_manual", "bib:eventide_orville_manual"],
+    "song_refs": [],
+    "see_also": ["ad_da", "companded_adc", "fft"],
+    "first_used_in_lesson": null
+  },
+
+  "ad_da": {
+    "term": "AD/DA converter",
+    "category": "hardware_history",
+    "definition": "Analog-to-digital (AD) and digital-to-analog (DA) converters — the glass between your mic and your DAW, and between your DAW and your monitors. Modern converters are commoditized and good; the remaining aesthetic differences live in clock jitter and analog filter design.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Analog-to-digital_converter",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["dsp_chip", "bit_depth", "sample_rate"],
+    "first_used_in_lesson": null
+  },
+
+  "edo": {
+    "term": "EDO (equal divisions of the octave)",
+    "category": "hardware_history",
+    "definition": "A tuning system dividing the octave into N equal steps. 12-EDO = standard Western temperament. 24-EDO = quarter tones. 31-EDO, 53-EDO approximate just intonation to varying degrees. Scala (.scl) files can describe any of them, and Live 12's tuning systems can load them.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Equal_temperament",
+    "alt_links": ["https://www.huygens-fokker.org/scala/"],
+    "bib_refs": ["bib:korg_monologue_afx_manual"],
+    "song_refs": [],
+    "see_also": ["equal_temperament", "microtuning", "tuning_systems", "cent"],
+    "first_used_in_lesson": "w05-aphex-tuning"
+  },
+
+  "one_shot": {
+    "term": "one-shot",
+    "category": "sampling",
+    "definition": "A sample that plays from start to finish on trigger, no loop, no gate. Drum hits are one-shots. Simpler's One-Shot mode sets this explicitly, with Fade In/Out envelopes for clean edges.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Sampler_(musical_instrument)",
+    "alt_links": [],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["simpler_modes", "loop_point", "sampler"],
+    "first_used_in_lesson": "w03-simpler-basics"
+  },
+
+  "loop_point": {
+    "term": "loop point",
+    "category": "sampling",
+    "definition": "The marker in a sample where, on sustain, playback jumps back to continue. Set between zero crossings to avoid clicks. The Fairlight and every hardware sampler after it made loop-point editing a ritual; soft samplers inherited the idea without the tedium.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Sampler_(musical_instrument)",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["one_shot", "sampler"],
+    "first_used_in_lesson": null
+  },
+
+  "chop": {
+    "term": "chop",
+    "category": "sampling",
+    "definition": "To slice a sample into fragments and reassign them to pads or notes. The foundational hip-hop move. 'Chop' is also the noun: a single slice. Chromatic chops spread across the keyboard as melody; rhythmic chops map to a Drum Rack as new grooves.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Sampling_(music)",
+    "alt_links": [],
+    "bib_refs": ["bib:rbma_just_blaze_lecture", "bib:prefuse_73_xlr8r"],
+    "song_refs": [],
+    "see_also": ["slice_to_midi", "resample", "micro_chopping", "amen_break"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "resample": {
+    "term": "resample",
+    "category": "sampling",
+    "definition": "Record the output of your session back in as audio — then chop, pitch, mangle. Aphex's whole workflow. Mr. Bill built a career on it. In Ableton: route a track's Audio From → Resampling (or the bus itself), arm a new audio track, hit record.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Sampling_(music)",
+    "alt_links": [],
+    "bib_refs": ["bib:mr_bill_resample_tutorial"],
+    "song_refs": [],
+    "see_also": ["chop", "resample_and_mutate", "bounce_in_place"],
+    "first_used_in_lesson": "w10-variation-generation"
+  },
+
+  "amen_break": {
+    "term": "Amen break",
+    "category": "sampling",
+    "definition": "Six seconds of drums from The Winstons' 'Amen, Brother' (1969), drummer Gregory Coleman. Sampled into the DNA of breakbeat, jungle, drum & bass, and IDM. Squarepusher: 'very sonically rich, very spectrally dense. You can pitch it up, down, stretch it, reverse it, it does everything.'",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Amen_break",
+    "alt_links": [],
+    "bib_refs": ["bib:wikipedia_amen_break", "bib:tape_op_89"],
+    "song_refs": ["song:squarepusher_come_on"],
+    "see_also": ["breakbeat", "chop", "slice_to_midi", "varispeed"],
+    "first_used_in_lesson": "w07-squarepusher-chops"
+  },
+
+  "breakbeat": {
+    "term": "breakbeat",
+    "category": "sampling",
+    "definition": "A drum break sampled and re-triggered — the rhythmic engine of hip-hop, jungle, drum & bass. Amen, Funky Drummer, Apache, Think, Synthetic Substitution. The canon is small; the mileage is enormous.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Breakbeat",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["amen_break", "chop", "slice_to_midi"],
+    "first_used_in_lesson": null
+  },
+
+  "slice_to_midi": {
+    "term": "Slice to MIDI",
+    "category": "sampling",
+    "definition": "Ableton command (right-click on a warped clip) that cuts audio at transients/beats/regions/manual markers and drops each slice into a Drum Rack as a Simpler chain, with a MIDI clip that re-triggers them in their original order. The starting point for every breakbeat-chopping session.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["chop", "transient_detection", "drum_rack", "simpler_modes"],
+    "first_used_in_lesson": "w03-simpler-basics"
+  },
+
+  "varispeed": {
+    "term": "varispeed",
+    "category": "sampling",
+    "definition": "Tape (or old-sampler) speed control that links pitch and duration. Double the speed = up an octave, half the length. The sound of chipmunk soul, of Squarepusher's half-speed bass trick, and of the Akai S950's crude pitch-shift. Re-Pitch warp in Ableton is the digital equivalent.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Varispeed",
+    "alt_links": [],
+    "bib_refs": ["bib:tape_op_89"],
+    "song_refs": [],
+    "see_also": ["repitch_warp", "pitch_shifting", "chipmunk_soul"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "anti_aliasing_filter": {
+    "term": "anti-aliasing filter",
+    "category": "sampling",
+    "definition": "A low-pass filter placed before AD conversion (or before non-linear processing) to kill content above Nyquist. Without it, aliased garbage folds into the signal. Oversampling in plugins is an anti-aliasing strategy — run the math at 4× sample rate, then filter and downsample.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Anti-aliasing_filter",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["nyquist_frequency", "aliasing", "sample_rate"],
+    "first_used_in_lesson": null
+  },
+
+  "drum_rack": {
+    "term": "Drum Rack",
+    "category": "sampling",
+    "definition": "Ableton's drum-kit container — up to 128 pads (16×8 visible), each a chain with its own devices, send routing, and MIDI note. Slice to MIDI lands here. Push 3 treats it as a grid instrument.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"],
+    "bib_refs": ["bib:ableton_live_12_manual", "bib:ableton_push_3_docs"],
+    "song_refs": [],
+    "see_also": ["slice_to_midi", "simpler_modes", "chain_selector"],
+    "first_used_in_lesson": "w03-simpler-basics"
+  },
+
+  "dilla_time": {
+    "term": "Dilla time",
+    "category": "named_technique",
+    "definition": "Dan Charnas's term (Dilla Time, 2022) for J Dilla's rhythmic signature — the deliberate superimposition of straight, swung, and micro-shifted elements within the same bar. On the MPC3000, per-pad swing and timing shift make this programmable. Canonical recipe: kicks on straight 16ths, hats at ~60–66% swing, snares dragged 20–30 ms late.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Dilla_Time",
+    "alt_links": [],
+    "bib_refs": ["bib:charnas_dilla_time", "bib:akai_mpc3000_manual", "bib:questlove_dilla_quote"],
+    "song_refs": ["song:dilla_dont_cry"],
+    "see_also": ["swing", "microtiming", "quantization", "groove_pool"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "chipmunk_soul": {
+    "term": "chipmunk soul",
+    "category": "named_technique",
+    "definition": "A style of hip-hop built on pitched-up soul vocal samples — the Kanye West / Just Blaze / RZA lineage. The authentic artifact is varispeed (linked pitch/tempo via old-gear sampler), not time-stretch. In Ableton: Re-Pitch warp, +4 to +7 semitones. Time-stretch loses the character.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Chipmunk_soul",
+    "alt_links": [],
+    "bib_refs": ["bib:rbma_just_blaze_lecture", "bib:rbma_rza_lecture"],
+    "song_refs": [],
+    "see_also": ["repitch_warp", "varispeed", "chop"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "boomsauce": {
+    "term": "boomsauce",
+    "category": "named_technique",
+    "definition": "Madlib's wobbly sub-bass sound — sampled bass routed through a Boss SP-303 with real-time filter/drive FX modulation while resampling. No Wikipedia page; the term is Madlib's own, documented via Dave Cooley interviews. Reproducible in Ableton with a low-bitrate resampler (Decimort 2 / Roar Bitgrunge), an LFO-modulated filter, and a commit-via-resample step.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:madlib_dave_cooley_interview", "bib:roland_sp303_manual"],
+    "song_refs": [],
+    "see_also": ["resample", "resample_and_mutate", "chipmunk_soul"],
+    "first_used_in_lesson": null
+  },
+
+  "fridmann_bass": {
+    "term": "Fridmann bass",
+    "category": "named_technique",
+    "definition": "Dave Fridmann's signature bass-distortion move — a Dorrough 610 broadcast loudness meter abused as a saturator, fed hot enough that it clips in a specific, musical way. No Wikipedia page; documented via Tarbox Road Studios gear lists and Fridmann's own site. The aesthetic lives on MGMT's Oracular Spectacular, Tame Impala's Lonerism, and the Flaming Lips' output.",
+    "wikipedia_url": null,
+    "alt_links": ["http://www.tarboxroadstudios.com/equipment.html"],
+    "bib_refs": ["bib:fridmann_davefridmann_com", "bib:tarbox_road_equipment", "bib:happymag_mgmt_oracular_engineering", "bib:audiotechnology_lonerism_feature"],
+    "song_refs": [],
+    "see_also": ["tarbox_road_studios", "loudness_war"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "kronecker_king_snare": {
+    "term": "Kronecker King snare",
+    "category": "named_technique",
+    "definition": "Squarepusher's technique on Hello Everything (2006) — a snare sample trimmed to a 1–2 ms transient-only envelope (a Kronecker-delta impulse), with a synthesized body triggered in parallel. The click is sampled; the snare is synthesis. The 1–2 ms figure is KVR/Jenkinson-site consensus, not a Tape Op quote directly.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Kronecker_delta",
+    "alt_links": [],
+    "bib_refs": ["bib:tape_op_89", "bib:kvr_autechre_analysis"],
+    "song_refs": [],
+    "see_also": ["transient_shaping", "one_shot", "resample"],
+    "first_used_in_lesson": "w07-squarepusher-chops"
+  },
+
+  "microtuning": {
+    "term": "microtuning",
+    "category": "named_technique",
+    "definition": "Per-note pitch offsets in cent-level increments — Aphex Twin's per-Cirklon-step ±1–20 cent drift, Wendy Carlos's Alpha scale, La Monte Young's just intonation. Live 12's Tuning Systems and per-note Pitch transformer make it accessible. RDJ: 'Like casting light on a rough surface and seeing different patterns.'",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Microtonality",
+    "alt_links": [],
+    "bib_refs": ["bib:aphex_pitchfork_microtuning", "bib:korg_monologue_afx_manual"],
+    "song_refs": ["song:aphex_vordhosbn", "song:aphex_xtal"],
+    "see_also": ["cent", "tuning_systems", "equal_temperament", "edo"],
+    "first_used_in_lesson": "w05-aphex-tuning"
+  },
+
+  "burial_inverse_drop": {
+    "term": "Burial inverse drop",
+    "category": "named_technique",
+    "definition": "Burial's signature structural move — at the bar that would be the EDM drop, the kick drops out rather than in. Archangel (1:30) is the textbook case. The energy pivots from rhythm to vocal stutter + vinyl-crackle rise. Zero risers, zero white noise, all foley.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:burial_soundforge_quote"],
+    "song_refs": [],
+    "see_also": ["bounce_and_arrange", "subtraction_method", "beat_switch"],
+    "first_used_in_lesson": "w11-beat-switch"
+  },
+
+  "the_rub": {
+    "term": "the rub",
+    "category": "named_technique",
+    "definition": "Engineer Bob Power's term for the compositional friction between a sample and the track it sits in — a two-way pull where both voices land inside a musical relationship without resolving. Canonical example: J Dilla's 'Get Dis Money' — synth bassline in Aeolian against a Herbie Hancock vocal in a different mode. Widely cited in D'Angelo / Roots engineering lore; primary-source interview pending. Not dissonance — modal friction.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:charnas_dilla_time", "bib:whosampled_db"],
+    "song_refs": [],
+    "see_also": ["dilla_time", "mode", "chop"],
+    "first_used_in_lesson": "w11-beat-switch"
+  },
+
+  "subliminal_layering": {
+    "term": "subliminal layering (Four Tet kick stack)",
+    "category": "named_technique",
+    "definition": "Kieran Hebden's philosophy of quiet embedded textures — 'little quiet echo-y bits of vocals and noises… subliminal little sounds and textures all the time.' Physically embodied in the Daydream Repeat kick stack: main sample + near-inaudible sine sub for club weight + a short transient click + a fourth sub-body layer. Built iteratively over months of club playbacks.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:tape_notes_140_four_tet"],
+    "song_refs": ["song:fourtet_daydream_repeat"],
+    "see_also": ["phase_cancellation", "transient_shaping"],
+    "first_used_in_lesson": "w06-fourtet-layering"
+  },
+
+  "resample_and_mutate": {
+    "term": "resample-and-mutate engine (Mr. Bill)",
+    "category": "named_technique",
+    "definition": "Every 8–16 bars of finished loop, route the drum bus to a new audio track, record 4–8 bars, delete the source MIDI, chop the print. Pitch-shift, reverse, bit-crush. The printed audio becomes the B and C sections. Commit to audio as both arrangement and anti-rabbit-hole device. Mr. Bill's signature workflow.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:mr_bill_resample_tutorial"],
+    "song_refs": [],
+    "see_also": ["resample", "bounce_in_place", "variation_generation", "skeleton_method"],
+    "first_used_in_lesson": "w10-variation-generation"
+  },
+
+  "subtraction_method": {
+    "term": "Subtraction method",
+    "category": "named_technique",
+    "definition": "Course-canonical arrangement method A. Build the loop to its densest, climactic version first. Duplicate across 6 minutes. Mute elements to form the other sections. Every section derives from the same master state — cohesion is guaranteed by construction. The answer to 'what goes next' is always 'less of what you have.'",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:rick_rubin_creative_act"],
+    "song_refs": [],
+    "see_also": ["bounce_and_arrange", "variation_generation", "skeleton_method"],
+    "first_used_in_lesson": "w02-subtraction"
+  },
+
+  "bounce_and_arrange": {
+    "term": "Bounce-and-Arrange (Burial method)",
+    "category": "named_technique",
+    "definition": "Once a loop feels finished enough, freeze + flatten it to one stereo clip and drop it on a 4-minute timeline. From that point you can no longer sound-design — only chop, mute, and vary. Burial's quote: 'Fuckit, I'm going to stick to this shitty little computer program, Soundforge.' Ableton 12.3's Bounce Groups makes this a single action.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:burial_soundforge_quote"],
+    "song_refs": [],
+    "see_also": ["bounce_in_place", "bounce_groups", "subtraction_method", "burial_inverse_drop"],
+    "first_used_in_lesson": "w10-variation-generation"
+  },
+
+  "skeleton_method": {
+    "term": "Skeleton method",
+    "category": "named_technique",
+    "definition": "Course-canonical arrangement method C. Place locators. Drop placeholder MIDI clips into each section — even silent ones. Fill one element at a time, section by section: kick across all sections, then snare, then bass, then pad. You never touch a loop; you only touch the line of a single instrument across the whole track. Autechre's linear method, essentially.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["subtraction_method", "variation_generation", "bounce_and_arrange"],
+    "first_used_in_lesson": "w02-subtraction"
+  },
+
+  "variation_generation": {
+    "term": "Variation Generation (5 mutations)",
+    "category": "named_technique",
+    "definition": "Course-canonical arrangement method B, borrowed from Finish More Music's 'spawn from the same seed.' Duplicate your loop five times. Mutate each: (1) drum swap via Recombine Shuffle, (2) bass swap via Seed, (3) filter sweep, (4) reverse or time-stretch one element, (5) add a new layer. Arrange out of order (3-1-2-5-4 often wins). Five distinct sections sharing DNA.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:finish_more_music_variation"],
+    "song_refs": [],
+    "see_also": ["subtraction_method", "skeleton_method", "resample_and_mutate"],
+    "first_used_in_lesson": "w10-variation-generation"
+  },
+
+  "beat_switch": {
+    "term": "beat switch",
+    "category": "named_technique",
+    "definition": "TDE/Kendrick compositional move — abrupt drum-pattern change at the 8th or 16th bar used as narrative punctuation, not as a mix transition. No gradual blend; the lurch is the hook. Sounwave and DJ Dahi's signature. Directly transplantable to IDM (Autechre already does this; they just don't call it that).",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:pitchfork_dj_dahi_money_trees"],
+    "song_refs": [],
+    "see_also": ["macro_variations", "chain_selector", "burial_inverse_drop"],
+    "first_used_in_lesson": "w11-beat-switch"
+  },
+
+  "micro_chopping": {
+    "term": "micro-chopping",
+    "category": "named_technique",
+    "definition": "Slicing a sample at 1/32 subdivisions (or finer) and rearranging. Dilla's Don't Cry, Prefuse 73's entire Vocal Studies + Uprock Narratives catalog. Source becomes unrecognizable but retains emotional coherence because timbre and pitch relationships survive.",
+    "wikipedia_url": null,
+    "alt_links": [],
+    "bib_refs": ["bib:prefuse_73_xlr8r", "bib:charnas_dilla_time"],
+    "song_refs": ["song:dilla_dont_cry"],
+    "see_also": ["chop", "slice_to_midi", "dilla_time", "chipmunk_soul"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "tarbox_road_studios": {
+    "term": "Tarbox Road Studios",
+    "category": "artist_studio",
+    "definition": "Dave Fridmann's studio in Cassadaga, NY. Analog-heavy, idiosyncratic signal paths, home of the Dorrough-610-as-saturator move and the fattest bass sounds on MGMT's Oracular Spectacular and Tame Impala's Lonerism.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Dave_Fridmann",
+    "alt_links": ["http://www.tarboxroadstudios.com/"],
+    "bib_refs": ["bib:tarbox_road_equipment", "bib:fridmann_davefridmann_com"],
+    "song_refs": [],
+    "see_also": ["fridmann_bass", "fredonia_srt"],
+    "first_used_in_lesson": "w04-warp-modes"
+  },
+
+  "fredonia_srt": {
+    "term": "SUNY Fredonia SRT",
+    "category": "artist_studio",
+    "definition": "Sound Recording Technology program at SUNY Fredonia — a rare hybrid of conservatory musicianship and hands-on studio engineering. Bernd Gottinger runs the program; alumni have shown up on Grammy ballots. Tarbox Road, up the road, is part of the ecosystem.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/State_University_of_New_York_at_Fredonia",
+    "alt_links": ["https://www.fredonia.edu/academics/colleges-schools/school-music/program/sound-recording-technology"],
+    "bib_refs": ["bib:fredonia_srt_program", "bib:fredonia_grammy_announcement"],
+    "song_refs": [],
+    "see_also": ["tarbox_road_studios"],
+    "first_used_in_lesson": "w05-aphex-tuning"
+  },
+
+  "nts_sessions": {
+    "term": "NTS Sessions",
+    "category": "artist_studio",
+    "definition": "Autechre's 2018 8-hour broadcast release across four 2-hour NTS Radio shows, the result of a persistent Max/MSP 'system' with patches dating to 2011. Archival, version-controlled composition — save many states, revisit years later. The closing 58-minute near-static reverb piece brings runtime to exactly 8 hours.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/NTS_Sessions_1%E2%80%934",
+    "alt_links": ["https://www.nts.live/shows/autechre"],
+    "bib_refs": ["bib:nts_autechre_sessions", "bib:autechre_pitchfork_nts_2018"],
+    "song_refs": [],
+    "see_also": ["warp_records", "capture_midi"],
+    "first_used_in_lesson": "w08-autechre-feedback"
+  },
+
+  "stones_throw": {
+    "term": "Stones Throw Records",
+    "category": "artist_studio",
+    "definition": "Los Angeles indie label founded by Peanut Butter Wolf in 1996. Home of Madvillainy, J Dilla's Donuts, and the entire Madlib universe. Mix engineer Dave Cooley defines the label's audible aesthetic — rough-hewn by choice.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Stones_Throw_Records",
+    "alt_links": ["https://www.stonesthrow.com/"],
+    "bib_refs": ["bib:madlib_dave_cooley_interview"],
+    "song_refs": ["song:dilla_dont_cry"],
+    "see_also": ["boomsauce", "dilla_time"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "warp_records": {
+    "term": "Warp Records",
+    "category": "artist_studio",
+    "definition": "Sheffield-founded (1989) label that is synonymous with IDM: Aphex Twin, Autechre, Squarepusher, Boards of Canada, Four Tet, Flying Lotus. The Artificial Intelligence compilation series (1992–94) is effectively IDM's founding document.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Warp_(record_label)",
+    "alt_links": ["https://warp.net/"],
+    "bib_refs": [],
+    "song_refs": ["song:aphex_xtal", "song:squarepusher_come_on", "song:autechre_parhelic"],
+    "see_also": ["nts_sessions"],
+    "first_used_in_lesson": null
+  },
+
+  "cent": {
+    "term": "cent",
+    "category": "music_theory",
+    "definition": "1/100 of an equal-tempered semitone — the unit of microtonal pitch. 1200 cents per octave. A 5-cent detune is the classic chorus/thicken; a 7-cent random offset per sustained note is what makes an Aphex pad shimmer instead of sit.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Cent_(music)",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["microtuning", "equal_temperament", "edo", "tuning_systems"],
+    "first_used_in_lesson": "w05-aphex-tuning"
+  },
+
+  "just_intonation": {
+    "term": "ratio (just intonation)",
+    "category": "music_theory",
+    "definition": "A tuning system where intervals are small-integer frequency ratios (3:2 for a perfect fifth, 5:4 for a major third) rather than equal divisions. Pure-sounding in a single key; wanders out of tune when you modulate. The ancestor system to equal temperament.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Just_intonation",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["equal_temperament", "cent", "microtuning", "edo"],
+    "first_used_in_lesson": "w05-aphex-tuning"
+  },
+
+  "equal_temperament": {
+    "term": "equal temperament",
+    "category": "music_theory",
+    "definition": "A tuning system with equally spaced steps. 12-tone equal temperament divides the octave into 12 equal semitones of 100 cents each — the default assumption of Western music since roughly Bach's time. Every interval except the octave is a rational compromise; microtuning explicitly un-does those compromises.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Equal_temperament",
+    "alt_links": [],
+    "bib_refs": [],
+    "song_refs": [],
+    "see_also": ["just_intonation", "microtuning", "cent", "edo", "scale_mode"],
+    "first_used_in_lesson": "w05-aphex-tuning"
+  },
+
+  "scale_mode": {
+    "term": "scale / mode",
+    "category": "music_theory",
+    "definition": "A scale is an ordered set of pitches that span an octave. A mode is a specific rotation of a scale — Ionian (major), Dorian, Phrygian, Lydian, Mixolydian, Aeolian (natural minor), Locrian. The friction-between-modes trick in 'the rub' is two voices landing in different modes of the same scale.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Mode_(music)",
+    "alt_links": [],
+    "bib_refs": ["bib:akihiko_matsumoto_mode"],
+    "song_refs": [],
+    "see_also": ["the_rub", "equal_temperament", "just_intonation", "scale_device"],
+    "first_used_in_lesson": "w11-beat-switch"
+  },
+
+  "groove_pool": {
+    "term": "Groove Pool",
+    "category": "time_rhythm",
+    "definition": "Ableton's repository of groove templates (Cmd/Ctrl+Alt+6). Extract Groove from any audio clip, drop on MIDI clips. Timing (0–130%) controls swing strength, Random adds micro-ms jitter, Base sets the grid. The mechanism for applying Dilla-style per-voice grooves without hand-nudging every note.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Ableton_Live",
+    "alt_links": ["https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"],
+    "bib_refs": ["bib:ableton_live_12_manual"],
+    "song_refs": [],
+    "see_also": ["swing", "microtiming", "dilla_time", "quantization"],
+    "first_used_in_lesson": null
+  },
+
+  "microshift": {
+    "term": "MicroShift",
+    "category": "mix_master",
+    "definition": "SoundToys plugin emulating the Eventide H3000 and AMS DMX 15-80 stereo-widening shifts — tiny pitch detunes with tiny delays. Style I = H3000 preset 231 (classic widener), Style II = H3000 preset 519 (warmer), Style III = AMS DMX (wider, more aggressive). The Kanye/MBDTF-era vocal-stack engine. Focus at 200–400 Hz to keep lows mono.",
+    "wikipedia_url": null,
+    "alt_links": ["https://www.soundtoys.com/product/microshift/"],
+    "bib_refs": ["bib:soundtoys_microshift_manual"],
+    "song_refs": [],
+    "see_also": ["stereo_imaging", "haas_effect", "pitch_shifting"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  },
+
+  "little_alterboy": {
+    "term": "Little AlterBoy",
+    "category": "mix_master",
+    "definition": "SoundToys pitch/formant box. Transpose mode with Pitch +7 / Formant +7 linked gives Kanye-chipmunk vocal; unlinked (Formant -8, Pitch 0) turns any source bass-y and textured. Robot mode with MIDI input plus Drive 5 = instant vocoder lead. Used on three-moves vocal processing throughout the course.",
+    "wikipedia_url": null,
+    "alt_links": ["https://www.soundtoys.com/product/little-alterboy/"],
+    "bib_refs": ["bib:soundtoys_little_alterboy_manual"],
+    "song_refs": [],
+    "see_also": ["formant", "pitch_shifting", "microshift", "chipmunk_soul"],
+    "first_used_in_lesson": "w09-vocal-chopping"
+  }
+}

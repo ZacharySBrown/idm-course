@@ -1,0 +1,1433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W8 — Week 8 — Autechre: generative, not random</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W8</span>
+  <span class="title-chip">Week 8 — Autechre: generative, not random</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>Autechre — generative, not random</h2>
+  
+  <div class="body"><h1>Autechre — generative, not random</h1>
+<p>Everyone tells you Autechre used Max. Nobody tells you the part that makes the music work: <strong>they refuse to use random operators.</strong></p>
+<p>Sean Booth, WATMM thread, paraphrased from the SOS April 2004 sit-down: <em>we don&rsquo;t use random operators because every time you run the process it sounds different. How we play the system dictates how the system responds.</em></p>
+<p>That is the entire week. Not &ldquo;generative music.&rdquo; Not &ldquo;algorithmic.&rdquo; <strong>Procedural.</strong> Rule-based, repeatable, composed.</p>
+<p>Your Ableton build this week:</p>
+<ul>
+<li>Rhythm generator → Recombine (Shuffle) → Time Warp → Velocity Shaper → Ornament.</li>
+<li>Commit after each step.</li>
+<li>Run it through Roar&rsquo;s multiband feedback.</li>
+<li>Bounce. Delete source.</li>
+</ul>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:watmm_forum_general</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>Procedural, not random — the Booth distinction</h2>
+  
+  <div class="body"><h1>Procedural, not random</h1>
+<p>From a WATMM post Booth made on the <em>Confield</em> threads, archived and re-quoted for years: <em>&ldquo;Algorithmic just means procedural. parhelic triangle wasn&rsquo;t algo at all, sim gishel was slightly, uviol was a lot… but none of it&rsquo;s in the way you prob think of &lsquo;algorithmic&rsquo; with loads of randomness. It was all planned out, with bits of it being executed after intervals etc — like a track but codified.&rdquo;</em></p>
+<p>Three tiers on one record:</p>
+<ul>
+<li><strong>parhelic triangle</strong> — procedural, zero algorithmic content</li>
+<li><strong>sim gishel</strong> — slightly algorithmic</li>
+<li><strong>uviol</strong> — highly algorithmic</li>
+</ul>
+<p>The distinction matters because it defines <em>your</em> constraint for the week. If a process you build sounds different every render, it is not composition — it is a toy. Re-seed it. Record the run. <strong>The run is the piece.</strong></p>
+<p><code>bib:watmm_forum_general</code> · <code>bib:sos_autechre_april_2004</code></p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">parhelic triangle</span><span class="by"> — Autechre</span><span class="links"><a href="https://open.spotify.com/track/6h90s8v73fSTBRe2bfKEA4" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/QGX1nSR5ymw" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Autechre%20parhelic%20triangle" target="_blank" rel="noopener">Apple</a> </span></div><div class="song-ref"><span class="title">sim gishel</span><span class="by"> — Autechre</span><span class="links"><a href="https://open.spotify.com/track/7MrOZhA1YBYXNdw5aLABSx" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/iLLUNYxJlRE" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Autechre%20sim%20gishel" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s03">
+  <h1>Slide s03 · concept</h1>
+  <h2>Confield (2001) — nested sequencers and fluid math</h2>
+  
+  <div class="body"><h1>Confield (2001) — what the patch actually did</h1>
+<p>SOS April 2004, Booth speaking directly: Max/MSP was acquired in 1997 and became the organising metaphor for the studio. <em>&ldquo;Most of Confield came out of experiments with Max that weren&rsquo;t really applicable in a club environment.&rdquo;</em></p>
+<p>Three ingredients of the <em>Confield</em> sound, per the same interview and the WATMM follow-ups:</p>
+<ul>
+<li><strong>Navier-Stokes fluid-dynamics simulations</strong> used as slow continuous modulators for filter, pan, pitch. Fluid math as an LFO replacement.</li>
+<li><strong>Nested analogue sequencers.</strong> One sequencer&rsquo;s control voltage decides what step another sequencer plays. A third sequencer drives the second at a different rate. Output: quantifiable complexity, not noise.</li>
+<li><strong>20+ minute takes edited down.</strong> The evening&rsquo;s job is curation.</li>
+</ul>
+<p>This is composition by <strong>selecting from a rule-bound output stream.</strong> You are not writing bars. You are tuning a system and then choosing.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:watmm_forum_general</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s04">
+  <h1>Slide s04 · caveat</h1>
+  <h2>The screen-off quote — flagged</h2>
+  
+  <div class="body"><h1>Caveat — the &ldquo;screen off&rdquo; quote</h1>
+<p>You will hear this one everywhere: <em>&ldquo;Booth had to turn the screen off to finish Confield.&rdquo;</em></p>
+<p>Flag: <strong>community paraphrase, not a verified direct quote from a dated interview.</strong> SOS April 2004 has Booth saying something adjacent — <em>&ldquo;there&rsquo;s nothing better than turning the screen off and just going analogue… the screen has to go off&rdquo;</em> — but that is a <em>general practice</em> statement, not a statement tied to the <em>Confield</em> sessions specifically. The fused version is WATMM folk transmission.</p>
+<p>The practical content is still correct, and the discipline matters:</p>
+<ul>
+<li>At least once per session, close the laptop lid.</li>
+<li>Monitor from speakers.</li>
+<li>Write notes on paper about what the piece needs.</li>
+<li>Your ears get authority back from your eyes.</li>
+</ul>
+<p>Preserve the caveat when you repeat the lore. <strong>One honest &ldquo;unconfirmed&rdquo; beats three &ldquo;it is said that.&rdquo;</strong></p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:watmm_forum_general</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>Draft 7.30 (2005) — the discipline of pulling back</h2>
+  
+  <div class="body"><h1>Draft 7.30 (2005) — the pullback</h1>
+<p><em>Confield</em> expanded. <em>Draft 7.30</em> contracted. On purpose.</p>
+<p>Booth, SOS April 2004 follow-up material and later WATMM AMAs: <em>Draft</em> was written <em>&ldquo;using straight-up normal sequencers and samplers. It&rsquo;s written note by note, where we know exactly what we put on.&rdquo;</em> They refused to download new software during production.</p>
+<p>Why this matters for you:</p>
+<ul>
+<li>Expansion without contraction is a trap. You become a tool-collector.</li>
+<li>After every generative-heavy track you ship, commit to one track built note-by-note with no Max for Live, no new devices, no rhythm generators.</li>
+<li>The constraint is the composition. If you enjoyed the loop for 8 bars, break it — Rick Rubin via the arrangement chapter.</li>
+</ul>
+<p><strong>Every third track: no generators.</strong> Compose by typing.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:watmm_forum_general</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>NTS Sessions (2018) — versioning as practice</h2>
+  
+  <div class="body"><h1>NTS Sessions (2018) — versioning as practice</h1>
+<p>Eight hours of music across four 2-hour broadcasts. Described in press and WATMM consensus as &ldquo;a persistent Max/MSP environment&rdquo; — the same patch family reworked across years.</p>
+<p>Booth, widely quoted from the 2018 press cycle (flag — attributed via multiple Pitchfork + forum transcriptions; we list the interview in <code>needs_bib</code>): <em>&ldquo;I think the oldest thing is from 2011… weird recent jams using old patches.&rdquo;</em></p>
+<p>The practice: <strong>archival, version-controlled composition.</strong> Save many states. Revisit years later. Treat a Max patch the way a software engineer treats a repo.</p>
+<p>In Ableton, this maps to:</p>
+<ul>
+<li>Save Live sets with version numbers. v01, v02, v03.</li>
+<li>Use <strong>Chain Selector + Macro Variations</strong> (12.2+) to store 8–16 recallable patch snapshots inside one rack.</li>
+<li>When a sound idea works, save it as a rack preset with a dated name. Raid the preset folder six months later.</li>
+</ul>
+<p><code>bib:watmm_forum_general</code> · <code>bib:ableton_live_12_manual</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>The four-commit procedural MIDI chain</h2>
+  
+  <div class="body"><h1>The four-commit procedural MIDI chain</h1>
+<p>This is the core exercise of the week. Built from Ableton 12 <strong>MIDI Transform &amp; Generate</strong> tools per the Live 12 manual.</p>
+<p>The chain, in order:</p>
+<ol>
+<li><strong>Rhythm generator</strong> — Steps 16, Density 55%, Division 1/16, Shift 0. Generate the raw grid.</li>
+<li><strong>Recombine (Shuffle)</strong> — re-orders the card deck. Commit the new MIDI.</li>
+<li><strong>Time Warp</strong> — breakpoint speed curve 2.0x → 0.25x across two bars. A snare roll that decelerates.</li>
+<li><strong>Velocity Shaper</strong> — draw a curve, apply. Kill uniformity.</li>
+<li><strong>Ornament</strong> — Length 1/64, Density low. Flams and mordents.</li>
+</ol>
+<p><strong>Commit each step.</strong> Right-click the MIDI clip → Freeze/Flatten, or apply the transform and keep moving. Between steps, drag a copy of the clip into a scratch track so you can revert.</p>
+<p>You are performing four discrete compositional acts. Do not stack transforms and apply once — the edits become uncollectable.</p>
+<p><code>bib:ableton_live_12_manual</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s08">
+  <h1>Slide s08 · concept</h1>
+  <h2>Euclidean + clip envelopes unlinked = polymeter</h2>
+  
+  <div class="body"><h1>Euclidean + unlinked clip envelopes = polymeter</h1>
+<p>Two tricks, stacked.</p>
+<p><strong>Euclidean generator</strong> (Live 12 manual): distribute N pulses across M steps with rotation R. The Ali Jamieson method:</p>
+<ul>
+<li>Kick 16/4/0</li>
+<li>Snare 16/3/2</li>
+<li>Hat 16/7/1</li>
+<li>Clave 12/5/0</li>
+</ul>
+<p>Four clips, unequal lengths, one Drum Rack. Pattern repeats only at the least common multiple. Forty-plus bars before anything literally recurs.</p>
+<p><strong>Clip envelopes unlinked from loop length.</strong> In a clip envelope, disable &ldquo;Linked&rdquo; on, say, the filter cutoff. Envelope length 7 bars. Audio clip length 4 bars. The filter sweep never lines up with the drum cycle the same way twice.</p>
+<ul>
+<li>4-bar drum audio + 7-bar filter LFO = the Autechre polymeter posture.</li>
+<li>3-bar pan + 5-bar amp envelope = fully non-repeating motion on a pad.</li>
+</ul>
+<p>No randomness touched. Every moment is procedurally derivable. This is the point.</p>
+<p><code>bib:ableton_live_12_manual</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s09">
+  <h1>Slide s09 · concept</h1>
+  <h2>Roar as the Ableton-native feedback matrix</h2>
+  
+  <div class="body"><h1>Roar — the Ableton-native feedback matrix</h1>
+<p>Before we touch Roar: an apology. The marketing calls it a saturator. It is <strong>three distortion stages taped together with a feedback loop.</strong> That is better.</p>
+<p>Per the Live 12.2+ manual, the IDM drum-bus configuration:</p>
+<ul>
+<li><strong>Routing:</strong> MultiBand, three shaper stages.</li>
+<li><strong>Low stage (&lt;120 Hz):</strong> Tube, Drive 40%, Mix 70%.</li>
+<li><strong>Mid stage (800 Hz–3 kHz):</strong> Diode, Drive 60%, Mix 50%.</li>
+<li><strong>High stage (&gt;3 kHz):</strong> Shards, Drive 25%, Mix 30%.</li>
+<li><strong>Feedback section:</strong> Time 1/16, Amount 15%, routed post-shaper. Start at 15%. Past 25% it screams.</li>
+</ul>
+<p>The feedback matrix is what approximates the Autechre Shure Auxpander patchbay routing in a single plugin. <em>&ldquo;Stuff can go back in and back out as many times as we want it to&rdquo;</em> — Booth, SOS April 2004.</p>
+<p><strong>A/B the stemforge render.</strong> <code>stemforge:w08-moanin-ambient-feedback</code> gives you <code>moanin_dry.wav</code> and <code>moanin_ambient.wav</code>. The wet is Moanin&rsquo; pushed through the ambient pipeline; your Roar pass runs on top.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:ableton_live_12_manual</code> · <code>bib:stemforge_repo</code></p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Moanin&#x27; — dry vs ambient feedback</div><div class="controls"><button data-src="stemforge/moanin_dry.wav" class="active">A — dry</button><button data-src="stemforge/moanin_ambient.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/moanin_dry.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide teaser" id="slide-s10">
+  <h1>Slide s10 · teaser</h1>
+  <h2>Detour — MGMT&#x27;s cheap-compressor assault</h2>
+  
+  <div class="body"><h1>Detour — wrongness as signature</h1>
+<p>Quick detour — because &ldquo;wrongness as signature&rdquo; is exactly what MGMT&rsquo;s &ldquo;Kids&rdquo; is. In March 2007, at Tarbox, Fridmann tracked the vocal on a Neumann U47 and then assaulted the whole mix with, quote, &ldquo;substandard 1990s compressors.&rdquo; He never named which ones. The engineers who&rsquo;ve tried to reconstruct it on Gearspace have not agreed. The point: the sound is load-bearing, and it came from breaking cheap gear on purpose, and you cannot buy it. You can only imitate the posture.</p>
+<p>The connection to this week: Autechre&rsquo;s feedback routing and MGMT&rsquo;s cheap-compressor assault are the same idea at different scales. <strong>Pick a wrong path on purpose and commit to it.</strong> Roar&rsquo;s feedback is your cheap-compressor. Turn it up until the texture becomes signature, then stop turning it up.</p>
+<p><code>bib:happymag_mgmt_oracular_engineering</code></p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Kids</span><span class="by"> — MGMT</span><span class="links"><a href="https://open.spotify.com/track/5NXQPIl8LBpeaVQJUj2DE0" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/fe4EK4HSPkI" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=MGMT%20Kids" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s11">
+  <h1>Slide s11 · concept</h1>
+  <h2>The Max for Live ecosystem — chaos, Markov, probability</h2>
+  
+  <div class="body"><h1>Max for Live — chaos, Markov, probability</h1>
+<p>Three devices. Each replaces a hand-built Max/MSP structure the Autechre duo would have patched themselves.</p>
+<ul>
+<li><strong>K-Devices ESQ / HEXO.</strong> Per-step probability step sequencers. Each step carries its own chance value. ESQ is melodic; HEXO is percussive. This is the <em>&ldquo;we may have one fader that determines how often a snare does a little roll&rdquo;</em> posture from the SOS 2004 piece, ported to a UI.</li>
+<li><strong>Dillon Bastan — Strange Mod.</strong> 3D chaotic attractors (Lorenz, Rössler, Thomas). Navier-Stokes-adjacent. Map X/Y/Z outputs to filter, pan, pitch. This is the <em>Confield</em> modulator, 2026-edition.</li>
+<li><strong>Markov Variations.</strong> Markov-chain note sequencer. Feed it a source melody, it generates statistically consistent derivatives. Same family as the Oversteps-era voice-writing patches Booth has described on WATMM.</li>
+</ul>
+<p>Pick <strong>one.</strong> Add the others after you ship a track with the first. Tool-collecting is the trap <em>Draft 7.30</em> warned us about.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:watmm_forum_general</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s12">
+  <h1>Slide s12 · concept</h1>
+  <h2>CPU, Freeze, Bounce in Place — the unglamorous part</h2>
+  
+  <div class="body"><h1>CPU, Freeze, Bounce in Place — the unglamorous part</h1>
+<p>Generative chains get heavy. Three Max for Live devices plus Roar plus a Drum Rack full of sample chains and your session will start glitching.</p>
+<p>Per the Live 12 manual, three tools, used in this order:</p>
+<ul>
+<li><strong>Freeze Track.</strong> Right-click a track header → Freeze. Ableton renders the track to a temporary audio file and suspends device processing. CPU recovers. Frozen tracks can still be moved, but device parameters are locked until you Unfreeze.</li>
+<li><strong>Flatten.</strong> After Freeze, right-click → Flatten. The frozen audio becomes a new audio clip; the MIDI and devices are removed. <strong>This is the commit.</strong></li>
+<li><strong>Bounce in Place</strong> (Live 12.3 Bounce Groups). For subgroups of tracks. Commit a generative drum bus to one audio track. Delete the source group.</li>
+</ul>
+<p>Rule: once a generative chain sounds right, <strong>Flatten within the same session.</strong> Do not come back to unfreeze. You are buying decision closure.</p>
+<p><code>bib:ableton_live_12_manual</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s13">
+  <h1>Slide s13 · exercise</h1>
+  <h2>Build it — four commits, 32 bars, Moanin&#x27; ambient kit</h2>
+  
+  <div class="body"><h1>Exercise — 32 bars, four commits, one bounce</h1>
+<p><strong>Deliverable:</strong> a 32-bar bounced audio file of evolving-but-rule-based drums.</p>
+<p>Steps:</p>
+<ol>
+<li>Import the <code>stemforge:w08-moanin-ambient-feedback</code> render (<code>moanin_ambient.wav</code>). Slice to Drum Rack at 1/16 by transient. This is your kit.</li>
+<li>New MIDI clip, 8 bars, empty. Apply <strong>Rhythm generator</strong>: Steps 16, Density 55%, Division 1/16. Commit.</li>
+<li>Apply <strong>Recombine (Shuffle)</strong>. Commit.</li>
+<li>Apply <strong>Time Warp</strong>: breakpoint curve 1.5x at bar 1 → 0.5x at bar 4 → 1.0x at bar 8. Commit.</li>
+<li>Apply <strong>Velocity Shaper</strong> (hand-drawn curve). Commit. Apply <strong>Ornament</strong> at Length 1/64, Density 20%. Commit.</li>
+<li>Loop the 8-bar clip × 4 into a 32-bar arrangement. Unlink a filter clip envelope at 7-bar length.</li>
+<li>Bus the Drum Rack through <strong>Roar MultiBand</strong> with the settings on slide 9.</li>
+<li><strong>Freeze → Flatten.</strong> Export 32 bars.</li>
+</ol>
+<p><strong>Time-box: 45 minutes.</strong> Ship one bounce. Delete the source MIDI. Save the set as <code>w08_v01.als</code>.</p>
+<p><code>bib:ableton_live_12_manual</code> · <code>bib:stemforge_repo</code></p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 32-bar bounced audio file of evolving-but-rule-based drums, generated by the four-commit MIDI chain (Rhythm → Recombine Shuffle → Time Warp → Velocity Shaper → Ornament) applied to a Drum Rack loaded with the w08-moanin-ambient-feedback stemforge render.</div>
+  
+</section>
+
+
+<section class="slide concept" id="slide-d01">
+  <h1>Slide d01 · concept</h1>
+  <h2>The four-commit chain, visualized</h2>
+  
+  <div class="body"><h1>The four-commit chain, visualized</h1>
+<p>Four discrete procedural acts. Not a macro. Not a preset. A sequence of decisions, each of which renames the MIDI in place before the next decision sees it.</p>
+<p>The shape is: generate a grid → scramble while preserving content → bend time non-linearly → un-uniform the velocity → decorate. Per the Live 12 manual&rsquo;s MIDI Transform &amp; Generate chapter, each operation can be previewed before commit — use that. Audition, decide, commit, move on.</p>
+<p>If you try to chain two transforms without committing in between, the second one operates on a preview, not on notes, and you lose the ability to revert step-by-step. One commit per act. The commits are the composition.</p>
+<p><code>bib:ableton_live_12_manual</code></p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Empty MIDI clip] --&gt; B[Rhythm generator&lt;br/&gt;16 steps, Density 55%]
+  B -- commit --&gt; C[Recombine Shuffle&lt;br/&gt;scramble, preserve content]
+  C -- commit --&gt; D[Time Warp&lt;br/&gt;2.0x → 0.25x curve]
+  D -- commit --&gt; E[Velocity Shaper&lt;br/&gt;hand-drawn curve]
+  E -- commit --&gt; F[Ornament&lt;br/&gt;1/64 flams, Density 20%]
+  F --&gt; G[Flattened MIDI]
+</div><div class="caption">Each arrow labelled &#x27;commit&#x27; is a literal Freeze+Flatten or apply-transform action. Five discrete decisions, not a macro.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d02">
+  <h1>Slide d02 · concept</h1>
+  <h2>Procedural vs random — same generator, two runs</h2>
+  
+  <div class="body"><h1>Procedural vs random — same generator, two runs</h1>
+<p>Imagine the same 16-step rhythm generator, run twice.</p>
+<p><strong>Run A — random.</strong> Each step&rsquo;s probability rolls a fresh <code>Math.random()</code> at playback. Render 1 gives you hits at 1, 4, 7, 9, 13. Render 2 gives you hits at 2, 5, 8, 10, 11, 15. The pattern is different every render. Booth&rsquo;s complaint lives here: you cannot play this system, you can only wait for a take you like.</p>
+<p><strong>Run B — procedural.</strong> Steps are chosen by a rule-based modulator — a counter, an LFO quantized to step positions, a Markov chain with fixed transition weights. Render 1 and render 2 produce the <em>same</em> pattern. Change the seed or the weights — the pattern changes predictably. You can play this system.</p>
+<p>The Autechre rule: <strong>if the render isn&rsquo;t reproducible, it isn&rsquo;t finished.</strong> Commit the run. The run is the piece.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:watmm_forum_general</code></p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TB
+  subgraph Random
+    R1[Generator] --&gt; R2[Math.random seed]
+    R2 --&gt; R3[Render 1: hits @ 1,4,7,9,13]
+    R2 --&gt; R4[Render 2: hits @ 2,5,8,10,11,15]
+  end
+  subgraph Procedural
+    P1[Generator] --&gt; P2[Rule: LFO quantized]
+    P2 --&gt; P3[Render 1: hits @ 1,3,5,8,11,14]
+    P2 --&gt; P4[Render 2: hits @ 1,3,5,8,11,14]
+  end
+</div><div class="caption">Same generator; the difference is whether the modulator is stochastic or rule-based. Booth&#x27;s constraint rejects the left column.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-01">
+  <h1>Slide gd-elektron-01 · gear deep dive</h1>
+  <h2>Elektron Machinedrum + Monomachine — the live rig</h2>
+  
+  <div class="body"><h1>Elektron Machinedrum + Monomachine — the live rig</h1>
+<p>Mid-2000s, Autechre stopped touring with laptops. The live rig that replaced them: <strong>Elektron Machinedrum SPS-1UW MKII</strong> on drums, <strong>Elektron Monomachine SFX-60 MKII</strong> on synths, a <strong>Nord Modular G2</strong> for modulation glue, and an <strong>Akai MPC1000</strong> for occasional playback. The whole thing ran without a computer.</p>
+<p>The reason this matters for us: the parameter lock workflow Elektron shipped in these two boxes is the first mass-market implementation of what Autechre were already doing in Max — <strong>procedural variation baked into a step sequencer UI</strong>, no randomness required.</p>
+<p>Studio rig was different (Max/MSP in MOTU Digital Performer, Shure Auxpander patchbay) — this deep-dive is the live-era paradigm.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:elektron_machinedrum_manual</code> · <code>bib:elektronauts_autechre_threads</code></p></div>
+  <figure class="figure"><img src="assets/gear-elektron-hero.jpg" alt="Machinedrum SPS-1UW MKII (top) and Monomachine SFX-60 MKII (bottom), the Autechre mid-2000s live rig core."><figcaption>Machinedrum SPS-1UW MKII (top) and Monomachine SFX-60 MKII (bottom), the Autechre mid-2000s live rig core.<div class="credit">Elektron product photography / fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-02">
+  <h1>Slide gd-elektron-02 · gear deep dive</h1>
+  <h2>Machinedrum tour — the five controls that matter</h2>
+  
+  <div class="body"><h1>Machinedrum tour — the five controls that matter</h1>
+<p>Six-track pattern sequencer (16 steps, 16 patterns × 16 banks = 256 patterns), two global effects, and <strong>per-step parameter locks</strong> on every control visible on the front panel.</p>
+<p>What to look at on the panel:</p>
+<ul>
+<li><strong>Trig keys (16).</strong> Per-step note on/off. Classic Roland-style entry.</li>
+<li><strong>Function + Trig.</strong> Hold FUNC, hit a trig — you arm a p-lock on that step. Whatever knob you move next is now locked to that step only.</li>
+<li><strong>Param encoders (6 rows × 8 columns).</strong> Synthesis parameters per machine. On the UW model: SYN, AMP, FLT, EFF, LFO, ROUT — each 8 knobs.</li>
+<li><strong>Kit banks.</strong> 64 kits per project. A kit is a machine-type + parameter snapshot per track.</li>
+<li><strong>Machine selector.</strong> TRX (analog modelling), EFM (FM drums), E12 (12-bit sample playback), P-I (physical impulse), GND (noise-based). Swapping machine type on a track is a single button press.</li>
+</ul>
+<p>Cite for all of the above: Machinedrum SPS-1UW MKII User Manual, chapter 8 (Trig Conditions and Parameter Locks).</p>
+<p><code>bib:elektron_machinedrum_manual</code></p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-machinedrum-panel.jpg" alt="Machinedrum front panel, p-lock workflow annotated."><div class="callouts"><ol><li><strong>Trig keys</strong>: 16 step-pads. FUNC + trig arms a parameter lock on that step.</li><li><strong>Param encoders</strong>: 6 rows × 8 columns. Whatever you turn after arming a step is locked there.</li><li><strong>Machine selector</strong>: TRX / EFM / E12 / P-I / GND — swap synthesis engine per track in one press.</li><li><strong>Kit bank</strong>: 64 kits per project. A kit is a machine-type + parameter snapshot set.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-03">
+  <h1>Slide gd-elektron-03 · gear deep dive</h1>
+  <h2>Monomachine tour — six voices, six engines</h2>
+  
+  <div class="body"><h1>Monomachine tour — six voices, six engines</h1>
+<p>Six-track mono synthesizer. Same step-sequencer architecture as the Machinedrum, same p-lock discipline, different sound-generation backend.</p>
+<p>The machine types you can load per track:</p>
+<ul>
+<li><strong>SID</strong> — emulates the Commodore 64 6581 chip. Square/pulse/tri, ring mod, hard sync. Gritty.</li>
+<li><strong>FM</strong> — 4-operator FM. DX100-adjacent. The Autechre metallic-bell timbre lives here.</li>
+<li><strong>WAVE</strong> — single-cycle wavetable. 16 banks of 64 waves.</li>
+<li><strong>VO</strong> — formant-synthesis vocal-ish. Bizarre.</li>
+<li><strong>DPRO</strong> — digital pulse. Cheap PWM with modulation.</li>
+<li><strong>SuperWave</strong> — analog-modelling supersaw.</li>
+</ul>
+<p>Per-track effects: AM, distortion, filter (2-pole LP/BP/HP/BS), delay, reverb send. All p-lockable.</p>
+<p>The live interplay: Monomachine sequences melodic material; Machinedrum sequences drums; Nord G2 routes audio-rate modulation between them via CV; both Elektrons sync to the same MIDI clock.</p>
+<p><code>bib:elektron_machinedrum_manual</code> · <code>bib:elektronauts_autechre_threads</code></p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-monomachine-panel.jpg" alt="Monomachine SFX-60 MKII. Same sequencer grammar, different backend."><div class="callouts"><ol><li><strong>SID / FM / WAVE / VO / DPRO / SuperWave</strong>: Six machine types. FM is where the metallic Autechre bell timbres live.</li><li><strong>Per-track filter + delay + reverb send</strong>: All p-lockable. Drops you into a Max-for-Live-adjacent routing model in hardware.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-04">
+  <h1>Slide gd-elektron-04 · gear deep dive</h1>
+  <h2>Technique — p-locks as live-programmed variation</h2>
+  
+  <div class="body"><h1>Technique — p-locks as live-programmed variation</h1>
+<p>The move is: <strong>program a static pattern, then lock a single parameter to a different value on every step.</strong></p>
+<p>Example — classic Machinedrum snare variation:</p>
+<ol>
+<li>Track 2 (SD), machine type E12, sample slot 17 (a rimshot).</li>
+<li>Program trigs on steps 4, 8, 12, 16 — the backbeat.</li>
+<li>FUNC + step 4 → SYN/Pitch encoder → +0. Step 8 → +5. Step 12 → +2. Step 16 → –3.</li>
+<li>Hit play. The snare backbeat is now a four-pitch melodic fragment. No randomness. Every step deterministic, every step different.</li>
+</ol>
+<p>The Autechre extension, per Elektronauts forum analysis of live sets: <strong>p-lock every knob on every step, then vary sequencer length per track</strong> (track 1 plays 16 steps, track 2 plays 15 steps, track 3 plays 13 steps). The pattern repeats only at the LCM — 16×15×13 = 3120 steps, or about 13 minutes at 120 BPM.</p>
+<p>That is &ldquo;procedural, not random&rdquo; implemented in an interface. The variation is composed.</p>
+<p><code>bib:elektron_machinedrum_manual</code> · <code>bib:elektronauts_autechre_threads</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-05">
+  <h1>Slide gd-elektron-05 · gear deep dive</h1>
+  <h2>Technique — cross-sequencing the two boxes</h2>
+  
+  <div class="body"><h1>Technique continued — cross-sequencing Machinedrum and Monomachine</h1>
+<p>Autechre did not run the two boxes as two independent sequencers. They cross-sequenced them. The receipts for the exact routing are community consensus on Elektronauts and WATMM (flag: not an officially documented patch — forum-reconstructed from live-set video analysis), but the general move is well documented:</p>
+<ul>
+<li><strong>Machinedrum LFO → Monomachine CC input.</strong> Use the Machinedrum&rsquo;s per-track LFO (shape, rate, depth) as a modulator routed via MIDI CC to a Monomachine filter cutoff. The drum track &ldquo;plays&rdquo; the synth filter.</li>
+<li><strong>Monomachine MIDI sequencer tracks → Machinedrum trigger input.</strong> Monomachine has two MIDI-out tracks; route one to a Machinedrum drum track&rsquo;s trigger. The synth pattern triggers the kick.</li>
+<li><strong>Nord G2 as glue.</strong> The G2 takes in CC data from both, applies chaotic modulation (built-in Lorenz-style oscillators), and routes back.</li>
+</ul>
+<p>Booth in SOS April 2004 on the broader studio philosophy: <em>&ldquo;Stuff can go back in and back out as many times as we want it to.&rdquo;</em> The same routing mindset, implemented in a MIDI mixer box.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:elektronauts_autechre_threads</code> · <code>bib:watmm_forum_general</code></p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  MD[Machinedrum LFO] --&gt;|CC| MM[Monomachine Filter Cutoff]
+  MM2[Monomachine MIDI track out] --&gt;|Trig| MD2[Machinedrum drum track]
+  MD --&gt;|Audio| NG[Nord G2 glue]
+  MM --&gt;|Audio| NG
+  NG --&gt;|CC back| MD
+  NG --&gt;|CC back| MM
+</div><div class="caption">Forum-reconstructed cross-sequencing topology. Receipts: Elektronauts live-set analysis threads.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-06">
+  <h1>Slide gd-elektron-06 · gear deep dive</h1>
+  <h2>Algorithm — step sequencer with per-step override</h2>
+  
+  <div class="body"><h1>Algorithm — step sequencer with per-step parameter override</h1>
+<p>The Elektron data model, simplified:</p>
+<pre><code>Pattern[step] = {
+  trig: bool,                    // note on/off for this step
+  note: int,                     // pitch (for melodic tracks)
+  velocity: int,                 // 1–127
+  plocks: {param_id → value}     // per-step parameter override dict
+}
+</code></pre>
+<p>At playback, for each step the sequencer emits the trig + note, and for every plock entry it writes the locked value to the parameter bus <strong>before</strong> the voice is retriggered. When the step passes, the parameter bus reverts to the kit&rsquo;s base value.</p>
+<p>Three properties that matter:</p>
+<ol>
+<li><strong>Deterministic.</strong> Same pattern, same run, same output. No seed required.</li>
+<li><strong>Independently modulatable.</strong> Because plocks are per-step, a parameter can have 16 different values across a 16-step pattern — the &ldquo;16 snares&rdquo; effect.</li>
+<li><strong>Per-track length.</strong> Each of the 6 tracks can have its own length (1–64 steps). Polymeter falls out for free.</li>
+</ol>
+<p>This is a <strong>UI-level generative</strong> system. The &ldquo;procedural not random&rdquo; constraint lives at the hardware level: there is literally no random-trigger parameter on the front panel.</p>
+<p><code>bib:elektron_machinedrum_manual</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-07">
+  <h1>Slide gd-elektron-07 · gear deep dive</h1>
+  <h2>Algorithm — constraints and limits</h2>
+  
+  <div class="body"><h1>Algorithm continued — constraints and limits</h1>
+<p>The Machinedrum + Monomachine duo are not magic; they are constrained in very specific ways that shaped Autechre&rsquo;s live sound.</p>
+<p>Hard limits:</p>
+<ul>
+<li><strong>Max 16 steps per pattern, 1/16 resolution.</strong> For finer timing you either chain patterns or use the TRC (trig condition) feature on later OS versions. Micro-timing is per-step offset, not continuous.</li>
+<li><strong>Six voices per machine.</strong> Drum kits are limited to 6 concurrent tracks; the Monomachine likewise 6. Stacking sounds means committing upstream or muting live.</li>
+<li><strong>No random operators in the sequencer.</strong> Later OS versions added Trig Conditions (A:B, PRE, NEI, FILL) which are probabilistic — Autechre largely pre-date this on the rig they toured. Forum consensus: they used <strong>Retrig</strong> and length variation, not probability.</li>
+<li><strong>Mono audio per track.</strong> Stereo is achieved via routing to the stereo master bus or external effects. Intra-track stereo imaging is limited.</li>
+<li><strong>No audio recording of the internal state.</strong> You record the stereo output; the per-step plock values are not exported.</li>
+</ul>
+<p>The constraint set is what makes the rig composable. Random would have broken the promise.</p>
+<p><code>bib:elektron_machinedrum_manual</code> · <code>bib:elektronauts_autechre_threads</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-08">
+  <h1>Slide gd-elektron-08 · gear deep dive</h1>
+  <h2>Ableton bridge — Push 3 step mode</h2>
+  
+  <div class="body"><h1>Ableton bridge — Push 3 step mode + per-step automation</h1>
+<p>The Elektron p-lock paradigm maps cleanly onto two Ableton 12 surfaces.</p>
+<p><strong>Push 3 step edit mode.</strong> Per the Push 3 manual: hold a step pad, turn any device knob — that parameter value is locked to that step only. Same gesture as FUNC + step on the Machinedrum. Push also exposes the Rhythm generator Drum Rack layout for live Auto-generation per voice.</p>
+<p><strong>Clip envelopes per parameter.</strong> On a MIDI or audio clip, expose an envelope for any device parameter (filter cutoff, FM ratio, send level). Draw 16 breakpoints across 16 steps. The clip now carries per-step parameter data just like a Machinedrum pattern.</p>
+<table>
+<thead>
+<tr>
+<th>Machinedrum concept</th>
+<th>Ableton 12 equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Per-step p-lock</td>
+<td>Push 3 step-edit, or clip envelope breakpoint</td>
+</tr>
+<tr>
+<td>Per-track pattern length</td>
+<td>Clip loop length (set per-clip independently)</td>
+</tr>
+<tr>
+<td>Kit snapshot</td>
+<td>Chain Selector preset in a Rack</td>
+</tr>
+<tr>
+<td>MIDI sync between machines</td>
+<td>Any MIDI track routed to another&rsquo;s input</td>
+</tr>
+<tr>
+<td>Machine type swap</td>
+<td>Rack Macro Variation, or an Instrument Rack chain select</td>
+</tr>
+</tbody>
+</table>
+<p><code>bib:ableton_live_12_manual</code> · <code>bib:ableton_push_3_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-09">
+  <h1>Slide gd-elektron-09 · gear deep dive</h1>
+  <h2>Parallel M4L — HEXO, ESQ, Euclidean Pro</h2>
+  
+  <div class="body"><h1>Parallel Max for Live devices</h1>
+<p>Three devices replicate specific Machinedrum/Monomachine moves.</p>
+<ul>
+<li><strong>K-Devices HEXO.</strong> Per-step probability percussion sequencer with six tracks. The straight translation of the Machinedrum trig-condition workflow. Unlike the Elektron, HEXO does allow probability — use it deterministically (100% or 0% per step) if you want the Autechre posture, or tune probability per step if you want the later-OS Elektron conditional feel.</li>
+<li><strong>K-Devices ESQ.</strong> Same idea for melodic voices. Six tracks, per-step pitch/velocity/duration/probability locks. Maps to Monomachine MIDI tracks.</li>
+<li><strong>alkman Euclidean Sequencer Pro.</strong> Per-track Euclidean distribution with rotation. Combine with HEXO for the per-track-length polymeter effect — 16/4, 15/3, 13/5 — that the Elektrons achieved through independent track lengths.</li>
+</ul>
+<p>Rack structure: one MIDI track per voice, HEXO or ESQ at the head of each chain, Drum Rack or synth downstream, Macro Variations storing &ldquo;kits&rdquo; as full rack snapshots. Select kit, play, commit, save. Same workflow as selecting Machinedrum kits mid-pattern.</p>
+<p><code>bib:k_devices_oog_docs</code> · <code>bib:alkman_euclidean_pro</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-10">
+  <h1>Slide gd-elektron-10 · gear deep dive</h1>
+  <h2>What else — chord stabs, granular, audio-rate LFO</h2>
+  
+  <div class="body"><h1>What else the hardware can do</h1>
+<p>Not every Machinedrum move is a drum move. The UW (&ldquo;user-waveform&rdquo;) revision of the Machinedrum shipped with sample playback — the thing becomes a 6-track sample instrument the moment you load a kit of non-drum samples.</p>
+<p>Non-obvious uses, pulled from Elektronauts threads and Autechre live-set reconstructions:</p>
+<ul>
+<li><strong>Chord stabs on a drum track.</strong> Load a 4-second pad sample into an E12 machine, p-lock pitch per step. The &ldquo;drum&rdquo; is now a chord sequencer.</li>
+<li><strong>Granular-adjacent playback.</strong> UW machines with very short samples (&lt;200 ms) and p-locked start point per step. You get a micro-grain stream that is still step-quantized.</li>
+<li><strong>Audio-rate LFO via Nord G2.</strong> Route an audio signal from the Machinedrum into the Nord G2, use the G2 as an audio-rate modulator for a Monomachine filter. The drum becomes the modulator.</li>
+<li><strong>Monomachine as drum synth.</strong> FM machine tuned low with a very fast decay envelope — the Monomachine kick is a DX100-style kick. This is how Autechre got the metallic/woody drum-synth sound without using the Machinedrum.</li>
+</ul>
+<p>The rig is not six drums + six synths. It is twelve voices with interchangeable roles.</p>
+<p><code>bib:elektronauts_autechre_threads</code> · <code>bib:elektron_machinedrum_manual</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-11">
+  <h1>Slide gd-elektron-11 · gear deep dive</h1>
+  <h2>Parallel modern workflows — Push 3, Digitakt II, Renoise</h2>
+  
+  <div class="body"><h1>Parallel use cases in modern workflows</h1>
+<p>The Elektron workflow survived the decade it defined because the constraint set is still useful. You can buy a new Machinedrum spiritual successor — <strong>Digitakt II, Digitone II, Analog Rytm MKII</strong> — all ship with the same p-lock grammar.</p>
+<p>In a computer workflow the same posture maps to:</p>
+<ul>
+<li><strong>Push 3 standalone.</strong> A battery-powered Elektron equivalent in Ableton&rsquo;s house style. Step-edit on Push does the p-lock gesture natively.</li>
+<li><strong>Bitwig Studio&rsquo;s modulators + grid.</strong> Any parameter can be modulated per-step by a discrete sequencer modulator. No Elektron box required.</li>
+<li><strong>Renoise tracker.</strong> The 90s/00s tracker UI already had per-step effect columns — literally a p-lock for every FX slot. The cultural ancestor.</li>
+<li><strong>Novation Circuit Tracks/Rhythm.</strong> Cheap modern implementation of the Elektron grammar.</li>
+</ul>
+<p>The transferable skill is not the hardware. It is the discipline of <strong>deciding one parameter per step on purpose</strong>. That discipline ports.</p>
+<p><code>bib:ableton_push_3_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-12">
+  <h1>Slide gd-elektron-12 · gear deep dive</h1>
+  <h2>Exercise A — the 16-pitch snare (replicate)</h2>
+  
+  <div class="body"><h1>Exercise A — the 16-pitch snare</h1>
+<p>Replicate the Machinedrum p-lock move in Ableton. No Elektron hardware required.</p>
+<p>Steps:</p>
+<ol>
+<li>Open Push 3, create a new MIDI track, load Drum Rack with one slot — slot D1 is a snare Simpler loaded with any crisp rim/snap sample.</li>
+<li>Push: step mode. Program trigs on steps 1, 3, 5, 7, 9, 11, 13, 15 — every odd step.</li>
+<li>For each trigged step: hold the step pad, turn the Simpler <strong>Transpose</strong> knob to a different semitone value. Write down the 8 values.</li>
+<li>No randomization. No dice. You are picking eight pitches by hand.</li>
+<li>Loop, listen. Commit the MIDI clip (right-click → Freeze + Flatten the track if you want the audio).</li>
+</ol>
+<p><strong>Deliverable.</strong> One 2-bar bounced snare pattern with 8 deliberate pitches. Nothing else — no reverb, no effects. The point is the p-lock discipline in isolation.</p>
+<p>Target time: 15 minutes.</p>
+<p><code>bib:ableton_live_12_manual</code> · <code>bib:ableton_push_3_docs</code></p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 2-bar bounced snare pattern with 8 deliberately chosen pitches programmed via Push 3 step-edit mode. No randomization.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-13">
+  <h1>Slide gd-elektron-13 · gear deep dive</h1>
+  <h2>Exercise B — nested LFOs modulating each other (explore)</h2>
+  
+  <div class="body"><h1>Exercise B — nested LFOs modulating each other</h1>
+<p>The Navier-Stokes territory Booth and Brown were chasing — slow, continuous, non-repeating modulation — is achievable today with one Max for Live device and an afternoon.</p>
+<p>Build it:</p>
+<ol>
+<li>New MIDI track, Wavetable or Meld instrument, one sustained note held by a 64-bar MIDI clip.</li>
+<li>Insert Max for Live <strong>LFO</strong> device #1 on the track. Routing: LFO1 output → LFO2 <strong>Rate</strong> parameter.</li>
+<li>Insert Max for Live <strong>LFO</strong> device #2 on the same track. Routing: LFO2 output → Wavetable filter cutoff.</li>
+<li>Now insert Max for Live <strong>LFO</strong> device #3. Routing: LFO3 output → LFO1 Rate. <strong>The three LFOs modulate each other&rsquo;s rates in a cycle.</strong></li>
+<li>Set all three to different base rates (LFO1: 1/4, LFO2: 1/3, LFO3: 1/8) and different depths.</li>
+<li>Play. The filter cutoff will move in a way that is fully deterministic (no random) but non-periodic at any listenable timescale.</li>
+</ol>
+<p><strong>Deliverable.</strong> A 32-bar recording of the sustained note with the self-modulating filter. The render is reproducible — same clip, same automation, same output. Procedural, not random.</p>
+<p>This is the poor-person&rsquo;s Lorenz attractor. The next deep-dive slide (d02 / gd-maxmsp-13) gives you the real thing.</p>
+<p><code>bib:cycling74_max_msp_docs</code> · <code>bib:ableton_cv_tools</code></p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">32 bars of a sustained synth note with three LFOs modulating each other&#x27;s rates. Render twice — outputs must be identical.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-elektron-14">
+  <h1>Slide gd-elektron-14 · gear deep dive</h1>
+  <h2>Receipts and caveats — what is sourced vs inferred</h2>
+  
+  <div class="body"><h1>Interview receipts and caveats</h1>
+<p>The Elektron live rig is extensively photographed but under-interviewed. What is actually on record:</p>
+<ul>
+<li><strong>SOS April 2004</strong> confirms Max/MSP as the studio environment but predates the Machinedrum-heavy tours. Treat SOS for the <em>studio</em> lineage, not for live rig claims.</li>
+<li><strong>Autechre WATMM AMA 2013</strong> has Booth and Brown discussing live setups in response to fan questions. The Machinedrum + Monomachine + Nord G2 + MPC1000 combo is repeatedly referenced there. Flag: WATMM is a community forum; quotes are paraphrased in thread replies, not transcribed from print.</li>
+<li><strong>Elektronauts forum reconstructions</strong> of live sets (circa 2010–2015) work backward from video footage to infer patterns and routing. Useful but not canonical.</li>
+<li><strong>Resident Advisor 2016</strong> feature covers the then-current rig in passing without specific parameter detail.</li>
+</ul>
+<p>One honest &ldquo;unconfirmed&rdquo; beats three &ldquo;it is said that.&rdquo; Where a cross-sequencing specific is forum-sourced, flag it inline. Where a p-lock is in the manual, cite the manual.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:autechre_watmm_ama_2013</code> · <code>bib:elektronauts_autechre_threads</code> · <code>bib:autechre_ra_2016</code> · <code>bib:elektron_machinedrum_manual</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-01">
+  <h1>Slide gd-maxmsp-01 · gear deep dive</h1>
+  <h2>Max/MSP — the studio as patched graph</h2>
+  
+  <div class="body"><h1>Max/MSP — the studio as patched graph</h1>
+<p>Cycling &lsquo;74&rsquo;s Max started life as Max (1986, control-rate only), grew MSP in 1997 (signal-rate audio), added Jitter in 2002 (video/matrix), and shipped <strong>gen~</strong> in 2012 (sample-accurate codebox DSP). Booth acquired a copy in 1997 per SOS April 2004: <em>&ldquo;Most of Confield came out of experiments with Max that weren&rsquo;t really applicable in a club environment.&rdquo;</em></p>
+<p>The paradigm: <strong>every audio or MIDI signal is a wire between objects.</strong> No timeline. No clip. No session. A patch is a graph; the graph <em>is</em> the instrument.</p>
+<p>This deep-dive treats Max as a composition environment — the thing that generated Confield, LP5, Untilted, Oversteps, Exai, and the NTS Sessions patch family — then maps it onto Max for Live, which is the same engine embedded inside Ableton 12.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:cycling74_max_msp_docs</code></p></div>
+  <figure class="figure"><img src="assets/gear-maxmsp-patcher.jpg" alt="A dense Max/MSP patcher. Objects, cords, subpatches — the visual grammar Autechre have patched in since 1997."><figcaption>A dense Max/MSP patcher. Objects, cords, subpatches — the visual grammar Autechre have patched in since 1997.<div class="credit">Cycling &#x27;74 product screenshot / fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-02">
+  <h1>Slide gd-maxmsp-02 · gear deep dive</h1>
+  <h2>Tour — the five object families</h2>
+  
+  <div class="body"><h1>Tour — the five object families</h1>
+<p>Max patches look chaotic until you recognize the types.</p>
+<ul>
+<li><strong>UI objects</strong> — <code>number</code>, <code>int</code>, <code>flonum</code>, <code>toggle</code>, <code>button</code>, <code>message</code>, <code>slider</code>, <code>dial</code>. These are the inlets and outlets a human touches.</li>
+<li><strong>Max (control-rate) objects</strong> — <code>metro</code>, <code>counter</code>, <code>select</code>, <code>gate</code>, <code>route</code>, <code>pack</code>/<code>unpack</code>, <code>trigger</code>. These run at the scheduler rate (ms precision). MIDI lives here.</li>
+<li><strong>MSP (signal-rate) objects</strong> — <code>cycle~</code>, <code>phasor~</code>, <code>noise~</code>, <code>gate~</code>, <code>*~</code>, <code>+~</code>. The tilde suffix means &ldquo;audio-rate.&rdquo; These run at the sample rate (44.1 kHz / 48 kHz).</li>
+<li><strong>Jitter (matrix) objects</strong> — <code>jit.matrix</code>, <code>jit.noise</code>, <code>jit.op</code>. Video and multi-dimensional arrays.</li>
+<li><strong>Abstractions / patchers</strong> — <code>patcher</code>, <code>bpatcher</code>, <code>poly~</code>. User-defined subpatches. A big Autechre patch is 99% abstractions.</li>
+</ul>
+<p>The visual grammar: <strong>thin black cords = Max messages, red/yellow striped cords = signal-rate audio, green cords = MIDI.</strong> Cords travel top-to-bottom, left-to-right.</p>
+<p><code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-03">
+  <h1>Slide gd-maxmsp-03 · gear deep dive</h1>
+  <h2>Tour — scheduler clock vs signal vector</h2>
+  
+  <div class="body"><h1>Tour continued — the scheduler and signal vectors</h1>
+<p>Two clocks run inside a Max patch.</p>
+<p><strong>The scheduler clock.</strong> Drives Max (non-tilde) objects. Resolution is typically 1 ms; configurable via &ldquo;Overdrive&rdquo; and &ldquo;Scheduler in Audio Interrupt&rdquo; toggles in the options pane. A <code>metro 250</code> object emits bangs every 250 ms. Control-rate data is ms-accurate, not sample-accurate.</p>
+<p><strong>The signal vector.</strong> Drives MSP (tilde) objects. The DSP engine processes audio in fixed-size chunks — default <strong>64 samples</strong> at 44.1 kHz = about 1.45 ms per vector. Signal Vector Size and I/O Vector Size in DSP options determine latency vs CPU tradeoff. Smaller vector = lower latency, higher CPU.</p>
+<p><strong>gen~</strong> collapses the signal-vector distinction for audio DSP. Inside a <code>gen~</code> patcher, every operation is sample-accurate — you write one-sample-at-a-time code (via the <code>codebox</code> object) and Max compiles it into an efficient DSP chain at load.</p>
+<p>For Autechre-grade micro-timing drums, the Max scheduler is not precise enough — you want <code>gen~</code> or <code>phasor~</code>-driven triggering for sample-accurate hits. This is why the Max patches you see in WATMM screenshots have a lot of tildes on the audio path.</p>
+<p><code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TB
+  subgraph Scheduler [Scheduler - 1ms resolution]
+    A1[metro] --&gt; A2[counter]
+    A2 --&gt; A3[message]
+  end
+  subgraph DSP [Signal Vector - 64 samples = 1.45ms]
+    B1[cycle~] --&gt; B2[*~]
+    B2 --&gt; B3[dac~]
+  end
+  A3 -.sig~.-&gt; B1
+  B3 -.snapshot~.-&gt; A1
+</div><div class="caption">Two clocks. Messages cross boundaries via sig~ (down) or snapshot~ (up).</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-04">
+  <h1>Slide gd-maxmsp-04 · gear deep dive</h1>
+  <h2>Technique — Confield-era nested sequencer patches</h2>
+  
+  <div class="body"><h1>Technique — Confield-era patches</h1>
+<p>SOS April 2004, Booth: the <em>Confield</em> compositional move was <strong>nested analogue sequencers emulated in Max</strong>, with fluid-math modulation routed to filter, pan, pitch.</p>
+<p>Reconstructed patch shape (community consensus, not a leaked .maxpat):</p>
+<ul>
+<li><strong>Sequencer 1</strong> — <code>counter</code> + <code>coll</code> (a data store), outputs a CV-like value per step. Step period 1/16.</li>
+<li><strong>Sequencer 2</strong> — identical structure, but its <em>rate</em> is set by the output of Sequencer 1. When Sequencer 1 outputs a low value, Sequencer 2 runs slow. When high, fast.</li>
+<li><strong>Sequencer 3</strong> — gates Sequencer 2&rsquo;s output. When Sequencer 3 is low, Sequencer 2&rsquo;s notes are muted. Sequencer 3&rsquo;s rate is set by an LFO driven by a Navier-Stokes fluid simulation rendered in Jitter.</li>
+<li><strong>Final stage</strong> — a gen~ drum synth, triggered by the Sequencer 2 output. The kick pitch is p-locked to Sequencer 1&rsquo;s current value.</li>
+</ul>
+<p>Output: a drum pattern that evolves over minutes, never repeats in the first 20, is <em>fully deterministic</em>. Record 20 minutes to disk. Edit down. Ship.</p>
+<p>&ldquo;That is the patch.&rdquo; is an oversimplification — the real patches have dozens more objects — but this is the compositional skeleton.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:watmm_forum_general</code> · <code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  S1[Sequencer 1&lt;br/&gt;counter + coll] --&gt;|sets rate of| S2[Sequencer 2]
+  NS[Navier-Stokes&lt;br/&gt;Jitter sim] --&gt;|LFO| S3[Sequencer 3 gate]
+  S3 --&gt;|gates output of| S2
+  S2 --&gt;|trigger| DS[gen~ drum synth]
+  S1 --&gt;|p-lock kick pitch| DS
+</div><div class="caption">Reconstructed compositional skeleton. Community consensus, not a leaked .maxpat.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-05">
+  <h1>Slide gd-maxmsp-05 · gear deep dive</h1>
+  <h2>Technique — gen~ for audio-rate DSP</h2>
+  
+  <div class="body"><h1>Technique continued — gen~ for audio-rate DSP</h1>
+<p>Plain MSP objects are fine for LFOs and mixers; for <strong>custom oscillators, filter algorithms, and waveshapers</strong> you want <code>gen~</code>.</p>
+<p>gen~ exposes a sample-accurate language (GenExpr, or a node-based patcher) that compiles to optimized DSP. Key idioms:</p>
+<ul>
+<li><strong><code>history</code></strong> — a one-sample delay. Lets you write feedback equations. <code>y = x + history(y) * 0.5</code> is a single-pole IIR filter.</li>
+<li><strong><code>codebox</code></strong> — write GenExpr code inline. For-loops, conditionals, sample-accurate state.</li>
+<li><strong><code>data</code> / <code>buffer</code></strong> — read/write buffers at audio rate.</li>
+<li><strong>Chaotic attractors</strong> — a Lorenz or Rössler system is four lines of codebox. Output the X/Y/Z channels at audio rate; resample down for modulation.</li>
+</ul>
+<p>The Autechre move is to use gen~ patches as <strong>self-contained instruments</strong>: a whole drum synth lives in one gen~ box. Inputs are trigger, pitch, decay. Outputs are left/right audio. The patch above — five Max-rate objects + one gen~ drum synth — is a credible Untilted-era skeleton.</p>
+<p><code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-06">
+  <h1>Slide gd-maxmsp-06 · gear deep dive</h1>
+  <h2>Algorithm — the dataflow model</h2>
+  
+  <div class="body"><h1>Algorithm — dataflow model</h1>
+<p>Max is a <strong>dataflow</strong> language. Execution is not &ldquo;top to bottom line by line&rdquo; — it is &ldquo;right-inlet-first, then left, then the next message.&rdquo;</p>
+<p>Three rules that catch every beginner:</p>
+<ol>
+<li><strong>Right-to-left, top-to-bottom order.</strong> When an object has multiple outlets, Max fires the <em>rightmost</em> outlet first, then middle, then leftmost. Same for inlets. Mis-wiring here gives you the &ldquo;my patch is one tick late&rdquo; bug.</li>
+<li><strong>Hot vs cold inlets.</strong> A left (hot) inlet triggers output. Right (cold) inlets just store values. The classic <code>[+]</code> object: right inlet sets the addend, left inlet triggers output. <code>[trigger b b]</code> (&ldquo;t b b&rdquo;) is how you enforce explicit fire order.</li>
+<li><strong>Messages vs signals.</strong> Messages are discrete events with a timestamp. Signals are continuous sample streams. Connecting a message outlet to a signal inlet is legal (converted via <code>sig~</code>) but the other direction requires <code>snapshot~</code> or <code>change</code> to sample the signal into a message.</li>
+</ol>
+<p>The dataflow model is why Max patches look like schematics. They <em>are</em> schematics. Read them like analog synth patch cables, not like a script.</p>
+<p><code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-07">
+  <h1>Slide gd-maxmsp-07 · gear deep dive</h1>
+  <h2>Algorithm — the scheduler&#x27;s cost</h2>
+  
+  <div class="body"><h1>Algorithm continued — the scheduler&rsquo;s cost</h1>
+<p>Max&rsquo;s scheduler is a cooperative single-threaded event queue. A long-running object blocks everything downstream.</p>
+<p>Practical constraints for Autechre-style patches:</p>
+<ul>
+<li><strong>Overdrive on</strong> — scheduler runs at higher priority than the UI thread. Turn this on always for music use.</li>
+<li><strong>Scheduler-in-Audio-Interrupt (SIAI)</strong> — scheduler runs inside the audio thread. Tighter MIDI/audio sync at the cost of lower allowed DSP headroom.</li>
+<li><strong>Signal Vector Size 64</strong> — 1.45 ms DSP latency. Any lower and CPU goes up. For live-performance patches with dozens of voices, many Autechre-adjacent patches run at SVS 128 or 256.</li>
+<li><strong><code>poly~</code> for polyphony</strong> — spawn N voices of a subpatch on demand. The voice-allocation pattern.</li>
+<li><strong><code>thispoly~</code> for voice management</strong> — lets each voice know when to free itself.</li>
+</ul>
+<p>Limits that bit Autechre in the <code>Confield</code> era and still bite you: <strong>CPU cost scales with active voices</strong>, and a Max patch that was fine at 4 voices will crackle at 16. Freeze sub-patches to audio when you can; use <code>poly~</code> with a modest voice cap; run DSP at a larger vector when performance matters more than latency.</p>
+<p><code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-08">
+  <h1>Slide gd-maxmsp-08 · gear deep dive</h1>
+  <h2>Ableton bridge — Max for Live is Max embedded</h2>
+  
+  <div class="body"><h1>Ableton bridge — Max for Live is Max embedded</h1>
+<p>Max for Live is literally the same Max runtime running inside Ableton. A .amxd file is a Max patch plus a small wrapper that exposes Live API objects.</p>
+<p>Three kinds of M4L device:</p>
+<ul>
+<li><strong>Max MIDI Effect</strong> — between a MIDI input and an instrument. For generative MIDI (Markov, Euclidean, probability).</li>
+<li><strong>Max Audio Effect</strong> — inserts in the audio chain. For custom DSP (gen~-based saturators, grain engines, filters).</li>
+<li><strong>Max Instrument</strong> — a synth. Receives MIDI, outputs audio.</li>
+</ul>
+<p>The Live API exposes the session tree: tracks, clips, devices, parameters, transport. A M4L device can read and write any Live parameter by walking the tree. This is how Dillon Bastan&rsquo;s data.mod writes modulation into any mapped parameter — it opens a Live API connection and pushes values.</p>
+<p>Upshot: every Max patch you can think of can be ported to M4L. The Confield sequencer skeleton above (5 Max-rate objects + gen~ drum synth) becomes a single .amxd instrument. Drop it into a MIDI track, done.</p>
+<p><code>bib:ableton_live_12_manual</code> · <code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-09">
+  <h1>Slide gd-maxmsp-09 · gear deep dive</h1>
+  <h2>The M4L ecosystem — who ships what</h2>
+  
+  <div class="body"><h1>The M4L ecosystem — who ships what</h1>
+<p>Four communities between them produce most of the useful Autechre-adjacent Max for Live devices.</p>
+<ul>
+<li><strong>Dillon Bastan</strong> — chaos, attractors, physics. <em>Strange Mod</em> (3D chaotic attractors), <em>Entanglement</em> (coupled pendulums), <em>Tree Tone</em> (L-system melodies), <em>Markov Variations</em>, <em>data.mod</em> (modulation matrix). Closest living analog to the Autechre patch aesthetic.</li>
+<li><strong>K-Devices</strong> — step sequencers, probability, transforms. <em>ESQ, HEXO, TATAT, TTAP, MOOR, Twistor</em>. Ship for a price; polished. Industrial.</li>
+<li><strong>Max for Cats</strong> — Ableton&rsquo;s ex-in-house team. <em>Bengal</em> (6-op FM — the FS1R emulation), <em>SQ8L</em> (8-bit wavetable), <em>DROID</em> (drum synth). Free-to-cheap.</li>
+<li><strong>Cycling &lsquo;74 + Ableton first-party</strong> — the stock M4L devices. <em>LFO</em>, <em>Envelope Follower</em>, <em>Shaper</em>, <em>Note Echo</em>, <em>Chord</em>. Not exciting individually; useful as building blocks.</li>
+</ul>
+<p>Also worth naming: <strong>Akihiko Matsumoto MODE 5.0</strong> (modal harmony), <strong>alkman Euclidean Sequencer Pro</strong>, <strong>Surreal Machines Magnetic/Diffuse</strong> (tape + reverb), <strong>Iftah Sting 2</strong> (acid bassline generator), <strong>POLYRHYTHMUS</strong> (free polyrhythm engine).</p>
+<p>Pick one per session. Tool-collecting is the Draft 7.30 trap again.</p>
+<p><code>bib:dillon_bastan_devices</code> · <code>bib:k_devices_oog_docs</code> · <code>bib:max_for_cats_bengal</code> · <code>bib:akihiko_matsumoto_mode</code> · <code>bib:alkman_euclidean_pro</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-10">
+  <h1>Slide gd-maxmsp-10 · gear deep dive</h1>
+  <h2>What else Max can do</h2>
+  
+  <div class="body"><h1>What else Max can do</h1>
+<p>Max is not just the IDM-patch thing. Once the dataflow clicks, it is the most flexible prototyping environment in the studio.</p>
+<p>Non-IDM uses worth knowing:</p>
+<ul>
+<li><strong>Instrument mapping layer.</strong> A Max patch that takes in OSC from a phone, remaps, and sends MIDI to Live. Zero code for a custom controller.</li>
+<li><strong>Sample management.</strong> Build a sample browser with <code>umenu</code> + <code>sfinfo~</code> + <code>sfplay~</code>. Preview, tag, drop into Live via drag.</li>
+<li><strong>Generative video.</strong> Jitter is a full-on video environment. <code>jit.gl.*</code> objects render OpenGL. Sync to Live&rsquo;s transport.</li>
+<li><strong>Hardware protocol bridges.</strong> Serial → MIDI, USB-HID → OSC, MQTT → anything. Max speaks every protocol with one or two external objects.</li>
+<li><strong>Compositional sketches.</strong> Before committing a generative idea to a full M4L device, prototype it as a standalone patch. You do not have to open Live at all until the idea works.</li>
+</ul>
+<p>For the course scope, we stay in M4L. But knowing the ceiling exists is useful — a lot of Autechre live-set mysteries dissolve once you realize Max can do literally anything you can wire into it.</p>
+<p><code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-11">
+  <h1>Slide gd-maxmsp-11 · gear deep dive</h1>
+  <h2>Parallel modern workflows — Pd, SuperCollider, Bitwig Grid</h2>
+  
+  <div class="body"><h1>Parallel modern workflows</h1>
+<p>Max has competitors. Some share DNA; some take the idea in different directions.</p>
+<ul>
+<li><strong>Pure Data (Pd)</strong> — the open-source cousin, by the same person (Miller Puckette) who wrote Max&rsquo;s predecessor at IRCAM. Visually similar; fewer high-level abstractions; runs on a Raspberry Pi.</li>
+<li><strong>Reaktor Core (Native Instruments)</strong> — similar graph-based DSP, different object library, shipped with Komplete.</li>
+<li><strong>VCV Rack</strong> — modular-synth-as-software. Modules are wired like Max signal objects. Much narrower scope.</li>
+<li><strong>Bitwig Studio Grid</strong> — built into Bitwig, audio-rate + modulation graph. The most elegant modern take on the signal-flow idea.</li>
+<li><strong>SuperCollider</strong> — text-based, client-server, has the longest research pedigree. Not visual; closest to academic computer music.</li>
+<li><strong>TouchDesigner</strong> — Jitter&rsquo;s video-side competitor. Sound is a second-class citizen; visuals are first-class.</li>
+</ul>
+<p>Autechre have worked in several of these at different times. Booth has mentioned SuperCollider and custom C code on WATMM. The point: <strong>the paradigm is transferable.</strong> Learn the dataflow model once, port it to whichever tool the session demands.</p>
+<p><code>bib:cycling74_max_msp_docs</code> · <code>bib:supercollider_docs</code> · <code>bib:reaktor_core_docs</code> · <code>bib:watmm_forum_general</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-12">
+  <h1>Slide gd-maxmsp-12 · gear deep dive</h1>
+  <h2>Exercise A — M4L four-note step sequencer (replicate)</h2>
+  
+  <div class="body"><h1>Exercise A — a four-note step sequencer, M4L</h1>
+<p>Build the simplest possible Max-for-Live step sequencer and drop it on a drum track.</p>
+<p>Steps:</p>
+<ol>
+<li>In Live, create a new MIDI track. Add a Drum Rack with four slots (kick, snare, closed hat, open hat).</li>
+<li>Add a <strong>Max MIDI Effect</strong> device on the track. Hit the Edit button (pencil icon) — Max opens.</li>
+<li>Build this graph:</li>
+<li><code>metro 125</code> (fires every 125 ms = 16th at 120 BPM) → <code>counter 0 3</code> (counts 0,1,2,3 repeating).</li>
+<li><code>counter</code> output → <code>route 0 1 2 3</code> (fans into four outlets by value).</li>
+<li>Each of the four outlets → <code>makenote 127 100</code> (velocity 127, duration 100ms) → <code>noteout</code>.</li>
+<li>Each <code>makenote</code> has a different note value: 36 (C1), 38 (D1), 42 (F#1), 46 (A#1) — standard GM drum map.</li>
+<li>Freeze the patch. Save.</li>
+<li>Hit play in Live. You hear kick, snare, closed hat, open hat in a 4-step loop.</li>
+</ol>
+<p><strong>Deliverable.</strong> One M4L MIDI device that plays a 4-step pattern into a drum track, checked in. 20 minutes.</p>
+<p>Extension: replace <code>counter</code> with <code>random 4</code> — note the pattern now changes every bar. Then <em>remove</em> the random. That is the Autechre choice, made in one gesture.</p>
+<p><code>bib:cycling74_max_msp_docs</code> · <code>bib:ableton_live_12_manual</code></p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">One saved M4L MIDI device (.amxd) that plays a 4-step drum pattern using metro + counter + route + makenote.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-13">
+  <h1>Slide gd-maxmsp-13 · gear deep dive</h1>
+  <h2>Exercise B — gen~ Lorenz attractor modulator (explore)</h2>
+  
+  <div class="body"><h1>Exercise B — gen~ Lorenz attractor as rhythm generator</h1>
+<p>The ancestor move. A Lorenz system is three coupled ODEs; its phase-space trajectory is a butterfly. Used as a modulator, it produces slow, non-repeating, fully-deterministic motion. This is the Navier-Stokes idea, simplified.</p>
+<p>The equations:</p>
+<pre><code>dx/dt = σ(y − x)
+dy/dt = x(ρ − z) − y
+dz/dt = xy − βz
+</code></pre>
+<p>With σ=10, ρ=28, β=8/3, the system is chaotic but bounded.</p>
+<p>Build as a Max for Live audio effect (or MIDI effect with <code>snapshot~</code>):</p>
+<ol>
+<li>New M4L audio effect. Inside, make a <code>gen~</code> object.</li>
+<li>Inside gen~, use a <code>codebox</code>:
+   <code>History x(1.0), y(1.0), z(1.0);
+   sigma = 10; rho = 28; beta = 8/3;
+   dt = 0.005;
+   dx = sigma * (y - x);
+   dy = x * (rho - z) - y;
+   dz = x*y - beta*z;
+   x += dx * dt;
+   y += dy * dt;
+   z += dz * dt;
+   out1 = x / 20;  out2 = y / 30;  out3 = z / 40;</code></li>
+<li>Outside gen~, <code>snapshot~ 20</code> samples the three outputs 50 Hz. Route to three <code>live.thisdevice</code> modulation outputs mapped to a filter cutoff, a drum rack macro, and a reverb size on the track.</li>
+<li>As a <strong>rhythm</strong> source: compare z-axis to a threshold. When z crosses, emit a trigger. The crossing rate is irregular but fully deterministic.</li>
+</ol>
+<p><strong>Deliverable.</strong> A 64-bar rendered audio clip where the filter, macro, and reverb are all driven by the same Lorenz system. Render twice — outputs will be identical. Deterministic. Non-periodic. Ship it.</p>
+<p><code>bib:cycling74_max_msp_docs</code> · <code>bib:dillon_bastan_devices</code></p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">64 bars rendered twice with identical output — filter, macro, and reverb size driven by a single Lorenz system in gen~.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-maxmsp-14">
+  <h1>Slide gd-maxmsp-14 · gear deep dive</h1>
+  <h2>Receipts and caveats — documented vs inferred</h2>
+  
+  <div class="body"><h1>Receipts and caveats — what Max actually shipped in Autechre&rsquo;s hands</h1>
+<p>What is documented vs inferred:</p>
+<ul>
+<li><strong>Documented (SOS April 2004).</strong> Max/MSP acquired 1997. Navier-Stokes fluid-dynamics patches as modulators. <em>Confield</em> is &ldquo;mostly Max experiments.&rdquo;</li>
+<li><strong>Documented (WATMM AMAs, 2013 onward).</strong> Booth repeatedly confirms Max as the primary environment, confirms use of custom C externals, references gen~ after its 2012 release. The <em>&ldquo;I think the oldest thing is from 2011&rdquo;</em> patch-archival quote is attributed widely to the 2018 NTS press cycle — we list the Pitchfork NTS interview in <code>needs_bib</code> because the exact wording varies by source.</li>
+<li><strong>Inferred (community reconstruction).</strong> Specific patch architectures for specific tracks (sim gishel, bladelores, vletrmx21). Published .maxpat files from Autechre do not exist; forum reconstructions are educated guesses.</li>
+<li><strong>Contested.</strong> The &ldquo;Booth had to turn the screen off to finish Confield&rdquo; quote is discussed in slide s04 — the specific tying of screen-off to Confield is community folk transmission, not a verified direct quote.</li>
+</ul>
+<p>Write what the manual says. Write what Booth said in print. Flag everything else.</p>
+<p><code>bib:sos_autechre_april_2004</code> · <code>bib:watmm_forum_general</code> · <code>bib:autechre_watmm_ama_2013</code> · <code>bib:autechre_pitchfork_nts_2018</code> · <code>bib:cycling74_max_msp_docs</code></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_cv_tools">Ableton AG — CV Tools Pack — Max for Live Documentation <a href="https://www.ableton.com/en/packs/cv-tools/" target="_blank" rel="noopener">↗</a></li><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:ableton_push_3_docs">Ableton AG — Push 3 Manual — Rhythm Generator Drum Rack layout <a href="https://www.ableton.com/en/manual/push-3-introduction/" target="_blank" rel="noopener">↗</a></li><li id="bib:akihiko_matsumoto_mode">Akihiko Matsumoto — MODE 5.0 — Modal Harmony Max for Live <a href="https://akihikomatsumoto.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:alkman_euclidean_pro">alkman — Euclidean Sequencer Pro — Max for Live</li><li id="bib:autechre_pitchfork_nts_2018">Autechre — NTS Sessions interview — Pitchfork 2018 <a href="https://pitchfork.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:autechre_ra_2016">Autechre — Resident Advisor feature — Resident Advisor 2016 <a href="https://ra.co/features" target="_blank" rel="noopener">↗</a></li><li id="bib:autechre_watmm_ama_2013">Sean Booth, Rob Brown — Autechre WATMM AMA (2013) — We Are The Music Makers 2013 <a href="https://forum.watmm.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:cycling74_max_msp_docs">Cycling &#x27;74 — Max/MSP + gen~ Documentation <a href="https://docs.cycling74.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:dillon_bastan_devices">Dillon Bastan — Dillon Bastan Max for Live Devices — Nirvana, Coalescence, Strange Mod, data.mod, Tree Tone, Entanglement, Markov Variations <a href="https://dillonbastan.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:elektron_machinedrum_manual">Elektron — Machinedrum SPS-1UW MKII User Manual <a href="https://www.elektron.se/support/" target="_blank" rel="noopener">↗</a></li><li id="bib:elektronauts_autechre_threads">Elektronauts — Autechre and IDM threads <a href="https://www.elektronauts.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:happymag_mgmt_oracular_engineering">Engineering the Sound: Oracular Spectacular by MGMT — Happy Mag <a href="https://happymag.tv/engineering-the-sound-oracular-spectacular-by-mgmt/" target="_blank" rel="noopener">↗</a></li><li id="bib:k_devices_oog_docs">K-Devices — K-Devices OOG Series — ESQ, HEXO, TATAT, TTAP, MOOR, Twistor, AutoTrig, TED FX <a href="https://k-devices.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:max_for_cats_bengal">Max for Cats — Bengal (6-op FM), SQ8L, DROID — Max for Live instruments <a href="https://maxforcats.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:reaktor_core_docs">Native Instruments — Reaktor Core — Reference Documentation <a href="https://www.native-instruments.com/en/products/komplete/synths/reaktor-6/" target="_blank" rel="noopener">↗</a></li><li id="bib:sos_autechre_april_2004">Sean Booth (interviewee) — Autechre — Recording Strategies — Sound on Sound 2004 <a href="https://www.soundonsound.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:supercollider_docs">SuperCollider Documentation <a href="https://supercollider.github.io/" target="_blank" rel="noopener">↗</a></li><li id="bib:watmm_forum_general">We Are The Music Makers (WATMM) — Autechre threads <a href="https://forum.watmm.com/" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 74950}, {"id": "ch001", "title": "Autechre \u2014 generative, not random", "start_ms": 75350, "end_ms": 176750}, {"id": "ch002", "title": "Procedural, not random \u2014 the Booth distinction", "start_ms": 177150, "end_ms": 276850}, {"id": "ch003", "title": "Confield (2001) \u2014 nested sequencers and fluid math", "start_ms": 277250, "end_ms": 393000}, {"id": "ch004", "title": "The screen-off quote \u2014 flagged", "start_ms": 393400, "end_ms": 497300}, {"id": "ch005", "title": "Draft 7.30 (2005) \u2014 the discipline of pulling back", "start_ms": 497700, "end_ms": 608750}, {"id": "ch006", "title": "NTS Sessions (2018) \u2014 versioning as practice", "start_ms": 609150, "end_ms": 735500}, {"id": "ch007", "title": "The four-commit procedural MIDI chain", "start_ms": 735900, "end_ms": 868550}, {"id": "ch008", "title": "Euclidean + clip envelopes unlinked = polymeter", "start_ms": 868950, "end_ms": 981400}, {"id": "ch009", "title": "Roar as the Ableton-native feedback matrix", "start_ms": 981800, "end_ms": 1110350}, {"id": "ch010", "title": "Detour \u2014 MGMT's cheap-compressor assault", "start_ms": 1110750, "end_ms": 1217050}, {"id": "ch011", "title": "The Max for Live ecosystem \u2014 chaos, Markov, probability", "start_ms": 1217450, "end_ms": 1345000}, {"id": "ch012", "title": "CPU, Freeze, Bounce in Place \u2014 the unglamorous part", "start_ms": 1345400, "end_ms": 1456500}, {"id": "ch013", "title": "Build it \u2014 four commits, 32 bars, Moanin' ambient kit", "start_ms": 1456900, "end_ms": 1585599}, {"id": "ch014", "title": "Outro", "start_ms": 1585999, "end_ms": 1660699}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+id: w05-aphex-tuning
+week: 5
+title: Week 5 — Aphex Pt.1, Tuning drums to the track
+duration_minutes: 45
+pillars:
+- aphex_twin
+- microtuning
+concepts:
+- drums_as_harmonic_content
+- repitched_808_as_bassline
+- simpler_transpose_per_pad
+- ableton_12_tuning_systems
+- scala_file_loading
+- scale_device_midi_effect
+- per_step_cent_offsets
+- community_attribution_vs_verbatim
+- commit_before_detune
+- three_minute_exercise
+ableton_surface:
+- simpler_classic_mode
+- simpler_transpose_knob
+- simpler_detune_cents
+- drum_rack_per_pad_tuning
+- tuning_systems_live_12
+- scale_device
+- pitch_midi_transformation
+- bounce_in_place
+- follow_actions_2_0
+prereqs:
+- w03-simpler-basics
+- w04-warp-modes
+teasers:
+- fredonia_srt
+stemforge:
+  recipes:
+  - w05-express-tuned-ab
+references:
+- bib:aphex_pitchfork_microtuning
+- bib:korg_monologue_afx_manual
+- bib:ableton_live_12_manual
+- bib:reverbmachine_rdj_gear
+- bib:discogs_syro
+- bib:stemforge_repo
+- bib:fredonia_srt_program
+- bib:fredonia_grammy_announcement
+- bib:sos_autechre_april_2004
+needs_bib:
+- title: Syrobonkers — RDJ interview on Cirklon microtuning and the Saita box
+  reason: Spec A §2.1 cites a Korg engineer named Kazuki Saita building a custom microtuning MIDI box. Needs a canonical interview entry (Noisey/Syrobonkers 2014).
+- title: Future Music, 1993 — RDJ on the Roland R-8 + 808 expansion
+  reason: Repitched-808-as-bassline lineage on Xtal/Ageispolis is attributed to a 1993 Future Music issue. Not yet catalogued.
+- title: Scala file archive — Huygens-Fokker Stichting
+  reason: Student-pointable source for free .scl files. Not in bibliography yet, worth a link-only entry.
+slides:
+- id: s01
+  kind: title
+  heading: The confession before we touch a synth
+  body_md: slides/s01-cold-open.md
+  script_md: script/s01-cold-open.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:aphex_ageispolis
+  - song:aphex_xtal
+- id: s02
+  kind: concept
+  heading: Drums are harmonic content — the 1992 receipt
+  body_md: slides/s02-drums-are-harmonic.md
+  script_md: script/s02-drums-are-harmonic.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:aphex_ageispolis
+  - song:aphex_xtal
+- id: s03
+  kind: caveat
+  heading: The quote everyone paraphrases — what he actually said
+  body_md: slides/s03-quote-caveat.md
+  script_md: script/s03-quote-caveat.md
+  visuals: []
+  audio_examples: []
+- id: s04
+  kind: concept
+  heading: What microtuning actually is, in cents
+  body_md: slides/s04-microtuning-in-cents.md
+  script_md: script/s04-microtuning-in-cents.md
+  visuals: []
+  audio_examples: []
+- id: t01
+  kind: concept
+  heading: The cents number line — what you're actually counting
+  body_md: slides/t01-cents-number-line.md
+  visuals:
+  - type: svg
+    caption: "Hz/cent number line for E minor — root E1, fifth B1, minor third G1, with JI vs 12-TET positions marked."
+    svg_content: |
+      <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cents number line E minor">
+        <rect width="800" height="220" fill="#0f1115"/>
+        <line x1="40" y1="120" x2="760" y2="120" stroke="#d0d6df" stroke-width="2"/>
+        <g font-family="monospace" font-size="12" fill="#d0d6df">
+          <line x1="40" y1="110" x2="40" y2="130" stroke="#d0d6df"/>
+          <text x="40" y="155" text-anchor="middle">0¢</text>
+          <text x="40" y="95" text-anchor="middle">E1 41.20 Hz</text>
+          <line x1="220" y1="110" x2="220" y2="130" stroke="#d0d6df"/>
+          <text x="220" y="155" text-anchor="middle">300¢</text>
+          <text x="220" y="95" text-anchor="middle">G1 (12-TET)</text>
+          <line x1="204" y1="105" x2="204" y2="135" stroke="#e66a3b" stroke-width="2"/>
+          <text x="204" y="180" text-anchor="middle" fill="#e66a3b">315.64¢ JI 6:5</text>
+          <line x1="460" y1="110" x2="460" y2="130" stroke="#d0d6df"/>
+          <text x="460" y="155" text-anchor="middle">700¢</text>
+          <text x="460" y="95" text-anchor="middle">B1 (12-TET)</text>
+          <line x1="461" y1="105" x2="461" y2="135" stroke="#5fb38b" stroke-width="2"/>
+          <text x="461" y="200" text-anchor="middle" fill="#5fb38b">701.96¢ JI 3:2</text>
+          <line x1="760" y1="110" x2="760" y2="130" stroke="#d0d6df"/>
+          <text x="760" y="155" text-anchor="middle">1200¢ (E2)</text>
+        </g>
+      </svg>
+  audio_examples: []
+- id: t02
+  kind: concept
+  heading: 12-EDO, 19-EDO, 17-EDO — the equal-division grid
+  body_md: slides/t02-edo-visual.md
+  visuals:
+  - type: mermaid
+    caption: "EDO comparison — how three equal divisions carve the 1200-cent octave."
+    mermaid: |
+      graph TD
+        A[1200 cent octave] --> B[12-EDO<br/>100¢ step<br/>piano default]
+        A --> C[19-EDO<br/>63.16¢ step<br/>cleaner JI thirds]
+        A --> D[17-EDO<br/>70.59¢ step<br/>sharp fifths]
+        A --> E[24-EDO<br/>50¢ step<br/>quarter-tones]
+  audio_examples: []
+- id: t03
+  kind: concept
+  heading: Just intonation vs equal temperament — the ratio war
+  body_md: slides/t03-ji-vs-et.md
+  visuals:
+  - type: svg
+    caption: "JI vs 12-TET side-by-side — circle of fifths in both systems, showing cumulative error."
+    svg_content: |
+      <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="JI vs ET circle of fifths">
+        <rect width="800" height="400" fill="#0f1115"/>
+        <g font-family="monospace" font-size="11" fill="#d0d6df">
+          <circle cx="200" cy="200" r="140" fill="none" stroke="#5fb38b" stroke-width="2"/>
+          <text x="200" y="40" text-anchor="middle" fill="#5fb38b" font-size="14">Just Intonation 3:2</text>
+          <text x="200" y="380" text-anchor="middle" fill="#5fb38b">does not close — Pythagorean comma +23.46¢</text>
+          <circle cx="600" cy="200" r="140" fill="none" stroke="#d0d6df" stroke-width="2"/>
+          <text x="600" y="40" text-anchor="middle" font-size="14">12-TET (fifth = 700¢)</text>
+          <text x="600" y="380" text-anchor="middle">closes cleanly — every fifth 1.96¢ flat</text>
+        </g>
+      </svg>
+  audio_examples: []
+- id: t04
+  kind: concept
+  heading: The Pythagorean comma — why the piano lies
+  body_md: slides/t04-pythagorean-comma.md
+  visuals:
+  - type: svg
+    caption: "Stacking twelve pure 3:2 fifths overshoots the octave by 23.46 cents — the Pythagorean comma."
+    svg_content: |
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pythagorean comma">
+        <rect width="800" height="300" fill="#0f1115"/>
+        <g font-family="monospace" font-size="11" fill="#d0d6df">
+          <text x="400" y="30" text-anchor="middle" font-size="14" fill="#d0d6df">Twelve pure 3:2 fifths, stacked from C</text>
+          <line x1="40" y1="150" x2="720" y2="150" stroke="#5fb38b" stroke-width="2"/>
+          <line x1="720" y1="150" x2="760" y2="150" stroke="#e66a3b" stroke-width="4"/>
+          <text x="40" y="180" text-anchor="middle">C</text>
+          <text x="720" y="180" text-anchor="middle">expected C</text>
+          <text x="760" y="180" text-anchor="middle">actual</text>
+          <text x="740" y="220" text-anchor="middle" fill="#e66a3b">+23.46¢</text>
+          <text x="400" y="270" text-anchor="middle">(3/2)^12 = 129.746  vs  2^7 = 128.000  →  ratio 1.01364 = 23.46¢</text>
+        </g>
+      </svg>
+  audio_examples: []
+- id: t05
+  kind: concept
+  heading: 7-limit, 11-limit — where Aphex lives and 12-TET can't follow
+  body_md: slides/t05-limits-and-aphex.md
+  visuals: []
+  audio_examples: []
+- id: t06
+  kind: concept
+  heading: Scala, TUN, MTS — the three file formats that carry tunings
+  body_md: slides/t06-file-formats.md
+  visuals:
+  - type: mermaid
+    caption: "Tuning-file dispatch — which format Live 12 reads natively, which needs conversion."
+    mermaid: |
+      graph LR
+        A[Huygens-Fokker archive] -->|.scl| B[Tuning Systems]
+        C[AnaMark .tun file] -->|convert via Scala| B
+        D[MTS-ESP runtime] -->|SysEx / MIDI| B
+        B --> E[Operator / Wavetable / Meld / Drift]
+  audio_examples: []
+- id: s05
+  kind: reference
+  heading: Express Yourself — dry kick vs tuned kick, on tape
+  body_md: slides/s05-express-ab.md
+  script_md: script/s05-express-ab.md
+  visuals:
+  - type: spectrogram
+    src: stemforge:w05:w05-express-tuned-ab:wet
+    caption: Tuned-kick render. Note the low-frequency fundamental sitting at E1 (~41 Hz), carrying the root of the track.
+  - type: spectrogram
+    src: stemforge:w05:w05-express-tuned-ab:dry
+    caption: Dry kick render. Broadband thump with no resolved fundamental.
+  audio_examples:
+  - type: ab
+    label: Express Yourself — dry kick vs tuned-to-root kick
+    a: build/audio/stemforge-renders/w05/express_dry.wav
+    b: build/audio/stemforge-renders/w05/express_tuned.wav
+- id: s06
+  kind: concept
+  heading: Simpler, Transpose, Detune — the three knobs that matter
+  body_md: slides/s06-simpler-surface.md
+  script_md: script/s06-simpler-surface.md
+  visuals: []
+  audio_examples: []
+- id: s07
+  kind: concept
+  heading: Live 12 Tuning Systems and the Scale device
+  body_md: slides/s07-tuning-systems.md
+  script_md: script/s07-tuning-systems.md
+  visuals: []
+  audio_examples: []
+- id: s08
+  kind: concept
+  heading: Snare to the fifth — harmony from the backbeat
+  body_md: slides/s08-snare-fifth.md
+  script_md: script/s08-snare-fifth.md
+  visuals: []
+  audio_examples: []
+- id: s09
+  kind: reference
+  heading: Live set — w05-drum-tuning-demo.als
+  body_md: slides/s09-live-set.md
+  script_md: script/s09-live-set.md
+  visuals: []
+  audio_examples: []
+  live_set: live-sets/w05-drum-tuning-demo.als
+- id: s10
+  kind: caveat
+  heading: The cost of tuned drums — what you give up
+  body_md: slides/s10-cost-caveat.md
+  script_md: script/s10-cost-caveat.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:aphex_xtal
+- id: gd-mnlg-01
+  kind: gear_deep_dive
+  heading: Korg Monologue (AFX edition) — the microtuner with James' name on it
+  body_md: slides/gd-mnlg-01-title.md
+  images:
+  - src: assets/gear-mnlg-hero.jpg
+    caption: "Korg Monologue, AFX edition — graphite body, red knobs, panel screen-printed with RDJ's signature."
+    credit: "Korg product photo"
+    license: "fair-use commentary"
+  audio_examples: []
+  song_refs:
+  - song:aphex_flim
+- id: gd-mnlg-02
+  kind: gear_deep_dive
+  heading: The five controls that matter on the Monologue panel
+  body_md: slides/gd-mnlg-02-panel.md
+  gear_annotations:
+  - src: assets/gear-mnlg-panel.jpg
+    caption: "Front panel callouts — microtuning-specific controls only."
+    callouts:
+    - label: "EDIT MODE"
+      note: "Hold + program dial → parameter 17 is Microtuning. Selects 12-TET, ET user 1–6, scale user 1–6."
+    - label: "PROGRAM dial"
+      note: "Doubles as parameter-picker in EDIT MODE. This is the gate to the microtuning edit page."
+    - label: "key group / 25 keys"
+      note: "Each key carries its own ±75 cent offset. Twelve offsets per user scale."
+    - label: "SLIDE TIME"
+      note: "Per-patch portamento time. Short slide + microtuning = Aphex lead texture."
+    - label: "sequencer STEP mode"
+      note: "Per-step pitch + motion sequencing. One step: scale degree. Next step: +15¢ via motion."
+  audio_examples: []
+- id: gd-mnlg-03
+  kind: gear_deep_dive
+  heading: How Aphex programs a microtuning, step by zero
+  body_md: slides/gd-mnlg-03-technique.md
+  visuals: []
+  audio_examples: []
+- id: gd-mnlg-04
+  kind: gear_deep_dive
+  heading: The algorithm — cent math inside the Monologue's MCU
+  body_md: slides/gd-mnlg-04-algorithm.md
+  diagrams:
+  - mermaid: |
+      graph LR
+        A[MIDI note N] --> B[base CV<br/>12-TET lookup]
+        B --> C[add scale offset<br/>±75¢]
+        C --> D[add motion-seq offset<br/>±75¢]
+        D --> E[16-bit pitch resolution<br/>1¢ user-facing offsets]
+        E --> F[VCO 1 + VCO 2]
+    caption: "MIDI-to-CV dispatch inside the Monologue. The microtuning layer is a lookup-table insert between note-in and voltage-out."
+  audio_examples: []
+- id: gd-mnlg-05
+  kind: gear_deep_dive
+  heading: The Ableton bridge — Tuning Systems + Operator + Scale device
+  body_md: slides/gd-mnlg-05-ableton-bridge.md
+  visuals:
+  - type: screenshot
+    src: assets/live12-tuning-systems.png
+    caption: "Live 12 Tuning Systems dialog with a 7-limit-just.scl loaded. Root note E, fifth visibly 1.96¢ sharp of the tempered column."
+  audio_examples: []
+- id: gd-mnlg-06
+  kind: gear_deep_dive
+  heading: What else the Monologue-pattern does — creative uses beyond leads
+  body_md: slides/gd-mnlg-06-creative.md
+  visuals: []
+  audio_examples: []
+- id: gd-mnlg-07
+  kind: gear_deep_dive
+  heading: "Exercise A — load a Scala file, tune a kick to root, play four bars"
+  body_md: slides/gd-mnlg-07-exercise-a.md
+  visuals: []
+  audio_examples: []
+  deliverable: 'A 15-second WAV of a kick played as a 4-bar JI arpeggio in E-min. One sentence describing what the 7-limit seventh sounded like against a 12-TET bass.'
+- id: gd-mnlg-08
+  kind: gear_deep_dive
+  heading: Exercise B — build your own microtuning, then write against it
+  body_md: slides/gd-mnlg-08-exercise-b.md
+  visuals: []
+  audio_examples: []
+  deliverable: 'A 30-second stereo WAV in a user-built 17-EDO or 7-limit JI scale. Bass riff + kick tuned to root. One paragraph identifying which intervals felt inevitable vs forced.'
+- id: gd-disk-01
+  kind: gear_deep_dive
+  heading: Yamaha Disklavier — a MIDI-driven acoustic piano
+  body_md: slides/gd-disk-01-title.md
+  images:
+  - src: assets/gear-disklavier-hero.jpg
+    caption: "Yamaha Disklavier grand — solenoid-driven acoustic piano. Drukqs-era Aphex used a MkIV Pro with mics placed inside the body cavity."
+    credit: "Yamaha promotional photo / fair-use"
+    license: "fair-use commentary"
+  audio_examples: []
+  song_refs:
+  - song:aphex_avril_14th
+- id: gd-disk-02
+  kind: gear_deep_dive
+  heading: What's under the lid — the annotated mechanism
+  body_md: slides/gd-disk-02-panel.md
+  gear_annotations:
+  - src: assets/gear-disklavier-interior.jpg
+    caption: "Cutaway of a Disklavier MkIV showing solenoid bank, pedal solenoids, and MIDI I/O."
+    callouts:
+    - label: "solenoid bank"
+      note: "88 solenoids, one per key. Plunger seats with an audible metallic click at end of travel."
+    - label: "pedal solenoids"
+      note: "Three — sustain, sostenuto, soft. Loudest mechanical noise in the instrument."
+    - label: "MIDI DIN / USB"
+      note: "Accepts standard SMF + XG-extended. Velocity 1–127 maps to solenoid drive current."
+    - label: "body cavity mic position"
+      note: "Aphex placed condensers under the lid, not above the soundboard. Captures click + body woof."
+  audio_examples: []
+- id: gd-disk-03
+  kind: gear_deep_dive
+  heading: The Drukqs technique — solenoid click as rhythmic layer
+  body_md: slides/gd-disk-03-technique.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:aphex_avril_14th
+- id: gd-disk-04
+  kind: gear_deep_dive
+  heading: The algorithm — velocity-to-solenoid and why the click is velocity-dependent
+  body_md: slides/gd-disk-04-algorithm.md
+  diagrams:
+  - mermaid: |
+      graph TD
+        A[MIDI note V velocity] --> B[lookup: solenoid current I=f V]
+        A --> C[lookup: pull duration T=g V]
+        B --> D[plunger accelerates]
+        C --> D
+        D --> E[key-bottom thump]
+        D --> F[solenoid seating click]
+        D --> G[hammer strikes string]
+        G --> H[string resonance<br/>Helmholtz f=1/2L·√ T over μ]
+        G --> I[body cavity woof ~70 Hz]
+    caption: "Three independent acoustic signals from one MIDI note: the click, the string, the body cavity. Mic placement chooses the mix."
+  audio_examples: []
+- id: gd-disk-05
+  kind: gear_deep_dive
+  heading: The Ableton bridge — Collision, piano VST, parallel click bus
+  body_md: slides/gd-disk-05-ableton-bridge.md
+  diagrams:
+  - mermaid: |
+      graph LR
+        A[MIDI clip] --> B[Piano VST<br/>Noire / Grand Piano]
+        A --> C[Collision<br/>Mallet + Plate, Decay 200ms]
+        C --> D[Return B<br/>HPF 600 Hz + Glue]
+        A --> E[Drum Rack<br/>70 Hz body-cavity kick]
+        B --> F[Master]
+        D --> F
+        E --> F
+    caption: "Three-way parallel bus recreating the Drukqs under-lid miking: string tone, solenoid click, body cavity woof."
+  audio_examples: []
+- id: gd-disk-06
+  kind: gear_deep_dive
+  heading: What else Collision-as-Disklavier does — past the piano stereotype
+  body_md: slides/gd-disk-06-creative.md
+  visuals: []
+  audio_examples: []
+- id: gd-disk-07
+  kind: gear_deep_dive
+  heading: Exercise A — layer Collision clicks under a piano VST
+  body_md: slides/gd-disk-07-exercise-a.md
+  visuals: []
+  audio_examples: []
+  deliverable: '20-second WAV of a piano MIDI part running through both Noire (tone) and Collision (solenoid clicks). One sentence per layer on what removing it sounded like.'
+- id: gd-disk-08
+  kind: gear_deep_dive
+  heading: Exercise B — Collision as a drum synth, not a piano surrogate
+  body_md: slides/gd-disk-08-exercise-b.md
+  visuals: []
+  audio_examples: []
+  deliverable: '30-second WAV of a drum pattern where kick/snare/hat are all Collision instances (Membrane/Plate/String resonators). One paragraph contrasting physical-model drums with sample-based drums.'
+- id: s11
+  kind: teaser
+  heading: For further listening — the Fredonia pipeline
+  body_md: slides/s11-fredonia-teaser.md
+  script_md: script/s11-fredonia-teaser.md
+  visuals: []
+  audio_examples: []
+- id: s12
+  kind: exercise
+  heading: Ship it — kick to root, snare to fifth, thirty seconds
+  body_md: slides/s12-exercise.md
+  script_md: script/s12-exercise.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: Your deliverable template — dry 15s into tuned 15s
+    a: build/audio/stemforge-renders/w05/express_dry.wav
+    b: build/audio/stemforge-renders/w05/express_tuned.wav
+  deliverable: 'A 30-second stereo bounce. First 15 seconds: drums at source pitch. Second 15 seconds: kick transposed to the root of your track, snare detuned to the fifth. No other changes. File named w05_<yourname>_tuned-ab.wav. Write one sentence per drum explaining what you heard appear in the low end when you detuned it.'
+images_needed:
+- slug: gear-mnlg-hero
+  description: "Korg Monologue (AFX edition) hero shot — graphite body, red knobs, front-panel screen-print, neutral background."
+  preferred_angle: "3/4 front"
+  lesson_context: "W5 gear deep-dive — Korg Monologue AFX"
+- slug: gear-mnlg-panel
+  description: "Korg Monologue AFX top-down panel photo, high-res, suitable for callout overlays on EDIT MODE, microtuning edit page, sequencer."
+  preferred_angle: "top-down"
+  lesson_context: "W5 gear deep-dive — Monologue annotated panel"
+- slug: gear-disklavier-hero
+  description: "Yamaha Disklavier grand (MkIV or Enspire Pro), full instrument, lid open, in a studio/recital context."
+  preferred_angle: "3/4 from keyboard side"
+  lesson_context: "W5 gear deep-dive — Disklavier hero"
+- slug: gear-disklavier-interior
+  description: "Cutaway or under-the-lid photo of a Disklavier showing solenoid bank below keys + pedal solenoids. Ideally a service/manual diagram."
+  preferred_angle: "keys-off top-down or side cutaway"
+  lesson_context: "W5 gear deep-dive — Disklavier annotated interior"
+- slug: album-art-saw-85-92
+  description: "Selected Ambient Works 85-92 cover art — Aphex Twin logo stencil, 1992. Fair-use at 480px max."
+  lesson_context: "W5 reference — SAW 85-92 is the 1992 receipt for tuned drums"
+- slug: album-art-drukqs
+  description: "Drukqs album cover art — 2001, Warp. Fair-use at 480px max."
+  lesson_context: "W5 Disklavier deep-dive — Drukqs is the primary solenoid-click record"
+- slug: album-art-syro
+  description: "Syro album cover art — 2014, Warp, typographic gear list cover. Fair-use at 480px max."
+  lesson_context: "W5 reference — Syro's cover literalizes the gear-curation aesthetic"
+- slug: album-art-i-care-because-you-do
+  description: "...I Care Because You Do album cover art — 1995, Warp. Fair-use at 480px max."
+  lesson_context: "W5 reference — mid-90s microtuning era"
+- slug: album-art-come-to-daddy
+  description: "Come To Daddy EP cover art — 1997, Warp. Fair-use at 480px max."
+  lesson_context: "W5 reference — Flim is on this EP; tuned hats example"
+- slug: album-art-windowlicker
+  description: "Windowlicker EP cover art — 1999, Warp. Fair-use at 480px max."
+  lesson_context: "W5 reference — late-90s tuned-drum continuation"
+- slug: portrait-aphex-come-to-daddy-mask
+  description: "Aphex Twin portrait wearing the toothy-grin mask from the Come To Daddy video (1997, Chris Cunningham). Fair-use screengrab or promo still."
+  preferred_angle: "head-and-shoulders, front"
+  lesson_context: "W5 cold-open visual anchor"
+  license_note: "Fair-use; prefer promotional still over video frame capture if available."
+- slug: rdj-soundcloud-screenshot
+  description: "Screenshot of user18081971 SoundCloud page showing track list with #disklavier / #nagra hashtags visible. Can be user-captured screenshot."
+  lesson_context: "W5 Disklavier deep-dive — receipt that the Nagra + Disklavier workflow is self-documented"
+  license_note: "Publicly-accessible user-uploaded page; fair-use as citation."
+- slug: spectrogram-microtuned-kick
+  description: "Spectrogram of a microtuned kick (E1 fundamental, ~41 Hz) showing the sustained fundamental line locked to the track root. Derivable from stemforge renders."
+  lesson_context: "W5 theory module — proof that tuning moves the fundamental"
+- slug: live12-tuning-systems
+  description: "Ableton Live 12 Tuning Systems dialog, screenshot, with a 7-limit-just.scl loaded, root E1 highlighted."
+  lesson_context: "W5 Monologue deep-dive — Ableton bridge"
+  license_note: "Self-captured in Live 12 for instructional use."
+needs_bib_additions:
+- title: Surge Synth Team — Scale Workbench
+  reason: Referenced in gd-mnlg-05 as the Scala/SysEx conversion tool for RDJ-Monologue scales. Not yet in bibliography.
+- title: ODDSound MTS-ESP Mini
+  reason: Referenced in gd-mnlg-05 and t06 as the MTS-ESP router for per-track tuning. Not yet in bibliography.
+- title: Huygens-Fokker Stichting — Scala archive
+  reason: Cited repeatedly as source of free .scl files. Already flagged in existing needs_bib; restated for images/tools.
+episode:
+  title: IDM W5 — Aphex Pt.1, Tuning drums to the track
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

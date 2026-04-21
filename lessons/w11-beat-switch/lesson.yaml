@@ -1,0 +1,512 @@
+id: w11-beat-switch
+week: 11
+title: Week 11 — Beat switches, inverse drops, and the rub
+duration_minutes: 45
+pillars:
+- arrangement
+- hip_hop_integration
+concepts:
+- tde_beat_switch
+- dj_dahi_reversal
+- the_rub_bob_power
+- inverse_drop
+- burial_archangel_method
+- scene_launch_switching
+- chain_selector_variations
+- follow_actions_as_switch
+- commit_before_switch
+ableton_surface:
+- scene_launch
+- session_to_arrangement_record
+- chain_selector
+- macro_variations
+- follow_actions
+- rack_snapshots
+- auto_filter
+- crystallizer
+- reverse_clip
+- bounce_groups
+prereqs:
+- w02-subtraction
+- w07-squarepusher-chops
+- w09-vocal-chopping
+- w10-variation-generation
+teasers: []
+stemforge:
+  recipes: []
+references:
+- bib:pitchfork_dj_dahi_money_trees
+- bib:charnas_dilla_time
+- bib:burial_soundforge_quote
+- bib:ableton_live_12_manual
+- bib:soundtoys_crystallizer_manual
+- bib:dblue_tapestop
+- bib:rick_rubin_creative_act
+- bib:whosampled_db
+- bib:finish_more_music_variation
+needs_bib:
+- title: Bob Power — 'the rub' — original interview or lecture source
+  reason: The phrase 'the rub' as Bob Power's compositional term for sample-vs-track friction is widely repeated in D'Angelo/Roots engineering lore, but we do not yet have a primary-source citation (Tape Op, RBMA, or Sound on Sound). Treated as attributed-but-not-verified in the lesson; flag for the bibliography agent.
+- title: Sounwave / Mark Spears on Kendrick Lamar beat-switch structure
+  reason: We cite the Sounwave / DJ Dahi beat-switch move from Zak-Handbook §4.5, but want a direct Sounwave interview citation (e.g. Mass Appeal, RBMA, or Complex) to ground the TDE attribution.
+- title: Burial (William Bevan) — 'Archangel' production notes
+  reason: The 1:30 kick-removal moment in 'Archangel' is observable from the record, but a direct quote from Bevan about the choice is elusive. bib:burial_soundforge_quote covers the Soundforge line; a separate Archangel-specific source would be stronger.
+slides:
+- id: s01
+  kind: title
+  heading: The drop is a subtraction problem
+  body_md: slides/s01-cold-open.md
+  script_md: script/s01-cold-open.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:burial_archangel
+- id: s02
+  kind: concept
+  heading: TDE beat switches — punctuation, not disruption
+  body_md: slides/s02-tde-beat-switch.md
+  script_md: script/s02-tde-beat-switch.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: Kendrick Lamar — Money Trees — pre-switch vs post-switch
+    a: 00:00 — Beach House reversed bed
+    b: 01:55 — kick-forward verse
+- id: s03
+  kind: concept
+  heading: DJ Dahi's reversal — Beach House into Money Trees
+  body_md: slides/s03-dahi-reversal.md
+  script_md: script/s03-dahi-reversal.md
+  visuals: []
+  audio_examples: []
+- id: s04
+  kind: concept
+  heading: The rub — Bob Power's friction, Dilla's bassline
+  body_md: slides/s04-the-rub.md
+  script_md: script/s04-the-rub.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: J Dilla — Get Dis Money — sample in isolation vs full loop
+    a: Herbie Hancock 'Come Running to Me' vocal chop, dry
+    b: Same chop + Dilla's synth bass in the Aeolian
+  song_refs:
+  - song:slum_village_get_dis
+- id: s05
+  kind: concept
+  heading: Inverse drop — Burial Archangel, Aphex Come to Daddy Dub
+  body_md: slides/s05-inverse-drop.md
+  script_md: script/s05-inverse-drop.md
+  visuals: []
+  audio_examples:
+  - type: mono
+    label: Burial — Archangel — 1:28 to 1:38, the kick disappears
+  song_refs:
+  - song:burial_archangel
+- id: s06
+  kind: concept
+  heading: Scene-launch the switch — Session to Arrangement on a bar boundary
+  body_md: slides/s06-scene-launch.md
+  script_md: script/s06-scene-launch.md
+  visuals: []
+  audio_examples: []
+- id: s07
+  kind: concept
+  heading: Chain Selector + Macro Variations — the patch-flip alternative
+  body_md: slides/s07-chain-selector.md
+  script_md: script/s07-chain-selector.md
+  visuals: []
+  audio_examples: []
+- id: s08
+  kind: caveat
+  heading: Commit the pre-switch section before you flip chains
+  body_md: slides/s08-commit-caveat.md
+  script_md: script/s08-commit-caveat.md
+  visuals: []
+  audio_examples: []
+- id: s09
+  kind: reference
+  heading: Four tracks to rip apart this week
+  body_md: slides/s09-reference.md
+  script_md: script/s09-reference.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:burial_archangel
+  - song:slum_village_get_dis
+- id: s10
+  kind: exercise
+  heading: The dullest eight bars — pick one of three moves
+  body_md: slides/s10-exercise.md
+  script_md: script/s10-exercise.md
+  visuals: []
+  audio_examples: []
+  deliverable: 'A bounced 60–90-second stereo WAV showing your chosen move applied to the dullest 8-bar section of your in-progress track. Filename: w11_<trackname>_<switch|inverse|rub>.wav. Include a 10-second A/B clip of the original underneath for comparison.'
+
+# ---------------------------------------------------------------------------
+# Expansion slides (Wave 9.2 lesson-expander)
+# ---------------------------------------------------------------------------
+
+# Technical diagrams ---------------------------------------------------------
+- id: d01
+  kind: concept
+  heading: "Beat-switch timing — bar-count visualization"
+  body_md: slides/d01-beat-switch-timing.md
+  diagrams:
+  - svg_content: |
+      <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" aria-label="Beat-switch timing candidate bar positions on a 32-bar loop">
+        <rect x="0" y="0" width="800" height="260" fill="#f6f4ef"/>
+        <line x1="40" y1="180" x2="760" y2="180" stroke="#222" stroke-width="1.5"/>
+        <text x="40" y="200" font-family="monospace" font-size="10" fill="#222">bar 1</text>
+        <text x="200" y="200" font-family="monospace" font-size="10" fill="#222">bar 8</text>
+        <text x="380" y="200" font-family="monospace" font-size="10" fill="#222">bar 16</text>
+        <text x="560" y="200" font-family="monospace" font-size="10" fill="#222">bar 24</text>
+        <text x="720" y="200" font-family="monospace" font-size="10" fill="#222">bar 32</text>
+        <g font-family="monospace" font-size="10" fill="#222">
+          <line x1="40" y1="175" x2="40" y2="185" stroke="#222"/>
+          <line x1="220" y1="175" x2="220" y2="185" stroke="#222"/>
+          <line x1="400" y1="175" x2="400" y2="185" stroke="#222"/>
+          <line x1="580" y1="175" x2="580" y2="185" stroke="#222"/>
+          <line x1="760" y1="175" x2="760" y2="185" stroke="#222"/>
+        </g>
+        <!-- candidate switch markers -->
+        <line x1="220" y1="60" x2="220" y2="175" stroke="#c04a2a" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="170" y="52" font-family="monospace" font-size="11" fill="#c04a2a">bar 8 — punctuation</text>
+        <line x1="400" y1="80" x2="400" y2="175" stroke="#c04a2a" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="350" y="72" font-family="monospace" font-size="11" fill="#c04a2a">bar 16 — bridge</text>
+        <line x1="760" y1="100" x2="760" y2="175" stroke="#c04a2a" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="680" y="92" font-family="monospace" font-size="11" fill="#c04a2a">bar 33 — new section</text>
+        <!-- non-candidates -->
+        <line x1="320" y1="130" x2="320" y2="175" stroke="#999" stroke-width="1" stroke-dasharray="2 3"/>
+        <text x="275" y="124" font-family="monospace" font-size="10" fill="#999">bar 11 — reads as mistake</text>
+        <text x="40" y="240" font-family="monospace" font-size="11" fill="#3a7a4a">Power-of-two bar boundaries only. TDE rule.</text>
+      </svg>
+    caption: "Three valid switch points on a 32-bar loop. Bar 11 shown as a counter-example."
+  references:
+  - bib:pitchfork_dj_dahi_money_trees
+  - bib:whosampled_db
+
+- id: d02
+  kind: concept
+  heading: "Inverse drop — energy curve vs normal drop"
+  body_md: slides/d02-inverse-drop-curve.md
+  diagrams:
+  - svg_content: |
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" aria-label="Energy curve comparison between a normal EDM drop and an inverse drop">
+        <rect x="0" y="0" width="800" height="300" fill="#f6f4ef"/>
+        <line x1="60" y1="250" x2="760" y2="250" stroke="#222" stroke-width="1.5"/>
+        <line x1="60" y1="40" x2="60" y2="250" stroke="#222" stroke-width="1.5"/>
+        <text x="20" y="50" font-family="monospace" font-size="11" fill="#222">energy</text>
+        <text x="720" y="268" font-family="monospace" font-size="11" fill="#222">time</text>
+        <!-- bar markers -->
+        <g font-family="monospace" font-size="10" fill="#222">
+          <text x="120" y="268">bar 0</text>
+          <text x="280" y="268">bar 8</text>
+          <text x="420" y="268">bar 16 (drop)</text>
+          <text x="620" y="268">bar 24</text>
+        </g>
+        <line x1="440" y1="40" x2="440" y2="250" stroke="#999" stroke-width="1" stroke-dasharray="2 3"/>
+        <!-- normal drop curve (red) -->
+        <path d="M 60 230 L 200 210 L 340 150 L 440 60 L 620 70 L 760 80"
+              fill="none" stroke="#c04a2a" stroke-width="2.5"/>
+        <text x="620" y="60" font-family="monospace" font-size="11" fill="#c04a2a">normal drop</text>
+        <!-- inverse drop curve (grey) -->
+        <path d="M 60 230 L 200 210 L 340 150 L 440 100 L 460 200 L 620 190 L 760 195"
+              fill="none" stroke="#444" stroke-width="2.5"/>
+        <text x="620" y="185" font-family="monospace" font-size="11" fill="#444">inverse drop</text>
+        <!-- annotation -->
+        <text x="340" y="105" font-family="monospace" font-size="10" fill="#c04a2a">peak = more</text>
+        <text x="450" y="225" font-family="monospace" font-size="10" fill="#444">peak = absence</text>
+      </svg>
+    caption: "Same time axis, same peak bar. Red: rhythmic density spikes. Grey: rhythmic density collapses; textural density takes over."
+  references:
+  - bib:burial_soundforge_quote
+
+- id: d03
+  kind: concept
+  heading: "Chain Selector routing — MIDI in, one stereo out"
+  body_md: slides/d03-chain-selector-routing.md
+  diagrams:
+  - mermaid: |
+      graph LR
+        M[MIDI in] --> S{Chain Selector<br/>value 0-127}
+        S -->|zone 0-42| A[Chain A<br/>clean saw sub]
+        S -->|zone 43-85| B[Chain B<br/>FM growl]
+        S -->|zone 86-127| C[Chain C<br/>bit-crushed square]
+        A --> O[Rack audio out]
+        B --> O
+        C --> O
+    caption: "Active chain(s) determined by selector value. Hard zones = one chain at a time; overlapping zones crossfade."
+  references:
+  - bib:ableton_live_12_manual
+
+- id: d04
+  kind: concept
+  heading: "The rub — two modes, shared pivot, non-shared friction"
+  body_md: slides/d04-the-rub-diagram.md
+  diagrams:
+  - svg_content: |
+      <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" aria-label="Two scales showing shared and non-shared pitch classes between sample and bassline">
+        <rect x="0" y="0" width="800" height="260" fill="#f6f4ef"/>
+        <text x="40" y="40" font-family="monospace" font-size="12" fill="#222">sample (Mixolydian): A B C# D E F# G</text>
+        <text x="40" y="160" font-family="monospace" font-size="12" fill="#222">bass (Aeolian):     A B C  D E F  G</text>
+        <!-- pitch class boxes -->
+        <g font-family="monospace" font-size="14" text-anchor="middle">
+          <rect x="60" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="85" y="82" fill="#fff">A</text>
+          <rect x="120" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="145" y="82" fill="#fff">B</text>
+          <rect x="180" y="55" width="50" height="40" fill="#c04a2a" stroke="#222"/><text x="205" y="82" fill="#fff">C#</text>
+          <rect x="240" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="265" y="82" fill="#fff">D</text>
+          <rect x="300" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="325" y="82" fill="#fff">E</text>
+          <rect x="360" y="55" width="50" height="40" fill="#c04a2a" stroke="#222"/><text x="385" y="82" fill="#fff">F#</text>
+          <rect x="420" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="445" y="82" fill="#fff">G</text>
+
+          <rect x="60" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="85" y="202" fill="#fff">A</text>
+          <rect x="120" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="145" y="202" fill="#fff">B</text>
+          <rect x="180" y="175" width="50" height="40" fill="#c04a2a" stroke="#222"/><text x="205" y="202" fill="#fff">C</text>
+          <rect x="240" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="265" y="202" fill="#fff">D</text>
+          <rect x="300" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="325" y="202" fill="#fff">E</text>
+          <rect x="360" y="175" width="50" height="40" fill="#c04a2a" stroke="#222"/><text x="385" y="202" fill="#fff">F</text>
+          <rect x="420" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="445" y="202" fill="#fff">G</text>
+        </g>
+        <text x="500" y="85" font-family="monospace" font-size="11" fill="#3a7a4a">green = shared (pivot)</text>
+        <text x="500" y="200" font-family="monospace" font-size="11" fill="#c04a2a">red = non-shared (rub)</text>
+        <text x="40" y="250" font-family="monospace" font-size="11" fill="#222">2 non-shared PCs = the rub. 0 = parallel. 3+ = mistake.</text>
+      </svg>
+    caption: "Two modes over A. Shared pitch classes are the pivot the ear hears as continuity; non-shared ones are the friction Bob Power named."
+  references:
+  - bib:charnas_dilla_time
+
+# TDE/Kendrick beat-switch mini-module --------------------------------------
+- id: tde-01
+  kind: reference
+  heading: "good kid, m.A.A.d city — the album that proved the switch"
+  body_md: slides/tde-01-gkmc-cover.md
+  images:
+  - src: assets/gkmc-cover.jpg
+    caption: "Kendrick Lamar, good kid, m.A.A.d city (Top Dawg / Aftermath / Interscope, 2012)."
+    credit: "Interscope Records"
+    license: "fair-use commentary"
+  references:
+  - bib:pitchfork_dj_dahi_money_trees
+  - bib:whosampled_db
+
+- id: tde-02
+  kind: reference
+  heading: "DJ Dahi — the reverse-and-filter seed"
+  body_md: slides/tde-02-dj-dahi.md
+  images:
+  - src: assets/dj-dahi-portrait.jpg
+    caption: "DJ Dahi (Dacoury Dahi Natche). Editorial / press photo."
+    credit: "Photo credit TBD (photo-sourcer)"
+    license: "editorial / fair-use commentary"
+  references:
+  - bib:pitchfork_dj_dahi_money_trees
+  - bib:charnas_dilla_time
+
+- id: tde-03
+  kind: reference
+  heading: "Beach House — Silver Soul — the exact source sample"
+  body_md: slides/tde-03-beach-house-source.md
+  images:
+  - src: assets/beach-house-teen-dream-cover.jpg
+    caption: "Beach House, Teen Dream (Sub Pop, 2010). 'Silver Soul' is track 2."
+    credit: "Sub Pop Records"
+    license: "fair-use commentary"
+  references:
+  - bib:whosampled_db
+  - bib:charnas_dilla_time
+
+- id: tde-04
+  kind: concept
+  heading: "Money Trees — bar count of the switch"
+  body_md: slides/tde-04-money-trees-breakdown.md
+  audio_examples:
+  - type: ab
+    label: "Money Trees — pre-switch (0:45) vs post-switch (2:15)"
+    a: "00:45 — reversed Beach House bed + verse"
+    b: "02:15 — dry kick-forward pocket"
+  song_refs:
+  - song:burial_archangel
+  references:
+  - bib:pitchfork_dj_dahi_money_trees
+  - bib:whosampled_db
+
+- id: tde-05
+  kind: concept
+  heading: "Constructing the switch — filter sweep + tail bleed"
+  body_md: slides/tde-05-filter-sweep-mechanics.md
+  references:
+  - bib:ableton_live_12_manual
+  - bib:soundtoys_crystallizer_manual
+
+# Inverse drop mini-module --------------------------------------------------
+- id: id-01
+  kind: reference
+  heading: "Untrue — the record that codified absence"
+  body_md: slides/id-01-untrue-cover.md
+  images:
+  - src: assets/burial-untrue-cover.jpg
+    caption: "Burial, Untrue (Hyperdub HDBCD002, 2007). Cover art by Burial."
+    credit: "Hyperdub Records"
+    license: "fair-use commentary"
+  references:
+  - bib:burial_soundforge_quote
+
+- id: id-02
+  kind: concept
+  heading: "Archangel, 1:28–1:38 — what actually happens"
+  body_md: slides/id-02-archangel-breakdown.md
+  audio_examples:
+  - type: mono
+    label: "Burial — Archangel — 1:20 to 1:45, focus on the kick drop-out"
+  song_refs:
+  - song:burial_archangel
+  references:
+  - bib:burial_soundforge_quote
+
+- id: id-03
+  kind: concept
+  heading: "Textural density as kick substitute — the replacement menu"
+  body_md: slides/id-03-textural-substitutes.md
+  references:
+  - bib:burial_soundforge_quote
+
+- id: id-04
+  kind: reference
+  heading: "Aphex — Come to Daddy (Pappy Mix) — the earlier precedent"
+  body_md: slides/id-04-aphex-parallel.md
+  images:
+  - src: assets/aphex-come-to-daddy-cover.jpg
+    caption: "Aphex Twin, Come to Daddy (Warp WAP94, 1997). Pappy Mix on the EP."
+    credit: "Warp Records"
+    license: "fair-use commentary"
+
+- id: id-05
+  kind: concept
+  heading: "Ableton recipe — inverse drop in eight bars"
+  body_md: slides/id-05-recipe.md
+  references:
+  - bib:ableton_live_12_manual
+
+# Chain Selector + Macro Variations deep-technique dive ---------------------
+- id: cs-01
+  kind: gear_deep_dive
+  heading: "Chain Selector + Macro Variations — the in-track switch engine"
+  body_md: slides/cs-01-title.md
+  references:
+  - bib:ableton_live_12_manual
+
+- id: cs-02
+  kind: gear_deep_dive
+  heading: "Rack anatomy — the four controls that matter"
+  body_md: slides/cs-02-rack-anatomy.md
+  images:
+  - src: assets/ableton-chain-selector-annotated.png
+    caption: "Ableton Instrument Rack with Chain Selector ruler, chain zones, and Macro Variations panel annotated."
+    credit: "Ableton Live 12.2 screenshot, annotated"
+    license: "fair-use commentary"
+  references:
+  - bib:ableton_live_12_manual
+
+- id: cs-03
+  kind: gear_deep_dive
+  heading: "How the Rack routes audio — the mental model"
+  body_md: slides/cs-03-audio-routing.md
+  references:
+  - bib:ableton_live_12_manual
+
+- id: cs-04
+  kind: gear_deep_dive
+  heading: "Macro Variations — Live 12.2+ snapshot primitive"
+  body_md: slides/cs-04-macro-variations.md
+  images:
+  - src: assets/ableton-macro-variations-drawer.png
+    caption: "Macro Variations drawer in Ableton Live 12.2. Named snapshots on one Rack."
+    credit: "Ableton Live 12.2 screenshot"
+    license: "fair-use commentary"
+  references:
+  - bib:ableton_live_12_manual
+
+- id: cs-05
+  kind: gear_deep_dive
+  heading: "In-track beat switch — the step-by-step"
+  body_md: slides/cs-05-in-track-switch.md
+  references:
+  - bib:ableton_live_12_manual
+
+- id: cs-06
+  kind: gear_deep_dive
+  heading: "The Autechre callback — same engine, different rate"
+  body_md: slides/cs-06-autechre-callback.md
+  references:
+  - bib:sos_autechre_april_2004
+  - bib:ableton_live_12_manual
+
+- id: cs-07
+  kind: gear_deep_dive
+  heading: "Parameter table — what to set for a hard switch"
+  body_md: slides/cs-07-parameter-table.md
+  references:
+  - bib:ableton_live_12_manual
+
+- id: cs-08
+  kind: gear_deep_dive
+  heading: "What else the Rack can do — three creative uses"
+  body_md: slides/cs-08-creative-uses.md
+  references:
+  - bib:ableton_live_12_manual
+
+- id: cs-09
+  kind: gear_deep_dive
+  heading: "The Max for Live alternative — when Chain Selector is not enough"
+  body_md: slides/cs-09-max-for-live.md
+  references:
+  - bib:ableton_live_12_manual
+
+- id: cs-10
+  kind: gear_deep_dive
+  heading: "Exercise — ship a Chain Selector switch Rack"
+  body_md: slides/cs-10-exercise-switch-rack.md
+  deliverable: "An Ableton Rack preset (.adg) plus a 60-second rendered WAV demonstrating three Macro-Variation switches across a 64-bar arrangement. Filename: w11_<trackname>_cs-switch.wav. Include the .adg alongside."
+  references:
+  - bib:ableton_live_12_manual
+
+images_needed:
+- slug: gkmc-cover
+  description: "Album cover of Kendrick Lamar's good kid, m.A.A.d city (Interscope, 2012). Centered, full-bleed."
+  lesson_context: "W11 tde-01, album that proved the beat-switch as grammar"
+  license_target: "fair-use commentary"
+- slug: dj-dahi-portrait
+  description: "Editorial / press photo of producer DJ Dahi (Dacoury Dahi Natche). Studio environment preferred; any editorial photo suitable for commentary acceptable."
+  preferred_angle: "studio / head-and-shoulders"
+  lesson_context: "W11 tde-02, reverse-and-filter seed producer"
+  license_target: "editorial / fair-use commentary"
+- slug: beach-house-teen-dream-cover
+  description: "Album cover of Beach House, Teen Dream (Sub Pop, 2010). 'Silver Soul' is track 2, the Money Trees source sample."
+  lesson_context: "W11 tde-03, exact source sample"
+  license_target: "fair-use commentary"
+- slug: burial-untrue-cover
+  description: "Album cover of Burial's Untrue (Hyperdub HDBCD002, 2007). Burial rarely does photos; the cover is the canonical visual."
+  lesson_context: "W11 id-01, record that codified the inverse drop"
+  license_target: "fair-use commentary"
+- slug: aphex-come-to-daddy-cover
+  description: "Single cover of Aphex Twin, Come to Daddy (Warp WAP94, 1997)."
+  lesson_context: "W11 id-04, Pappy Mix as earlier inverse-drop precedent"
+  license_target: "fair-use commentary"
+- slug: ableton-chain-selector-annotated
+  description: "Ableton Live 12.2 Instrument Rack screenshot with Chain Selector ruler, chain zones, Macros bar, and Macro Variations drawer visible and annotated."
+  preferred_angle: "full Rack expanded, chain list visible"
+  lesson_context: "W11 cs-02, Rack anatomy deep-dive"
+  license_target: "fair-use commentary / original screenshot"
+- slug: ableton-macro-variations-drawer
+  description: "Ableton Live 12.2 Macro Variations drawer, showing at least three named snapshots stored on a single Rack."
+  preferred_angle: "drawer expanded, variation names visible"
+  lesson_context: "W11 cs-04, Macro Variations primitive"
+  license_target: "fair-use commentary / original screenshot"
+
+episode:
+  title: IDM W11 — Switches, inverses, rubs
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

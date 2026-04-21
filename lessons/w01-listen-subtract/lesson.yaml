@@ -1,0 +1,449 @@
+id: w01-listen-subtract
+week: 1
+title: "Week 1 — Listen like an engineer, subtract like a producer"
+duration_minutes: 45
+pillars: [meta_listening]
+concepts:
+  - reference_track_analysis
+  - critical_listening_protocol
+  - drop_one_stem
+  - subtraction_method_preview
+  - time_box_45min
+  - session_mentalities
+  - monitoring_environment
+  - completion_over_perfection
+ableton_surface:
+  - arrangement_view
+  - session_view
+  - mute_solo
+  - locators
+  - reference_track_on_muted_audio_lane
+  - bounce_in_place
+prereqs: []
+
+teasers: []
+
+stemforge:
+  recipes:
+    - w01-benjamins-stems
+
+references:
+  - bib:sos_autechre_april_2004
+  - bib:tape_op_89
+  - bib:tape_notes_140_four_tet
+  - bib:oblique_strategies_eno
+  - bib:ableton_live_12_manual
+  - bib:stemforge_repo
+  - bib:song_exploder_porter_robinson
+
+needs_bib:
+  - title: "Berklee Online OMPRD-382 — Critical Listening syllabus"
+    reason: "Cited in Spec B §6 for the level-matched 30-second A/B protocol; no public PDF currently archived in bibliography.json."
+  - title: "Yamaha HS5 / Neumann KH80 / AKG K371 / Sennheiser HD600 monitoring comparison"
+    reason: "Listening-environment sidebar pulls standard reference points; no consolidated source in bibliography.json. Zak specs manuals exist per-product but no umbrella entry."
+  - title: "Rick Rubin — Perfection-by-subtraction quote"
+    reason: "Spec A §5.9 cites the quote inline. Attribution likely The Creative Act (2023) — not in bibliography yet."
+  - title: "Andrew Huang — half-decibel difference threshold quote"
+    reason: "Spec A §6.1 attributes; source likely a YouTube essay. Not yet cataloged."
+
+slides:
+  - id: s01
+    kind: title
+    heading: "The course begins with silence"
+    body_md: slides/s01-cold-open.md
+    script_md: script/s01-cold-open.md
+    visuals: []
+    audio_examples: []
+
+  - id: s02
+    kind: concept
+    heading: "Listen like an engineer — the critical-listening protocol"
+    body_md: slides/s02-listen-like-engineer.md
+    script_md: script/s02-listen-like-engineer.md
+    visuals: []
+    audio_examples: []
+
+  - id: s03
+    kind: caveat
+    heading: "What you listen on matters, and less than you think"
+    body_md: slides/s03-monitoring.md
+    script_md: script/s03-monitoring.md
+    visuals: []
+    audio_examples: []
+
+  - id: s04
+    kind: reference
+    heading: "Benjamins — your reference track for the next twelve weeks"
+    body_md: slides/s04-benjamins-reference.md
+    script_md: script/s04-benjamins-reference.md
+    visuals: []
+    audio_examples:
+      - type: ab
+        label: "Full mix vs drums-muted"
+        a: build/audio/stemforge-renders/w01/benjamins_drums.wav
+        b: build/audio/stemforge-renders/w01/benjamins_bass.wav
+
+  - id: s05
+    kind: concept
+    heading: "Drop one stem — the single most useful ear exercise"
+    body_md: slides/s05-drop-one-stem.md
+    script_md: script/s05-drop-one-stem.md
+    visuals: []
+    audio_examples:
+      - type: ab
+        label: "Benjamins — vocals solo vs other solo"
+        a: build/audio/stemforge-renders/w01/benjamins_vocals.wav
+        b: build/audio/stemforge-renders/w01/benjamins_other.wav
+
+  - id: s06
+    kind: concept
+    heading: "Subtract like a producer — the densest-case principle"
+    body_md: slides/s06-subtract-like-producer.md
+    script_md: script/s06-subtract-like-producer.md
+    visuals: []
+    audio_examples: []
+
+  - id: s07
+    kind: caveat
+    heading: "The 45-minute rabbit hole — separate the mentalities"
+    body_md: slides/s07-time-box.md
+    script_md: script/s07-time-box.md
+    visuals: []
+    audio_examples: []
+
+  - id: s08
+    kind: concept
+    heading: "Pre-place the locators, then close the laptop"
+    body_md: slides/s08-arrangement-first.md
+    script_md: script/s08-arrangement-first.md
+    visuals: []
+    audio_examples: []
+
+  - id: s09
+    kind: reference
+    heading: "Twelve in twelve — the cadence the course assumes"
+    body_md: slides/s09-ship-twelve.md
+    script_md: script/s09-ship-twelve.md
+    visuals: []
+    audio_examples: []
+
+  - id: s10
+    kind: caveat
+    heading: "A confession, and one Sound on Sound aside"
+    body_md: slides/s10-confession-aside.md
+    script_md: script/s10-confession-aside.md
+    visuals: []
+    audio_examples: []
+
+  - id: s11
+    kind: exercise
+    heading: "Ship the listening — the 30-second mute-the-drums clip"
+    body_md: slides/s11-exercise.md
+    script_md: script/s11-exercise.md
+    visuals: []
+    audio_examples:
+      - type: ab
+        label: "Your deliverable — 30-second A/B, drums muted for 15s"
+        a: build/audio/stemforge-renders/w01/benjamins_drums.wav
+        b: build/audio/stemforge-renders/w01/benjamins_bass.wav
+    deliverable: "A 30-second stereo bounce of Benjamins where the drums are muted from 0:00 to 0:15 and un-muted from 0:15 to 0:30. One-sentence note per stem describing what it is doing rhythmically and harmonically. File named w01_<yourname>_mute-ab.wav."
+
+  # ------------------------------------------------------------------
+  # Image-anchored expansion slides (i01-i08)
+  # ------------------------------------------------------------------
+
+  - id: i01
+    kind: reference
+    heading: "Benjamins — the cover, briefly"
+    body_md: slides/i01-benjamins-art.md
+    images:
+      - src: assets/benjamins-cover.jpg
+        caption: "Benjamins, cover art. The reference track for the next twelve weeks."
+        credit: "Album art — fair-use commentary"
+        license: "fair-use commentary"
+
+  - id: i02
+    kind: concept
+    heading: "The five axes, one pass at a time"
+    body_md: slides/i02-five-axes.md
+    images:
+      - src: assets/five-axes-icons.svg
+        caption: "Low-end, width, clarity, transient, reverb — five passes through the same 30-second chunk."
+        credit: "Original diagram"
+        license: "course-owned"
+
+  - id: i03
+    kind: concept
+    heading: "Paper, not screen"
+    body_md: slides/i03-paper-not-screen.md
+    images:
+      - src: assets/notebook-timer.jpg
+        caption: "A paper notebook and a kitchen timer. The only two instruments this week."
+        credit: "Stock photo"
+        license: "stock-to-purchase"
+
+  - id: d01
+    kind: concept
+    heading: "Where the four stems live"
+    body_md: slides/d01-stem-frequencies.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+            <style>
+              .label { font: 14px sans-serif; fill: #222; }
+              .axis  { stroke: #222; stroke-width: 1; fill: none; }
+              .tick  { font: 11px sans-serif; fill: #555; }
+              .bar-d { fill: #d35f5f; opacity: 0.75; }
+              .bar-b { fill: #5f8cd3; opacity: 0.75; }
+              .bar-v { fill: #67a867; opacity: 0.75; }
+              .bar-o { fill: #c69a3f; opacity: 0.75; }
+            </style>
+            <text class="label" x="20" y="24">Stem occupancy (Hz, log)</text>
+            <line class="axis" x1="80" y1="270" x2="760" y2="270" />
+            <g class="tick">
+              <text x="80"  y="290">20</text>
+              <text x="195" y="290">100</text>
+              <text x="310" y="290">500</text>
+              <text x="425" y="290">1k</text>
+              <text x="540" y="290">4k</text>
+              <text x="655" y="290">10k</text>
+              <text x="745" y="290">20k</text>
+            </g>
+            <rect class="bar-d" x="170" y="60"  width="490" height="30" />
+            <text class="label" x="670" y="80">drums</text>
+            <rect class="bar-b" x="165" y="105" width="205" height="30" />
+            <text class="label" x="380" y="125">bass</text>
+            <rect class="bar-v" x="255" y="150" width="345" height="30" />
+            <text class="label" x="610" y="170">vocals</text>
+            <rect class="bar-o" x="205" y="195" width="430" height="30" />
+            <text class="label" x="645" y="215">other</text>
+          </svg>
+        caption: "Approximate frequency occupancy per stem. Ranges overlap; the separator classifies by more than frequency."
+        credit: "Original diagram"
+        license: "course-owned"
+
+  - id: d02
+    kind: concept
+    heading: "The listening protocol, as a loop"
+    body_md: slides/d02-listening-protocol.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Load reference + WIP<br/>adjacent tracks] --> B[Level-match<br/>LUFS short-term]
+            B --> C[Chunk to 30s<br/>one axis per pass]
+            C --> D[A/B switch]
+            D --> E[Write one<br/>sentence]
+            E --> C
+        caption: "The Berklee critical-listening loop. Level-match first, chunk, switch, write — then repeat."
+
+  - id: d03
+    kind: concept
+    heading: "Demucs, at arm's length"
+    body_md: slides/d03-demucs-pipeline.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[benjamins.wav<br/>stereo 44.1kHz] --> B[Demucs U-Net<br/>hybrid waveform+STFT]
+            B --> C[drums.wav]
+            B --> D[bass.wav]
+            B --> E[vocals.wav]
+            B --> F[other.wav]
+        caption: "Simplified stemforge dispatch. The real U-Net has hundreds of layers; this is the block view."
+
+  - id: i04
+    kind: concept
+    heading: "A spectrogram, in passing"
+    body_md: slides/i04-spectrogram.md
+    images:
+      - src: assets/spectrogram-4stem.png
+        caption: "Spectrogram view of Benjamins with the four stems stacked — time on x, frequency on y, amplitude as color."
+        credit: "Generated from stemforge output"
+        license: "course-owned"
+
+  - id: i05
+    kind: concept
+    heading: "The densest bar is master state"
+    body_md: slides/i05-densest-bar.md
+    images:
+      - src: assets/master-state-diagram.svg
+        caption: "Arrangement as mute-automation over a single master state."
+        credit: "Original diagram"
+        license: "course-owned"
+
+  - id: i06
+    kind: reference
+    heading: "Benjamins — find the master state"
+    body_md: slides/i06-benjamins-as-example.md
+    audio_examples:
+      - type: ab
+        label: "Benjamins chorus vs second verse — which one is master state?"
+        a: build/audio/stemforge-renders/w01/benjamins_drums.wav
+        b: build/audio/stemforge-renders/w01/benjamins_other.wav
+
+  - id: i07
+    kind: reference
+    heading: "Tape Op and Sound on Sound"
+    body_md: slides/i07-tape-op-sos.md
+    images:
+      - src: assets/tape-op-89-cover.jpg
+        caption: "Tape Op #89 — Squarepusher cover story."
+        credit: "Tape Op magazine — fair-use commentary"
+        license: "fair-use commentary"
+      - src: assets/sos-april-2004-cover.jpg
+        caption: "Sound on Sound, April 2004 — Autechre feature."
+        credit: "Sound on Sound magazine — fair-use commentary"
+        license: "fair-use commentary"
+
+  - id: i08
+    kind: caveat
+    heading: "The half-dB threshold (approximately)"
+    body_md: slides/i08-huang-half-db.md
+    images:
+      - src: assets/level-match-meter.png
+        caption: "A short-term LUFS meter matched within half a dB. The threshold where most listeners stop being able to tell."
+        credit: "Screenshot"
+        license: "screenshot-for-commentary"
+
+  # ------------------------------------------------------------------
+  # Listening-environment sidebar (le01-le06)
+  # ------------------------------------------------------------------
+
+  - id: le01
+    kind: concept
+    heading: "Listening environment — the sidebar"
+    body_md: slides/le01-sidebar-open.md
+    visuals: []
+
+  - id: le02
+    kind: reference
+    heading: "Yamaha HS5 — the dull, honest near-field"
+    body_md: slides/le02-hs5.md
+    images:
+      - src: assets/gear-yamaha-hs5.jpg
+        caption: "Yamaha HS5 (2014). 5-inch near-field, 70 Hz-30 kHz."
+        credit: "Yamaha product photography — fair-use commentary"
+        license: "fair-use commentary"
+
+  - id: le03
+    kind: reference
+    heading: "Neumann KH80 DSP — better, if the room deserves it"
+    body_md: slides/le03-kh80.md
+    images:
+      - src: assets/gear-neumann-kh80.jpg
+        caption: "Neumann KH80 DSP (2016). Onboard DSP, room correction via MA 1 mic."
+        credit: "Neumann product photography — fair-use commentary"
+        license: "fair-use commentary"
+
+  - id: le04
+    kind: reference
+    heading: "AKG K371 + Sennheiser HD600 — the headphone A/B"
+    body_md: slides/le04-k371-hd600.md
+    images:
+      - src: assets/gear-akg-k371.jpg
+        caption: "AKG K371 (2019). Closed-back, Harman-target-adjacent."
+        credit: "AKG product photography — fair-use commentary"
+        license: "fair-use commentary"
+      - src: assets/gear-sennheiser-hd600.jpg
+        caption: "Sennheiser HD600 (1997). Open-back, 300 ohm, mid-forward."
+        credit: "Sennheiser product photography — fair-use commentary"
+        license: "fair-use commentary"
+
+  - id: le05
+    kind: concept
+    heading: "Cross-reference, do not pick one"
+    body_md: slides/le05-cross-reference.md
+    visuals: []
+
+  - id: le06
+    kind: concept
+    heading: "Room acoustics — first reflections and bass modes"
+    body_md: slides/le06-room-acoustics.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+            <style>
+              .wall    { stroke: #222; stroke-width: 2; fill: none; }
+              .speaker { fill: #444; }
+              .head    { fill: #b44; }
+              .direct  { stroke: #2a7; stroke-width: 2; fill: none; }
+              .reflect { stroke: #a62; stroke-width: 2; stroke-dasharray: 6 4; fill: none; }
+              .mode    { stroke: #55a; stroke-width: 1.5; stroke-dasharray: 2 4; fill: none; }
+              .label   { font: 13px sans-serif; fill: #222; }
+            </style>
+            <rect class="wall" x="80" y="60" width="640" height="280" />
+            <rect class="speaker" x="180" y="180" width="24" height="40" />
+            <rect class="speaker" x="596" y="180" width="24" height="40" />
+            <circle class="head" cx="400" cy="280" r="10" />
+            <line class="direct" x1="200" y1="200" x2="400" y2="280" />
+            <line class="direct" x1="608" y1="200" x2="400" y2="280" />
+            <polyline class="reflect" points="200,200 90,150 400,280" />
+            <polyline class="reflect" points="608,200 710,150 400,280" />
+            <path class="mode" d="M 90,330 Q 400,320 710,330" />
+            <path class="mode" d="M 90,330 Q 245,360 400,330 Q 555,300 710,330" />
+            <text class="label" x="90"  y="52">Room boundary</text>
+            <text class="label" x="180" y="175">L mon</text>
+            <text class="label" x="596" y="175">R mon</text>
+            <text class="label" x="380" y="305">listener</text>
+            <text class="label" x="510" y="145">first reflection</text>
+            <text class="label" x="510" y="380">bass mode (low-freq standing wave)</text>
+          </svg>
+        caption: "Top-down room. Solid green lines — direct sound. Dashed brown — first reflections off side walls. Dashed blue — the lowest bass mode between front and back walls."
+        credit: "Original diagram"
+        license: "course-owned"
+
+images_needed:
+  - slug: benjamins-cover
+    description: "Benjamins album art, square cover, 1400x1400 minimum"
+    preferred_angle: "flat"
+    lesson_context: "W1 reference track — used on i01"
+  - slug: five-axes-icons
+    description: "Five small icons or glyphs representing low-end, stereo width, vocal clarity, transient sharpness, reverb depth — aligned horizontally"
+    preferred_angle: "diagram"
+    lesson_context: "W1 i02 — the five listening axes"
+  - slug: notebook-timer
+    description: "Overhead photo of a paper notebook with pen and a mechanical kitchen timer on a desk, laptop closed in background"
+    preferred_angle: "overhead"
+    lesson_context: "W1 i03 — paper, not screen"
+  - slug: spectrogram-4stem
+    description: "Stacked spectrogram of a song broken into four stems (drums/bass/vocals/other), 30 seconds, labeled"
+    preferred_angle: "screenshot"
+    lesson_context: "W1 i04 — vocabulary slide"
+  - slug: master-state-diagram
+    description: "Simple arrangement diagram with a central 'master state' bar and arrows showing intro/A/B/breakdown/peak/outro as mutes of it"
+    preferred_angle: "diagram"
+    lesson_context: "W1 i05 — subtraction method"
+  - slug: tape-op-89-cover
+    description: "Tape Op magazine issue 89 cover (Squarepusher feature)"
+    preferred_angle: "flat"
+    lesson_context: "W1 i07 — voice reference"
+  - slug: sos-april-2004-cover
+    description: "Sound on Sound magazine April 2004 cover (Autechre feature)"
+    preferred_angle: "flat"
+    lesson_context: "W1 i07 — voice reference"
+  - slug: level-match-meter
+    description: "Screenshot of a LUFS meter showing two tracks matched within 0.5 dB"
+    preferred_angle: "screenshot"
+    lesson_context: "W1 i08 — level-match threshold"
+  - slug: gear-yamaha-hs5
+    description: "Yamaha HS5 studio monitor, single unit, front three-quarter angle, neutral background"
+    preferred_angle: "three-quarter front"
+    lesson_context: "W1 le02 — monitoring sidebar"
+  - slug: gear-neumann-kh80
+    description: "Neumann KH80 DSP studio monitor, single unit, front three-quarter angle, neutral background"
+    preferred_angle: "three-quarter front"
+    lesson_context: "W1 le03 — monitoring sidebar"
+  - slug: gear-akg-k371
+    description: "AKG K371 closed-back headphones on stand, side profile"
+    preferred_angle: "side"
+    lesson_context: "W1 le04 — monitoring sidebar"
+  - slug: gear-sennheiser-hd600
+    description: "Sennheiser HD600 open-back headphones on stand, side profile"
+    preferred_angle: "side"
+    lesson_context: "W1 le04 — monitoring sidebar"
+
+episode:
+  title: "IDM W1 — Listen like an engineer, subtract like a producer"
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

@@ -1,0 +1,91 @@
+{
+  "_meta": {
+    "generated": "2026-04-21",
+    "diagrams_reviewed": 52,
+    "issues_found": 8,
+    "by_severity": {"high": 1, "medium": 5, "low": 2},
+    "reviewer_notes": "Reviewed all diagrams with mermaid: or svg_content: across lessons w01-w12 and the two compass_artifact specs. Counted 52 diagrams/gear_annotations blocks total. Most hardware/DSP claims align with cited sources (Roads 1996, Ableton Live 12 manual, Tape Op #89, SOS April 2004, Tape Notes #140, Charnas Dilla Time, ITU-R BS.1770). Issues below are limited to claims that conflict with primary sources or that are approximately right but missing the caveat the slide body does carry elsewhere."
+  },
+  "issues": [
+    {
+      "lesson": "w07-squarepusher-chops",
+      "slide_id": "gd-s950-06",
+      "diagram_location": "diagrams[0].mermaid",
+      "claim": "Akai S950 samples at 48 kHz",
+      "severity": "high",
+      "issue": "The S950 does NOT sample at 48 kHz. Per the Akai S900/S950 service documentation and Vintage Synth Explorer, the S950 supports variable sample rates selectable between 7.5 kHz and 40 kHz (maximum). The 48 kHz figure is factually wrong and conflicts with the Big Loada aliased-repitch narrative that the lesson builds elsewhere (the aliasing and 'grit' are a direct consequence of the ~40 kHz ceiling plus the coarse anti-alias LPF). The diagram also labels the companding as 'µ-law' without qualification; the S900/S950's companding is a proprietary E-mu/Akai-family 12-to-8-bit scheme, commonly described as 'µ-law-like' rather than strict µ-law.",
+      "suggested_fix": "Replace '12-bit linear quantize at 48 kHz' with '12-bit linear quantize at 7.5–40 kHz (user-selectable)'. Change 'µ-law companding curve' to 'Akai/E-mu-family companding (µ-law-style, not strict µ-law)'. Update the caption accordingly.",
+      "source_references": ["bib:roads_computer_music_tutorial", "bib:akai_s950_manual (needs_bib — currently not in bibliography)"]
+    },
+    {
+      "lesson": "w07-squarepusher-chops",
+      "slide_id": "gd-s950-02",
+      "diagram_location": "gear_annotations[0].callouts.pitch shift",
+      "claim": "S950 pitch shift 'aliases above ±2 semitones'",
+      "severity": "medium",
+      "issue": "The ±2 framing conflates direction. Naive sample-rate-conversion pitch shifting produces aliasing only on upward shifts (foldover above Nyquist), not on downward shifts. Downward shifts produce lower-fidelity / 'dusty' audio via decimation artefacts but not aliasing in the textbook sense. Also the threshold for audible aliasing on the S950 in practice is typically reported closer to +4 to +5 semitones, not +2.",
+      "suggested_fix": "Rephrase as 'Naive sample-rate conversion — aliases on upward shifts (typically audible by +4 semitones). Downward shifts thicken/dull via decimation.' This matches the Jenkinson 'aliased repitch is the signature' quote.",
+      "source_references": ["bib:roads_computer_music_tutorial (Ch. 21 on sample-rate conversion)", "bib:sos_squarepusher_interviews"]
+    },
+    {
+      "lesson": "w05-aphex-tuning",
+      "slide_id": "gd-mnlg-04",
+      "diagram_location": "diagrams[0].mermaid",
+      "claim": "Korg Monologue uses 12-bit DAC with ~0.24¢ step",
+      "severity": "medium",
+      "issue": "Korg's public spec for the Monologue lists 16-bit-equivalent pitch resolution for its CV output path. A 12-bit DAC spanning one octave would give ~0.29¢ per step (1200/4096); spanning the Monologue's ~5-octave keyboard range would give ~1.47¢ per step — neither matches '~0.24¢'. The cents-per-step arithmetic as stated is inconsistent with a 12-bit DAC at any reasonable voltage range. The microtuning edit page exposes ±75¢ offsets in 1¢ increments, so 1¢ is the user-facing resolution.",
+      "suggested_fix": "Either (a) replace the '12-bit DAC ~0.24¢ step' node with '16-bit pitch resolution, user-facing 1¢ microtuning offsets', or (b) drop the cent-per-step quantization and keep only the lookup-table structure (microtuning offset inserted between MIDI-to-CV and VCO). Cite Korg Monologue owner's manual p. 20-22 (microtuning section) rather than Roads 1996 for this specific claim.",
+      "source_references": ["Korg Monologue Owner's Manual (public, Korg.com)", "bib:roads_computer_music_tutorial (generic DAC math, not Monologue-specific)"]
+    },
+    {
+      "lesson": "w09-vocal-chopping",
+      "slide_id": "gd-sp1200-06",
+      "diagram_location": "diagrams[0].svg_content",
+      "claim": "SP-1200 ADC is 'µ-law-style' companding",
+      "severity": "medium",
+      "issue": "The SP-1200's input path is a 12-bit linear ADC followed by a 12-to-8-bit compression (floating-point / scaled-exponent encoding) for RAM storage, NOT µ-law. Dave Rossum has described this as a custom E-mu encoding that resembles µ-law curvatively (dense near zero, sparse near full-scale) but is not the ITU G.711 µ-law function. The diagram label 'µ-law-style' hedges this; the body slide does too. However the axis label 'quantization level density' and the shape drawn is specifically a µ-law curve, which risks students believing the SP-1200 literally implements µ-law. Low-risk because the caveat exists, but worth tightening.",
+      "suggested_fix": "Change the red curve label from 'SP-1200 companded (µ-law-style)' to 'SP-1200 companded (E-mu proprietary 12→8-bit, µ-law-like shape)'. Add a note below the axis: 'Not the ITU G.711 µ-law function; curve shape shown is illustrative.'",
+      "source_references": ["bib:charnas_dilla_time", "needs_bib: Dave Rossum SP-1200 design interview (flagged in the lesson's needs_bib)"]
+    },
+    {
+      "lesson": "w09-vocal-chopping",
+      "slide_id": "gd-sp1200-07",
+      "diagram_location": "diagrams[0].svg_content",
+      "claim": "SP-1200 aliasing shown as a simple inverted-image fold at 13 kHz with a flat source spectrum to 20 kHz",
+      "severity": "medium",
+      "issue": "The diagram shows the source spectrum as flat to 20 kHz and then cuts cleanly; the fold-back is drawn as a symmetric image. This is correct in principle but omits that the SP-1200's input path DOES include a gentle analog pre-filter at the ADC (not a brick-wall anti-alias — this is what makes the SP famous — but not absent either). Drawing 'no anti-alias filter' as an absolute is a slight overstatement compared to the service-manual schematic, which shows a passive input shaping. This matters pedagogically because students trying to replicate the effect with a plain 26 kHz downsampler in-the-box will over-emphasize the high-frequency fold and under-emphasize the gentle input roll-off that the SP-1200 actually provides.",
+      "suggested_fix": "Add a third line to the spectrum plot: 'SP-1200 input: gentle ~1-pole roll-off from ~10 kHz (not brick-wall)'. Update caption to: 'Aliasing cliff at Nyquist. SP-1200's famously permissive input path lets HF content fold back, but there is a gentle analog roll-off — not truly 'no filter'.'",
+      "source_references": ["bib:roads_computer_music_tutorial (Ch. 21)", "needs_bib: E-mu SP-1200 Service Manual (already flagged in the lesson's needs_bib)"]
+    },
+    {
+      "lesson": "w04-warp-modes",
+      "slide_id": "wm03",
+      "diagram_location": "diagrams[0].mermaid",
+      "claim": "Phase vocoder uses 'Hann window, hop = N/4'",
+      "severity": "medium",
+      "issue": "The diagram presents 'Hann window, hop = N/4' as if it were the Complex Pro spec. Hop = N/4 (75% overlap) is the textbook default for phase vocoders in teaching material (Roads 1996; JOS3/Smith III), but Ableton does not publish the internal window size, hop size, or window type for Complex Pro. Labeling these values as definitive overstates what is documented. Separately, the block diagram omits the two sub-issues most responsible for artefacts: (a) vertical phase coherence (phase-locking of bin neighbours), and (b) transient smearing caused by the fixed analysis window. Those are the two things students hear and ask about.",
+      "suggested_fix": "Reframe the window/hop nodes as 'Analysis window (Hann typical, hop ~N/4 — Complex Pro internals not published)'. Add a small annotation below the IFFT block: 'Phase-propagation-only = phasiness/smearing on polyphonic transients. Complex Pro adds formant preservation and phase-locking heuristics not shown here.' Keep the Roads 1996 citation — it's appropriate for the textbook phase vocoder, not for Complex Pro specifically.",
+      "source_references": ["bib:roads_computer_music_tutorial (Ch. 10)", "bib:ableton_live_12_manual (Complex Pro section)"]
+    },
+    {
+      "lesson": "w08-autechre-feedback",
+      "slide_id": "gd-maxmsp-03",
+      "diagram_location": "diagrams[0].mermaid",
+      "claim": "Max/MSP signal vector: '64 samples = 1.45ms'",
+      "severity": "low",
+      "issue": "The arithmetic (64/44100 ≈ 1.451 ms) is correct, but the diagram doesn't declare the sample rate. At 48 kHz (common in modern sessions) 64 samples = 1.333 ms. Similarly, the 'Scheduler — 1ms resolution' is an acceptable default but Max's scheduler interval is user-configurable (Audio Settings → Scheduler Interval, commonly 1–2 ms). These are presentational quibbles, not substance errors.",
+      "suggested_fix": "Change to '64 samples @ 44.1 kHz ≈ 1.45 ms (1.33 ms @ 48 kHz)'. For the scheduler block, say '1–2 ms scheduler interval (user-configurable)'.",
+      "source_references": ["Max/MSP documentation — Audio Status / Scheduler Interval", "Cycling '74 DSP basics article"]
+    },
+    {
+      "lesson": "w11-beat-switch",
+      "slide_id": "d01",
+      "diagram_location": "diagrams[0].svg_content",
+      "claim": "Switch candidates: 'bar 8 — punctuation / bar 16 — bridge / bar 33 — new section'. Footer: 'Power-of-two bar boundaries only. TDE rule.'",
+      "severity": "low",
+      "issue": "Bar 33 is not itself a power of two; it is the downbeat after a full 32-bar period, which is the power-of-two boundary. Captioning the marker as 'bar 33' while asserting 'power-of-two bar boundaries only' reads inconsistently. Pedagogically minor — readers will intuit the meaning — but a careful reader will count '8, 16, 33' and pause.",
+      "suggested_fix": "Either relabel the third tick as 'bar 32 (end of first 32) → new section at bar 33' or keep 'bar 33' and adjust the footer to 'power-of-two period boundaries (bar 8 = 2³, bar 16 = 2⁴, bar 32 = 2⁵ → new section at downbeat of the next bar)'.",
+      "source_references": ["bib:pitchfork_dj_dahi_money_trees"]
+    }
+  ]
+}

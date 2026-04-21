@@ -1,0 +1,93 @@
+# Teaser calendar — six teasers, placed once each, never repeated.
+# Authoring agents lift the paragraph into the assigned lesson verbatim-ish,
+# preserving the citation. Each teaser fires in exactly one lesson.
+
+tarbox_road:
+  week: 4
+  lesson: w04-warp-modes
+  slot: "mid-lesson aside — after Complex Pro vs Beats comparison"
+  citation: bib:fridmann_davefridmann_com
+  paragraph: |
+    Aside — since we're talking about warp modes as sound design, file this
+    for later: there's a studio in Cassadaga, New York, built in 1997 by a
+    producer named Dave Fridmann, that runs a Neve 88RS into a Dorrough 610
+    multiband compressor that was originally meant for FM broadcast. He
+    feeds the bass through it until it crunches. Flaming Lips, Mercury Rev,
+    MGMT, Tame Impala, Mogwai — all came through there. We'll revisit the
+    Fridmann bass in Week 7 when we talk Squarepusher's half-speed bass
+    trick, because the logic is the same: a constraint baked into the
+    signal path, not a plugin added after.
+
+fredonia_srt:
+  week: 5
+  lesson: w05-aphex-tuning
+  slot: "closing for-further-listening section"
+  citation: bib:fredonia_srt_program
+  paragraph: |
+    For further listening — if the microtuning bug has bitten, there's a
+    program at SUNY Fredonia called Sound Recording Technology that takes
+    forty students every two years and turns out working engineers. They
+    run a mastering lab where precision is treated as craft, not
+    afterthought. One of the professors, Bernd Gottinger, has a pile of
+    GRAMMY nominations for classical and orchestral work. Another alumnus,
+    Matt Estep, is Fridmann's full-time assistant at Tarbox Road. The
+    program does not advertise the pipeline. But it exists.
+
+mgmt_kids_distortion:
+  week: 8
+  lesson: w08-autechre-feedback
+  slot: "example of wrongness-as-signature, near the Roar feedback-loop demo"
+  citation: bib:happymag_mgmt_oracular_engineering
+  paragraph: |
+    Quick detour — because "wrongness as signature" is exactly what MGMT's
+    "Kids" is. In March 2007, at Tarbox, Fridmann tracked the vocal on a
+    Neumann U47 and then assaulted the whole mix with, quote, "substandard
+    1990s compressors." He never named which ones. The engineers who've
+    tried to reconstruct it on Gearspace have not agreed. The point: the
+    sound is load-bearing, and it came from breaking cheap gear on purpose,
+    and you cannot buy it. You can only imitate the posture.
+
+zaireeka_4cd:
+  week: 10
+  lesson: w10-variation-generation
+  slot: "opening parable before the five-mutations framework"
+  citation: bib:zaireeka_wikipedia
+  paragraph: |
+    Parable — in the summer of 1997, The Flaming Lips and Dave Fridmann
+    decided to make an album that played on four CDs simultaneously. This
+    was not a gimmick. It was an arrangement constraint: each CD had to
+    carry a partial version of the song that only made sense in combination
+    with the other three. Halfway through, they realized you cannot split
+    a normal song across four CDs and threw out months of work. The record
+    that shipped, Zaireeka, was the first project ever tracked at Tarbox
+    Road. The lesson for our five-mutations framework this week: the
+    constraint is the generator. If you are stuck, it is because your
+    constraint is not strong enough.
+
+tame_impala_boss:
+  week: 7
+  lesson: w07-squarepusher-chops
+  slot: "comparison side note — after the QY700-as-sole-sequencer demo"
+  citation: bib:audiotechnology_lonerism_feature
+  paragraph: |
+    Side note — Squarepusher's QY700 is the anti-computer in its purest
+    form, but it is not the only one. Kevin Parker walked into Tarbox Road
+    in 2009 with a Boss BR-1600 sixteen-track digital recorder his dad had
+    bought him when he was sixteen and handed it to Fridmann. Instead of
+    laughing, Fridmann mixed Innerspeaker from it. Parker, afterward: "There's
+    no way I could've made the album sound as good as Fridmann made it
+    sound." The rig is a constraint; the engineer is the respect for it.
+
+gottinger_alumni:
+  week: 12
+  lesson: w12-ship-two-tracks
+  slot: "outro — after the ship-two-tracks exercise"
+  citation: bib:fredonia_grammy_announcement
+  paragraph: |
+    Final note — we mentioned Fredonia's SRT program back in Week 5. Here
+    is the payoff. Bernd Gottinger, the professor who runs the mastering
+    lab, has engineered GRAMMY-nominated Buffalo Philharmonic recordings
+    of Danielpour, Foss, and Kodály. An orchestra cannot be re-tracked.
+    Mastering it means listening harder than anyone else in the room. The
+    program graduates forty engineers every two years. Most of them ship.
+    That is the whole thing. Ship. Go.

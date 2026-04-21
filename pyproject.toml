@@ -1,0 +1,16 @@
+[project]
+name = "idm-course"
+version = "0.1.0"
+description = "IDM production course — interactive slides + walking-podcast audio"
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0",
+    "openai>=1.50",
+    "mutagen>=1.47",
+    "librosa>=0.10",
+    "matplotlib>=3.8",
+    "numpy>=1.26",
+]
+
+[tool.uv]
+package = false

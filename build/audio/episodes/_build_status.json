@@ -1,0 +1,86 @@
+[
+  {
+    "lesson": "w01-listen-subtract",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w01-listen-subtract.mp3",
+    "chapters": 13,
+    "duration_ms": 1462650
+  },
+  {
+    "lesson": "w02-subtraction",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w02-subtraction.mp3",
+    "chapters": 13,
+    "duration_ms": 1443800
+  },
+  {
+    "lesson": "w03-simpler-basics",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w03-simpler-basics.mp3",
+    "chapters": 12,
+    "duration_ms": 1643950
+  },
+  {
+    "lesson": "w04-warp-modes",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w04-warp-modes.mp3",
+    "chapters": 14,
+    "duration_ms": 1628550
+  },
+  {
+    "lesson": "w05-aphex-tuning",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w05-aphex-tuning.mp3",
+    "chapters": 14,
+    "duration_ms": 1443250
+  },
+  {
+    "lesson": "w06-fourtet-layering",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w06-fourtet-layering.mp3",
+    "chapters": 14,
+    "duration_ms": 1536000
+  },
+  {
+    "lesson": "w07-squarepusher-chops",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w07-squarepusher-chops.mp3",
+    "chapters": 13,
+    "duration_ms": 1751600
+  },
+  {
+    "lesson": "w08-autechre-feedback",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w08-autechre-feedback.mp3",
+    "chapters": 15,
+    "duration_ms": 1661099
+  },
+  {
+    "lesson": "w09-vocal-chopping",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w09-vocal-chopping.mp3",
+    "chapters": 13,
+    "duration_ms": 1452600
+  },
+  {
+    "lesson": "w10-variation-generation",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w10-variation-generation.mp3",
+    "chapters": 15,
+    "duration_ms": 1709650
+  },
+  {
+    "lesson": "w11-beat-switch",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w11-beat-switch.mp3",
+    "chapters": 12,
+    "duration_ms": 1453500
+  },
+  {
+    "lesson": "w12-ship-two-tracks",
+    "status": "ok",
+    "mp3": "build/audio/episodes/w12-ship-two-tracks.mp3",
+    "chapters": 15,
+    "duration_ms": 1614649
+  }
+]

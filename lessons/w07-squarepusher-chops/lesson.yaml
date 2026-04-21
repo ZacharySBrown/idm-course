@@ -1,0 +1,435 @@
+id: w07-squarepusher-chops
+week: 7
+title: 'Week 7 — Squarepusher: hardware hostility & Amen chopping'
+duration_minutes: 45
+pillars:
+- squarepusher
+- breakbeat
+concepts:
+- hardware_first_sequencing
+- blind_numeric_sequencer
+- half_speed_tape_bass
+- single_pass_discipline
+- amen_break_chopping
+- slice_to_midi
+- sidechain_as_composition
+- signal_path_mental_model
+- program_like_a_player
+- transient_only_envelope
+ableton_surface:
+- simpler_slicing_mode
+- slice_to_midi
+- drum_rack
+- warp_complex_pro
+- compressor_external_sidechain
+- glue_compressor
+- capture_midi
+- bounce_in_place
+- clip_envelopes
+prereqs:
+- w03-simpler-basics
+- w04-warp-modes
+teasers:
+- tame_impala_boss
+stemforge:
+  recipes:
+  - w07-funky-fanfare-amen
+references:
+- bib:tape_op_89
+- bib:audiotechnology_lonerism_feature
+- bib:ableton_live_12_manual
+- bib:stemforge_repo
+- bib:roads_computer_music_tutorial
+needs_bib:
+- title: Squarepusher — The Metallurgist sidechain quote (source)
+  reason: 'The spec attributes the ''bass drum as sidechain source for all other instruments'' quote to Jenkinson but does not anchor the exact interview. Likely Tape Op #89 or a second magazine piece; flagged so the bib-expander can confirm primary source.'
+- title: Squarepusher — Hello Everything / Kronecker King production notes
+  reason: The 1–2ms transient-only snare (Kronecker-delta impulse) is documented on KVR and Jenkinson's own site notes; no single citable interview in bibliography.json yet.
+- title: Mantronix — 'King Of The Beats' Amen-break provenance
+  reason: Jenkinson's SOS comment that Mantronix was his first Amen exposure needs a direct SOS citation slot; not present in current bibliography.
+slides:
+- id: s01
+  kind: title
+  heading: Jenkinson does not want you watching the screen
+  body_md: slides/s01-cold-open.md
+  script_md: script/s01-cold-open.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:squarepusher_metallurgist
+- id: s02
+  kind: concept
+  heading: The QY700 as brain — blind numeric sequencing
+  body_md: slides/s02-qy700.md
+  script_md: script/s02-qy700.md
+  visuals: []
+  audio_examples: []
+- id: gd-qy700-01
+  kind: gear_deep_dive
+  heading: Yamaha QY700 — the no-computer sequencer
+  body_md: slides/gd-qy700-01-title.md
+  images:
+  - src: assets/gear-qy700-hero.jpg
+    caption: 'Yamaha QY700, 1996. 32-track step sequencer + 16-part AWM tone generator.'
+    credit: TBD
+    license: fair-use commentary
+- id: gd-qy700-02
+  kind: gear_deep_dive
+  heading: Annotated tour (1/2) — the step grid
+  body_md: slides/gd-qy700-02-panel-grid.md
+  gear_annotations:
+  - src: assets/gear-qy700-panel-grid.jpg
+    caption: Step grid + velocity editor highlighted
+    callouts:
+    - label: step grid
+      note: One line per track. Pitches entered numerically, not via piano roll.
+    - label: velocity ed
+      note: Per-step velocity curves — hand-drawn, not groove-template.
+    - label: pattern chain
+      note: Up to 16 patterns chained into the arrangement.
+    - label: part 1-16
+      note: 16 AWM voices, each on its own MIDI channel.
+- id: gd-qy700-03
+  kind: gear_deep_dive
+  heading: Annotated tour (2/2) — MIDI I/O and the chain
+  body_md: slides/gd-qy700-03-panel-io.md
+  gear_annotations:
+  - src: assets/gear-qy700-rear.jpg
+    caption: QY700 rear panel — MIDI Out A/B and sync
+    callouts:
+    - label: MIDI Out A
+      note: Ch 1-16 — internal AWM + external FM synths (TX81Z, FS1R).
+    - label: MIDI Out B
+      note: Ch 1-16 — sampler bus (S950, later S6000).
+    - label: sync out
+      note: 24 PPQ clock to DR-660 and tape transport.
+- id: gd-qy700-04
+  kind: gear_deep_dive
+  heading: How Jenkinson tracked Go Plastic on it
+  body_md: slides/gd-qy700-04-workflow.md
+  visuals: []
+- id: gd-qy700-06
+  kind: gear_deep_dive
+  heading: Underlying algorithm — AWM tone generation
+  body_md: slides/gd-qy700-06-algorithm.md
+  diagrams:
+  - mermaid: |
+      graph LR
+        A[PCM ROM sample] --> B[Pitch shifter]
+        B --> C[Low-pass filter]
+        C --> D[VCA + envelope]
+        D --> E[Output bus]
+    caption: 'Simplified AWM voice — sample playback, filter, envelope. Roads 1996 covers the family.'
+- id: gd-qy700-07
+  kind: gear_deep_dive
+  heading: Algorithm continued — constraints as character
+  body_md: slides/gd-qy700-07-constraints.md
+  visuals: []
+- id: gd-qy700-08
+  kind: gear_deep_dive
+  heading: Ableton bridge — Push step mode + MIDI generators
+  body_md: slides/gd-qy700-08-ableton-bridge.md
+  images:
+  - src: assets/push3-step-mode.png
+    caption: Push 3 step sequencer in session view
+    credit: 'Ableton AG, Live 12 Reference Manual'
+    license: fair-use
+- id: gd-qy700-09
+  kind: gear_deep_dive
+  heading: Parallel Max for Live — Rhythm and Seed
+  body_md: slides/gd-qy700-09-max-rhythm.md
+  diagrams:
+  - mermaid: |
+      graph LR
+        A[Rhythm seed=N] --> B[Velocity Shaper curve]
+        B --> C[MIDI track]
+        C --> D[Instrument]
+    caption: Deterministic-but-shaped MIDI chain — the Ableton analogue of blind numeric entry.
+- id: gd-qy700-12
+  kind: gear_deep_dive
+  heading: Exercise A — replicate the technique
+  body_md: slides/gd-qy700-12-exercise-a.md
+  deliverable: 32-step Amen fragment programmed in Ableton step-input mode, no real-time play-in, no piano-roll edits. Bounce named w07_qy700-style_<yourname>.wav.
+- id: gd-qy700-13
+  kind: gear_deep_dive
+  heading: Exercise B — explore beyond
+  body_md: slides/gd-qy700-13-exercise-b.md
+  deliverable: 32-bar bounce of four Rhythm-generator instances (seeds 17/42/99/203) each feeding its own Simpler/Operator. Bounce named w07_rhythm-seeds_<yourname>.wav.
+- id: s03
+  kind: teaser
+  heading: Side note — the other anti-computer in the room
+  body_md: slides/s03-teaser-tame-impala.md
+  script_md: script/s03-teaser-tame-impala.md
+  visuals: []
+  audio_examples: []
+- id: s04
+  kind: concept
+  heading: Half-speed tape bass — Hard Normal Daddy's bionic swing
+  body_md: slides/s04-halfspeed-bass.md
+  script_md: script/s04-halfspeed-bass.md
+  visuals: []
+  audio_examples: []
+- id: d02
+  kind: concept
+  heading: Half-speed tape bass — the diagram
+  body_md: slides/d02-halfspeed-diagram.md
+  diagrams:
+  - mermaid: |
+      graph TD
+        A[Project tempo 160 BPM] --> B[Halve to 80 BPM]
+        B --> C[Play bass one octave down, slowly]
+        C --> D[Return tempo to 160 BPM]
+        D --> E[Warp Complex Pro, Formants ON]
+        E --> F[Pitch snaps up one octave, timing tightens]
+    caption: Jenkinson's half-speed trick, Ableton equivalent flow. Error halves when tempo doubles.
+- id: s05
+  kind: reference
+  heading: Go Plastic — the no-computer rig, receipts
+  body_md: slides/s05-go-plastic-rig.md
+  script_md: script/s05-go-plastic-rig.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:squarepusher_come_on
+- id: s06
+  kind: concept
+  heading: Amen break in the S950 — and its Ableton translation
+  body_md: slides/s06-amen-chopping.md
+  script_md: script/s06-amen-chopping.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: Funky Fanfare dry vs idm_crushed pipeline (stemforge w07)
+    a: build/audio/stemforge-renders/w07/ff_drums.wav
+    b: build/audio/stemforge-renders/w07/ff_chops/
+  song_refs:
+  - song:squarepusher_come_on
+- id: d01
+  kind: concept
+  heading: The Amen break — annotated waveform
+  body_md: slides/d01-amen-waveform.md
+  images:
+  - src: assets/amen-break-waveform.png
+    caption: '"Amen, Brother" drum break, 4 bars, transient markers and 16-pad assignments.'
+    credit: The Winstons (1969), drum break excerpt for educational commentary
+    license: fair-use commentary
+- id: gd-s950-01
+  kind: gear_deep_dive
+  heading: Akai S950 + Boss DR-660 — the chop system
+  body_md: slides/gd-s950-01-title.md
+  images:
+  - src: assets/gear-s950-dr660-hero.jpg
+    caption: Akai S950 (12-bit rack sampler, 1988) + Boss DR-660 (drum machine, 1992), side by side.
+    credit: TBD
+    license: fair-use commentary
+- id: gd-s950-02
+  kind: gear_deep_dive
+  heading: Annotated tour (1/2) — S950 sample edit
+  body_md: slides/gd-s950-02-panel-s950.md
+  gear_annotations:
+  - src: assets/gear-s950-panel.jpg
+    caption: S950 front panel — edit controls
+    callouts:
+    - label: truncate
+      note: Trim sample start/end by ear. Two-line LCD, no waveform view.
+    - label: loop points
+      note: Sustain loops for held-snare rolls on Hard Normal Daddy.
+    - label: pitch shift
+      note: Naive sample-rate conversion — aliases above ±2 semitones. That alias is the signature.
+    - label: 8 outs
+      note: Each chop to its own Mackie channel, parallel processing.
+- id: gd-s950-03
+  kind: gear_deep_dive
+  heading: Annotated tour (2/2) — DR-660 pattern grid + sync
+  body_md: slides/gd-s950-03-panel-dr660.md
+  gear_annotations:
+  - src: assets/gear-dr660-panel.jpg
+    caption: Boss DR-660 front panel — pattern grid + sync/trigger
+    callouts:
+    - label: pattern grid
+      note: Step mode or real-time tap-in. Jenkinson tap-in then 1/32 quantize.
+    - label: MIDI out
+      note: Each pad fires a note on configurable channel — routes to S950 in.
+    - label: sync out
+      note: 24 PPQ clock — slaves S950 LFOs and QY700 when present.
+    - label: accent row
+      note: Three velocity tiers. Ghost/loud switch, not nuance.
+- id: gd-s950-04
+  kind: gear_deep_dive
+  heading: How Jenkinson chopped the Amen on it — Big Loada method
+  body_md: slides/gd-s950-04-workflow.md
+  visuals: []
+  song_refs:
+  - song:squarepusher_come_on
+- id: gd-s950-06
+  kind: gear_deep_dive
+  heading: Underlying algorithm — 12-bit companded ADC at 7.5–40 kHz
+  body_md: slides/gd-s950-06-algorithm.md
+  diagrams:
+  - mermaid: |
+      graph LR
+        A[Input audio] --> B[µ-law-style companding<br/>Akai/E-mu 12→8-bit proprietary]
+        B --> C[12-bit linear quantize<br/>at 7.5–40 kHz user-selectable]
+        C --> D[RAM]
+        D --> E[Pitch = sample-rate conversion]
+        E --> F[Aliasing above ±2 semitones]
+        F --> G[Anti-alias LPF ~24 kHz, gentle slope]
+        G --> H[Output]
+    caption: 'S950 signal path. Companding + naive repitch = the grit, not the bit depth alone. Roads 1996 pp. 21-23.'
+- id: gd-s950-08
+  kind: gear_deep_dive
+  heading: Ableton bridge — Drum Rack + Follow Actions + bitcrush
+  body_md: slides/gd-s950-08-ableton-bridge.md
+  images:
+  - src: assets/drumrack-bitcrush-chain.png
+    caption: Drum Rack → Auto Filter (16 kHz LPF) → Redux (12-bit) → Glue Compressor chain
+    credit: 'Ableton AG, Live 12 Reference Manual'
+    license: fair-use
+- id: gd-s950-09
+  kind: gear_deep_dive
+  heading: Parallel Max / third-party — Decimort 2, Sandman Pro, Redux
+  body_md: slides/gd-s950-09-max-devices.md
+  visuals: []
+- id: gd-s950-10
+  kind: gear_deep_dive
+  heading: What else can you do with the S950 chain
+  body_md: slides/gd-s950-10-creative-uses.md
+  visuals: []
+- id: gd-s950-12
+  kind: gear_deep_dive
+  heading: Exercise A — replicate the Big Loada single-pass
+  body_md: slides/gd-s950-12-exercise-a.md
+  deliverable: 32-bar single-pass performance of the Funky Fanfare chops through a Drum Rack + 16 kHz LPF + Redux (12-bit) + Glue Compressor chain. No undo during the take. Bounce named w07_bigloada_<yourname>.wav.
+- id: gd-s950-13
+  kind: gear_deep_dive
+  heading: Exercise B — Metallurgist / Hello Everything territory
+  body_md: slides/gd-s950-13-exercise-b.md
+  deliverable: 32-bar variant of Exercise A with half the chops reversed + Buffer Shuffler 2.0 (1-bar freeze, 1/16 divisions, random mode ON) + Saturator. Bounce named w07_metallurgist-territory_<yourname>.wav.
+- id: s07
+  kind: concept
+  heading: Single-pass — program like a player
+  body_md: slides/s07-single-pass.md
+  script_md: script/s07-single-pass.md
+  visuals: []
+  audio_examples: []
+- id: s08
+  kind: concept
+  heading: The Metallurgist — sidechain as composition
+  body_md: slides/s08-metallurgist-sidechain.md
+  script_md: script/s08-metallurgist-sidechain.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:squarepusher_metallurgist
+- id: d03
+  kind: concept
+  heading: The Metallurgist — sidechain bus graph
+  body_md: slides/d03-metallurgist-bus-graph.md
+  diagrams:
+  - mermaid: |
+      graph LR
+        K[KICK trigger bus] --> S[Sub compressor: 6 dB]
+        K --> P[Pad compressor: 3 dB]
+        K --> L[Lead compressor: 1 dB]
+        K --> V[Vox compressor: 2 dB]
+        K --> N[Noise compressor: 4 dB]
+        K --> M[Master Glue: 1 dB]
+    caption: Fan-out sidechain graph — every bus receives the kick envelope. Mix composed by envelope, not just mixed.
+  song_refs:
+  - song:squarepusher_metallurgist
+- id: s09
+  kind: caveat
+  heading: Kronecker King — the 1–2ms snare, and what is unconfirmed
+  body_md: slides/s09-kronecker-caveat.md
+  script_md: script/s09-kronecker-caveat.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:squarepusher_hello
+- id: s10
+  kind: reference
+  heading: Iambic 9 Poetry — when the Orville fights the grid
+  body_md: slides/s10-iambic-orville.md
+  script_md: script/s10-iambic-orville.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:squarepusher_iambic
+- id: s11
+  kind: exercise
+  heading: Ship the chop — one pass, no undo
+  body_md: slides/s11-exercise.md
+  script_md: script/s11-exercise.md
+  visuals: []
+  audio_examples:
+  - type: mono
+    label: Funky Fanfare idm_crushed drums — chop source
+    a: build/audio/stemforge-renders/w07/ff_drums.wav
+  deliverable: 'A 30-second stereo bounce of a rearranged Amen-style chop sourced from build/audio/stemforge-renders/w07/ff_drums.wav. Slice to MIDI at 1/16 into a Drum Rack, rearrange the hits in one pass with no undo, print. File named w07_<yourname>_single-pass.wav. Include a one-line note: which slice you hit the most and why.'
+images_needed:
+- slug: qy700-hero
+  description: Yamaha QY700 (1996) front panel, centered, neutral background, full front view
+  preferred_angle: front
+  lesson_context: W7 gear deep-dive gd-qy700-01
+- slug: qy700-panel-grid
+  description: Yamaha QY700 front panel close-up on the step sequencer grid + velocity editor area, callouts will annotate
+  preferred_angle: front close
+  lesson_context: W7 gear deep-dive gd-qy700-02
+- slug: qy700-rear
+  description: Yamaha QY700 rear panel — MIDI In/Out A/Out B, Sync Out, stereo out jacks visible
+  preferred_angle: rear
+  lesson_context: W7 gear deep-dive gd-qy700-03
+- slug: push3-step-mode
+  description: Ableton Push 3 in step sequencer mode with pads lit, showing the 16-pad grid
+  lesson_context: W7 gear deep-dive gd-qy700-08
+- slug: s950-dr660-hero
+  description: Akai S950 rack sampler (1988) and Boss DR-660 drum machine (1992) side by side, neutral background
+  preferred_angle: front
+  lesson_context: W7 gear deep-dive gd-s950-01
+- slug: s950-panel
+  description: Akai S950 front panel close-up showing LCD, numeric keypad, edit buttons, 8 output jacks visible
+  preferred_angle: front close
+  lesson_context: W7 gear deep-dive gd-s950-02
+- slug: dr660-panel
+  description: Boss DR-660 front panel — pattern grid pads, sync out, MIDI out jack visible
+  preferred_angle: front close
+  lesson_context: W7 gear deep-dive gd-s950-03
+- slug: drumrack-bitcrush-chain
+  description: Ableton Drum Rack UI screenshot with Auto Filter LPF + Redux + Glue Compressor chain visible on the return
+  lesson_context: W7 gear deep-dive gd-s950-08
+- slug: amen-break-waveform
+  description: Amen break waveform, 4 bars, with transient markers annotated for 16-pad assignment (kick, snare, hat, pickup bar 3-4 highlighted)
+  lesson_context: W7 diagram slide d01
+- slug: jenkinson-portrait
+  description: Tom Jenkinson (Squarepusher) portrait, studio or live context, bass guitar if possible
+  lesson_context: W7 reference — cold-open s01 and teaser context
+- slug: go-plastic-album-art
+  description: 'Squarepusher — Go Plastic (2001) album cover art'
+  lesson_context: W7 reference — s05
+- slug: big-loada-album-art
+  description: 'Squarepusher — Big Loada (1997) EP cover art'
+  lesson_context: W7 reference — s06
+- slug: hello-everything-album-art
+  description: 'Squarepusher — Hello Everything (2006) album cover art'
+  lesson_context: W7 reference — s09
+- slug: ultravisitor-album-art
+  description: 'Squarepusher — Ultravisitor (2004) album cover art'
+  lesson_context: W7 reference — s10
+- slug: tx81z-fs1r-hero
+  description: Yamaha TX81Z (1987) and FS1R (1998) FM rack synths, side by side
+  preferred_angle: front
+  lesson_context: W7 Go Plastic rig reference — s05
+- slug: s6000-hero
+  description: Akai S6000 rack sampler (1998) front panel
+  preferred_angle: front
+  lesson_context: W7 Go Plastic rig reference — s05
+- slug: eventide-orville-hero
+  description: Eventide Orville (2000) rack front panel with screen on
+  preferred_angle: front
+  lesson_context: W7 Go Plastic rig reference — s05, s10
+episode:
+  title: 'IDM W7 — Squarepusher: hardware hostility & Amen chopping'
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

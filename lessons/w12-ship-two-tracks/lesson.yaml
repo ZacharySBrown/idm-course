@@ -1,0 +1,452 @@
+id: w12-ship-two-tracks
+week: 12
+title: "Week 12 — Ship two tracks, mastering, metadata, delivery"
+duration_minutes: 45
+pillars: [mastering, release_discipline, voice_consistency]
+concepts:
+  - lufs_targets_streaming_vs_club
+  - true_peak_ceiling_minus_one_dbtp
+  - level_matched_ab_against_references
+  - headphone_vs_monitor_translation
+  - self_master_vs_send_out
+  - distributor_choice_bandcamp_vs_distrokid
+  - metadata_hygiene_isrc_composer_artwork
+  - track_naming_and_versioning
+  - twelve_tracks_curation_to_four
+  - voice_as_consistency_not_uniqueness
+  - ship_two_not_one
+  - finished_over_perfect
+ableton_surface:
+  - utility_gain_matching
+  - bounce_in_place
+  - export_audio_video_dialog
+  - lufs_meter_youlean
+  - spectrum_span
+  - brainworx_bx_xl
+  - fabfilter_pro_l2
+prereqs:
+  - w01-listen-subtract
+  - w02-subtraction
+  - w03-simpler-basics
+  - w04-warp-modes
+  - w05-aphex-tuning
+  - w06-fourtet-layering
+  - w07-squarepusher-chops
+  - w08-autechre-feedback
+  - w09-vocal-chopping
+  - w10-variation-generation
+  - w11-beat-switch
+
+teasers:
+  - gottinger_alumni
+
+stemforge:
+  recipes: []
+
+references:
+  - bib:charnas_dilla_time
+  - bib:brainworx_bx_xl_docs
+  - bib:fabfilter_prol2_docs
+  - bib:izotope_ozone_maximizer_docs
+  - bib:ableton_live_12_manual
+  - bib:jack_conte_ship_it
+  - bib:rick_rubin_creative_act
+  - bib:fredonia_grammy_announcement
+  - bib:fredonia_srt_program
+  - bib:fridmann_davefridmann_com
+  - bib:edmprod_intermediate
+
+needs_bib:
+  - title: "Youlean Loudness Meter 2 — documentation / LUFS target presets"
+    reason: "Primary free LUFS meter recommended this week. No current bib entry; needed for a direct receipt in slide s02."
+  - title: "SPAN (Voxengo) — free spectrum analyzer documentation"
+    reason: "Recommended alongside Youlean for the metering pair. No bib entry."
+  - title: "Spotify Loudness Normalization — official target documentation"
+    reason: "The −14 LUFS integrated claim needs the Spotify engineering post as its receipt, not a forum paraphrase."
+  - title: "Apple Music — Sound Check / loudness normalization specification"
+    reason: "Same issue on the Apple side. Currently forum-sourced; needs a first-party page."
+  - title: "AES Recommendation BS.1770-4 — ITU loudness measurement"
+    reason: "The standard under every LUFS meter. Cite-only; useful for students who want the spec."
+  - title: "Bandcamp — artist upload specification (file format, artwork, metadata)"
+    reason: "Primary distribution path for the finale exercise. No bib entry for the spec page."
+  - title: "DistroKid / TuneCore — artist agreement pages"
+    reason: "For the self-distribution vs Bandcamp-first comparison. Link-only bib entries."
+  - title: "AKG K371 and Sennheiser HD600 — measured frequency response"
+    reason: "Headphone translation reference. Measured response (Crinacle / oratory1990) is the honest citation, not marketing copy."
+  - title: "Dave Fridmann — 'if it's not finished, it's not mastered' interview attribution"
+    reason: "Quote is widely repeated in producer communities and aligns with Fridmann's public philosophy, but I could not find the verbatim source in either spec or the bibliography. Flagging as community-paraphrased in the lesson and citing davefridmann.com as the archive landing page only."
+  - title: "ISRC code — official allocation documentation (US: RIAA ISRC agency)"
+    reason: "The student will be asked to register their own ISRCs through a distributor; a link-only bib entry would help."
+
+slides:
+  - id: s01
+    kind: title
+    heading: "Twelve weeks, maybe eight tracks, and a countdown"
+    body_md: slides/s01-cold-open.md
+    script_md: script/s01-cold-open.md
+    visuals: []
+    audio_examples: []
+
+  - id: s02
+    kind: concept
+    heading: "LUFS targets — −14 for streaming, louder for the club"
+    body_md: slides/s02-lufs-targets.md
+    script_md: script/s02-lufs-targets.md
+    visuals: []
+    audio_examples: []
+
+  - id: s03
+    kind: concept
+    heading: "The metering pair — Youlean and SPAN, both free"
+    body_md: slides/s03-metering-pair.md
+    script_md: script/s03-metering-pair.md
+    visuals: []
+    audio_examples: []
+
+  - id: s04
+    kind: concept
+    heading: "The A/B protocol — level-matched, three references"
+    body_md: slides/s04-ab-protocol.md
+    script_md: script/s04-ab-protocol.md
+    visuals: []
+    audio_examples: []
+
+  - id: s05
+    kind: concept
+    heading: "True peak ceiling — −1.0 dBTP, not zero"
+    body_md: slides/s05-true-peak-ceiling.md
+    script_md: script/s05-true-peak-ceiling.md
+    visuals: []
+    audio_examples: []
+
+  - id: s06
+    kind: concept
+    heading: "Headphones that translate — K371, HD600, monitor compare"
+    body_md: slides/s06-headphone-translation.md
+    script_md: script/s06-headphone-translation.md
+    visuals: []
+    audio_examples: []
+
+  - id: s07
+    kind: caveat
+    heading: "Self-master or send it out — the Fridmann test"
+    body_md: slides/s07-self-vs-send.md
+    script_md: script/s07-self-vs-send.md
+    visuals: []
+    audio_examples: []
+
+  - id: s08
+    kind: concept
+    heading: "Delivery — Bandcamp first, distributor later"
+    body_md: slides/s08-delivery.md
+    script_md: script/s08-delivery.md
+    visuals: []
+    audio_examples: []
+
+  - id: s09
+    kind: concept
+    heading: "Metadata hygiene — ISRC, credits, artwork, file naming"
+    body_md: slides/s09-metadata.md
+    script_md: script/s09-metadata.md
+    visuals: []
+    audio_examples: []
+
+  - id: s10
+    kind: concept
+    heading: "Voice is the consistency, not the uniqueness"
+    body_md: slides/s10-voice-consistency.md
+    script_md: script/s10-voice-consistency.md
+    visuals: []
+    audio_examples: []
+
+  - id: s11
+    kind: exercise
+    heading: "Curate four from twelve — listen back before you re-master"
+    body_md: slides/s11-curate-four.md
+    script_md: script/s11-curate-four.md
+    visuals: []
+    audio_examples: []
+    deliverable: "A single text file, w12_<yourname>_curation.txt, listing all twelve week-by-week sketches, each with one sentence on what it actually sounds like (not what you meant it to sound like). Circle the four that feel most like you. Those four are the EP candidates for Year Two."
+
+  - id: s12
+    kind: exercise
+    heading: "Ship two tracks — Bandcamp private EP, one friend"
+    body_md: slides/s12-ship-two.md
+    script_md: script/s12-ship-two.md
+    visuals: []
+    audio_examples: []
+    deliverable: "Two finished tracks. Not one. Two. Exported at 24-bit/44.1kHz WAV with −1.0 dBTP ceiling and integrated loudness within 1 LU of your chosen target. Uploaded to Bandcamp as a private EP with artwork, credits, and ISRCs (or distributor-allocated ISRCs). Link sent to exactly one friend. That friend does not need to respond. The work has already happened."
+
+  # --- Mastering deep-technique mini-module (mast-01 .. mast-08) ---
+
+  - id: mast-01
+    kind: concept
+    heading: "LUFS explained — ITU BS.1770-4, K-weighting, gating"
+    body_md: slides/mast-01-lufs-explained.md
+    images:
+      - src: assets/itu-bs1770-k-weighting.png
+        caption: "K-weighting filter response — high-pass + high-shelf, approximating equal-loudness at 83 dB SPL."
+        credit: "After ITU-R BS.1770-4, Annex 1"
+        license: "fair-use technical illustration"
+
+  - id: mast-02
+    kind: concept
+    heading: "The loudness scale — −14 LUFS, −9 LUFS, −1 dBTP on one diagram"
+    body_md: slides/mast-02-lufs-scale-diagram.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <style>
+              .axis { stroke: #333; stroke-width: 1.5; }
+              .tick { stroke: #333; stroke-width: 1; }
+              .label { font: 13px sans-serif; fill: #222; }
+              .hdr { font: 15px sans-serif; fill: #111; font-weight: 600; }
+              .band { opacity: 0.25; }
+              .note { font: 11px sans-serif; fill: #444; }
+              .marker { font: 12px sans-serif; fill: #b00; font-weight: 600; }
+            </style>
+            <text x="40" y="30" class="hdr">LUFS (integrated) — perceptual loudness scale</text>
+            <line x1="60" y1="80" x2="60" y2="340" class="axis" />
+            <line x1="60" y1="340" x2="740" y2="340" class="axis" />
+            <!-- scale tick marks from -24 to -6 LUFS -->
+            <g>
+              <line x1="60" y1="80" x2="55" y2="80" class="tick" /><text x="30" y="84" class="label">-6</text>
+              <line x1="60" y1="120" x2="55" y2="120" class="tick" /><text x="24" y="124" class="label">-9</text>
+              <line x1="60" y1="160" x2="55" y2="160" class="tick" /><text x="22" y="164" class="label">-11</text>
+              <line x1="60" y1="200" x2="55" y2="200" class="tick" /><text x="22" y="204" class="label">-14</text>
+              <line x1="60" y1="260" x2="55" y2="260" class="tick" /><text x="22" y="264" class="label">-18</text>
+              <line x1="60" y1="320" x2="55" y2="320" class="tick" /><text x="22" y="324" class="label">-24</text>
+            </g>
+            <!-- streaming normalization band -14 -->
+            <rect x="60" y="198" width="680" height="6" fill="#1a8917" />
+            <text x="280" y="216" class="marker">−14 LUFS — Spotify / Apple Music integrated target</text>
+            <!-- club band -9 to -11 -->
+            <rect x="60" y="120" width="680" height="44" fill="#b88200" class="band" />
+            <text x="280" y="146" class="marker">−9 to −11 LUFS — club / loud-listening master</text>
+            <!-- quiet / classical -->
+            <rect x="60" y="260" width="680" height="60" fill="#1a4e89" class="band" />
+            <text x="280" y="298" class="note">−18 to −24 LUFS — orchestral / film-score / dynamic masters</text>
+            <!-- dBTP note separate axis -->
+            <text x="40" y="380" class="hdr">dBTP (separate axis — codec safety ceiling, NOT LUFS)</text>
+            <text x="60" y="400" class="marker">−1.0 dBTP — streaming delivery ceiling (true-peak, 4× oversampled)</text>
+          </svg>
+        caption: "LUFS is perceptual-loudness. dBTP is reconstruction-peak. Different axes, both clamped on delivery."
+
+  - id: mast-03
+    kind: concept
+    heading: "True peak vs sample peak — why −1.0 dBTP, not 0 dBFS"
+    body_md: slides/mast-03-true-peak-math.md
+    images:
+      - src: assets/intersample-peak-reconstruction.png
+        caption: "Samples below 0 dBFS; reconstructed analog wave rises above. The intersample peak is what the DAC produces."
+        credit: "After Nielsen & Lund, AES 2003 / Pro-L 2 documentation"
+        license: "fair-use technical illustration"
+
+  - id: mast-04
+    kind: concept
+    heading: "The mastering chain — signal order, six stages"
+    body_md: slides/mast-04-mastering-flowchart.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Mix bounce] --> B[Pre-master check + references]
+            B --> C[Master EQ]
+            C --> D[Master comp optional]
+            D --> E[Limiter -1.0 dBTP]
+            E --> F[Youlean + SPAN metering]
+            F --> G[Export 24-bit / 44.1]
+        caption: "Fixed order. EQ before limiter. Metering after limiter. Export last."
+
+  - id: mast-05
+    kind: concept
+    heading: "A/B level-matched — close your eyes, then pick"
+    body_md: slides/mast-05-ab-protocol-deep.md
+    images:
+      - src: assets/youlean-ab-levelmatched.png
+        caption: "Three reference tracks + one mix, all gain-matched to the same integrated LUFS on Youlean."
+        credit: "Screenshot — Youlean Loudness Meter 2 free tier"
+        license: "fair-use product documentation"
+
+  - id: mast-06
+    kind: concept
+    heading: "Translation matrix — four playback chains, four kinds of lying"
+    body_md: slides/mast-06-reference-translation.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg">
+            <style>
+              .hdr { font: 14px sans-serif; fill: #111; font-weight: 600; }
+              .cell { font: 12px sans-serif; fill: #222; }
+              .system { font: 13px sans-serif; fill: #111; font-weight: 600; }
+              .grid { stroke: #999; stroke-width: 1; fill: none; }
+              .row-alt { fill: #f4f4f4; }
+            </style>
+            <text x="20" y="24" class="hdr">Four playback chains — what each one tells you, what it lies about</text>
+            <line x1="20" y1="40" x2="800" y2="40" class="grid" />
+            <text x="30" y="60" class="system">System</text>
+            <text x="220" y="60" class="system">Trust it for</text>
+            <text x="520" y="60" class="system">Do NOT trust it for</text>
+            <line x1="20" y1="70" x2="800" y2="70" class="grid" />
+            <rect x="20" y="70" width="780" height="40" class="row-alt" />
+            <text x="30" y="95" class="cell">Main monitors</text>
+            <text x="220" y="95" class="cell">Stereo field, transients</text>
+            <text x="520" y="95" class="cell">Low end (room-dependent)</text>
+            <text x="30" y="135" class="cell">AKG K371 (closed)</text>
+            <text x="220" y="135" class="cell">Bass translation, isolation</text>
+            <text x="520" y="135" class="cell">Slight upper-mid recession</text>
+            <rect x="20" y="150" width="780" height="40" class="row-alt" />
+            <text x="30" y="175" class="cell">Sennheiser HD600 (open)</text>
+            <text x="220" y="175" class="cell">Midrange honesty, vocals</text>
+            <text x="520" y="175" class="cell">Sub below 50 Hz (absent)</text>
+            <text x="30" y="215" class="cell">Phone speaker</text>
+            <text x="220" y="215" class="cell">Midrange balance, reality</text>
+            <text x="520" y="215" class="cell">Anything below 200 Hz (gone)</text>
+            <rect x="20" y="230" width="780" height="40" class="row-alt" />
+            <text x="30" y="255" class="cell">Car system</text>
+            <text x="220" y="255" class="cell">Sub-bass reality check</text>
+            <text x="520" y="255" class="cell">Cabin adds 6-8 dB sub resonance</text>
+          </svg>
+        caption: "Each chain's bias is known. Use them in combination, not in isolation."
+
+  - id: mast-07
+    kind: caveat
+    heading: "Self-master vs send to engineer — the decision tree"
+    body_md: slides/mast-07-when-to-send-out.md
+
+  - id: mast-08
+    kind: concept
+    heading: "Reading Youlean + SPAN — the five-second glance"
+    body_md: slides/mast-08-metering-workflow-screenshot.md
+    images:
+      - src: assets/youlean-span-master-chain.png
+        caption: "Youlean integrated + short-term + true-peak on the left; SPAN long-time spectrum on the right."
+        credit: "Screenshot — Youlean Loudness Meter 2 + Voxengo SPAN, both free tier"
+        license: "fair-use product documentation"
+
+  # --- Release delivery mini-module (rel-01 .. rel-04) ---
+
+  - id: rel-01
+    kind: concept
+    heading: "Bandcamp upload — six fields that matter for the private EP"
+    body_md: slides/rel-01-bandcamp-upload.md
+    images:
+      - src: assets/bandcamp-upload-dialog.png
+        caption: "Bandcamp artist-page upload form — album title, privacy toggle, artwork, track files."
+        credit: "Screenshot — Bandcamp artist dashboard"
+        license: "fair-use platform documentation"
+
+  - id: rel-02
+    kind: concept
+    heading: "SoundCloud vs DistroKid vs TuneCore — route by the job"
+    body_md: slides/rel-02-soundcloud-vs-distrokid.md
+    diagrams:
+      - mermaid: |
+          graph TD
+            A[Finished master] --> B{Release shape?}
+            B -->|private, 1 friend| C[Bandcamp private]
+            B -->|public single, preview| D[SoundCloud]
+            B -->|EP / album, volume| E[DistroKid subscription]
+            B -->|one release per year| F[TuneCore per-release]
+            E --> G[Spotify / Apple / Tidal / ~150 DSPs]
+            F --> G
+        caption: "Route by release shape, not hype. Bandcamp this week; DistroKid for Year Two volume."
+
+  - id: rel-03
+    kind: concept
+    heading: "File versioning — `v01_mixprint` saves you in eighteen months"
+    body_md: slides/rel-03-file-versioning.md
+
+  - id: rel-04
+    kind: concept
+    heading: "Metadata hygiene — composer, BPM, key, ISRC, the boring list"
+    body_md: slides/rel-04-metadata-hygiene-deep.md
+
+  # --- Voice-consistency mini-module (voice-01 .. voice-02) ---
+
+  - id: voice-01
+    kind: exercise
+    heading: "Listen to all twelve, back-to-back, once"
+    body_md: slides/voice-01-listen-all-twelve.md
+
+  - id: voice-02
+    kind: exercise
+    heading: "Curate four, re-master as a cohesive set"
+    body_md: slides/voice-02-curate-and-remaster.md
+
+  # --- Bernd says meta-module (bernd-01 .. bernd-02) ---
+  # Aspirational pre-outro that sets up the s13 Gottinger teaser payoff.
+
+  - id: bernd-01
+    kind: teaser
+    heading: "Bernd says — the classical mastering mind"
+    body_md: slides/bernd-01-gottinger-intro.md
+    images:
+      - src: assets/gottinger-mastering-studio.jpg
+        caption: "Bernd Gottinger at the SUNY Fredonia mastering lab; GRAMMY-nominated Buffalo Philharmonic credits."
+        credit: "SUNY Fredonia press / fair-use editorial"
+        license: "fair-use editorial"
+
+  - id: bernd-02
+    kind: teaser
+    heading: "Listen harder than anyone in the room"
+    body_md: slides/bernd-02-listen-harder.md
+    images:
+      - src: assets/buffalo-philharmonic-session.jpg
+        caption: "Buffalo Philharmonic orchestral session — the one-shot mastering posture that translates to your two tracks."
+        credit: "Buffalo Philharmonic / fair-use editorial"
+        license: "fair-use editorial"
+
+  # --- Outro (UNCHANGED, lands last, ends with 'Ship. Go.') ---
+
+  - id: s13
+    kind: teaser
+    heading: "Final note — the Fredonia payoff, then quiet"
+    body_md: slides/s13-gottinger-outro.md
+    script_md: script/s13-gottinger-outro.md
+    visuals: []
+    audio_examples: []
+
+images_needed:
+  - slug: itu-bs1770-k-weighting
+    description: "Diagram of ITU-R BS.1770-4 K-weighting filter magnitude response; high-pass + high-shelf, x-axis 20 Hz to 20 kHz log, y-axis dB"
+    preferred_angle: "technical diagram"
+    lesson_context: "W12 mast-01 — LUFS explained"
+  - slug: intersample-peak-reconstruction
+    description: "Waveform diagram showing digital samples just below 0 dBFS with the reconstructed analog waveform rising above 0 dBFS between samples"
+    preferred_angle: "technical illustration"
+    lesson_context: "W12 mast-03 — true peak vs sample peak"
+  - slug: youlean-ab-levelmatched
+    description: "Screenshot of Ableton Live arrangement view with four audio tracks, Utility on each, Youlean Loudness Meter 2 showing matched integrated LUFS"
+    preferred_angle: "screenshot"
+    lesson_context: "W12 mast-05 — A/B protocol"
+  - slug: youlean-span-master-chain
+    description: "Side-by-side screenshot of Youlean Loudness Meter 2 (integrated, short-term, true peak) and Voxengo SPAN (spectrum analyzer, long-time averaging)"
+    preferred_angle: "screenshot"
+    lesson_context: "W12 mast-08 — reading the meters"
+  - slug: bandcamp-upload-dialog
+    description: "Screenshot of Bandcamp artist-dashboard album upload form, showing privacy toggle, artwork slot, track title fields"
+    preferred_angle: "screenshot"
+    lesson_context: "W12 rel-01 — Bandcamp upload"
+  - slug: gottinger-mastering-studio
+    description: "Bernd Gottinger at SUNY Fredonia mastering lab / Buffalo Philharmonic session control room; press photo or editorial portrait"
+    preferred_angle: "editorial portrait"
+    lesson_context: "W12 bernd-01 — Gottinger meta-module"
+  - slug: buffalo-philharmonic-session
+    description: "Buffalo Philharmonic orchestral recording session — wide shot of the orchestra in a recording hall with microphone setup"
+    preferred_angle: "wide shot"
+    lesson_context: "W12 bernd-02 — listen harder"
+  - slug: fredonia-srt-facilities
+    description: "SUNY Fredonia Sound Recording Technology program — mastering lab, studio, or program facilities exterior/interior"
+    preferred_angle: "facility shot"
+    lesson_context: "W12 s13 — Fredonia payoff"
+  - slug: fridmann-tarbox-chair
+    description: "Dave Fridmann at Tarbox Road Studios — chair in the woods, rural New York aesthetic; the 'finished or not mastered' attribution photo"
+    preferred_angle: "environmental portrait"
+    lesson_context: "W12 mast-07 — Fridmann test"
+
+episode:
+  title: "IDM W12 — Ship two tracks, mastering, metadata, delivery"
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

@@ -1,0 +1,589 @@
+id: w04-warp-modes
+week: 4
+title: "Week 4 — Warp modes as sound design"
+duration_minutes: 45
+pillars: [warp, sound_design_primitives]
+concepts:
+  - complex_pro_formants
+  - complex_pro_envelope
+  - beats_mode_transient
+  - texture_flux
+  - repitch_chipmunk_soul
+  - warp_marker_nudging
+  - kick_transient_layering
+  - phase_vocoder_dsp
+  - granular_synthesis_cloud
+  - fridmann_bass_signal_path
+  - multiband_compression_broadcast
+ableton_surface:
+  - warp_complex_pro
+  - warp_beats
+  - warp_texture
+  - warp_repitch
+  - warp_markers
+  - simpler_warp
+  - glue_compressor
+  - saturator
+  - multiband_dynamics
+prereqs: [w03-simpler-basics]
+
+teasers: [tarbox_road]
+
+stemforge:
+  recipes: [w04-hallogallo-warp-ab]
+
+references:
+  - bib:ableton_live_12_manual
+  - bib:fridmann_davefridmann_com
+  - bib:tarbox_road_equipment
+  - bib:audiotechnology_lonerism_feature
+  - bib:stemforge_repo
+  - bib:roads_computer_music_tutorial
+  - bib:soundtoys_decapitator_manual
+  - bib:happymag_mgmt_oracular_engineering
+  - bib:zaireeka_wikipedia
+
+needs_bib:
+  - title: "NEU (1972) — Hallogallo session notes / Conny Plank tracking"
+    reason: "Want a primary source for the single-take motorik drum bed on Hallogallo; currently only forum/retrospective consensus. Flagging for expander."
+  - title: "Kanye West / Just Blaze — RBMA or interview on Re-Pitch chipmunk-soul workflow"
+    reason: "Teaser to W9 currently leans on compass_artifact summary of the Just Blaze RBMA lecture; want a citeable transcript."
+  - title: "Dorrough 610 Discriminate Audio Processor — manufacturer manual, circa 1980s"
+    reason: "Originally Dorrough Electronics, Woodland Hills CA. Device marketed as a multiband processor for FM broadcast; primary source needed for threshold/ratio defaults and broadcast-chain positioning."
+  - title: "Tarbox Road — tracking-chain diagram for Flaming Lips *Soft Bulletin* sessions (1999)"
+    reason: "Fridmann-bass specifics (which mic, which pre, Dorrough in insert vs bus, Studer A80 printing) treated as Tarbox-internal lore. Compass-artifact and happymag summaries converge but no authoritative signal flow diagram."
+  - title: "Flaming Lips engineering credits — Michael Ivins bass chain references"
+    reason: "Want explicit confirmation that the distorted bass on *Soft Bulletin* (e.g., 'Race for the Prize') ran through the Dorrough insert rather than DI-plus-plugin."
+
+slides:
+  - id: s01
+    kind: title
+    heading: "Warp is not for tempo matching"
+    body_md: slides/s01-cold-open.md
+    script_md: script/s01-cold-open.md
+    visuals: []
+    audio_examples: []
+
+  - id: s02
+    kind: concept
+    heading: "Why Hallogallo is the test clip"
+    body_md: slides/s02-hallogallo-as-test.md
+    script_md: script/s02-hallogallo-as-test.md
+    visuals:
+      - type: waveform
+        src: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+        caption: "Hallogallo drums stem, rendered via stemforge recipe w04-hallogallo-warp-ab."
+    audio_examples:
+      - type: mono
+        label: "Hallogallo drums stem — raw, unwarped"
+        a: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+    images:
+      - src: assets/neu-1972-cover.jpg
+        caption: "NEU (1972), Brain Records. Cover by Klaus Dinger. Hallogallo is track 1."
+        credit: "Brain/Philips original art"
+        license: "fair-use commentary"
+
+  - id: s03
+    kind: reference
+    heading: "The warp-mode menu, short version"
+    body_md: slides/s03-warp-mode-menu.md
+    script_md: script/s03-warp-mode-menu.md
+    visuals:
+      - type: screenshot
+        src: assets/warp-mode-dropdown.png
+        caption: "Live 12 Sample tab — warp mode dropdown. Beats, Tones, Texture, Re-Pitch, Complex, Complex Pro."
+
+  - id: s04
+    kind: concept
+    heading: "Complex Pro — Formants and Envelope"
+    body_md: slides/s04-complex-pro-anatomy.md
+    script_md: script/s04-complex-pro-anatomy.md
+    visuals:
+      - type: screenshot
+        src: assets/complex-pro-params.png
+        caption: "Complex Pro controls — Formants, Envelope."
+    audio_examples:
+      - type: ab
+        label: "Hallogallo drums — Complex Pro default vs Envelope 256"
+        a: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+        b: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+
+  - id: s05
+    kind: concept
+    heading: "Beats mode — transients intact, grid hostile"
+    body_md: slides/s05-beats-mode.md
+    script_md: script/s05-beats-mode.md
+    visuals:
+      - type: screenshot
+        src: assets/beats-mode-params.png
+        caption: "Beats mode — Preserve, Transient Loop Mode, Transient Envelope."
+
+  - id: s06
+    kind: caveat
+    heading: "The pitfall — Complex Pro softens kicks"
+    body_md: slides/s06-complex-vs-beats-kick.md
+    script_md: script/s06-complex-vs-beats-kick.md
+    visuals:
+      - type: waveform
+        src: assets/kick-transient-smear.png
+        caption: "Same kick, two modes. Complex Pro top, Beats bottom. Rounded leading edge versus sharp."
+    audio_examples:
+      - type: ab
+        label: "Isolated kick — Complex Pro vs Beats"
+        a: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+        b: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+
+  - id: s07
+    kind: teaser
+    heading: "Aside — a studio in Cassadaga"
+    body_md: slides/s07-tarbox-teaser.md
+    script_md: script/s07-tarbox-teaser.md
+    visuals: []
+    audio_examples: []
+
+  - id: s08
+    kind: concept
+    heading: "Texture mode — Flux from stable to cloud"
+    body_md: slides/s08-texture-flux.md
+    script_md: script/s08-texture-flux.md
+    visuals:
+      - type: screenshot
+        src: assets/texture-flux-params.png
+        caption: "Texture mode — Grain Size, Flux."
+    audio_examples:
+      - type: ab
+        label: "Hallogallo drums — Texture Flux 0 vs Flux 100"
+        a: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+        b: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+
+  - id: s09
+    kind: concept
+    heading: "Re-Pitch mode — chipmunk-soul territory"
+    body_md: slides/s09-repitch-chipmunk.md
+    script_md: script/s09-repitch-chipmunk.md
+    visuals: []
+    audio_examples:
+      - type: ab
+        label: "Hallogallo drums — Re-Pitch +5st"
+        a: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+        b: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+
+  - id: s10
+    kind: concept
+    heading: "Walkthrough — Hallogallo drums, four modes"
+    body_md: slides/s10-hallogallo-walkthrough.md
+    script_md: script/s10-hallogallo-walkthrough.md
+    visuals:
+      - type: waveform
+        src: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+        caption: "Session-view comparison. Four clips, same stem, four modes."
+    audio_examples:
+      - type: ab
+        label: "Four-mode A/B test bed"
+        a: build/audio/stemforge-renders/w04/hallogallo_drums.wav
+        b: build/audio/stemforge-renders/w04/hallogallo_other.wav
+    live_set: live-sets/w04-warp-ab-bed.als
+
+  - id: s11
+    kind: reference
+    heading: "Settings to remember, pitfalls to flag"
+    body_md: slides/s11-quick-recap.md
+    script_md: script/s11-quick-recap.md
+    visuals: []
+
+  - id: s12
+    kind: exercise
+    heading: "Assignment — three modes, three sentences"
+    body_md: slides/s12-exercise.md
+    script_md: script/s12-exercise.md
+    visuals: []
+    deliverable: "One drum loop, rendered three times — Complex Pro / Beats / Re-Pitch. Three sentences describing transient and formant character per mode. One Re-Pitch +5 semitone render labelled chipmunk-soul for the W9 bank. Zipped, uploaded."
+
+  # ------------------------------------------------------------------
+  # Warp-mode deep-teach mini-module — diagrams for what each algorithm
+  # actually does. Authored by lesson-expander; no narration dependency.
+  # ------------------------------------------------------------------
+
+  - id: wm01
+    kind: concept
+    heading: "What a warp mode actually is"
+    body_md: slides/wm01-overview.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Audio clip] --> B{Warp mode dispatch}
+            B -->|Beats| C[Transient slice + per-slice playback]
+            B -->|Tones| D[Mono pitch-track + grain splice]
+            B -->|Texture| E[Poly granular cloud]
+            B -->|Re-Pitch| F[Varispeed — pitch+time locked]
+            B -->|Complex / Complex Pro| G[Phase-vocoder FFT resynth]
+            C --> H[Timeline grid]
+            D --> H
+            E --> H
+            F --> H
+            G --> H
+        caption: "One clip, five algorithms, one grid. Pick wrong and the algorithm costs more than it gives."
+
+  - id: wm02
+    kind: concept
+    heading: "Beats mode — slice, play, truncate"
+    body_md: slides/wm02-beats-diagram.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="320" fill="#f7f5f1"/>
+            <text x="20" y="30" font-family="monospace" font-size="14" fill="#222">BEFORE — continuous audio with 4 transients</text>
+            <path d="M20 90 Q40 50 60 90 L80 90 Q100 60 120 90 L360 90 Q380 55 400 90 L620 90 Q640 58 660 90 L780 90" stroke="#222" stroke-width="2" fill="none"/>
+            <line x1="60" y1="60" x2="60" y2="110" stroke="#c33" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="120" y1="60" x2="120" y2="110" stroke="#c33" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="400" y1="60" x2="400" y2="110" stroke="#c33" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="660" y1="60" x2="660" y2="110" stroke="#c33" stroke-width="1" stroke-dasharray="3 3"/>
+            <text x="20" y="170" font-family="monospace" font-size="14" fill="#222">AFTER — slices locked to grid, each played at source rate</text>
+            <rect x="20" y="200" width="180" height="60" fill="none" stroke="#222" stroke-width="1.5"/>
+            <rect x="210" y="200" width="180" height="60" fill="none" stroke="#222" stroke-width="1.5"/>
+            <rect x="400" y="200" width="180" height="60" fill="none" stroke="#222" stroke-width="1.5"/>
+            <rect x="590" y="200" width="180" height="60" fill="none" stroke="#222" stroke-width="1.5"/>
+            <path d="M30 230 Q50 205 70 230" stroke="#222" stroke-width="2" fill="none"/>
+            <path d="M220 230 Q240 205 260 230" stroke="#222" stroke-width="2" fill="none"/>
+            <path d="M410 230 Q430 205 450 230" stroke="#222" stroke-width="2" fill="none"/>
+            <path d="M600 230 Q620 205 640 230" stroke="#222" stroke-width="2" fill="none"/>
+            <text x="20" y="290" font-family="monospace" font-size="11" fill="#666">Gaps between slice-end and next grid point get truncated (Loop Off) or looped (Loop On)</text>
+          </svg>
+        caption: "Beats mode is a slicer. Transients stay sharp; held-note tails get cut. Per Ableton Live 12 manual (bib:ableton_live_12_manual)."
+
+  - id: wm03
+    kind: concept
+    heading: "Complex Pro — phase vocoder block diagram"
+    body_md: slides/wm03-phase-vocoder.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Input audio] --> B[Windowed frames<br/>Hann typical, hop ~N/4<br/>Ableton internals not published]
+            B --> C[FFT<br/>complex spectrum]
+            C --> D[Magnitude + phase]
+            D --> E[Phase advance<br/>re-scaled to new hop]
+            E --> F[IFFT]
+            F --> G[Overlap-add<br/>new hop size]
+            G --> H[Output audio<br/>stretched]
+        caption: "Simplified phase-vocoder chain. Magnitude spectrum is preserved; phase is re-propagated at a new hop size, which is how time changes without pitch changing. Source: Roads 1996, chapter on time-frequency processing (bib:roads_computer_music_tutorial)."
+
+  - id: wm04
+    kind: concept
+    heading: "Complex Pro — pitch and formant as independent axes"
+    body_md: slides/wm04-formants-axes.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="400" fill="#f7f5f1"/>
+            <line x1="100" y1="350" x2="700" y2="350" stroke="#222" stroke-width="2"/>
+            <line x1="100" y1="50" x2="100" y2="350" stroke="#222" stroke-width="2"/>
+            <text x="400" y="385" font-family="monospace" font-size="13" fill="#222" text-anchor="middle">pitch shift (semitones)</text>
+            <text x="40" y="200" font-family="monospace" font-size="13" fill="#222" transform="rotate(-90 40 200)">formant shift (%)</text>
+            <circle cx="250" cy="250" r="6" fill="#222"/>
+            <text x="260" y="245" font-family="monospace" font-size="11" fill="#222">source — 0 st / 100%</text>
+            <circle cx="500" cy="250" r="6" fill="#c33"/>
+            <text x="370" y="230" font-family="monospace" font-size="11" fill="#c33">+5 st, formants 100% → natural-ish pitched vocal</text>
+            <circle cx="500" cy="100" r="6" fill="#36a"/>
+            <text x="380" y="90" font-family="monospace" font-size="11" fill="#36a">+5 st, formants 0% → chipmunk aliased vowel</text>
+            <circle cx="250" cy="100" r="6" fill="#696"/>
+            <text x="260" y="95" font-family="monospace" font-size="11" fill="#696">0 st, formants 0% → voice but smaller head</text>
+            <text x="100" y="30" font-family="monospace" font-size="12" fill="#666">Two knobs, two axes. Tape only gives you the diagonal.</text>
+          </svg>
+        caption: "Complex Pro decouples pitch from formant. Tape's varispeed (Re-Pitch in Live) only gives you the diagonal through this plane."
+
+  - id: wm05
+    kind: concept
+    heading: "Texture — grain cloud, Flux = stochastic offset"
+    body_md: slides/wm05-texture-granular.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="340" fill="#f7f5f1"/>
+            <text x="20" y="30" font-family="monospace" font-size="13" fill="#222">Source timeline (top) → grain sampling positions (bottom, per playback)</text>
+            <rect x="20" y="60" width="760" height="30" fill="none" stroke="#222" stroke-width="1.5"/>
+            <line x1="100" y1="55" x2="100" y2="95" stroke="#c33" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="280" y1="55" x2="280" y2="95" stroke="#c33" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="460" y1="55" x2="460" y2="95" stroke="#c33" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="640" y1="55" x2="640" y2="95" stroke="#c33" stroke-width="1" stroke-dasharray="2 2"/>
+            <text x="20" y="140" font-family="monospace" font-size="12" fill="#222">Flux 0 — strict, phase-locked</text>
+            <circle cx="100" cy="165" r="5" fill="#222"/>
+            <circle cx="280" cy="165" r="5" fill="#222"/>
+            <circle cx="460" cy="165" r="5" fill="#222"/>
+            <circle cx="640" cy="165" r="5" fill="#222"/>
+            <text x="20" y="220" font-family="monospace" font-size="12" fill="#222">Flux 60 — windowed random offset</text>
+            <circle cx="108" cy="245" r="5" fill="#36a"/>
+            <circle cx="270" cy="245" r="5" fill="#36a"/>
+            <circle cx="475" cy="245" r="5" fill="#36a"/>
+            <circle cx="627" cy="245" r="5" fill="#36a"/>
+            <text x="20" y="290" font-family="monospace" font-size="12" fill="#222">Flux 100 — unbounded, evolving cloud</text>
+            <circle cx="132" cy="315" r="5" fill="#c33"/>
+            <circle cx="245" cy="315" r="5" fill="#c33"/>
+            <circle cx="510" cy="315" r="5" fill="#c33"/>
+            <circle cx="595" cy="315" r="5" fill="#c33"/>
+          </svg>
+        caption: "Flux = how far each grain is allowed to drift from its strict position. At 100, the clip never repeats identically — bounce before you commit."
+
+  - id: wm06
+    kind: concept
+    heading: "Re-Pitch — pitch and time locked, no DSP at all"
+    body_md: slides/wm06-repitch-varispeed.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Audio clip] --> B[Read at altered sample rate]
+            B --> C[Pitch shifts]
+            B --> D[Duration shifts]
+            C --> E[Tape varispeed output]
+            D --> E
+        caption: "Re-Pitch is varispeed. No FFT, no granulation. Change playback rate, pitch and time move together. This is the chipmunk-soul mechanism."
+
+  # ------------------------------------------------------------------
+  # Gear deep-dive — Tarbox Road console + Dorrough + tape. This is the
+  # Fridmann-bass easter-egg payoff; teaser in s07 only gestures.
+  # ------------------------------------------------------------------
+
+  - id: gd-tarbox-01
+    kind: gear_deep_dive
+    heading: "Tarbox Road Studios — a converted dairy in Cassadaga, NY"
+    body_md: slides/gd-tarbox-01-title.md
+    images:
+      - src: assets/tarbox-exterior.jpg
+        caption: "Tarbox Road Studios. Built 1997 by Dave Fridmann. Per bib:fridmann_davefridmann_com and bib:tarbox_road_equipment."
+        credit: "Photo: Tarbox Road Studios / davefridmann.com"
+        license: "fair-use commentary"
+
+  - id: gd-tarbox-02
+    kind: gear_deep_dive
+    heading: "The console — Neve 88RS, 48 channels, discrete"
+    body_md: slides/gd-tarbox-02-neve-tour.md
+    gear_annotations:
+      - src: assets/tarbox-neve-88rs.jpg
+        caption: "Neve 88RS centrepiece. Annotations mark the channels Fridmann routes bass through."
+        callouts:
+          - label: "mic pre"
+            note: "Neve 88RS preamp stage — class-A discrete. Hot into the Dorrough; the grit starts here."
+          - label: "channel EQ"
+            note: "88RS channel EQ — used minimally pre-Dorrough; post-compressor is where the shaping happens."
+          - label: "insert send/return"
+            note: "Channel insert point. Dorrough lives here on the bass channel."
+          - label: "bus assign"
+            note: "Routing to bus — tape (Studer A80) receives from the bus, not the channel."
+
+  - id: gd-tarbox-03
+    kind: gear_deep_dive
+    heading: "Signal path — bass DI → 88RS pre → Dorrough insert → tape bus"
+    body_md: slides/gd-tarbox-03-signal-flow.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Bass DI or mic] --> B[Neve 88RS mic pre<br/>gain hot]
+            B --> C[Channel insert send]
+            C --> D[Dorrough 610<br/>multiband comp]
+            D --> E[Channel insert return]
+            E --> F[88RS channel fader]
+            F --> G[Bus/tape send]
+            G --> H[Studer A80 VU II<br/>2-inch tape]
+            H --> I[Playback to mix]
+        caption: "The Fridmann bass chain as reconstructed from Tarbox's published equipment list (bib:tarbox_road_equipment) and Fridmann interviews (bib:fridmann_davefridmann_com). Compression and saturation happen before print."
+
+  - id: gd-tarbox-04
+    kind: gear_deep_dive
+    heading: "Dorrough 610 — FM broadcast processor, misused on purpose"
+    body_md: slides/gd-tarbox-04-dorrough-tour.md
+    gear_annotations:
+      - src: assets/dorrough-610-front.jpg
+        caption: "Dorrough 610 Discriminate Audio Processor. Three-band compressor + limiter, originally a broadcast transmission tool."
+        callouts:
+          - label: "low band"
+            note: "Low-frequency band threshold. On bass, Fridmann pushes this deep into gain reduction until the fundamental crunches."
+          - label: "mid band"
+            note: "Midrange threshold — this is where the growl lives."
+          - label: "high band"
+            note: "Highs — kept tame on bass; this knob's purpose shifts when the box is on a mix bus."
+          - label: "output limiter"
+            note: "Hard output ceiling. The Dorrough was designed so FM transmitters never clipped; here it caps the crunch."
+
+  - id: gd-tarbox-05
+    kind: gear_deep_dive
+    heading: "How Fridmann drives the Dorrough — crunch as a choice"
+    body_md: slides/gd-tarbox-05-fridmann-technique.md
+    images:
+      - src: assets/fridmann-at-desk.jpg
+        caption: "Dave Fridmann at the Tarbox console. Photo cited per bib:fridmann_davefridmann_com."
+        credit: "davefridmann.com"
+        license: "fair-use commentary"
+
+  - id: gd-tarbox-06
+    kind: gear_deep_dive
+    heading: "The Studer A80 as insert — tape is part of the compressor"
+    body_md: slides/gd-tarbox-06-studer-tape.md
+    gear_annotations:
+      - src: assets/studer-a80-vu.jpg
+        caption: "Studer A80 VU II, 2-inch 24-track. Tarbox keeps one in the room."
+        callouts:
+          - label: "record level"
+            note: "Fridmann prints the Dorrough-crushed bass hot — ~+6 VU on peaks. Tape adds its own soft-clip here."
+          - label: "bias"
+            note: "Bias setting governs hysteresis character — too much bias = dull; too little = fragile highs."
+          - label: "tape speed"
+            note: "A80 at 15 IPS gives more low-end saturation; 30 IPS is cleaner. Tarbox uses both."
+
+  - id: gd-tarbox-07
+    kind: gear_deep_dive
+    heading: "Compressor math — threshold, ratio, attack, release, knee"
+    body_md: slides/gd-tarbox-07-compressor-math.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="420" fill="#f7f5f1"/>
+            <line x1="80" y1="380" x2="760" y2="380" stroke="#222" stroke-width="2"/>
+            <line x1="80" y1="40" x2="80" y2="380" stroke="#222" stroke-width="2"/>
+            <text x="420" y="410" font-family="monospace" font-size="13" fill="#222" text-anchor="middle">input level (dB)</text>
+            <text x="30" y="210" font-family="monospace" font-size="13" fill="#222" transform="rotate(-90 30 210)">output level (dB)</text>
+            <line x1="80" y1="380" x2="760" y2="40" stroke="#aaa" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="660" y="60" font-family="monospace" font-size="11" fill="#aaa">1:1 unity</text>
+            <path d="M80 380 L360 210 L760 140" stroke="#36a" stroke-width="2.5" fill="none"/>
+            <text x="400" y="200" font-family="monospace" font-size="11" fill="#36a">threshold −18 dB, ratio 4:1 — gentle bus</text>
+            <path d="M80 380 L260 280 L760 240" stroke="#c33" stroke-width="2.5" fill="none"/>
+            <text x="300" y="275" font-family="monospace" font-size="11" fill="#c33">Fridmann — threshold −30 dB, ratio 10:1, fast attack = crunch</text>
+            <circle cx="260" cy="280" r="4" fill="#c33"/>
+            <text x="265" y="300" font-family="monospace" font-size="10" fill="#c33">knee</text>
+          </svg>
+        caption: "Compressor transfer curve. Above threshold, output rises at 1/ratio. Fridmann's setting is not subtle — 10:1-ish with a very low threshold drives the Dorrough into constant gain reduction, which is where the harmonic distortion shows up."
+
+  - id: gd-tarbox-08
+    kind: gear_deep_dive
+    heading: "Tape hysteresis — the algorithm nobody codes on purpose"
+    body_md: slides/gd-tarbox-08-tape-algo.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="360" fill="#f7f5f1"/>
+            <line x1="400" y1="40" x2="400" y2="320" stroke="#222" stroke-width="1"/>
+            <line x1="100" y1="180" x2="700" y2="180" stroke="#222" stroke-width="1"/>
+            <text x="720" y="185" font-family="monospace" font-size="12" fill="#222">H (applied)</text>
+            <text x="405" y="35" font-family="monospace" font-size="12" fill="#222">M (magnetisation)</text>
+            <path d="M120 300 C200 290 320 220 400 180 C480 140 600 80 680 70 C600 75 520 100 450 160 C380 220 280 280 200 290 C180 292 150 298 120 300 Z" stroke="#c33" stroke-width="2" fill="none"/>
+            <text x="500" y="300" font-family="monospace" font-size="11" fill="#666">Hysteresis loop — output depends on input history</text>
+            <text x="120" y="340" font-family="monospace" font-size="11" fill="#666">Adds 2nd + 3rd order harmonics; soft-knee compression at high levels</text>
+          </svg>
+        caption: "Hysteresis loop of a magnetic medium. Output is a non-linear function of input and recent history — this is where tape's harmonic distortion, soft clip, and low-end 'thickening' come from."
+
+  - id: gd-tarbox-09
+    kind: gear_deep_dive
+    heading: "Ableton bridge — approximating the Fridmann bass in the box"
+    body_md: slides/gd-tarbox-09-ableton-bridge.md
+    images:
+      - src: assets/ableton-glue-saturator.png
+        caption: "Ableton Glue Compressor + Saturator. The two devices that carry most of the reconstruction."
+        credit: "Ableton Live 12 screenshot, Zak rig."
+        license: "fair-use commentary"
+
+  - id: gd-tarbox-10
+    kind: gear_deep_dive
+    heading: "Multiband Rack build — the Dorrough approximation"
+    body_md: slides/gd-tarbox-10-multiband-rack.md
+    diagrams:
+      - mermaid: |
+          graph LR
+            A[Bass DI] --> R[Audio Effect Rack]
+            R --> LB[Chain 1: EQ-8 LP 200 Hz]
+            R --> MB[Chain 2: EQ-8 BP 200–1200 Hz]
+            R --> HB[Chain 3: EQ-8 HP 1200 Hz]
+            LB --> LG[Glue Comp: thresh −30, ratio 10, atk 1 ms, rel 100 ms]
+            MB --> MG[Glue Comp: thresh −24, ratio 6, atk 3 ms, rel 60 ms]
+            HB --> HG[Glue Comp: thresh −18, ratio 4, atk 10 ms, rel 100 ms]
+            LG --> S[Sum]
+            MG --> S
+            HG --> S
+            S --> SAT[Saturator: Analog Clip +6 dB, Dry/Wet 60]
+            SAT --> OUT[Bass out]
+        caption: "Split by EQ-8 bands inside an Audio Effect Rack, one Glue Compressor per chain, sum, then Saturator for the tape role. This is the Dorrough + Studer chain as Ableton primitives."
+
+  - id: gd-tarbox-11
+    kind: gear_deep_dive
+    heading: "Plugin shortcut — Decapitator Style N (Neve germanium)"
+    body_md: slides/gd-tarbox-11-decapitator.md
+    images:
+      - src: assets/decapitator-style-n.png
+        caption: "SoundToys Decapitator Style N — Neve 1057 germanium model. Per bib:soundtoys_decapitator_manual."
+        credit: "SoundToys Decapitator interface"
+        license: "fair-use commentary"
+
+  - id: gd-tarbox-12
+    kind: gear_deep_dive
+    heading: "Exercise A — patch the Fridmann bass on a sub sample"
+    body_md: slides/gd-tarbox-12-exercise-a.md
+    deliverable: "One 8-bar sub-bass loop bounced three times — dry, through the multiband Rack, through the multiband Rack + Saturator + optional Decapitator Style N. Three-sentence notes: where each stage adds what. Save as w04-fridmann-bass-AB/."
+
+  - id: gd-tarbox-13
+    kind: gear_deep_dive
+    heading: "Exercise B — explore — broadcast-style multiband beyond bass"
+    body_md: slides/gd-tarbox-13-exercise-b.md
+    deliverable: "Take the Dorrough approximation Rack off bass and put it on a drum bus, a full mix, and a vocal. Bounce three examples. Keep the settings. One paragraph on what broadcast multiband actually does when it is not abused on purpose."
+
+images_needed:
+  - slug: tarbox-exterior
+    description: "Tarbox Road Studios exterior, Cassadaga NY — converted dairy building, daytime"
+    preferred_angle: "front exterior"
+    lesson_context: "W4 gd-tarbox-01 hero"
+  - slug: tarbox-neve-88rs
+    description: "Neve 88RS console interior shot at Tarbox Road, wide enough to annotate mic pre / EQ / inserts / bus section"
+    preferred_angle: "engineer's seat POV"
+    lesson_context: "W4 gd-tarbox-02 annotated tour"
+  - slug: dorrough-610-front
+    description: "Dorrough 610 Discriminate Audio Processor front panel, close enough to read the three-band threshold controls"
+    preferred_angle: "straight-on front panel"
+    lesson_context: "W4 gd-tarbox-04 annotated tour"
+  - slug: fridmann-at-desk
+    description: "Dave Fridmann seated at the Tarbox console, preferably mid-session"
+    preferred_angle: "three-quarter candid"
+    lesson_context: "W4 gd-tarbox-05 technique execution"
+  - slug: studer-a80-vu
+    description: "Studer A80 VU II 2-inch tape machine at Tarbox, transport and VU bank visible"
+    preferred_angle: "front, annotated-friendly"
+    lesson_context: "W4 gd-tarbox-06 tape-as-insert"
+  - slug: ableton-glue-saturator
+    description: "Ableton Live 12 Glue Compressor and Saturator devices side-by-side in a track view, default skin"
+    preferred_angle: "screenshot, Live 12 default theme"
+    lesson_context: "W4 gd-tarbox-09 Ableton bridge"
+  - slug: decapitator-style-n
+    description: "SoundToys Decapitator interface with Style set to N (Neve germanium), Drive approx 7, Punish on"
+    preferred_angle: "full plugin window screenshot"
+    lesson_context: "W4 gd-tarbox-11 Decapitator alternative"
+  - slug: warp-mode-dropdown
+    description: "Ableton Live 12 Sample tab warp-mode dropdown expanded — Beats / Tones / Texture / Re-Pitch / Complex / Complex Pro visible"
+    preferred_angle: "screenshot, Live 12 default theme"
+    lesson_context: "W4 s03 menu reference"
+  - slug: complex-pro-params
+    description: "Complex Pro warp mode control strip, Formants and Envelope controls visible"
+    preferred_angle: "screenshot"
+    lesson_context: "W4 s04 Complex Pro anatomy"
+  - slug: beats-mode-params
+    description: "Beats warp mode control strip — Preserve, Transient Loop Mode, Transient Envelope"
+    preferred_angle: "screenshot"
+    lesson_context: "W4 s05 Beats anatomy"
+  - slug: texture-flux-params
+    description: "Texture warp mode control strip — Grain Size and Flux"
+    preferred_angle: "screenshot"
+    lesson_context: "W4 s08 Texture anatomy"
+  - slug: kick-transient-smear
+    description: "Side-by-side kick waveform — Complex Pro (top, rounded attack) vs Beats (bottom, sharp attack)"
+    preferred_angle: "generated waveform plot"
+    lesson_context: "W4 s06 pitfall diagram"
+  - slug: neu-1972-cover
+    description: "NEU debut album cover (1972, Brain Records) — the red script logo on white"
+    lesson_context: "W4 s02 Hallogallo test-clip context"
+  - slug: flaming-lips-soft-bulletin
+    description: "The Flaming Lips — The Soft Bulletin (1999) album cover"
+    lesson_context: "W4 gd-tarbox-01/05 Fridmann discography — optional secondary image"
+  - slug: mercury-rev-deserters-songs
+    description: "Mercury Rev — Deserter's Songs (1998) album cover"
+    lesson_context: "W4 gd-tarbox-01/05 Fridmann discography — optional secondary image"
+
+episode:
+  title: "IDM W4 — Warp modes as sound design"
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

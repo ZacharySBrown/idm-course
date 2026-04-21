@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ch000",
+    "title": "Intro",
+    "start_ms": 0,
+    "end_ms": 96450
+  },
+  {
+    "id": "ch001",
+    "title": "Twelve weeks, maybe eight tracks, and a countdown",
+    "start_ms": 96850,
+    "end_ms": 188450
+  },
+  {
+    "id": "ch002",
+    "title": "LUFS targets \u2014 \u221214 for streaming, louder for the club",
+    "start_ms": 188850,
+    "end_ms": 298100
+  },
+  {
+    "id": "ch003",
+    "title": "The metering pair \u2014 Youlean and SPAN, both free",
+    "start_ms": 298500,
+    "end_ms": 411300
+  },
+  {
+    "id": "ch004",
+    "title": "The A/B protocol \u2014 level-matched, three references",
+    "start_ms": 411700,
+    "end_ms": 528700
+  },
+  {
+    "id": "ch005",
+    "title": "True peak ceiling \u2014 \u22121.0 dBTP, not zero",
+    "start_ms": 529100,
+    "end_ms": 645350
+  },
+  {
+    "id": "ch006",
+    "title": "Headphones that translate \u2014 K371, HD600, monitor compare",
+    "start_ms": 645750,
+    "end_ms": 760150
+  },
+  {
+    "id": "ch007",
+    "title": "Self-master or send it out \u2014 the Fridmann test",
+    "start_ms": 760550,
+    "end_ms": 872900
+  },
+  {
+    "id": "ch008",
+    "title": "Delivery \u2014 Bandcamp first, distributor later",
+    "start_ms": 873300,
+    "end_ms": 998000
+  },
+  {
+    "id": "ch009",
+    "title": "Metadata hygiene \u2014 ISRC, credits, artwork, file naming",
+    "start_ms": 998400,
+    "end_ms": 1139600
+  },
+  {
+    "id": "ch010",
+    "title": "Voice is the consistency, not the uniqueness",
+    "start_ms": 1140000,
+    "end_ms": 1246050
+  },
+  {
+    "id": "ch011",
+    "title": "Curate four from twelve \u2014 listen back before you re-master",
+    "start_ms": 1246450,
+    "end_ms": 1366300
+  },
+  {
+    "id": "ch012",
+    "title": "Ship two tracks \u2014 Bandcamp private EP, one friend",
+    "start_ms": 1366700,
+    "end_ms": 1496899
+  },
+  {
+    "id": "ch013",
+    "title": "Final note \u2014 the Fredonia payoff, then quiet",
+    "start_ms": 1497299,
+    "end_ms": 1592699
+  },
+  {
+    "id": "ch014",
+    "title": "Outro",
+    "start_ms": 1593099,
+    "end_ms": 1614249
+  }
+]

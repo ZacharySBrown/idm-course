@@ -1,0 +1,371 @@
+id: w02-subtraction
+week: 2
+title: "Week 2 — The Subtraction method: finish by removing"
+duration_minutes: 45
+pillars: [arrangement]
+concepts:
+  - subtraction_method
+  - arrangement_template
+  - eight_bar_rule
+  - constant_anchor
+  - silence_as_instrument
+  - completion_over_perfection
+ableton_surface:
+  - arrangement_view
+  - locators
+  - track_activator
+  - consolidate
+  - bounce_in_place
+prereqs: [w01-listen-subtract]
+
+teasers: []
+
+stemforge:
+  recipes: [w02-little-by-little-stems]
+
+references:
+  - bib:tape_notes_140_four_tet
+  - bib:oblique_strategies_eno
+  - bib:ableton_live_12_manual
+  - bib:stemforge_repo
+
+needs_bib:
+  - title: "Rick Rubin — 'Perfection is obtained when there's no longer anything to take away' (attribution)"
+    reason: "Used as the Subtraction thesis quote. The specs cite Rubin paraphrasing Saint-Exupéry; we should back this with either The Creative Act (Rubin, 2023) or the original Saint-Exupéry Terre des Hommes (1939). Neither is currently in bibliography.json."
+  - title: "Jack Conte — 'Finished is better than perfect' (Patreon / YouTube interview source)"
+    reason: "Spec cites Conte via Rubin via unnamed producer; need a primary source. Likely Jack Conte's own YouTube uploads or Patreon blog circa 2015–2018."
+
+slides:
+  - id: s01
+    kind: title
+    heading: "The loop is finished. You are the one who is not."
+    script_md: script/s01-cold-open.md
+    visuals: []
+    audio_examples: []
+
+  - id: s02
+    kind: concept
+    heading: "Subtraction, stated plainly"
+    body_md: slides/s02-subtraction-thesis.md
+    script_md: script/s02-subtraction-thesis.md
+    visuals: []
+    audio_examples: []
+
+  - id: s03
+    kind: concept
+    heading: "Place the locators before you touch a sound"
+    body_md: slides/s03-locators.md
+    script_md: script/s03-locators.md
+    visuals:
+      - type: screenshot
+        src: assets/arrangement-locators-6min.png
+        caption: "Six locators over a 6-minute timeline: Intro 0:00, A 0:45, B 2:00, Reduction 3:15, Peak 3:45, Outro 5:00, End 5:45."
+    audio_examples: []
+
+  - id: s04
+    kind: concept
+    heading: "Build the Peak first — the densest sixteen bars"
+    body_md: slides/s04-build-the-peak.md
+    script_md: script/s04-build-the-peak.md
+    visuals: []
+    audio_examples: []
+
+  - id: s05
+    kind: concept
+    heading: "Mute backward: Reduction, Breakdown, Intro"
+    body_md: slides/s05-mute-backward.md
+    script_md: script/s05-mute-backward.md
+    visuals: []
+    audio_examples: []
+
+  - id: s06
+    kind: reference
+    heading: "The constant anchor — Hebden on what rides through"
+    body_md: slides/s06-constant-anchor.md
+    script_md: script/s06-constant-anchor.md
+    visuals: []
+    audio_examples: []
+
+  - id: s07
+    kind: concept
+    heading: "The 8-bar rule and the one-bar silence"
+    body_md: slides/s07-eight-bar-rule.md
+    script_md: script/s07-eight-bar-rule.md
+    visuals: []
+    audio_examples: []
+
+  - id: s08
+    kind: caveat
+    heading: "When Subtraction fails you"
+    body_md: slides/s08-when-subtraction-fails.md
+    script_md: script/s08-when-subtraction-fails.md
+    visuals: []
+    audio_examples: []
+
+  - id: s09
+    kind: concept
+    heading: "Drop-one-stem — the subtraction ear-training drill"
+    body_md: slides/s09-stemforge-demo.md
+    script_md: script/s09-stemforge-demo.md
+    visuals: []
+    audio_examples:
+      - type: ab
+        label: "Full mix vs. drums muted"
+        a: build/audio/stemforge-renders/w02/lbl_full_mix.wav
+        b: build/audio/stemforge-renders/w02/lbl_no_drums.wav
+      - type: ab
+        label: "Full mix vs. bass-only (inverse mute)"
+        a: build/audio/stemforge-renders/w02/lbl_full_mix.wav
+        b: build/audio/stemforge-renders/w02/lbl_bass.wav
+
+  - id: s10
+    kind: reference
+    heading: "Finished is better than perfect — Rubin, Conte, and the kitchen timer"
+    body_md: slides/s10-finished-over-perfect.md
+    script_md: script/s10-finished-over-perfect.md
+    visuals: []
+    audio_examples: []
+
+  - id: s11
+    kind: exercise
+    heading: "Ship a 3-minute mp3 in one hour"
+    body_md: slides/s11-exercise.md
+    script_md: script/s11-exercise.md
+    visuals: []
+    audio_examples: []
+    deliverable: "A 3-minute mp3 rough, Subtraction arrangement only. Built from your most recent 16-bar loop. Paper plan before DAW. One-hour time-box on the Arrangement View pass. Dropbox link or Discord upload by next session."
+
+  # Image-anchored reference slides ------------------------------------------
+
+  - id: i01
+    kind: reference
+    heading: "Burial, Untrue (2007) — the prehistory of the inverse drop"
+    body_md: slides/i01-burial-untrue.md
+    images:
+      - src: assets/burial-untrue-cover.jpg
+        caption: "Burial, Untrue (Hyperdub HDBCD002, 2007). Cover art by Burial."
+        credit: "Hyperdub Records"
+        license: "fair-use commentary"
+    references:
+      - bib:burial_soundforge_quote
+
+  - id: i02
+    kind: reference
+    heading: "The Creative Act — the book we cite for the thesis"
+    body_md: slides/i02-creative-act-cover.md
+    images:
+      - src: assets/rubin-creative-act-cover.jpg
+        caption: "Rick Rubin, The Creative Act: A Way of Being (Penguin Press, 2023)."
+        credit: "Penguin Press"
+        license: "fair-use commentary"
+    references:
+      - bib:rick_rubin_creative_act
+
+  - id: i03
+    kind: reference
+    heading: "Rubin in the room — a philosophy is a workflow claim"
+    body_md: slides/i03-rubin-studio.md
+    images:
+      - src: assets/rubin-studio-shangri-la.jpg
+        caption: "Rick Rubin at Shangri-La Studio, Malibu."
+        credit: "Photo credit TBD (photo-sourcer)"
+        license: "editorial / fair-use commentary"
+    references:
+      - bib:rick_rubin_creative_act
+
+  - id: i04
+    kind: reference
+    heading: "Four Tet, Rounds (2003) — the constant anchor"
+    body_md: slides/i04-four-tet-rounds.md
+    images:
+      - src: assets/four-tet-rounds-cover.jpg
+        caption: "Four Tet, Rounds (Domino WIGCD127, 2003)."
+        credit: "Domino Recording Co."
+        license: "fair-use commentary"
+    references:
+      - bib:tape_notes_140_four_tet
+      - bib:hebden_unspoken_production
+
+  - id: i05
+    kind: reference
+    heading: "J Dilla, Donuts (2006) — dynamics arc without a drop"
+    body_md: slides/i05-dilla-donuts.md
+    images:
+      - src: assets/dilla-donuts-cover.jpg
+        caption: "J Dilla, Donuts (Stones Throw STH2126, 2006)."
+        credit: "Stones Throw Records"
+        license: "fair-use commentary"
+    references:
+      - bib:dilla_time_charnas
+      - bib:mpc3000_dilla_smithsonian
+
+  - id: i06
+    kind: concept
+    heading: "An arrangement view with dynamics arc visible to the eye"
+    body_md: slides/i06-arrangement-dynamics-arc.md
+    images:
+      - src: assets/arrangement-dynamics-arc-example.png
+        caption: "A finished Subtraction arrangement in Ableton's Arrangement View — density lowest at edges, peak at ~2/3, one-bar silence visible inside the Reduction."
+        credit: "Zak Brown / course assets"
+        license: "original work"
+
+  # Ableton Arrangement-view mini-module --------------------------------------
+
+  - id: ar01
+    kind: concept
+    heading: "The Locators pane — where the template actually lives"
+    body_md: slides/ar01-locators-pane.md
+    images:
+      - src: assets/ableton-locators-pane.png
+        caption: "Ableton Live 12 Arrangement View, Locators pane with the Subtraction template placed (Intro, A, B, Reduction, Peak, Outro, End)."
+        credit: "Ableton Live 12 screenshot"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+
+  - id: ar02
+    kind: concept
+    heading: "Bounce Groups (Live 12.3) — the commit-to-tape button"
+    body_md: slides/ar02-bounce-groups.md
+    images:
+      - src: assets/ableton-bounce-groups-dialog.png
+        caption: "Bounce Group dialog, Ableton Live 12.3. Render range, sample rate, bit depth, include returns, delete source toggles."
+        credit: "Ableton Live 12.3 screenshot"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+
+  - id: ar03
+    kind: concept
+    heading: "Group tracks, Track Activator, and the mute-backward workflow"
+    body_md: slides/ar03-group-tracks-mute-solo.md
+    images:
+      - src: assets/ableton-group-track-header.png
+        caption: "Annotated group-track header — Track Activator (green square), Solo (S), Mute (M), clip-level activator."
+        credit: "Ableton Live 12 screenshot, annotated"
+        license: "fair-use commentary"
+    references:
+      - bib:ableton_live_12_manual
+
+  - id: ar04
+    kind: concept
+    heading: "The six-minute locator template — density curve"
+    body_md: slides/ar04-locator-template-diagram.md
+    diagrams:
+      - svg_content: |
+          <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" aria-label="Density curve over 6-minute Subtraction template">
+            <rect x="0" y="0" width="800" height="280" fill="#f6f4ef"/>
+            <!-- axes -->
+            <line x1="60" y1="240" x2="760" y2="240" stroke="#222" stroke-width="1.5"/>
+            <line x1="60" y1="40" x2="60" y2="240" stroke="#222" stroke-width="1.5"/>
+            <text x="20" y="50" font-family="monospace" font-size="11" fill="#222">tracks</text>
+            <text x="720" y="258" font-family="monospace" font-size="11" fill="#222">time</text>
+            <!-- locator ticks + labels -->
+            <g font-family="monospace" font-size="10" fill="#222">
+              <line x1="60" y1="240" x2="60" y2="246" stroke="#222"/>
+              <text x="44" y="262">0:00</text>
+              <line x1="175" y1="240" x2="175" y2="246" stroke="#222"/>
+              <text x="150" y="262">0:45</text>
+              <line x1="310" y1="240" x2="310" y2="246" stroke="#222"/>
+              <text x="290" y="262">2:00</text>
+              <line x1="460" y1="240" x2="460" y2="246" stroke="#222"/>
+              <text x="430" y="262">3:15</text>
+              <line x1="520" y1="240" x2="520" y2="246" stroke="#222"/>
+              <text x="498" y="262">3:45</text>
+              <line x1="640" y1="240" x2="640" y2="246" stroke="#222"/>
+              <text x="618" y="262">5:00</text>
+              <line x1="740" y1="240" x2="740" y2="246" stroke="#222"/>
+              <text x="716" y="262">5:45</text>
+            </g>
+            <!-- section labels -->
+            <g font-family="monospace" font-size="11" fill="#555">
+              <text x="95" y="32">Intro</text>
+              <text x="225" y="32">A</text>
+              <text x="375" y="32">B</text>
+              <text x="470" y="32">Red.</text>
+              <text x="555" y="32">Peak</text>
+              <text x="665" y="32">Outro</text>
+            </g>
+            <!-- density curve -->
+            <path d="M 60 210 L 175 180 L 310 130 L 460 215 L 475 220 L 490 150 L 520 60 L 640 170 L 740 225"
+                  fill="none" stroke="#c04a2a" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- one-bar silence marker -->
+            <line x1="478" y1="232" x2="478" y2="70" stroke="#222" stroke-width="1" stroke-dasharray="3 3"/>
+            <text x="404" y="80" font-family="monospace" font-size="10" fill="#222">one-bar silence</text>
+            <!-- constant anchor baseline -->
+            <line x1="60" y1="225" x2="740" y2="225" stroke="#3a7a4a" stroke-width="1" stroke-dasharray="2 4"/>
+            <text x="610" y="220" font-family="monospace" font-size="10" fill="#3a7a4a">constant anchor</text>
+          </svg>
+        caption: "Density curve over the Subtraction template. Dip before Peak is what makes the Peak land. Dashed green: the constant anchor rides through."
+
+  - id: ar05
+    kind: concept
+    heading: "Subtraction vs Bounce-and-Arrange vs Skeleton — side-by-side"
+    body_md: slides/ar05-methods-comparison.md
+    diagrams:
+      - mermaid: |
+          graph TD
+            A[Dense 16-bar loop exists?] -->|Yes, I love it| S[Subtraction: mute backward from Peak]
+            A -->|Yes, but too many takes| B[Bounce-and-Arrange: freeze stems then cut]
+            A -->|No, loop is thin| K[Skeleton: build sparse first, add up]
+            S --> Z[Finished 6-min arrangement]
+            B --> Z
+            K --> Z
+        caption: "Three entry points, one output. The method follows the state of the loop, not the other way round."
+
+  - id: ar06
+    kind: concept
+    heading: "Consolidate, Bounce in Place, Freeze, Bounce Group — which one, when"
+    body_md: slides/ar06-consolidate-vs-bounce.md
+    references:
+      - bib:ableton_live_12_manual
+
+images_needed:
+  - slug: burial-untrue-cover
+    description: "Album cover of Burial's Untrue (Hyperdub, 2007) — centered, full-bleed."
+    lesson_context: "W2 i01, inverse-drop prehistory reference"
+    license_target: "fair-use commentary"
+  - slug: rubin-creative-act-cover
+    description: "Book cover of Rick Rubin, The Creative Act: A Way of Being (Penguin Press, 2023)."
+    lesson_context: "W2 i02, Subtraction thesis citation"
+    license_target: "fair-use commentary"
+  - slug: rubin-studio-shangri-la
+    description: "Photograph of Rick Rubin in a studio environment — ideally Shangri-La, Malibu. Any editorial photo suitable for commentary."
+    lesson_context: "W2 i03, philosophy-is-workflow aside"
+    license_target: "editorial / fair-use commentary"
+  - slug: four-tet-rounds-cover
+    description: "Album cover of Four Tet, Rounds (Domino, 2003)."
+    lesson_context: "W2 i04, constant-anchor reference"
+    license_target: "fair-use commentary"
+  - slug: dilla-donuts-cover
+    description: "Album cover of J Dilla, Donuts (Stones Throw, 2006)."
+    lesson_context: "W2 i05, pad-mute-as-Subtraction reference"
+    license_target: "fair-use commentary"
+  - slug: arrangement-dynamics-arc-example
+    description: "Ableton Arrangement View screenshot of a finished track with a clear dynamics arc — thinning toward edges, dense Peak, one-bar silence visible. Dilla/Burial/Four Tet reference recording ideal; any well-subtracted arrangement acceptable."
+    preferred_angle: "full-timeline, 6-min span visible"
+    lesson_context: "W2 i06, visual grammar of Subtraction"
+    license_target: "original work or fair-use commentary"
+  - slug: ableton-locators-pane
+    description: "Ableton Live 12 Arrangement View screenshot, locators pane visible, with the seven-locator Subtraction template placed (Intro / A / B / Reduction / Peak / Outro / End)."
+    lesson_context: "W2 ar01, Locator-pane mini-module"
+    license_target: "fair-use commentary"
+  - slug: ableton-bounce-groups-dialog
+    description: "Screenshot of the Bounce Group dialog introduced in Ableton Live 12.3 — parameter fields visible."
+    lesson_context: "W2 ar02, Bounce Groups mini-module"
+    license_target: "fair-use commentary"
+  - slug: ableton-group-track-header
+    description: "Close-up of an Ableton group-track header with Track Activator, Solo, Mute, and clip-level activator annotated."
+    lesson_context: "W2 ar03, mute-backward workflow"
+    license_target: "fair-use commentary"
+  - slug: arrangement-locators-6min
+    description: "Ableton Arrangement View with six locators at Intro 0:00, A 0:45, B 2:00, Reduction 3:15, Peak 3:45, Outro 5:00, End 5:45 — referenced from existing s03 slide."
+    lesson_context: "W2 s03, existing slide, screenshot missing"
+    license_target: "fair-use commentary"
+
+episode:
+  title: "IDM W2 — Finish by removing"
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

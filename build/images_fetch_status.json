@@ -1,0 +1,1181 @@
+{
+  "ok": 30,
+  "skip": 0,
+  "fail": 196,
+  "results": [
+    {
+      "slug": "img:gear_qy700",
+      "status": "got-html-not-image",
+      "url": "https://www.vintagesynth.com/yamaha/qy700-sequencer",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_tx81z",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Yamaha_TX81Z"
+    },
+    {
+      "slug": "img:gear_fs1r",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Yamaha_FS1R"
+    },
+    {
+      "slug": "img:gear_dx7",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Yamaha_DX7",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_disklavier",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Disklavier",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_akai_s950",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:AKAI_S_series",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_akai_s6000",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:AKAI_S_series",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_mpc3000",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/File:Akai_MPC3000.jpg",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_mpc2000xl",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Akai_MPC_series",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_mpc60",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Akai_MPC_series",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_sp1200",
+      "status": "got-html-not-image",
+      "url": "https://en.wikipedia.org/wiki/File:Sp1200_front_of_machine.JPG",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_asr10",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Ensoniq",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_eps16plus",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Ensoniq_EPS-16_Plus"
+    },
+    {
+      "slug": "img:gear_sp303",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/File:Boss_SP-303.jpg",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_sp404",
+      "status": "ok",
+      "path": "references/images/shared/gear-sp404.jpg",
+      "source_bytes": 445848,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Boss_SP-303.jpg/1280px-Boss_SP-303.jpg"
+    },
+    {
+      "slug": "img:gear_dr660",
+      "status": "got-html-not-image",
+      "url": "https://equipboard.com/items/boss-dr-rhythm-dr-660",
+      "ctype": "text/html; charset=utf-8"
+    },
+    {
+      "slug": "img:gear_monologue_afx",
+      "status": "got-html-not-image",
+      "url": "https://www.korg.com/us/products/synthesizers/monologue/",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_ms20",
+      "status": "got-html-not-image",
+      "url": "https://www.vintagesynth.com/korg/ms-20",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_tb303",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/File:Roland_TB-303_Bass_Line_Computer_Controlled.jpg",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_casio_fz10m",
+      "status": "got-html-not-image",
+      "url": "https://www.vintagesynth.com/casio/fz-1",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_orville",
+      "status": "got-html-not-image",
+      "url": "https://www.eventideaudio.com/rackmount/orville/",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_dsp4000",
+      "status": "got-html-not-image",
+      "url": "https://www.eventideaudio.com/rackmount/dsp4000/",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_machinedrum",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Elektron_Machinedrum",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_monomachine",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Elektron_Monomachine",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_nord_g2x",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Nord_Modular_G2",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:gear_technics_sl1200",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Technics_SL-1200",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:album_aphex_saw85_92",
+      "status": "ok",
+      "path": "lessons/w05-aphex-tuning/assets/album-aphex-saw85-92.jpg",
+      "source_bytes": 29772,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/8/82/Selected_Ambient_Works_85-92.png"
+    },
+    {
+      "slug": "img:album_aphex_come_to_daddy",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Come_to_Daddy"
+    },
+    {
+      "slug": "img:album_aphex_windowlicker",
+      "status": "ok",
+      "path": "lessons/w05-aphex-tuning/assets/album-aphex-windowlicker.jpg",
+      "source_bytes": 18883,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/9/9b/WAP105.jpeg"
+    },
+    {
+      "slug": "img:album_aphex_drukqs",
+      "status": "ok",
+      "path": "lessons/w05-aphex-tuning/assets/album-aphex-drukqs.jpg",
+      "source_bytes": 140814,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/f/f0/Drukqs_%28Front_Cover%29.png"
+    },
+    {
+      "slug": "img:album_aphex_syro",
+      "status": "ok",
+      "path": "lessons/w05-aphex-tuning/assets/album-aphex-syro.jpg",
+      "source_bytes": 21484,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/9/99/Aphex_twin_syro.jpg"
+    },
+    {
+      "slug": "img:album_aphex_icare",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/5/54/AphexTwinICareBecauseYouDo.jpg"
+    },
+    {
+      "slug": "img:album_autechre_confield",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/92/Autechre_Confield.jpeg"
+    },
+    {
+      "slug": "img:album_autechre_lp5",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/4/4e/Autechrelp5.jpg"
+    },
+    {
+      "slug": "img:album_autechre_nts",
+      "status": "ok",
+      "path": "references/images/shared/album-autechre-nts.jpg",
+      "source_bytes": 8581,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Autechre_-_NTS_Sessions_1-4.png/1280px-Autechre_-_NTS_Sessions_1-4.png"
+    },
+    {
+      "slug": "img:album_fourtet_three",
+      "status": "ok",
+      "path": "lessons/w06-fourtet-layering/assets/album-fourtet-three.jpg",
+      "source_bytes": 49824,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/9/92/Four_Tet_-_Three.png"
+    },
+    {
+      "slug": "img:album_fourtet_rounds",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Rounds_(Four_Tet_album)"
+    },
+    {
+      "slug": "img:album_fourtet_pager",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Looking_at_Your_Pager"
+    },
+    {
+      "slug": "img:album_squarepusher_bigloada",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/13/Squarepusher.bigloada.jpg"
+    },
+    {
+      "slug": "img:album_squarepusher_goplastic",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/7/7f/SquarepusherGoPlastic.jpg"
+    },
+    {
+      "slug": "img:album_squarepusher_hello_everything",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/7/75/SquarepusherHelloEverything.jpg"
+    },
+    {
+      "slug": "img:album_squarepusher_ultravisitor",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/1b/Squarepusher.ultravisitor.gif"
+    },
+    {
+      "slug": "img:album_squarepusher_ufabulum",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/0/04/Squarepusher_Ufabulum.jpg"
+    },
+    {
+      "slug": "img:album_dilla_donuts",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/14/Dilladonutscover.jpg"
+    },
+    {
+      "slug": "img:album_slum_fantastic_vol2",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/b/ba/SV_fantastic.jpg"
+    },
+    {
+      "slug": "img:album_pharcyde_labcabin",
+      "status": "ok",
+      "path": "lessons/w09-vocal-chopping/assets/album-pharcyde-labcabin.jpg",
+      "source_bytes": 130888,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/c/c6/Labcabincalifornia.jpg"
+    },
+    {
+      "slug": "img:album_djshadow_entroducing",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/c/c1/Endtroducingcover.jpg"
+    },
+    {
+      "slug": "img:album_burial_untrue",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/6/64/BurialUntrue.jpg"
+    },
+    {
+      "slug": "img:album_peterock_mecca",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/1e/Pete_%26_cl_-_mecca_%26_the_soul_brother.jpg"
+    },
+    {
+      "slug": "img:album_nas_illmatic",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/2/27/IllmaticNas.jpg"
+    },
+    {
+      "slug": "img:album_biggie_life_after_death",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/1c/NotoriousB.I.G.LifeAfterDeath.jpg"
+    },
+    {
+      "slug": "img:album_madvillain_madvillainy",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/5/5e/Madvillainy_cover.png"
+    },
+    {
+      "slug": "img:album_death_grips_exmilitary",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/1a/Exmilitary_artwork.png"
+    },
+    {
+      "slug": "img:album_death_grips_money_store",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/a/af/Death_Grips_-_The_Money_Store.jpg"
+    },
+    {
+      "slug": "img:album_mgmt_oracular",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/8/83/Oracular_Spectacular_2008.jpg"
+    },
+    {
+      "slug": "img:artist_aphex_twin",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Aphex_Twin",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:artist_autechre",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Autechre_%28cropped%29.jpg/1280px-Autechre_%28cropped%29.jpg"
+    },
+    {
+      "slug": "img:artist_fourtet",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/File:Kieran_Hebden_(Four_Tet)_Circulo_de_Bellas_Artes_1.JPG",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:artist_squarepusher",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:Squarepusher",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:artist_j_dilla",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/Category:J_Dilla",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:artist_j_dilla_mpc3000_smithsonian",
+      "status": "fetch-failed",
+      "url": "https://nmaahc.si.edu/object/nmaahc_2014.205.1.1"
+    },
+    {
+      "slug": "img:artist_djshadow",
+      "status": "got-html-not-image",
+      "url": "https://commons.wikimedia.org/wiki/DJ_Shadow",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:artist_dave_fridmann",
+      "status": "got-html-not-image",
+      "url": "https://www.davefridmann.com/",
+      "ctype": "text/html"
+    },
+    {
+      "slug": "img:studio_tarbox_exterior",
+      "status": "got-html-not-image",
+      "url": "http://www.tarboxroadstudios.com/",
+      "ctype": "text/html"
+    },
+    {
+      "slug": "img:studio_tarbox_console",
+      "status": "got-html-not-image",
+      "url": "http://www.tarboxroadstudios.com/equipment.html",
+      "ctype": "text/html"
+    },
+    {
+      "slug": "img:studio_fredonia_srt",
+      "status": "got-html-not-image",
+      "url": "https://www.fredonia.edu/academics/colleges-schools/school-music/program/sound-recording-technology",
+      "ctype": "text/html; charset=UTF-8"
+    },
+    {
+      "slug": "img:ableton_simpler",
+      "status": "ok",
+      "path": "lessons/w03-simpler-basics/assets/ableton-simpler-classic.jpg",
+      "source_bytes": 790769,
+      "derived_url": "https://cdn-resources.ableton.com/80bA26cPQ1hEJDFjpUKntxfqdmG3ZykO/static/images/og-images/default.83939b540f40.jpg"
+    },
+    {
+      "slug": "img:ableton_simpler_oneshot",
+      "status": "ok",
+      "path": "lessons/w03-simpler-basics/assets/ableton-simpler-oneshot.jpg",
+      "source_bytes": 790769,
+      "derived_url": "https://cdn-resources.ableton.com/80bA26cPQ1hEJDFjpUKntxfqdmG3ZykO/static/images/og-images/default.83939b540f40.jpg"
+    },
+    {
+      "slug": "img:ableton_simpler_slicing",
+      "status": "ok",
+      "path": "lessons/w07-squarepusher-chops/assets/ableton-simpler-slicing.jpg",
+      "source_bytes": 790769,
+      "derived_url": "https://cdn-resources.ableton.com/80bA26cPQ1hEJDFjpUKntxfqdmG3ZykO/static/images/og-images/default.83939b540f40.jpg"
+    },
+    {
+      "slug": "img:ableton_drum_rack",
+      "status": "ok",
+      "path": "references/images/shared/ableton-drum-rack.jpg",
+      "source_bytes": 790769,
+      "derived_url": "https://cdn-resources.ableton.com/80bA26cPQ1hEJDFjpUKntxfqdmG3ZykO/static/images/og-images/default.83939b540f40.jpg"
+    },
+    {
+      "slug": "img:ableton_roar",
+      "status": "ok",
+      "path": "lessons/w08-autechre-feedback/assets/ableton-roar.jpg",
+      "source_bytes": 532847,
+      "derived_url": "https://beta-ableton.imgix.net/media/y1tf4gvt/l12-beta-800x600.jpg"
+    },
+    {
+      "slug": "img:ableton_meld",
+      "status": "ok",
+      "path": "lessons/w05-aphex-tuning/assets/ableton-meld.jpg",
+      "source_bytes": 532847,
+      "derived_url": "https://beta-ableton.imgix.net/media/y1tf4gvt/l12-beta-800x600.jpg"
+    },
+    {
+      "slug": "img:ableton_granulator_iii",
+      "status": "ok",
+      "path": "lessons/w06-fourtet-layering/assets/ableton-granulator-iii.jpg",
+      "source_bytes": 149755,
+      "derived_url": "https://cdn-resources.ableton.com/resources/public/2012/01/30/robert_henke.jpg"
+    },
+    {
+      "slug": "img:ableton_operator",
+      "status": "ok",
+      "path": "lessons/w08-autechre-feedback/assets/ableton-operator.jpg",
+      "source_bytes": 790769,
+      "derived_url": "https://cdn-resources.ableton.com/80bA26cPQ1hEJDFjpUKntxfqdmG3ZykO/static/images/og-images/default.83939b540f40.jpg"
+    },
+    {
+      "slug": "img:ableton_follow_actions",
+      "status": "ok",
+      "path": "lessons/w10-variation-generation/assets/ableton-follow-actions.jpg",
+      "source_bytes": 532847,
+      "derived_url": "https://beta-ableton.imgix.net/media/y1tf4gvt/l12-beta-800x600.jpg"
+    },
+    {
+      "slug": "img:ableton_tuning_systems",
+      "status": "ok",
+      "path": "lessons/w05-aphex-tuning/assets/ableton-tuning-systems.jpg",
+      "source_bytes": 532847,
+      "derived_url": "https://beta-ableton.imgix.net/media/y1tf4gvt/l12-beta-800x600.jpg"
+    },
+    {
+      "slug": "img:ableton_cv_tools",
+      "status": "ok",
+      "path": "references/images/shared/ableton-cv-tools.jpg",
+      "source_bytes": 232673,
+      "derived_url": "https://cdn-resources.ableton.com/resources/75/ac/75ac4afe-a05b-45cb-a3dc-d06505aa7c9e/cvtoolsalbum.jpg"
+    },
+    {
+      "slug": "img:ableton_warp_modes",
+      "status": "ok",
+      "path": "lessons/w04-warp-modes/assets/ableton-warp-modes.jpg",
+      "source_bytes": 790769,
+      "derived_url": "https://cdn-resources.ableton.com/80bA26cPQ1hEJDFjpUKntxfqdmG3ZykO/static/images/og-images/default.83939b540f40.jpg"
+    },
+    {
+      "slug": "img:ableton_push3",
+      "status": "resolve-failed",
+      "source": "https://www.ableton.com/en/manual/push-3-introduction/"
+    },
+    {
+      "slug": "img:ableton_sampler",
+      "status": "ok",
+      "path": "references/images/shared/ableton-sampler.jpg",
+      "source_bytes": 790769,
+      "derived_url": "https://cdn-resources.ableton.com/80bA26cPQ1hEJDFjpUKntxfqdmG3ZykO/static/images/og-images/default.83939b540f40.jpg"
+    },
+    {
+      "slug": "img:ableton_wavetable",
+      "status": "ok",
+      "path": "references/images/shared/ableton-wavetable.jpg",
+      "source_bytes": 790769,
+      "derived_url": "https://cdn-resources.ableton.com/80bA26cPQ1hEJDFjpUKntxfqdmG3ZykO/static/images/og-images/default.83939b540f40.jpg"
+    },
+    {
+      "slug": "img:benjamins-cover",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/None"
+    },
+    {
+      "slug": "img:five-axes-icons",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:notebook-timer",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:spectrogram-4stem",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:master-state-diagram",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:tape-op-89-cover",
+      "status": "ok",
+      "path": "lessons/w01-listen-subtract/assets/tape-op-89-cover.jpg",
+      "source_bytes": 528226,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/2012_Squarepusher_%40_Royale_Bostno_%288148077592%29.jpg"
+    },
+    {
+      "slug": "img:sos-april-2004-cover",
+      "status": "ok",
+      "path": "lessons/w01-listen-subtract/assets/sos-april-2004-cover.jpg",
+      "source_bytes": 179943,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Autechre_%28cropped%29.jpg/1280px-Autechre_%28cropped%29.jpg"
+    },
+    {
+      "slug": "img:level-match-meter",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gear-yamaha-hs5",
+      "status": "ok",
+      "path": "lessons/w01-listen-subtract/assets/gear-yamaha-hs5.jpg",
+      "source_bytes": 49824,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/9/92/Four_Tet_-_Three.png"
+    },
+    {
+      "slug": "img:gear-neumann-kh80",
+      "status": "ok",
+      "path": "lessons/w01-listen-subtract/assets/gear-neumann-kh80.jpg",
+      "source_bytes": 49824,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/9/92/Four_Tet_-_Three.png"
+    },
+    {
+      "slug": "img:gear-akg-k371",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/42/AKG_at_Revox_B795_LP-player_%283870710127crop%29.jpg"
+    },
+    {
+      "slug": "img:gear-sennheiser-hd600",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Sennheiser_HD_600"
+    },
+    {
+      "slug": "img:burial-untrue-cover",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Untrue"
+    },
+    {
+      "slug": "img:rubin-creative-act-cover",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/The_Creative_Act:_A_Way_of_Being"
+    },
+    {
+      "slug": "img:rubin-studio-shangri-la",
+      "status": "ok",
+      "path": "lessons/w02-subtraction/assets/rubin-studio-shangri-la.jpg",
+      "source_bytes": 195972,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/commons/4/43/RickRubinSept09.jpg"
+    },
+    {
+      "slug": "img:four-tet-rounds-cover",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Rounds_(Four_Tet_album)"
+    },
+    {
+      "slug": "img:dilla-donuts-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/14/Dilladonutscover.jpg"
+    },
+    {
+      "slug": "img:arrangement-dynamics-arc-example",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Four_Tet_2004-04-04_%28cropped%29.jpg/960px-Four_Tet_2004-04-04_%28cropped%29.jpg"
+    },
+    {
+      "slug": "img:ableton-locators-pane",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-bounce-groups-dialog",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-group-track-header",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:arrangement-locators-6min",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gear-mpc2kxl-hero",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Akai_MPC2000XL"
+    },
+    {
+      "slug": "img:gear-mpc2kxl-pads",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Akai_MPC2000XL"
+    },
+    {
+      "slug": "img:gear-mpc2kxl-left-panel",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Akai_MPC2000XL"
+    },
+    {
+      "slug": "img:simpler-classic-full",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:simpler-oneshot-full",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:simpler-slicing-full",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:simpler-classic-annotated",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Warp_Records_logo.svg/1280px-Warp_Records_logo.svg.png"
+    },
+    {
+      "slug": "img:simpler-oneshot-annotated",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:simpler-slicing-annotated",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:drum-rack-16-pads-populated",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:mpc-ableton-bridge-set",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/92/Four_Tet_-_Three.png"
+    },
+    {
+      "slug": "img:stemforge-loader-annotated",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:tarbox-exterior",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Dave_Fridmann"
+    },
+    {
+      "slug": "img:tarbox-neve-88rs",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Neve_Electronics"
+    },
+    {
+      "slug": "img:dorrough-610-front",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/92/Four_Tet_-_Three.png"
+    },
+    {
+      "slug": "img:fridmann-at-desk",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Dave_Fridmann"
+    },
+    {
+      "slug": "img:studer-a80-vu",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Studer_A800_MK_III_%28Bullet_Sound_Studios%29.jpg/1280px-Studer_A800_MK_III_%28Bullet_Sound_Studios%29.jpg"
+    },
+    {
+      "slug": "img:ableton-glue-saturator",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:decapitator-style-n",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:warp-mode-dropdown",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Warp_Records_logo.svg/1280px-Warp_Records_logo.svg.png"
+    },
+    {
+      "slug": "img:complex-pro-params",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Warp_Records_logo.svg/1280px-Warp_Records_logo.svg.png"
+    },
+    {
+      "slug": "img:beats-mode-params",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Warp_Records_logo.svg/1280px-Warp_Records_logo.svg.png"
+    },
+    {
+      "slug": "img:texture-flux-params",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Warp_Records_logo.svg/1280px-Warp_Records_logo.svg.png"
+    },
+    {
+      "slug": "img:kick-transient-smear",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:neu-1972-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/6/6e/Neu_band.jpg"
+    },
+    {
+      "slug": "img:flaming-lips-soft-bulletin",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/9d/Soft_Bulletin_cover.jpg"
+    },
+    {
+      "slug": "img:mercury-rev-deserters-songs",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/5/5e/MercuryRev-DesertersSongs.jpg"
+    },
+    {
+      "slug": "img:gear-mnlg-hero",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Korg_Monologue_Synthesizer.jpg/1280px-Korg_Monologue_Synthesizer.jpg"
+    },
+    {
+      "slug": "img:gear-mnlg-panel",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Korg_Monologue_Synthesizer.jpg/1280px-Korg_Monologue_Synthesizer.jpg"
+    },
+    {
+      "slug": "img:gear-disklavier-hero",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/DisklavierView2.jpg"
+    },
+    {
+      "slug": "img:gear-disklavier-interior",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/DisklavierView2.jpg"
+    },
+    {
+      "slug": "img:album-art-saw-85-92",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Selected_Ambient_Works_85\u201392"
+    },
+    {
+      "slug": "img:album-art-drukqs",
+      "status": "ok",
+      "path": "lessons/w05-aphex-tuning/assets/album-art-drukqs.jpg",
+      "source_bytes": 140814,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/f/f0/Drukqs_%28Front_Cover%29.png"
+    },
+    {
+      "slug": "img:album-art-syro",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/99/Aphex_twin_syro.jpg"
+    },
+    {
+      "slug": "img:album-art-i-care-because-you-do",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/5/54/AphexTwinICareBecauseYouDo.jpg"
+    },
+    {
+      "slug": "img:album-art-come-to-daddy",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Come_to_Daddy"
+    },
+    {
+      "slug": "img:album-art-windowlicker",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/9b/WAP105.jpeg"
+    },
+    {
+      "slug": "img:portrait-aphex-come-to-daddy-mask",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Come_to_Daddy"
+    },
+    {
+      "slug": "img:rdj-soundcloud-screenshot",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/DisklavierView2.jpg"
+    },
+    {
+      "slug": "img:spectrogram-microtuned-kick",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:live12-tuning-systems",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:hebden-portrait",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/92/Four_Tet_-_Three.png"
+    },
+    {
+      "slug": "img:three-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/92/Four_Tet_-_Three.png"
+    },
+    {
+      "slug": "img:rounds-cover",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Rounds_(Four_Tet_album)"
+    },
+    {
+      "slug": "img:gear-omnisphere-browser-hero",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gear-omnisphere-browser",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gear-omnisphere-layers",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gear-omnisphere-fx",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gear-omnisphere-orb",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gear-audiomulch-canvas",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:cool-edit-pro-ui",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Rounds_(Four_Tet_album)"
+    },
+    {
+      "slug": "img:ableton-note-chance",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-pitch-transformer",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:kick-spectrogram",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:qy700-hero",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Yamaha_QY700"
+    },
+    {
+      "slug": "img:qy700-panel-grid",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Yamaha_QY700"
+    },
+    {
+      "slug": "img:qy700-rear",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Yamaha_QY700"
+    },
+    {
+      "slug": "img:push3-step-mode",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:s950-dr660-hero",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Akai_S950"
+    },
+    {
+      "slug": "img:s950-panel",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Akai_S950"
+    },
+    {
+      "slug": "img:dr660-panel",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Boss_DR-660"
+    },
+    {
+      "slug": "img:drumrack-bitcrush-chain",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:amen-break-waveform",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:jenkinson-portrait",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/2012_Squarepusher_%40_Royale_Bostno_%288148077592%29.jpg"
+    },
+    {
+      "slug": "img:go-plastic-album-art",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/7/7f/SquarepusherGoPlastic.jpg"
+    },
+    {
+      "slug": "img:big-loada-album-art",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/13/Squarepusher.bigloada.jpg"
+    },
+    {
+      "slug": "img:hello-everything-album-art",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/7/75/SquarepusherHelloEverything.jpg"
+    },
+    {
+      "slug": "img:ultravisitor-album-art",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/1b/Squarepusher.ultravisitor.gif"
+    },
+    {
+      "slug": "img:tx81z-fs1r-hero",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Yamaha_TX81Z"
+    },
+    {
+      "slug": "img:s6000-hero",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Akai_S6000"
+    },
+    {
+      "slug": "img:eventide-orville-hero",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Eventide_H9"
+    },
+    {
+      "slug": "img:elektron-hero",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Elektron_Machinedrum"
+    },
+    {
+      "slug": "img:machinedrum-panel",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Elektron_Machinedrum"
+    },
+    {
+      "slug": "img:monomachine-panel",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Elektron_monomachine.jpg/1280px-Elektron_monomachine.jpg"
+    },
+    {
+      "slug": "img:nord-modular-g2",
+      "status": "ok",
+      "path": "lessons/w08-autechre-feedback/assets/nord-modular-g2.jpg",
+      "source_bytes": 179943,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Autechre_%28cropped%29.jpg/1280px-Autechre_%28cropped%29.jpg"
+    },
+    {
+      "slug": "img:maxmsp-patcher",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:booth-brown-studio",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Autechre_%28cropped%29.jpg/1280px-Autechre_%28cropped%29.jpg"
+    },
+    {
+      "slug": "img:booth-brown-live",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Autechre_%28cropped%29.jpg/1280px-Autechre_%28cropped%29.jpg"
+    },
+    {
+      "slug": "img:confield-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/92/Autechre_Confield.jpeg"
+    },
+    {
+      "slug": "img:draft-730-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Autechre_%28cropped%29.jpg/1280px-Autechre_%28cropped%29.jpg"
+    },
+    {
+      "slug": "img:lp5-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/4/4e/Autechrelp5.jpg"
+    },
+    {
+      "slug": "img:tri-repetae-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Sleeve_of_Tri_Repetae.svg/1280px-Sleeve_of_Tri_Repetae.svg.png"
+    },
+    {
+      "slug": "img:quaristice-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/c/c6/WARPCD333_Packshot_350web.jpg"
+    },
+    {
+      "slug": "img:nts-sessions-cover",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/NTS_Sessions_1\u20134"
+    },
+    {
+      "slug": "img:gear-mpc3000-hero",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Akai_MPC60.jpg"
+    },
+    {
+      "slug": "img:gear-mpc3000-panel",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Akai_MPC60.jpg"
+    },
+    {
+      "slug": "img:gear-sp1200-hero",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/E-mu_SP-1200_%28111607sp1200%29.jpg"
+    },
+    {
+      "slug": "img:gear-sp1200-panel",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/E-mu_SP-1200_%28111607sp1200%29.jpg"
+    },
+    {
+      "slug": "img:dilla-portrait",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Akai_MPC60.jpg"
+    },
+    {
+      "slug": "img:dilla-smithsonian-mpc3000",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Akai_MPC60.jpg"
+    },
+    {
+      "slug": "img:premier-portrait",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Akai_MPC60.jpg"
+    },
+    {
+      "slug": "img:kanye-mike-dean-console",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/f/f0/My_Beautiful_Dark_Twisted_Fantasy.jpg"
+    },
+    {
+      "slug": "img:scott-herren-prefuse",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Akai_MPC2000XL"
+    },
+    {
+      "slug": "img:album-donuts",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/1/14/Dilladonutscover.jpg"
+    },
+    {
+      "slug": "img:album-fantastic-vol-2",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/b/ba/SV_fantastic.jpg"
+    },
+    {
+      "slug": "img:album-illmatic",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/2/27/IllmaticNas.jpg"
+    },
+    {
+      "slug": "img:album-36-chambers",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/5/53/Wu-TangClanEntertheWu-Tangalbumcover.jpg"
+    },
+    {
+      "slug": "img:album-one-word-extinguisher",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/f/fb/Prefuse_73-One_Word_Extinguisher_%28album_cover%29.jpg"
+    },
+    {
+      "slug": "img:album-madvillainy",
+      "status": "ok",
+      "path": "lessons/w09-vocal-chopping/assets/album-madvillainy.jpg",
+      "source_bytes": 90469,
+      "derived_url": "https://upload.wikimedia.org/wikipedia/en/5/5e/Madvillainy_cover.png"
+    },
+    {
+      "slug": "img:zaireeka-4cd-spread",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/c/c0/Zaireeka_cover.png"
+    },
+    {
+      "slug": "img:fridmann-tarbox-studio",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Dave_Fridmann"
+    },
+    {
+      "slug": "img:mr-bill-studio",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Mr._Bill"
+    },
+    {
+      "slug": "img:cobham-spectrum-cover",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-follow-actions-panel",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-sample-offset-envelope",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-recombine-shuffle",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-seed-generator",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-clip-envelope-unlinked",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gkmc-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/93/KendrickGKMC.jpg"
+    },
+    {
+      "slug": "img:dj-dahi-portrait",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/DJ_Dahi"
+    },
+    {
+      "slug": "img:beach-house-teen-dream-cover",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/b/b2/Beach_House_-_Teen_Dream.png"
+    },
+    {
+      "slug": "img:aphex-come-to-daddy-cover",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Come_to_Daddy"
+    },
+    {
+      "slug": "img:ableton-chain-selector-annotated",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:ableton-macro-variations-drawer",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/9/92/Four_Tet_-_Three.png"
+    },
+    {
+      "slug": "img:itu-bs1770-k-weighting",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:intersample-peak-reconstruction",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:youlean-ab-levelmatched",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:youlean-span-master-chain",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:bandcamp-upload-dialog",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:gottinger-mastering-studio",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/Bernd_Gottinger"
+    },
+    {
+      "slug": "img:buffalo-philharmonic-session",
+      "status": "no-source-url"
+    },
+    {
+      "slug": "img:fredonia-srt-facilities",
+      "status": "fetch-failed",
+      "url": "https://upload.wikimedia.org/wikipedia/en/thumb/4/46/SUNY_Fredonia_seal.svg/1280px-SUNY_Fredonia_seal.svg.png"
+    },
+    {
+      "slug": "img:fridmann-tarbox-chair",
+      "status": "resolve-failed",
+      "source": "https://en.wikipedia.org/wiki/The_Woods_(Sleater-Kinney_album)"
+    }
+  ]
+}

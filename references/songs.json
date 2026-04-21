@@ -1,0 +1,677 @@
+{
+  "_meta": {
+    "version": "0.1.0",
+    "generated": "2026-04-21",
+    "note": "Song registry — parallel to bibliography.json. Each entry keyed by song:* (disjoint from bib:*). Tier 1 (default, tonight): search URLs for Spotify/YouTube/Apple Music — one click opens the app, search results include the exact track. Always work, no wrong-ID risk. Tier 2 (future): upgrade spotify_url to a direct /track/<id> link per track. Tier 3 (nice-to-have): populate youtube_timestamped_url with ?t=N for signature moments. Spotify does NOT support track-level timestamps; only podcast episodes. YouTube fully supports ?t=N.",
+    "tiers": {
+      "1_search": "https://open.spotify.com/search/<url-encoded artist+title>",
+      "2_direct": "https://open.spotify.com/track/<spotify_track_id>",
+      "3_timestamp": "https://youtu.be/<id>?t=<seconds>"
+    },
+    "total_tracks": 33
+  },
+  "song:aphex_xtal": {
+    "priority": 1,
+    "title": "Xtal",
+    "artist": "Aphex Twin",
+    "album": "Selected Ambient Works 85-92",
+    "year": 1992,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/7o2AeQZzfCERsRmOM86EcB",
+    "spotify_track_id": "7o2AeQZzfCERsRmOM86EcB",
+    "youtube_url": "https://youtu.be/sWcLccMuCA8",
+    "youtube_video_id": "sWcLccMuCA8",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Aphex%20Twin%20Xtal",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w05-aphex-tuning"
+    ],
+    "notes": ""
+  },
+  "song:aphex_flim": {
+    "priority": 1,
+    "title": "Flim",
+    "artist": "Aphex Twin",
+    "album": "Come To Daddy EP",
+    "year": 1997,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/3JJ4BoL9WVHk4Yye2EGJC7",
+    "spotify_track_id": "3JJ4BoL9WVHk4Yye2EGJC7",
+    "youtube_url": "https://youtu.be/l7bEkyk-DhA",
+    "youtube_video_id": "l7bEkyk-DhA",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Aphex%20Twin%20Flim",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w05-aphex-tuning",
+      "w08-autechre-feedback"
+    ],
+    "notes": ""
+  },
+  "song:fourtet_daydream_repeat": {
+    "priority": 1,
+    "title": "Daydream Repeat",
+    "artist": "Four Tet",
+    "album": "Three",
+    "year": 2022,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/4c7b2Ft8Br0CgJLmt3mI7Z",
+    "spotify_track_id": "4c7b2Ft8Br0CgJLmt3mI7Z",
+    "youtube_url": "https://youtu.be/bKaRxvxeUzs",
+    "youtube_video_id": "bKaRxvxeUzs",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Four%20Tet%20Daydream%20Repeat",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w06-fourtet-layering"
+    ],
+    "notes": ""
+  },
+  "song:squarepusher_come_on": {
+    "priority": 1,
+    "title": "Come On My Selector",
+    "artist": "Squarepusher",
+    "album": "Big Loada",
+    "year": 1997,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/6lUoKi6r3AY4ECxPOqVs7F",
+    "spotify_track_id": "6lUoKi6r3AY4ECxPOqVs7F",
+    "youtube_url": "https://youtu.be/MWCSw_cNxKc",
+    "youtube_video_id": "MWCSw_cNxKc",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Squarepusher%20Come%20On%20My%20Selector",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w07-squarepusher-chops"
+    ],
+    "notes": ""
+  },
+  "song:dilla_dont_cry": {
+    "priority": 1,
+    "title": "Don't Cry",
+    "artist": "J Dilla",
+    "album": "Donuts",
+    "year": 2006,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/67c5M9gVWemCV5SGH5cc4v",
+    "spotify_track_id": "67c5M9gVWemCV5SGH5cc4v",
+    "youtube_url": "https://youtu.be/NHn-G_YpQB0",
+    "youtube_video_id": "NHn-G_YpQB0",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=J%20Dilla%20Don%27t%20Cry",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping"
+    ],
+    "notes": ""
+  },
+  "song:aphex_ageispolis": {
+    "priority": 2,
+    "title": "Ageispolis",
+    "artist": "Aphex Twin",
+    "album": "Selected Ambient Works 85-92",
+    "year": 1992,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/7KRQoq9GeWeCm0ZAXg5XMb",
+    "spotify_track_id": "7KRQoq9GeWeCm0ZAXg5XMb",
+    "youtube_url": "https://youtu.be/oG7OXcczUZk",
+    "youtube_video_id": "oG7OXcczUZk",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Aphex%20Twin%20Ageispolis",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w05-aphex-tuning"
+    ],
+    "notes": ""
+  },
+  "song:aphex_windowlicker": {
+    "priority": 2,
+    "title": "Windowlicker",
+    "artist": "Aphex Twin",
+    "album": "Windowlicker EP",
+    "year": 1999,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/60Pe9j2pCBa4Zp4ztf5nhd",
+    "spotify_track_id": "60Pe9j2pCBa4Zp4ztf5nhd",
+    "youtube_url": "https://youtu.be/UBS4Gi1y_nc",
+    "youtube_video_id": "UBS4Gi1y_nc",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Aphex%20Twin%20Windowlicker",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w05-aphex-tuning"
+    ],
+    "notes": ""
+  },
+  "song:aphex_vordhosbn": {
+    "priority": 2,
+    "title": "Vordhosbn",
+    "artist": "Aphex Twin",
+    "album": "Drukqs",
+    "year": 2001,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/0AjQvTAlYcWQ6JpJcUdsKw",
+    "spotify_track_id": "0AjQvTAlYcWQ6JpJcUdsKw",
+    "youtube_url": "https://youtu.be/6ro1aHvhGec",
+    "youtube_video_id": "6ro1aHvhGec",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Aphex%20Twin%20Vordhosbn",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w05-aphex-tuning",
+      "w08-autechre-feedback"
+    ],
+    "notes": ""
+  },
+  "song:aphex_avril_14th": {
+    "priority": 2,
+    "title": "Avril 14th",
+    "artist": "Aphex Twin",
+    "album": "Drukqs",
+    "year": 2001,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/1uaGSDFsLdReQgg8p7Obwh",
+    "spotify_track_id": "1uaGSDFsLdReQgg8p7Obwh",
+    "youtube_url": "https://youtu.be/MBFXJw7n-fU",
+    "youtube_video_id": "MBFXJw7n-fU",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Aphex%20Twin%20Avril%2014th",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w05-aphex-tuning"
+    ],
+    "notes": ""
+  },
+  "song:autechre_parhelic": {
+    "priority": 2,
+    "title": "parhelic triangle",
+    "artist": "Autechre",
+    "album": "Confield",
+    "year": 2001,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/6h90s8v73fSTBRe2bfKEA4",
+    "spotify_track_id": "6h90s8v73fSTBRe2bfKEA4",
+    "youtube_url": "https://youtu.be/QGX1nSR5ymw",
+    "youtube_video_id": "QGX1nSR5ymw",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Autechre%20parhelic%20triangle",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w08-autechre-feedback"
+    ],
+    "notes": ""
+  },
+  "song:autechre_sim_gishel": {
+    "priority": 2,
+    "title": "sim gishel",
+    "artist": "Autechre",
+    "album": "Confield",
+    "year": 2001,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/7MrOZhA1YBYXNdw5aLABSx",
+    "spotify_track_id": "7MrOZhA1YBYXNdw5aLABSx",
+    "youtube_url": "https://youtu.be/iLLUNYxJlRE",
+    "youtube_video_id": "iLLUNYxJlRE",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Autechre%20sim%20gishel",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w08-autechre-feedback"
+    ],
+    "notes": ""
+  },
+  "song:autechre_rae": {
+    "priority": 2,
+    "title": "Rae",
+    "artist": "Autechre",
+    "album": "LP5",
+    "year": 1998,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/4tBC5l4AkqYfQ5CCx5IrKm",
+    "spotify_track_id": "4tBC5l4AkqYfQ5CCx5IrKm",
+    "youtube_url": "https://youtu.be/Z03MjhsB0jk",
+    "youtube_video_id": "Z03MjhsB0jk",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Autechre%20Rae",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w08-autechre-feedback"
+    ],
+    "notes": "Registry originally had album Draft 7.30 / 2003 — corrected. Priority-2 tier-2 agent confirmed LP5 (1998) via Spotify/YouTube lookup."
+  },
+  "song:fourtet_unspoken": {
+    "priority": 2,
+    "title": "Unspoken",
+    "artist": "Four Tet",
+    "album": "Rounds",
+    "year": 2003,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/69t0SrCVeudh7Ycxp9PxDr",
+    "spotify_track_id": "69t0SrCVeudh7Ycxp9PxDr",
+    "youtube_url": "https://youtu.be/5ViItcZyYBw",
+    "youtube_video_id": "5ViItcZyYBw",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Four%20Tet%20Unspoken",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w06-fourtet-layering"
+    ],
+    "notes": ""
+  },
+  "song:fourtet_skater": {
+    "priority": 2,
+    "title": "Skater",
+    "artist": "Four Tet",
+    "album": "Three",
+    "year": 2024,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/2zmpcYAM15byqlySCB64ua",
+    "spotify_track_id": "2zmpcYAM15byqlySCB64ua",
+    "youtube_url": "https://youtu.be/1BPEhDTscqE",
+    "youtube_video_id": "1BPEhDTscqE",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Four%20Tet%20Skater",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w06-fourtet-layering"
+    ],
+    "notes": "Registry originally had 2022 — corrected to actual release year 2024 (Three)."
+  },
+  "song:fourtet_pager": {
+    "priority": 2,
+    "title": "Looking At Your Pager",
+    "artist": "KH",
+    "album": "Three-era single",
+    "year": 2022,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/0y6CoVW1ZSBqRmPbyfhFQs",
+    "spotify_track_id": "0y6CoVW1ZSBqRmPbyfhFQs",
+    "youtube_url": "https://youtu.be/z-CcdRv87CA",
+    "youtube_video_id": "z-CcdRv87CA",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Four%20Tet%20Looking%20At%20Your%20Pager",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w06-fourtet-layering"
+    ],
+    "notes": "Released under KH alias (not Four Tet), 2022. Registry originally attributed to Four Tet / Three-era single / 2024 — corrected. Tape Notes #140 still cited as interview source because Hebden discussed the 15%-velocity/15%-octave randomization trick in context."
+  },
+  "song:squarepusher_red_hot": {
+    "priority": 2,
+    "title": "My Red Hot Car",
+    "artist": "Squarepusher",
+    "album": "Go Plastic",
+    "year": 2001,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/2wjbR0QM2uRIz8QacUE494",
+    "spotify_track_id": "2wjbR0QM2uRIz8QacUE494",
+    "youtube_url": "https://youtu.be/HpxYZD71sK8",
+    "youtube_video_id": "HpxYZD71sK8",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Squarepusher%20My%20Red%20Hot%20Car",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w07-squarepusher-chops"
+    ],
+    "notes": ""
+  },
+  "song:squarepusher_hello": {
+    "priority": 2,
+    "title": "Cronecker King",
+    "artist": "Squarepusher",
+    "album": "Hello Everything",
+    "year": 2006,
+    "link_tier": 1,
+    "spotify_url": "https://open.spotify.com/search/Squarepusher%20Hello%20Everything",
+    "spotify_track_id": null,
+    "youtube_url": "https://www.youtube.com/results?search_query=Squarepusher%20Hello%20Everything",
+    "youtube_video_id": null,
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Squarepusher%20Hello%20Everything",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w07-squarepusher-chops"
+    ],
+    "notes": "Registry originally titled 'Hello Everything' which is the album, not a track. Repoint: the teaching reference in W7 is the Kronecker/Cronecker King snare — 1-2ms transient-envelope synthesis. Official tracklist spells it 'Cronecker King'; some commentary (KVR) uses 'Kronecker King'. song_refs ID preserved so lesson.yaml references don't break; title/album corrected."
+  },
+  "song:squarepusher_iambic": {
+    "priority": 2,
+    "title": "Iambic 9 Poetry",
+    "artist": "Squarepusher",
+    "album": "Ultravisitor",
+    "year": 2004,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/7v0X5s4VKoilJWp7iapIr9",
+    "spotify_track_id": "7v0X5s4VKoilJWp7iapIr9",
+    "youtube_url": "https://youtu.be/4otl_CgwdU4",
+    "youtube_video_id": "4otl_CgwdU4",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Squarepusher%20Iambic%209%20Poetry",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w07-squarepusher-chops"
+    ],
+    "notes": ""
+  },
+  "song:slum_village_get_dis": {
+    "priority": 2,
+    "title": "Get Dis Money",
+    "artist": "Slum Village",
+    "album": "Fantastic, Vol. 2",
+    "year": 2000,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/797IwT97Umk0KeReKvasJu",
+    "spotify_track_id": "797IwT97Umk0KeReKvasJu",
+    "youtube_url": "https://youtu.be/F-oLqMwzvBY",
+    "youtube_video_id": "F-oLqMwzvBY",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Slum%20Village%20Get%20Dis%20Money",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping",
+      "w11-beat-switch"
+    ],
+    "notes": ""
+  },
+  "song:pharcyde_runnin": {
+    "priority": 2,
+    "title": "Runnin'",
+    "artist": "The Pharcyde",
+    "album": "Labcabincalifornia",
+    "year": 1995,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/5pFXepfAbXlLUm5vBZXXXW",
+    "spotify_track_id": "5pFXepfAbXlLUm5vBZXXXW",
+    "youtube_url": "https://youtu.be/jQ-RrGCSa2M",
+    "youtube_video_id": "jQ-RrGCSa2M",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=The%20Pharcyde%20Runnin%27",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping"
+    ],
+    "notes": ""
+  },
+  "song:dj_shadow_building": {
+    "priority": 2,
+    "title": "Building Steam with a Grain of Salt",
+    "artist": "DJ Shadow",
+    "album": "Endtroducing.....",
+    "year": 1996,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/4Ms0GKHCtr5Lpg4dKOhO2I",
+    "spotify_track_id": "4Ms0GKHCtr5Lpg4dKOhO2I",
+    "youtube_url": "https://youtu.be/HORLJvUMs08",
+    "youtube_video_id": "HORLJvUMs08",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=DJ%20Shadow%20Building%20Steam%20with%20a%20Grain%20of%20Salt",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w01-listen-subtract"
+    ],
+    "notes": ""
+  },
+  "song:burial_archangel": {
+    "priority": 2,
+    "title": "Archangel",
+    "artist": "Burial",
+    "album": "Untrue",
+    "year": 2007,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/63FmCXIc4lmEq9fNqGkQ57",
+    "spotify_track_id": "63FmCXIc4lmEq9fNqGkQ57",
+    "youtube_url": "https://youtu.be/qgdL8S4hyUo",
+    "youtube_video_id": "qgdL8S4hyUo",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Burial%20Archangel",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w11-beat-switch"
+    ],
+    "notes": ""
+  },
+  "song:aphex_minipops": {
+    "priority": 3,
+    "title": "minipops 67 [120.2][source field mix]",
+    "artist": "Aphex Twin",
+    "album": "Syro",
+    "year": 2014,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/00xFfMsOn9TbRe3sZcdABm",
+    "spotify_track_id": "00xFfMsOn9TbRe3sZcdABm",
+    "youtube_url": "https://youtu.be/RUAJ8KLGqis",
+    "youtube_video_id": "RUAJ8KLGqis",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Aphex%20Twin%20minipops%2067%20%5B120.2%5D%5Bsource%20field%20mix%5D",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w05-aphex-tuning"
+    ],
+    "notes": ""
+  },
+  "song:aphex_alberto": {
+    "priority": 3,
+    "title": "Alberto Balsalm",
+    "artist": "Aphex Twin",
+    "album": "...I Care Because You Do",
+    "year": 1995,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/38Y253aj0hzfYmepykV8BZ",
+    "spotify_track_id": "38Y253aj0hzfYmepykV8BZ",
+    "youtube_url": "https://youtu.be/ulj5UJ5GHvE",
+    "youtube_video_id": "ulj5UJ5GHvE",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Aphex%20Twin%20Alberto%20Balsalm",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w05-aphex-tuning"
+    ],
+    "notes": ""
+  },
+  "song:squarepusher_metallurgist": {
+    "priority": 3,
+    "title": "The Metallurgist",
+    "artist": "Squarepusher",
+    "album": "Ufabulum",
+    "year": 2012,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/6ReqI2SKrLLRrJqZQQqzpT",
+    "spotify_track_id": "6ReqI2SKrLLRrJqZQQqzpT",
+    "youtube_url": "https://youtu.be/jLW96qNj8ec",
+    "youtube_video_id": "jLW96qNj8ec",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Squarepusher%20The%20Metallurgist",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w07-squarepusher-chops"
+    ],
+    "notes": "Registry originally had album Hello Everything / 2006 — corrected. 'The Metallurgist' is actually from Ufabulum (2012) per Warp / Discogs / Bandcamp. The W7 lesson references the sidechain-to-all-instruments technique demonstrated on this track; album attribution corrected."
+  },
+  "song:autechre_all_end": {
+    "priority": 3,
+    "title": "all end",
+    "artist": "Autechre",
+    "album": "NTS Sessions 1-4",
+    "year": 2018,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/5iRoIHqcuaWKt3ruyx3UEj",
+    "spotify_track_id": "5iRoIHqcuaWKt3ruyx3UEj",
+    "youtube_url": "https://youtu.be/R4YF41c0MP4",
+    "youtube_video_id": "R4YF41c0MP4",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Autechre%20all%20end",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w08-autechre-feedback"
+    ],
+    "notes": ""
+  },
+  "song:pete_rock_troy": {
+    "priority": 3,
+    "title": "T.R.O.Y. (They Reminisce Over You)",
+    "artist": "Pete Rock & CL Smooth",
+    "album": "Mecca and the Soul Brother",
+    "year": 1992,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/2Mb3zpobD0CvJGWv6NpsPy",
+    "spotify_track_id": "2Mb3zpobD0CvJGWv6NpsPy",
+    "youtube_url": "https://youtu.be/k6mdRv0ZdR8",
+    "youtube_video_id": "k6mdRv0ZdR8",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Pete%20Rock%20%26%20CL%20Smooth%20T.R.O.Y.%20%28They%20Reminisce%20Over%20You%29",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping"
+    ],
+    "notes": ""
+  },
+  "song:nas_ny_state": {
+    "priority": 3,
+    "title": "N.Y. State of Mind",
+    "artist": "Nas",
+    "album": "Illmatic",
+    "year": 1994,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/0trHOzAhNpGCsGBEu7dOJo",
+    "spotify_track_id": "0trHOzAhNpGCsGBEu7dOJo",
+    "youtube_url": "https://youtu.be/8y1V6gvDygI",
+    "youtube_video_id": "8y1V6gvDygI",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Nas%20N.Y.%20State%20of%20Mind",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping"
+    ],
+    "notes": ""
+  },
+  "song:biggie_ten_crack": {
+    "priority": 3,
+    "title": "Ten Crack Commandments",
+    "artist": "The Notorious B.I.G.",
+    "album": "Life After Death",
+    "year": 1997,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/0BknVuf853LEmEzTEO3LY4",
+    "spotify_track_id": "0BknVuf853LEmEzTEO3LY4",
+    "youtube_url": "https://youtu.be/ot9NT9W0Fog",
+    "youtube_video_id": "ot9NT9W0Fog",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=The%20Notorious%20B.I.G.%20Ten%20Crack%20Commandments",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping"
+    ],
+    "notes": ""
+  },
+  "song:madvillain_rhinestone": {
+    "priority": 3,
+    "title": "Rhinestone Cowboy",
+    "artist": "Madvillain",
+    "album": "Madvillainy",
+    "year": 2004,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/1IM5em8ceA9Ukorn9xf19w",
+    "spotify_track_id": "1IM5em8ceA9Ukorn9xf19w",
+    "youtube_url": "https://youtu.be/lWpRJK_z08I",
+    "youtube_video_id": "lWpRJK_z08I",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Madvillain%20Rhinestone%20Cowboy",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping"
+    ],
+    "notes": ""
+  },
+  "song:death_grips_takyon": {
+    "priority": 3,
+    "title": "Takyon (Death Yon)",
+    "artist": "Death Grips",
+    "album": "Exmilitary",
+    "year": 2011,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/3cuJhxsnEyjKG9qsgKBj8I",
+    "spotify_track_id": "3cuJhxsnEyjKG9qsgKBj8I",
+    "youtube_url": "https://youtu.be/89F5fpvwPr0",
+    "youtube_video_id": "89F5fpvwPr0",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Death%20Grips%20Takyon%20%28Death%20Yon%29",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping"
+    ],
+    "notes": ""
+  },
+  "song:death_grips_system": {
+    "priority": 3,
+    "title": "System Blower",
+    "artist": "Death Grips",
+    "album": "The Money Store",
+    "year": 2012,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/5ZtF5IAVOaAQfVjbZav0K2",
+    "spotify_track_id": "5ZtF5IAVOaAQfVjbZav0K2",
+    "youtube_url": "https://youtu.be/XsYrGKn14jI",
+    "youtube_video_id": "XsYrGKn14jI",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=Death%20Grips%20System%20Blower",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w09-vocal-chopping"
+    ],
+    "notes": ""
+  },
+  "song:mgmt_kids": {
+    "priority": 3,
+    "title": "Kids",
+    "artist": "MGMT",
+    "album": "Oracular Spectacular",
+    "year": 2007,
+    "link_tier": 2,
+    "spotify_url": "https://open.spotify.com/track/5NXQPIl8LBpeaVQJUj2DE0",
+    "spotify_track_id": "5NXQPIl8LBpeaVQJUj2DE0",
+    "youtube_url": "https://youtu.be/fe4EK4HSPkI",
+    "youtube_video_id": "fe4EK4HSPkI",
+    "youtube_timestamped_url": null,
+    "apple_music_url": "https://music.apple.com/us/search?term=MGMT%20Kids",
+    "isrc": null,
+    "key_moments": [],
+    "used_by": [
+      "w04-warp-modes",
+      "w08-autechre-feedback"
+    ],
+    "notes": ""
+  }
+}

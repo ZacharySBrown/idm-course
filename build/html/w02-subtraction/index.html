@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W2 — Week 2 — The Subtraction method: finish by removing</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W2</span>
+  <span class="title-chip">Week 2 — The Subtraction method: finish by removing</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>The loop is finished. You are the one who is not.</h2>
+  
+  <div class="body"></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>Subtraction, stated plainly</h2>
+  
+  <div class="body"><h1>Subtraction, stated plainly</h1>
+<p><strong>The method in one paragraph.</strong> Build the single densest loop your track will ever contain — the Peak. Duplicate that loop across a six-minute timeline. Then <strong>mute backward</strong>. Every other section — Intro, A, B, Reduction, Outro — is made by switching elements <em>off</em>, not by writing new ones.</p>
+<p><strong>Why this works.</strong></p>
+<ul>
+<li>Cohesion is free. Every section derives from the same master state.</li>
+<li>The &ldquo;what goes next&rdquo; question has one answer: <em>less of what you already have.</em></li>
+<li>The loop trap breaks because you are no longer trying to make the <em>loop</em> sound finished. The loop is already finished. The <em>track</em> is what&rsquo;s unfinished.</li>
+</ul>
+<p><strong>Source.</strong> Zak Handbook §5.3. Track Hebden&rsquo;s thesis the whole way through: <em>&ldquo;Arrangement is just everything. There&rsquo;s no point in having a good sound if it&rsquo;s not arranged into anything&rdquo;</em> (<code>Tape Notes #140</code>).</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s03">
+  <h1>Slide s03 · concept</h1>
+  <h2>Place the locators before you touch a sound</h2>
+  
+  <div class="body"><h1>Place the locators before you touch a sound</h1>
+<p>Open Arrangement View. Before you load a single instrument, drop seven locators at these timecodes:</p>
+<table>
+<thead>
+<tr>
+<th>Locator</th>
+<th>Time</th>
+<th>What lives here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intro</td>
+<td>0:00</td>
+<td>Texture + one constant element</td>
+</tr>
+<tr>
+<td>A</td>
+<td>0:45</td>
+<td>Texture + drums</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2:00</td>
+<td>Texture + drums + bass</td>
+</tr>
+<tr>
+<td>Reduction</td>
+<td>3:15</td>
+<td>Texture + a single vocal chop</td>
+</tr>
+<tr>
+<td>Peak</td>
+<td>3:45</td>
+<td>All elements, densest state</td>
+</tr>
+<tr>
+<td>Outro</td>
+<td>5:00</td>
+<td>Inverse of Intro</td>
+</tr>
+<tr>
+<td>End</td>
+<td>5:45</td>
+<td>Stop</td>
+</tr>
+</tbody>
+</table>
+<p>Right-click the ruler → Add Locator, then rename inline. Locator names follow the project into bounces.</p>
+<p><strong>What this buys you.</strong> A finite session. The locators are suggestions, not contracts — the act of placing them converts <em>open-ended</em> into <em>shaped</em>. Zak Handbook §5.2. <code>bib:ableton_live_12_manual</code>, Arrangement View → Locators.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>Build the Peak first — the densest sixteen bars</h2>
+  
+  <div class="body"><h1>Build the Peak first — the densest sixteen bars</h1>
+<p>Write the climax of the track first. Sixteen bars. Everything on.</p>
+<p><strong>Checklist for the Peak loop:</strong></p>
+<ul>
+<li>Kick, snare, hats, one perc layer</li>
+<li>Sub + mid bass (two tracks, separated bands)</li>
+<li>One melodic element (pad or lead, pick one)</li>
+<li>One texture (field, noise bed, reverb wash on a send)</li>
+<li>One vocal chop or one-shot</li>
+<li>One &ldquo;detail&rdquo; element — a ratchet, a click, a stutter</li>
+</ul>
+<p><strong>The constraint.</strong> If it is not in the Peak, it does not exist in the track. You cannot add a new element at bar 96 because the section feels thin. Thin is the point — Subtraction doing its job.</p>
+<p>Loop the sixteen bars in Session View. A/B against a reference. When you enjoy it, stop and bounce. Zak Handbook §5.3, §6.1.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>Mute backward: Reduction, Breakdown, Intro</h2>
+  
+  <div class="body"><h1>Mute backward: Reduction, Breakdown, Intro</h1>
+<p>Duplicate the Peak across the full six-minute timeline. Then, inside each locator region, toggle tracks off with the <strong>Track Activator</strong> (the green square in the track header).</p>
+<p><strong>Default mute map — start here, mutate later:</strong></p>
+<ul>
+<li><strong>Peak</strong> (3:45–5:00): nothing muted.</li>
+<li><strong>B</strong> (2:00–3:15): mute perc 2 + stutter.</li>
+<li><strong>A</strong> (0:45–2:00): also mute vocal chop + lead.</li>
+<li><strong>Reduction</strong> (3:15–3:45): mute drums + bass.</li>
+<li><strong>Intro</strong> (0:00–0:45): only anchor + texture remain.</li>
+<li><strong>Outro</strong> (5:00–5:45): inverse of Intro.</li>
+</ul>
+<p><strong>The load-bearing trick.</strong> If you lose the kick at bar 24, you don&rsquo;t replace it — you let the Fridmann bass carry the weight, and the listener doesn&rsquo;t notice the trade. Zak Handbook §5.3.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s06">
+  <h1>Slide s06 · reference</h1>
+  <h2>The constant anchor — Hebden on what rides through</h2>
+  
+  <div class="body"><h1>The constant anchor — Hebden on what rides through</h1>
+<p><code>Tape Notes #140</code> — Kieran Hebden:</p>
+<blockquote>
+<p><em>&ldquo;Decide which things ride through the track in a simple way, and which the detail is in.&rdquo;</em></p>
+</blockquote>
+<p><strong>Translation into Subtraction.</strong> Pick one element in the Peak that never mutes for the whole six minutes. Candidates:</p>
+<ul>
+<li>A single pad note</li>
+<li>A hat pattern running 1/16</li>
+<li>A sub drone on the root</li>
+<li>A field-recording bed</li>
+</ul>
+<p>That element is the <strong>constant anchor</strong>. Not interesting on its own — that&rsquo;s the job. It gives the listener a thread through the chaos while everything else mutates.</p>
+<p><strong>Deflation.</strong> An anchor will not save a bad Peak. If the densest state is thin, the anchor exposes the thinness across the whole track. Finishing move, not a rescue move. Handbook §5.8.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>The 8-bar rule and the one-bar silence</h2>
+  
+  <div class="body"><h1>The 8-bar rule and the one-bar silence</h1>
+<p><strong>The rule — Rubin via every producer who ever shipped:</strong> if you enjoyed a loop for eight bars, break it. The moment you want to hear it again is the cue to cut.</p>
+<p><strong>How to break it inside Subtraction:</strong></p>
+<ul>
+<li>Mute one layer for bars 9–16. Re-enable for 17–24.</li>
+<li>Duplicate the drum clip, shift it back 1/16 for bars 25–32.</li>
+<li>Insert one bar of true silence at bar 48. No tail. No tape stop. A gap.</li>
+</ul>
+<p><strong>Silence is compositional.</strong> Rubin: <em>&ldquo;Perfection is obtained when there&rsquo;s no longer anything to take away.&rdquo;</em> (Handbook §5.9; primary source flagged in <code>needs_bib:</code>.) Autechre&rsquo;s <em>Tri Repetae</em> and Aphex&rsquo;s <em>#3</em> both use 2+ bars of near-silence as structural punctuation. Handbook §5.8, §5.9.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s08">
+  <h1>Slide s08 · caveat</h1>
+  <h2>When Subtraction fails you</h2>
+  
+  <div class="body"><h1>When Subtraction fails you</h1>
+<p>Subtraction is not the only arrangement method. Four more are coming — Variation, Skeleton, Resample-and-Mutate, Bounce-and-Arrange. Use Subtraction when it fits; do not force it.</p>
+<p><strong>Subtraction is a bad fit when:</strong></p>
+<ul>
+<li><strong>Your Peak is thin.</strong> Muting a thin Peak gives you a thinner A section. Fix the Peak first or switch to Skeleton.</li>
+<li><strong>The track wants a new idea at bar 80.</strong> Subtraction forbids new elements. If the track is begging for a second motif after the Reduction, that&rsquo;s a Variation Generation session, not a Subtraction one. Handbook §5.4.</li>
+<li><strong>You cannot commit to a densest state.</strong> If your Peak keeps changing, you&rsquo;re still in the writing mentality, not the arrangement mentality. Close the session. Come back with a bounced loop.</li>
+</ul>
+<p><strong>Receipt.</strong> Handbook §1 (&ldquo;The two-mentality problem&rdquo;) and §6.1 are explicit: Writing and Arrangement are separate sessions. Do not mix them.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s09">
+  <h1>Slide s09 · concept</h1>
+  <h2>Drop-one-stem — the subtraction ear-training drill</h2>
+  
+  <div class="body"><h1>Drop-one-stem — the subtraction ear-training drill</h1>
+<p>Stemforge recipe <code>w02-little-by-little-stems</code> splits <code>little_by_little.wav</code> into drums, bass, vocals, and other. We use it to train the ear that Subtraction depends on: <em>what does this track sound like with one stem gone?</em></p>
+<p><strong>A/B listens in this lesson:</strong></p>
+<ul>
+<li>Full mix vs. drums muted → hear what the kick was doing for the low-end perceived loudness.</li>
+<li>Full mix vs. bass alone → hear how much of the &ldquo;vibe&rdquo; was actually one line on one stem.</li>
+<li>Full mix vs. vocal-only → hear the anchor. It is almost never the loudest element.</li>
+</ul>
+<p><strong>What to write in your notebook during the A/B:</strong> <em>Which stem could I mute for the Reduction section of my own track and still keep the listener?</em> That question is the Subtraction method, compressed.</p>
+<p>Source: <code>stemforge</code> repo at <code>/Users/zak/zacharysbrown/stemforge</code>, recipe <code>w02-little-by-little-stems</code> in <code>recipes.yaml</code>.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Full mix vs. drums muted</div><div class="controls"><button data-src="stemforge/lbl_full_mix.wav" class="active">A — dry</button><button data-src="stemforge/lbl_no_drums.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/lbl_full_mix.wav"></audio></div><div class="ab"><div class="label">Full mix vs. bass-only (inverse mute)</div><div class="controls"><button data-src="stemforge/lbl_full_mix.wav" class="active">A — dry</button><button data-src="stemforge/lbl_bass.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/lbl_full_mix.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s10">
+  <h1>Slide s10 · reference</h1>
+  <h2>Finished is better than perfect — Rubin, Conte, and the kitchen timer</h2>
+  
+  <div class="body"><h1>Finished is better than perfect — Rubin, Conte, and the kitchen timer</h1>
+<p><strong>The mantra, Handbook §6.1:</strong> <em>&ldquo;Good is good enough. Finished is better than perfect. Ship the track.&rdquo;</em> — Jack Conte via Rick Rubin (primary sources in <code>needs_bib:</code>).</p>
+<p><strong>Operational rules for this week:</strong></p>
+<ul>
+<li><strong>45-minute time-box</strong> on any single element. Physical kitchen timer. When it rings, commit.</li>
+<li><strong>Huang&rsquo;s half-decibel threshold:</strong> adjustments below perceptual threshold = perfectionism. Stop.</li>
+<li><strong>Eno&rsquo;s <code>Oblique Strategies</code></strong> when stuck: <em>&ldquo;Cut a vital connection.&rdquo;</em> <em>&ldquo;Just carry on.&rdquo;</em> (<code>bib:oblique_strategies_eno</code>)</li>
+<li><strong>Bounce in Place</strong> the Peak <em>before</em> muting. Frozen audio is expensive to un-freeze — that expense is the feature. <code>bib:ableton_live_12_manual</code>.</li>
+</ul>
+<p>The goal this week is not a great track. The goal is a <em>finished</em> track. Great comes from doing this fifty-two times.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s11">
+  <h1>Slide s11 · exercise</h1>
+  <h2>Ship a 3-minute mp3 in one hour</h2>
+  
+  <div class="body"><h1>Ship a 3-minute mp3 in one hour</h1>
+<p><strong>The assignment.</strong></p>
+<ol>
+<li>Take your most recent 16-bar loop. Not a new one — the last one you made.</li>
+<li>Write the Subtraction arrangement <strong>on paper</strong>. Six sections. For each, list which elements drop. No DAW yet.</li>
+<li>Open Ableton. Drop the locators from slide 3. Duplicate the loop across six minutes.</li>
+<li>One-hour timer. Mute backward. Do not add elements. Do not open a synth.</li>
+<li>Insert one bar of true silence somewhere between bar 32 and bar 80.</li>
+<li>Bounce to mp3 at 192 kbps. Three minutes, cut from the middle of the six.</li>
+<li>Upload before next session. Paper plan in the thread next to the file.</li>
+</ol>
+<p><strong>What we grade.</strong> That the file exists. That is the whole criterion. Handbook §6.1; recipe <code>w02-little-by-little-stems</code> for A/B reference.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 3-minute mp3 rough, Subtraction arrangement only. Built from your most recent 16-bar loop. Paper plan before DAW. One-hour time-box on the Arrangement View pass. Dropbox link or Discord upload by next session.</div>
+  
+</section>
+
+
+<section class="slide reference" id="slide-i01">
+  <h1>Slide i01 · reference</h1>
+  <h2>Burial, Untrue (2007) — the prehistory of the inverse drop</h2>
+  
+  <div class="body"><h1>Burial, <em>Untrue</em> — the prehistory of the inverse drop</h1>
+<p>Before &ldquo;drop&rdquo; meant a festival moment, it meant the place where a track removes its own drums. <em>Untrue</em> (Hyperland, 2007) is the Rosetta stone. Listen to &ldquo;Archangel&rdquo; at 1:45: the kick-and-clatter pattern that carried the first minute is gone, and a sidechained pad is left holding the room alone. That gap is the Reduction section, eleven years before producers started naming it.</p>
+<p><strong>Why it reads as Subtraction.</strong> Burial composed in Sound Forge without a grid — no MIDI, no Arrangement View, no locators. The whole record is regions placed on a timeline, track activators in spirit if not in software. When he wanted a section to change, he muted regions. That is the method. <code>bib:burial_soundforge_quote</code>.</p></div>
+  <figure class="figure"><img src="assets/burial-untrue-cover.jpg" alt="Burial, Untrue (Hyperdub HDBCD002, 2007). Cover art by Burial."><figcaption>Burial, Untrue (Hyperdub HDBCD002, 2007). Cover art by Burial.<div class="credit">Hyperdub Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i02">
+  <h1>Slide i02 · reference</h1>
+  <h2>The Creative Act — the book we cite for the thesis</h2>
+  
+  <div class="body"><h1><em>The Creative Act</em> — the book we cite but do not canonize</h1>
+<p>Rick Rubin, <em>The Creative Act: A Way of Being</em> (Penguin Press, 2023). This is the primary source for the Subtraction thesis quote — <em>&ldquo;Perfection is obtained when there&rsquo;s no longer anything to take away&rdquo;</em> — which Rubin in turn borrows from Antoine de Saint-Exupéry&rsquo;s <em>Terre des Hommes</em> (1939).</p>
+<p><strong>Receipt discipline.</strong> We cite Rubin because it is the source most students will actually read. We flag the Saint-Exupéry lineage in <code>needs_bib:</code> so nobody thinks Rubin invented the line. <code>bib:rick_rubin_creative_act</code>, quote policy: short quotes only, cite page.</p>
+<p><strong>Deflation.</strong> The book is ninety percent koan and ten percent studio. For the studio ten percent, it pairs well with <code>Tape Notes #140</code> and the Jack Conte interviews flagged for purchase.</p></div>
+  <figure class="figure"><img src="assets/rubin-creative-act-cover.jpg" alt="Rick Rubin, The Creative Act: A Way of Being (Penguin Press, 2023)."><figcaption>Rick Rubin, The Creative Act: A Way of Being (Penguin Press, 2023).<div class="credit">Penguin Press · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i03">
+  <h1>Slide i03 · reference</h1>
+  <h2>Rubin in the room — a philosophy is a workflow claim</h2>
+  
+  <div class="body"><h1>Rubin in the room — the philosophy is a workflow claim</h1>
+<p>The reason Rubin keeps appearing in an arrangement-method lesson is not the mystique. It is a specific operational claim: that a finished rough is worth more than an unfinished masterpiece, and that the fastest route to a finished rough is to remove, not add.</p>
+<p><strong>What the photo is here to do.</strong> Remind you that the person saying <em>&ldquo;less&rdquo;</em> spent forty years producing records that sound like <em>more</em>. Def Jam, Johnny Cash&rsquo;s <em>American</em> sessions, Slayer, System of a Down. The advice is not monastic — it is post-abundance. Rubin had every option available and the method is what he chose anyway.</p>
+<p><strong>For the Subtraction lesson.</strong> Rubin&rsquo;s frame: finishing <em>is</em> a compositional decision. Muting a track at bar 64 <em>is</em> the composition. Handbook §5.9.</p></div>
+  <figure class="figure"><img src="assets/rubin-studio-shangri-la.jpg" alt="Rick Rubin at Shangri-La Studio, Malibu."><figcaption>Rick Rubin at Shangri-La Studio, Malibu.<div class="credit">Photo credit TBD (photo-sourcer) · editorial / fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i04">
+  <h1>Slide i04 · reference</h1>
+  <h2>Four Tet, Rounds (2003) — the constant anchor</h2>
+  
+  <div class="body"><h1>Four Tet, <em>Rounds</em> (2003) — the constant anchor in practice</h1>
+<p>&ldquo;Unspoken,&rdquo; the fourteen-minute closer on <em>Rounds</em>, is the reference recording for the constant anchor idea. A single drum loop rides through the entire track. Everything else — pads, melodica, chopped vocal, live percussion overdubs — mutates around it.</p>
+<p><strong>What to listen for.</strong> The loop never stops. It gets dirtier, it gets ducked under other material, but it never drops out. Hebden&rsquo;s thesis in <code>Tape Notes #140</code>: <em>&ldquo;Decide which things ride through the track in a simple way, and which the detail is in.&rdquo;</em> The drums ride. The detail is everywhere else. <code>bib:tape_notes_140_four_tet</code>, <code>bib:hebden_unspoken_production</code>.</p>
+<p><strong>Why <em>Rounds</em> and not a newer record.</strong> Because the constraint was tighter — fewer plugins, fewer options, an anchor-first composer working in a smaller room. The method is more visible in the early work.</p></div>
+  <figure class="figure"><img src="assets/four-tet-rounds-cover.jpg" alt="Four Tet, Rounds (Domino WIGCD127, 2003)."><figcaption>Four Tet, Rounds (Domino WIGCD127, 2003).<div class="credit">Domino Recording Co. · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i05">
+  <h1>Slide i05 · reference</h1>
+  <h2>J Dilla, Donuts (2006) — dynamics arc without a drop</h2>
+  
+  <div class="body"><h1>J Dilla, <em>Donuts</em> (2006) — dynamics arc without a drop</h1>
+<p><em>Donuts</em> is thirty-one beats in forty-three minutes. Most sit under two minutes. None have a festival drop. And yet the dynamics arc on something like &ldquo;Stop&rdquo; or &ldquo;Workinonit&rdquo; is unmistakable — sections get denser, sections drop out, a sample mutes for half a bar and returns transformed.</p>
+<p><strong>What this teaches for Subtraction.</strong> Dilla&rsquo;s method on the MPC3000 was pad-level mutes inside a pattern chain. A pad is a track. Muting a pad at bar nine is the Subtraction method, shrunk to a one-minute beat. Charnas 2022, <code>bib:dilla_time_charnas</code>. MPC3000 on display at the Smithsonian, <code>bib:mpc3000_dilla_smithsonian</code>.</p>
+<p><strong>Transfer.</strong> Whatever you think you need six minutes to say, Dilla said in ninety seconds, with fewer elements, by muting harder.</p></div>
+  <figure class="figure"><img src="assets/dilla-donuts-cover.jpg" alt="J Dilla, Donuts (Stones Throw STH2126, 2006)."><figcaption>J Dilla, Donuts (Stones Throw STH2126, 2006).<div class="credit">Stones Throw Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i06">
+  <h1>Slide i06 · concept</h1>
+  <h2>An arrangement view with dynamics arc visible to the eye</h2>
+  
+  <div class="body"><h1>An arrangement view, dynamics arc visible to the eye</h1>
+<p>A well-subtracted track has a shape you can see in the Arrangement View before you hit play. Density low at the edges, peaks around the two-thirds mark, one visible gap inside the reduction.</p>
+<p><strong>What a good reference arrangement looks like on screen:</strong></p>
+<ul>
+<li>Lanes thinning toward the intro and outro (tracks muted → empty regions)</li>
+<li>A dense block in the Peak region where every lane is lit</li>
+<li>One narrow vertical gap — the one-bar silence — inside the Reduction</li>
+<li>A constant lane running edge-to-edge (the anchor)</li>
+</ul>
+<p><strong>Why the screenshot matters.</strong> Subtraction is partly a visual method. If your Arrangement View looks uniform from bar 1 to bar 144, the listener&rsquo;s attention will drift at the same rate. Shape on screen predicts shape in the ear. Handbook §5.3.</p></div>
+  <figure class="figure"><img src="assets/arrangement-dynamics-arc-example.png" alt="A finished Subtraction arrangement in Ableton&#x27;s Arrangement View — density lowest at edges, peak at ~2/3, one-bar silence visible inside the Reduction."><figcaption>A finished Subtraction arrangement in Ableton&#x27;s Arrangement View — density lowest at edges, peak at ~2/3, one-bar silence visible inside the Reduction.<div class="credit">Zak Brown / course assets · original work</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ar01">
+  <h1>Slide ar01 · concept</h1>
+  <h2>The Locators pane — where the template actually lives</h2>
+  
+  <div class="body"><h1>The Locators pane — where the template actually lives</h1>
+<p>Locators are timeline markers in Ableton&rsquo;s Arrangement View. They live in the scrub-area above the tracks. Right-click the ruler → <strong>Add Locator</strong> (or use the ▶ button in the transport toolbar). Rename inline.</p>
+<p><strong>What the Locators pane buys you for Subtraction:</strong></p>
+<ul>
+<li><strong>Named sections that travel.</strong> Locator names bake into bounces as chapter markers — when you export to WAV, a DAW with chapter-mark support shows them. Useful for A/B review.</li>
+<li><strong>Jump-to-section playback.</strong> Number-pad digits 1–9 jump to the first nine locators. This is how you audition the Reduction without scrubbing.</li>
+<li><strong>Snap-to-grid placement.</strong> Hold <code>Cmd</code> while dragging a locator to break snap if you want a one-beat offset. Otherwise it locks to the bar.</li>
+</ul>
+<p><code>bib:ableton_live_12_manual</code>, Arrangement View → Locators.</p></div>
+  <figure class="figure"><img src="assets/ableton-locators-pane.png" alt="Ableton Live 12 Arrangement View, Locators pane with the Subtraction template placed (Intro, A, B, Reduction, Peak, Outro, End)."><figcaption>Ableton Live 12 Arrangement View, Locators pane with the Subtraction template placed (Intro, A, B, Reduction, Peak, Outro, End).<div class="credit">Ableton Live 12 screenshot · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ar02">
+  <h1>Slide ar02 · concept</h1>
+  <h2>Bounce Groups (Live 12.3) — the commit-to-tape button</h2>
+  
+  <div class="body"><h1>Bounce Groups — Live 12.3&rsquo;s commit-to-tape button</h1>
+<p><span class="term">Bounce Groups<span class="gloss"><strong>Bounce Groups</strong> — Live 12.3 feature — bounce an entire group track to a new audio track in one action, with optional Paste Bounced Audio back into place. Turns bounce-and-arrange from a manual ritual into a keyboard shortcut. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> landed in Live 12.3 (2025). Right-click a group track header → <strong>Bounce Group</strong>. Ableton consolidates the group&rsquo;s output to a single audio track, preserving the group&rsquo;s send/insert state as a frozen artifact.</p>
+<p><strong>Parameter table — what the dialog asks:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Render range</td>
+<td>Entire arrangement</td>
+<td>Or loop region, or selected time</td>
+</tr>
+<tr>
+<td>Sample rate</td>
+<td>Project rate (48 kHz)</td>
+<td>Inherits project unless overridden</td>
+</tr>
+<tr>
+<td>Bit depth</td>
+<td>32-bit float</td>
+<td>Keep at 32-bit for reversible headroom</td>
+</tr>
+<tr>
+<td>Include return fx</td>
+<td>On</td>
+<td>Captures send-returns into the bounced region</td>
+</tr>
+<tr>
+<td>Delete source</td>
+<td>Off</td>
+<td>Keep off until you are sure; destructive</td>
+</tr>
+<tr>
+<td>Preserve sidechain</td>
+<td>Group-internal only</td>
+<td>External sidechains are not captured</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For Subtraction.</strong> Bounce the Peak group <em>before</em> you mute anything. Frozen audio is cheap to mute, expensive to un-freeze. The expense is the feature — it forces commitment. <code>bib:ableton_live_12_manual</code>.</p></div>
+  <figure class="figure"><img src="assets/ableton-bounce-groups-dialog.png" alt="Bounce Group dialog, Ableton Live 12.3. Render range, sample rate, bit depth, include returns, delete source toggles."><figcaption>Bounce Group dialog, Ableton Live 12.3. Render range, sample rate, bit depth, include returns, delete source toggles.<div class="credit">Ableton Live 12.3 screenshot · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ar03">
+  <h1>Slide ar03 · concept</h1>
+  <h2>Group tracks, Track Activator, and the mute-backward workflow</h2>
+  
+  <div class="body"><h1>Group tracks, Track Activator, and the mute-backward workflow</h1>
+<p>Group tracks in Ableton are folders for tracks. <code>Cmd+G</code> on a selection creates a group. In the group header, the Track Activator (the green square top-left of the header) toggles the entire group.</p>
+<p><strong>The Subtraction workflow, in six keystrokes:</strong></p>
+<ol>
+<li>Select the Peak loop&rsquo;s tracks. <code>Cmd+G</code>. Group named &ldquo;PEAK&rdquo;.</li>
+<li>Drag-select across the Peak locator region. <code>Cmd+D</code>. Duplicates the region across the timeline.</li>
+<li>Inside each non-Peak locator region, click individual track activators to mute lanes.</li>
+<li><code>Cmd+0</code> (zero) toggles the clip-level activator if you want to mute a single region without muting the lane.</li>
+<li><code>S</code> solos the selected track — used for A/B listening, not arrangement.</li>
+<li><code>M</code> mutes the selected track. <code>0</code> on the track header does the same.</li>
+</ol>
+<p><strong>Distinction.</strong> Track Activator (green square) is what Subtraction uses — it persists across the whole track. Solo (the S) is an audition tool only. Don&rsquo;t confuse them in your arrangement pass. <code>bib:ableton_live_12_manual</code>.</p></div>
+  <figure class="figure"><img src="assets/ableton-group-track-header.png" alt="Annotated group-track header — Track Activator (green square), Solo (S), Mute (M), clip-level activator."><figcaption>Annotated group-track header — Track Activator (green square), Solo (S), Mute (M), clip-level activator.<div class="credit">Ableton Live 12 screenshot, annotated · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ar04">
+  <h1>Slide ar04 · concept</h1>
+  <h2>The six-minute locator template — density curve</h2>
+  
+  <div class="body"><h1>The six-minute locator template — density curve</h1>
+<p>The template from slide <code>s03</code> plotted as a density curve. The y-axis is active-track count (a proxy for arrangement density); the x-axis is time.</p>
+<p><strong>Read the shape, not the numbers.</strong> The curve starts low (Intro: two active lanes), climbs through A and B, drops sharply into the Reduction (one lane), spikes into the Peak (all lanes), and tapers through the Outro. The one-bar silence sits inside the Reduction as the curve&rsquo;s minimum.</p>
+<p><strong>Why this shape and not another.</strong> Handbook §5.3: the Reduction&rsquo;s job is to throw the Peak into relief. If the density curve is monotonic — always climbing or always falling — the Peak lands as predictable. The dip before the peak is what makes the peak feel <em>earned</em>. See the SVG on this slide for the template shape; overlay it on your own arrangement to compare.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" aria-label="Density curve over 6-minute Subtraction template">
+  <rect x="0" y="0" width="800" height="280" fill="#f6f4ef"/>
+  <!-- axes -->
+  <line x1="60" y1="240" x2="760" y2="240" stroke="#222" stroke-width="1.5"/>
+  <line x1="60" y1="40" x2="60" y2="240" stroke="#222" stroke-width="1.5"/>
+  <text x="20" y="50" font-family="monospace" font-size="11" fill="#222">tracks</text>
+  <text x="720" y="258" font-family="monospace" font-size="11" fill="#222">time</text>
+  <!-- locator ticks + labels -->
+  <g font-family="monospace" font-size="10" fill="#222">
+    <line x1="60" y1="240" x2="60" y2="246" stroke="#222"/>
+    <text x="44" y="262">0:00</text>
+    <line x1="175" y1="240" x2="175" y2="246" stroke="#222"/>
+    <text x="150" y="262">0:45</text>
+    <line x1="310" y1="240" x2="310" y2="246" stroke="#222"/>
+    <text x="290" y="262">2:00</text>
+    <line x1="460" y1="240" x2="460" y2="246" stroke="#222"/>
+    <text x="430" y="262">3:15</text>
+    <line x1="520" y1="240" x2="520" y2="246" stroke="#222"/>
+    <text x="498" y="262">3:45</text>
+    <line x1="640" y1="240" x2="640" y2="246" stroke="#222"/>
+    <text x="618" y="262">5:00</text>
+    <line x1="740" y1="240" x2="740" y2="246" stroke="#222"/>
+    <text x="716" y="262">5:45</text>
+  </g>
+  <!-- section labels -->
+  <g font-family="monospace" font-size="11" fill="#555">
+    <text x="95" y="32">Intro</text>
+    <text x="225" y="32">A</text>
+    <text x="375" y="32">B</text>
+    <text x="470" y="32">Red.</text>
+    <text x="555" y="32">Peak</text>
+    <text x="665" y="32">Outro</text>
+  </g>
+  <!-- density curve -->
+  <path d="M 60 210 L 175 180 L 310 130 L 460 215 L 475 220 L 490 150 L 520 60 L 640 170 L 740 225"
+        fill="none" stroke="#c04a2a" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- one-bar silence marker -->
+  <line x1="478" y1="232" x2="478" y2="70" stroke="#222" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="404" y="80" font-family="monospace" font-size="10" fill="#222">one-bar silence</text>
+  <!-- constant anchor baseline -->
+  <line x1="60" y1="225" x2="740" y2="225" stroke="#3a7a4a" stroke-width="1" stroke-dasharray="2 4"/>
+  <text x="610" y="220" font-family="monospace" font-size="10" fill="#3a7a4a">constant anchor</text>
+</svg>
+<div class="caption">Density curve over the Subtraction template. Dip before Peak is what makes the Peak land. Dashed green: the constant anchor rides through.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ar05">
+  <h1>Slide ar05 · concept</h1>
+  <h2>Subtraction vs Bounce-and-Arrange vs Skeleton — side-by-side</h2>
+  
+  <div class="body"><h1>Subtraction vs Bounce-and-Arrange vs Skeleton — side-by-side</h1>
+<p>Three arrangement methods, three entry points. Subtraction is this week&rsquo;s. The other two are coming in later lessons — placed here so you know when not to use Subtraction.</p>
+<p><strong>Subtraction.</strong> Start from the densest Peak. Mute backward. Best when: you already have a strong sixteen-bar loop and finishing is the blocker. Worst when: your Peak is thin.</p>
+<p><strong>Bounce-and-Arrange.</strong> Bounce all stems first, then treat them as audio clips on a fresh Arrangement timeline. Cut, move, silence. Best when: you have too many options in the writing session and need to commit. Worst when: the writing itself is unfinished. Handbook §5.6.</p>
+<p><strong>Skeleton.</strong> Write only the sparsest version — anchor + one melodic idea + one percussive element — for the full six minutes, then build up. Best when: your Peak doesn&rsquo;t exist yet. Worst when: you already have a dense loop you love; Skeleton asks you to throw it away. Handbook §5.4.</p>
+<p>See the diagram for the signal-flow comparison.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  A[Dense 16-bar loop exists?] --&gt;|Yes, I love it| S[Subtraction: mute backward from Peak]
+  A --&gt;|Yes, but too many takes| B[Bounce-and-Arrange: freeze stems then cut]
+  A --&gt;|No, loop is thin| K[Skeleton: build sparse first, add up]
+  S --&gt; Z[Finished 6-min arrangement]
+  B --&gt; Z
+  K --&gt; Z
+</div><div class="caption">Three entry points, one output. The method follows the state of the loop, not the other way round.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-ar06">
+  <h1>Slide ar06 · concept</h1>
+  <h2>Consolidate, Bounce in Place, Freeze, Bounce Group — which one, when</h2>
+  
+  <div class="body"><h1>Consolidate, Bounce in Place, and Freeze — which one, when</h1>
+<p>Three Ableton commands that all look like &ldquo;commit the audio,&rdquo; all different.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+<th>Reversible?</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Consolidate</strong> (<code>Cmd+J</code>)</td>
+<td>Merges a selection of clips on one track into a single audio clip</td>
+<td>No — destructive</td>
+<td>You have ten overlapping MIDI clips in a lane; you want one audio region.</td>
+</tr>
+<tr>
+<td><strong>Bounce in Place</strong></td>
+<td>Renders a track&rsquo;s MIDI + effects to audio, muting the source</td>
+<td>Reversible (source preserved, just muted)</td>
+<td>You want to free up CPU from a plugin chain but keep the option to un-freeze.</td>
+</tr>
+<tr>
+<td><strong>Freeze Track</strong></td>
+<td>Renders to a hidden cache; track becomes non-editable</td>
+<td>Fully reversible — unfreeze restores</td>
+<td>CPU pressure during writing; you&rsquo;re not committing yet.</td>
+</tr>
+<tr>
+<td><strong>Bounce Group</strong> (12.3)</td>
+<td>Renders a group track to a new audio track; source group muted</td>
+<td>Reversible</td>
+<td>Subtraction&rsquo;s checkpoint — commit the Peak before muting.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For Subtraction.</strong> Bounce Group the Peak. Don&rsquo;t Consolidate it — Consolidate is destructive and Subtraction needs the option to un-bounce if the Peak was wrong. <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:burial_soundforge_quote">Burial (interviewee) — Burial on Sound Forge and bedroom production</li><li><code>bib:dilla_time_charnas</code> <em>(unresolved)</em></li><li><code>bib:hebden_unspoken_production</code> <em>(unresolved)</em></li><li><code>bib:mpc3000_dilla_smithsonian</code> <em>(unresolved)</em></li><li id="bib:oblique_strategies_eno">Brian Eno, Peter Schmidt — Oblique Strategies <a href="https://stoney.sb.org/eno/oblique.html" target="_blank" rel="noopener">↗</a></li><li id="bib:rick_rubin_creative_act">Rick Rubin — The Creative Act: A Way of Being — Penguin Press 2023</li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:tape_notes_140_four_tet">Kieran Hebden (Four Tet) — Three — 2024 <a href="https://tapenotes.cc/" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 96600}, {"id": "ch001", "title": "The loop is finished. You are the one who is not.", "start_ms": 97000, "end_ms": 195650}, {"id": "ch002", "title": "Subtraction, stated plainly", "start_ms": 196050, "end_ms": 315450}, {"id": "ch003", "title": "Place the locators before you touch a sound", "start_ms": 315850, "end_ms": 426150}, {"id": "ch004", "title": "Build the Peak first \u2014 the densest sixteen bars", "start_ms": 426550, "end_ms": 540550}, {"id": "ch005", "title": "Mute backward: Reduction, Breakdown, Intro", "start_ms": 540950, "end_ms": 658050}, {"id": "ch006", "title": "The constant anchor \u2014 Hebden on what rides through", "start_ms": 658450, "end_ms": 790300}, {"id": "ch007", "title": "The 8-bar rule and the one-bar silence", "start_ms": 790700, "end_ms": 904900}, {"id": "ch008", "title": "When Subtraction fails you", "start_ms": 905300, "end_ms": 1020800}, {"id": "ch009", "title": "Drop-one-stem \u2014 the subtraction ear-training drill", "start_ms": 1021200, "end_ms": 1130550}, {"id": "ch010", "title": "Finished is better than perfect \u2014 Rubin, Conte, and the kitchen timer", "start_ms": 1130950, "end_ms": 1261000}, {"id": "ch011", "title": "Ship a 3-minute mp3 in one hour", "start_ms": 1261400, "end_ms": 1381700}, {"id": "ch012", "title": "Outro", "start_ms": 1382100, "end_ms": 1443400}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

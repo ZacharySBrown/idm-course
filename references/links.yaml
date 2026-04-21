@@ -1,0 +1,49 @@
+# Bucket C — link-only references. Do not mirror content locally.
+# The pdf-fetcher agent validates each URL returns 200-OK and writes back.
+
+_meta:
+  note: "Wave 2 pdf-fetcher populates validated_at timestamps. Stub seeded from Phase 1."
+
+links:
+  - id: bib:soundtoys_decapitator_manual
+    url: https://www.soundtoys.com/support/
+    reason: login-gated vendor manual, per-plugin PDFs behind auth
+  - id: bib:song_exploder_porter_robinson
+    url: https://songexploder.net/porter-robinson
+    reason: licensed podcast content, timestamp-link only
+  - id: bib:watmm_forum_general
+    url: https://forum.watmm.com/
+    reason: UGC, link to specific thread URLs only
+  - id: bib:rbma_rza_lecture
+    url: https://web.archive.org/web/*/rbma.com/
+    reason: RBMA shut down, web.archive captures only
+  - id: bib:fridmann_davefridmann_com
+    url: https://www.davefridmann.com/
+    reason: artist site, link-only
+  - id: bib:tarbox_road_equipment
+    url: http://www.tarboxroadstudios.com/equipment.html
+    reason: studio site, link-only
+  - id: bib:fredonia_srt_program
+    url: https://www.fredonia.edu/academics/colleges-schools/school-music/program/sound-recording-technology
+    reason: institution page
+  - id: bib:aphex_pitchfork_microtuning
+    url: https://pitchfork.com/
+    reason: paywalled outlet, link-only
+  - id: bib:happymag_mgmt_oracular_engineering
+    url: https://happymag.tv/engineering-the-sound-oracular-spectacular-by-mgmt/
+    reason: licensed editorial
+  - id: bib:audiotechnology_lonerism_feature
+    url: https://www.audiotechnology.com/features/lonerism-tame-impala-in-the-studio
+    reason: licensed editorial
+  - id: bib:zaireeka_wikipedia
+    url: https://en.wikipedia.org/wiki/Zaireeka
+    reason: encyclopedia, link-only
+  - id: bib:reverbmachine_rdj_gear
+    url: https://reverbmachine.com/
+    reason: third-party blog analysis
+  - id: bib:discogs_syro
+    url: https://www.discogs.com/
+    reason: database, cite-by-ID-only
+  - id: bib:fredonia_grammy_announcement
+    url: https://www.fredonia.edu/news/articles/suny-fredonia%E2%80%99s-gottinger-and-alumnus-among-grammy-nominees
+    reason: press release, link-only

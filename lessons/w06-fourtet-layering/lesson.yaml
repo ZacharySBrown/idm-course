@@ -1,0 +1,527 @@
+id: w06-fourtet-layering
+week: 6
+title: 'Week 6 — Four Tet: subliminal layering & preset discipline'
+duration_minutes: 45
+pillars:
+- four_tet
+- layering
+concepts:
+- subliminal_layering
+- preset_discipline
+- kick_stack
+- midi_randomization
+- laptop_speaker_mixing
+- arrangement_primacy
+ableton_surface:
+- simpler
+- drum_rack
+- operator
+- note_chance
+- midi_pitch_transformer
+- velocity_shaper
+- utility
+- eq_eight
+- soundtoys_microshift
+prereqs:
+- w03-simpler-basics
+- w05-aphex-tuning
+teasers: []
+stemforge:
+  recipes:
+  - w06-moanin-glitch-layers
+references:
+- bib:tape_notes_140_four_tet
+- bib:ableton_live_12_manual
+- bib:henke_granulator_iii
+- bib:stemforge_repo
+needs_bib:
+- title: Four Tet — Rounds (2003) production interview (Pitchfork / Sound on Sound equivalent covering 200–300 sample count, AudioMulch + Cool Edit Pro)
+  reason: We reference Rounds-era sample counts and the AudioMulch/Cool Edit chain; currently only the Zak Handbook synthesizes this, no primary bib entry exists.
+- title: Four Tet — Three (2022) press / album notes for release date and track list
+  reason: We cite the album Three in several slides; the canonical press/label entry is not yet in bibliography.json.
+slides:
+- id: s01
+  kind: title
+  heading: Henke shipped a granulator, then mixed a record on laptop speakers
+  script_md: script/s01-cold-open.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:fourtet_daydream_repeat
+- id: s02
+  kind: concept
+  heading: Preset discipline — Omnisphere as the whole palette
+  body_md: slides/s02-preset-discipline.md
+  script_md: script/s02-preset-discipline.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:fourtet_daydream_repeat
+- id: s03
+  kind: caveat
+  heading: The can't-be-bothered framing is performative
+  body_md: slides/s03-caveat-performative.md
+  script_md: script/s03-caveat-performative.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:fourtet_daydream_repeat
+  - song:fourtet_unspoken
+- id: s04
+  kind: concept
+  heading: Subliminal layering — the Fridge-era precedent
+  body_md: slides/s04-subliminal-philosophy.md
+  script_md: script/s04-subliminal-philosophy.md
+  visuals: []
+  audio_examples: []
+- id: s05
+  kind: concept
+  heading: Daydream Repeat — the four-layer kick stack
+  body_md: slides/s05-kick-stack.md
+  script_md: script/s05-kick-stack.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: Main kick alone vs full four-layer stack
+    a: main kick sample — solo
+    b: main + sub sine + transient click + sub body — summed
+  song_refs:
+  - song:fourtet_daydream_repeat
+- id: s06
+  kind: concept
+  heading: Skater — the bell doubling the bass you cannot hear
+  body_md: slides/s06-skater-bell.md
+  script_md: script/s06-skater-bell.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: Skater bass with bell muted vs unmuted (headphones)
+    a: bass solo — bell muted
+    b: bass + bell summed — note the depth shift
+  song_refs:
+  - song:fourtet_skater
+- id: s07
+  kind: concept
+  heading: Looking At Your Pager — 15% velocity, 15% octave
+  body_md: slides/s07-randomization-trick.md
+  script_md: script/s07-randomization-trick.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:fourtet_pager
+- id: s08
+  kind: reference
+  heading: Ableton wiring — Note Chance + Pitch Transformer
+  body_md: slides/s08-ableton-wiring.md
+  script_md: script/s08-ableton-wiring.md
+  visuals: []
+  audio_examples: []
+- id: s09
+  kind: caveat
+  heading: Laptop-speaker mixing — the cost
+  body_md: slides/s09-laptop-speakers.md
+  script_md: script/s09-laptop-speakers.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:fourtet_daydream_repeat
+- id: s10
+  kind: reference
+  heading: Rounds-era Hebden — the same discipline, different decade
+  body_md: slides/s10-rounds-era.md
+  script_md: script/s10-rounds-era.md
+  visuals: []
+  audio_examples: []
+  song_refs:
+  - song:fourtet_unspoken
+- id: s11
+  kind: concept
+  heading: Stemforge glitch render on Moanin' — what to listen for
+  body_md: slides/s11-stemforge-moanin.md
+  script_md: script/s11-stemforge-moanin.md
+  visuals: []
+  audio_examples:
+  - type: ab
+    label: Moanin' dry vs glitch-pipeline wet (stemforge w06)
+    a: build/audio/stemforge-renders/w06/moanin_dry.wav
+    b: build/audio/stemforge-renders/w06/moanin_glitch.wav
+- id: s12
+  kind: exercise
+  heading: Build the four-layer kick on a Moanin' stem
+  body_md: slides/s12-exercise.md
+  script_md: script/s12-exercise.md
+  visuals: []
+  audio_examples: []
+  deliverable: A rendered 8-bar loop at 120 BPM over the Moanin' glitch stem, with a four-layer kick stack (main + sub sine + transient click + sub body) on its own group. Bounce a stereo WAV and a stem per layer. Notes file naming each layer's one job.
+
+# --- Expansion: reference / portrait slides ---
+- id: i01
+  kind: reference
+  heading: Kieran Hebden — laptop, headphones, and a TR-8 he has already put away
+  body_md: slides/i01-hebden-portrait.md
+  images:
+    - src: assets/hebden-portrait.jpg
+      caption: "Kieran Hebden in studio, Three promo cycle (2024)."
+      credit: "Photo: press/editorial — to be sourced"
+      license: "fair-use commentary"
+- id: i02
+  kind: reference
+  heading: Three (2024) — the album the receipts describe
+  body_md: slides/i02-three-album.md
+  images:
+    - src: assets/three-cover.jpg
+      caption: "Four Tet, Three (Text Records, 15 March 2024)."
+      credit: "Artwork: Text Records"
+      license: "fair-use commentary"
+  song_refs:
+  - song:fourtet_daydream_repeat
+  - song:fourtet_skater
+  - song:fourtet_pager
+- id: i03
+  kind: reference
+  heading: Rounds (2003) — the other Hebden
+  body_md: slides/i03-rounds-parallel.md
+  images:
+    - src: assets/rounds-cover.jpg
+      caption: "Four Tet, Rounds (Domino, 6 May 2003)."
+      credit: "Artwork: Domino Records"
+      license: "fair-use commentary"
+  song_refs:
+  - song:fourtet_unspoken
+
+# --- Expansion: kick-stack mini-module ---
+- id: k01
+  kind: concept
+  heading: Kick-stack anatomy — the four-layer mental model
+  body_md: slides/k01-kick-stack-overview.md
+  song_refs:
+  - song:fourtet_daydream_repeat
+- id: k02
+  kind: concept
+  heading: Kick-stack frequency bands — one layer per band
+  body_md: slides/k02-kick-frequency-diagram.md
+  diagrams:
+    - svg_content: |
+        <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+          <rect width="800" height="360" fill="#f6f4ee"/>
+          <text x="20" y="30" font-family="monospace" font-size="16" fill="#222">Kick-stack frequency bands (log-ish Hz, Zak estimate)</text>
+          <g font-family="monospace" font-size="12" fill="#222">
+            <text x="20" y="90">transient click</text>
+            <rect x="180" y="72" width="480" height="24" fill="#c97a4a" opacity="0.85"/>
+            <text x="670" y="90">3k–8k Hz</text>
+            <text x="20" y="160">main kick</text>
+            <rect x="90" y="142" width="360" height="24" fill="#5a7a8f" opacity="0.85"/>
+            <text x="460" y="160">80–400 Hz body + 1–3k click</text>
+            <text x="20" y="230">sub body</text>
+            <rect x="60" y="212" width="180" height="24" fill="#3e5f3a" opacity="0.85"/>
+            <text x="250" y="230">40–120 Hz</text>
+            <text x="20" y="300">sub sine</text>
+            <rect x="45" y="282" width="90" height="24" fill="#2a2a5a" opacity="0.85"/>
+            <text x="145" y="300">30–60 Hz (F1)</text>
+          </g>
+          <line x1="180" y1="340" x2="780" y2="340" stroke="#222" stroke-width="1"/>
+          <text x="180" y="356" font-family="monospace" font-size="10" fill="#222">20 Hz</text>
+          <text x="760" y="356" font-family="monospace" font-size="10" fill="#222">20 kHz</text>
+        </svg>
+      caption: "Each layer chosen for its dominant band, not EQed into one. Inferred bands — flagged as estimate, not interview source."
+  song_refs:
+  - song:fourtet_daydream_repeat
+- id: k03
+  kind: concept
+  heading: The iteration process — months of club playbacks
+  body_md: slides/k03-kick-iteration.md
+  song_refs:
+  - song:fourtet_daydream_repeat
+- id: k04
+  kind: concept
+  heading: Checklist — how to audit your own stack
+  body_md: slides/k04-kick-what-to-check.md
+
+# --- Expansion: technical diagrams ---
+- id: d01
+  kind: concept
+  heading: Note Chance + Pitch Transformer wiring
+  body_md: slides/d01-note-chance-wiring.md
+  diagrams:
+    - mermaid: |
+        graph LR
+          A[MIDI clip] --> B[Velocity Range ±15%]
+          B --> C[note-on velocity randomized per trigger]
+          A --> D[duplicate notes +12 semitones]
+          D --> E{Chance 15%}
+          E -->|fires| F[octave-up replacement]
+          E -->|skips| G[original plays]
+      caption: "Live 12 native primitives — Velocity Range + Note Chance — implement the Hebden 15/15 trick."
+  song_refs:
+  - song:fourtet_pager
+- id: d02
+  kind: concept
+  heading: Skater doubling — one MIDI clip, three octave layers
+  body_md: slides/d02-skater-doubling-diagram.md
+  diagrams:
+    - mermaid: |
+        graph LR
+          M[MIDI clip<br/>F minor bass walk] --> T1[Omnisphere Plectra Sub<br/>F1–F2, 0 dB]
+          M --> T2[Same patch +24 semi<br/>F3–F4, −20 dB]
+          M --> T3[Same patch +36 semi<br/>F4–F5, −24 dB, reverb]
+          T1 --> G[group bus → brightness halo]
+          T2 --> G
+          T3 --> G
+      caption: "No counter-melody. Same notes, three octaves. The halo reveals the fundamental on small speakers."
+  song_refs:
+  - song:fourtet_skater
+
+# --- Expansion: Omnisphere gear deep-dive (gd-omni-01..14) ---
+- id: gd-omni-01
+  kind: gear_deep_dive
+  heading: Spectrasonics Omnisphere — the whole palette
+  body_md: slides/gd-omni-01-title.md
+  images:
+    - src: assets/gear-omnisphere-browser-hero.jpg
+      caption: "Omnisphere 2.8 preset browser open on category pane."
+      credit: "Spectrasonics marketing asset / fair-use commentary"
+      license: "fair-use commentary"
+  references:
+  - bib:spectrasonics_omnisphere_docs
+  - bib:tape_notes_140_four_tet
+- id: gd-omni-02
+  kind: gear_deep_dive
+  heading: Annotated tour 1/5 — the preset browser
+  body_md: slides/gd-omni-02-browser.md
+  gear_annotations:
+    - src: assets/gear-omnisphere-browser.jpg
+      caption: "Preset browser — alphabetical column is the only affordance Hebden uses."
+      callouts:
+        - label: "category pane"
+          note: "Bass / Keyboards / Leads / Pads / Textures / Grooves / Arps+BPM / Hits"
+        - label: "preset list"
+          note: "Alphabetical sort — Hebden's default scroll"
+        - label: "Sound Match"
+          note: "Timbrally-similar suggestions — unused by Hebden"
+        - label: "favorites"
+          note: "Per-track shortlist, lightly used"
+  references:
+  - bib:spectrasonics_omnisphere_docs
+- id: gd-omni-03
+  kind: gear_deep_dive
+  heading: Annotated tour 2/5 — patch layer architecture
+  body_md: slides/gd-omni-03-layers.md
+  references:
+  - bib:spectrasonics_omnisphere_docs
+- id: gd-omni-04
+  kind: gear_deep_dive
+  heading: Annotated tour 3/5 — the FX chain page
+  body_md: slides/gd-omni-04-fx-chain.md
+  references:
+  - bib:spectrasonics_omnisphere_docs
+- id: gd-omni-05
+  kind: gear_deep_dive
+  heading: Annotated tour 4/5 — Arpeggiator + Orb
+  body_md: slides/gd-omni-05-arp-orb.md
+  references:
+  - bib:spectrasonics_omnisphere_docs
+- id: gd-omni-06
+  kind: gear_deep_dive
+  heading: Annotated tour 5/5 — signal path in one line
+  body_md: slides/gd-omni-06-technique.md
+  diagrams:
+    - mermaid: |
+        graph LR
+          S[Soundsources<br/>+ synth osc] --> LF[Layer filter + env]
+          LF --> LFX[Layer FX x4]
+          LFX --> PF[Part filter]
+          PF --> PFX[Part FX x4]
+          PFX --> AFX[Aux FX x4]
+          AFX --> OUT[master out]
+      caption: "Omnisphere per-patch signal chain. For Hebden, everything downstream of Soundsources is pre-baked by the preset author."
+- id: gd-omni-07
+  kind: gear_deep_dive
+  heading: Technique — Hebden's alphabetical browse-and-grab
+  body_md: slides/gd-omni-07-workflow.md
+  references:
+  - bib:tape_notes_140_four_tet
+  song_refs:
+  - song:fourtet_skater
+- id: gd-omni-08
+  kind: gear_deep_dive
+  heading: Technique continued — interview receipts
+  body_md: slides/gd-omni-08-receipts.md
+  references:
+  - bib:tape_notes_140_four_tet
+- id: gd-omni-09
+  kind: gear_deep_dive
+  heading: Underlying algorithm — STEAM + wavetable hybrid
+  body_md: slides/gd-omni-09-algorithm.md
+  references:
+  - bib:spectrasonics_omnisphere_docs
+  - bib:roads_computer_music_tutorial
+- id: gd-omni-10
+  kind: gear_deep_dive
+  heading: Algorithm continued — what the engine cannot do
+  body_md: slides/gd-omni-10-constraints.md
+- id: gd-omni-11
+  kind: gear_deep_dive
+  heading: Ableton bridge — Wavetable + Operator running presets
+  body_md: slides/gd-omni-11-ableton-bridge.md
+  references:
+  - bib:ableton_live_12_manual
+- id: gd-omni-12
+  kind: gear_deep_dive
+  heading: Parallel Max for Live devices
+  body_md: slides/gd-omni-12-max-parallels.md
+  references:
+  - bib:henke_granulator_iii
+- id: gd-omni-13
+  kind: gear_deep_dive
+  heading: Exercise A — replicate — three presets, 16 bars, no tweaking
+  body_md: slides/gd-omni-13-exercise-a.md
+  deliverable: A 16-bar sketch using three Omnisphere (or Wavetable) presets, loaded alphabetically and committed without parameter edits. Bounce stereo WAV; session named by preset names.
+- id: gd-omni-14
+  kind: gear_deep_dive
+  heading: Exercise B — explore — four-layer kick from Simpler + Operator only
+  body_md: slides/gd-omni-14-exercise-b.md
+  deliverable: A four-layer kick stack built only with Ableton Simpler + Operator, tuned to F1. Render four solo stems + the summed stack. Notes file naming each layer's job.
+
+# --- Expansion: AudioMulch + Cool Edit Pro gear deep-dive (gd-audmulch-01..12) ---
+- id: gd-audmulch-01
+  kind: gear_deep_dive
+  heading: AudioMulch + Cool Edit Pro — the Rounds chain
+  body_md: slides/gd-audmulch-01-title.md
+  images:
+    - src: assets/gear-audiomulch-canvas.jpg
+      caption: "AudioMulch 2.x canvas with connected Contraptions."
+      credit: "Ross Bencina / audiomulch.com — fair-use commentary"
+      license: "fair-use commentary"
+  references:
+  - bib:audiomulch_docs
+  - bib:cool_edit_pro_legacy
+  - bib:four_tet_rounds_interviews
+- id: gd-audmulch-02
+  kind: gear_deep_dive
+  heading: Annotated tour — the patching environment
+  body_md: slides/gd-audmulch-02-patching.md
+  gear_annotations:
+    - src: assets/gear-audiomulch-canvas.jpg
+      caption: "Canvas + Metasurface — the instrument surface."
+      callouts:
+        - label: "canvas"
+          note: "drag-and-drop Contraptions, patch with cables"
+        - label: "Metasurface"
+          note: "XY parameter-morph between named scenes"
+        - label: "output bus"
+          note: "always-capturable — the render is live audio"
+  references:
+  - bib:audiomulch_docs
+- id: gd-audmulch-03
+  kind: gear_deep_dive
+  heading: The paradigm shift — audio as a stream, not a clip
+  body_md: slides/gd-audmulch-03-paradigm.md
+  diagrams:
+    - mermaid: |
+        graph LR
+          A[DAW model: audio = clip on timeline] -.contrast.-> B[AudioMulch: audio = stream through patch]
+          B --> C[source file]
+          C --> D[contraption 1<br/>filter/granulate]
+          D --> E[contraption 2<br/>delay/reverb]
+          E --> F[print to disk<br/>as new sample]
+      caption: "Two paradigms side by side. The print becomes the source material for DAW arrangement later."
+- id: gd-audmulch-04
+  kind: gear_deep_dive
+  heading: Technique — the Rounds sample pipeline
+  body_md: slides/gd-audmulch-04-technique.md
+  references:
+  - bib:four_tet_rounds_interviews
+  - bib:tape_notes_140_four_tet
+  song_refs:
+  - song:fourtet_unspoken
+- id: gd-audmulch-05
+  kind: gear_deep_dive
+  heading: Underlying algorithm — modular routing as instrument
+  body_md: slides/gd-audmulch-05-algorithm.md
+  references:
+  - bib:roads_computer_music_tutorial
+  - bib:audiomulch_docs
+- id: gd-audmulch-06
+  kind: gear_deep_dive
+  heading: Constraints and why they mattered
+  body_md: slides/gd-audmulch-06-constraints.md
+- id: gd-audmulch-07
+  kind: gear_deep_dive
+  heading: Ableton bridge — Effect Rack with Chain Selector
+  body_md: slides/gd-audmulch-07-ableton-bridge.md
+  references:
+  - bib:ableton_live_12_manual
+- id: gd-audmulch-08
+  kind: gear_deep_dive
+  heading: Max for Live as the truer parallel
+  body_md: slides/gd-audmulch-08-max-patches.md
+  references:
+  - bib:henke_granulator_iii
+- id: gd-audmulch-09
+  kind: gear_deep_dive
+  heading: What else did AudioMulch do in IDM
+  body_md: slides/gd-audmulch-09-creative-uses.md
+- id: gd-audmulch-10
+  kind: gear_deep_dive
+  heading: Modern workflow parallels
+  body_md: slides/gd-audmulch-10-modern-parallels.md
+- id: gd-audmulch-11
+  kind: gear_deep_dive
+  heading: Exercise — three-stage Effect Rack with chain-swap morph
+  body_md: slides/gd-audmulch-11-exercise.md
+  deliverable: A 16-bar render of moanin_glitch.wav through a three-chain Audio Effect Rack, with Chain Selector automated across all three chains. Reimport the render, arrange with it, and do not re-audition the source.
+- id: gd-audmulch-12
+  kind: gear_deep_dive
+  heading: Coda — two dead tools, one live question
+  body_md: slides/gd-audmulch-12-shrug.md
+
+images_needed:
+  - slug: hebden-portrait
+    description: "Kieran Hebden portrait, Three (2024) promo cycle, laptop + HD25s framing preferred"
+    preferred_angle: "waist-up"
+    lesson_context: "W6 reference slide i01"
+  - slug: three-cover
+    description: "Four Tet — Three (2024) official album art, 1:1 square, hi-res"
+    lesson_context: "W6 reference slide i02"
+  - slug: rounds-cover
+    description: "Four Tet — Rounds (2003) official album art, 1:1 square, hi-res"
+    lesson_context: "W6 reference slide i03"
+  - slug: gear-omnisphere-browser-hero
+    description: "Omnisphere 2.8 preset browser screenshot, showing alphabetical category list prominent"
+    preferred_angle: "full-window"
+    lesson_context: "W6 Omnisphere deep-dive hero gd-omni-01"
+  - slug: gear-omnisphere-browser
+    description: "Omnisphere browser closeup for annotated tour — category pane + preset list + Sound Match + favorites visible"
+    lesson_context: "W6 Omnisphere deep-dive tour gd-omni-02"
+  - slug: gear-omnisphere-layers
+    description: "Omnisphere edit page showing Part A / Part B + two Layers per part architecture"
+    lesson_context: "W6 Omnisphere deep-dive gd-omni-03 (optional — diagram is primary)"
+  - slug: gear-omnisphere-fx
+    description: "Omnisphere FX page with Layer / Part / Aux slots populated"
+    lesson_context: "W6 Omnisphere deep-dive gd-omni-04 (optional)"
+  - slug: gear-omnisphere-orb
+    description: "Omnisphere Orb page — circular modulation XY surface"
+    lesson_context: "W6 Omnisphere deep-dive gd-omni-05"
+  - slug: gear-audiomulch-canvas
+    description: "AudioMulch 2.x canvas screenshot with Contraptions patched end-to-end and Metasurface visible"
+    preferred_angle: "full-window"
+    lesson_context: "W6 AudioMulch deep-dive hero gd-audmulch-01, tour gd-audmulch-02"
+  - slug: cool-edit-pro-ui
+    description: "Cool Edit Pro waveform editor screenshot circa 2003 for Rounds-era context"
+    lesson_context: "W6 AudioMulch deep-dive gd-audmulch-01 / gd-audmulch-04 (optional)"
+  - slug: ableton-note-chance
+    description: "Ableton Live 12 clip editor with Chance and Velocity Range handles visible on selected notes"
+    lesson_context: "W6 diagram slide d01, reinforces s07/s08"
+  - slug: ableton-pitch-transformer
+    description: "Ableton Live 12 Clip Transform → Pitch dialog with probabilistic shift enabled"
+    lesson_context: "W6 diagram slide d01, reinforces s08"
+  - slug: kick-spectrogram
+    description: "Spectrogram of a four-layer kick stack rendered — four distinct frequency bands visible over time"
+    lesson_context: "W6 kick-stack module k02 (optional complement to the SVG)"
+
+episode:
+  title: IDM W6 — Four Tet, subliminal layering, preset discipline
+  chapters_from_slides: true
+  intro_script: script/intro.md
+  outro_script: script/outro.md
+  target_runtime_minutes: 28

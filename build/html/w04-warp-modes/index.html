@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W4 — Week 4 — Warp modes as sound design</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W4</span>
+  <span class="title-chip">Week 4 — Warp modes as sound design</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>Warp is not for tempo matching</h2>
+  
+  <div class="body"><h1>Warp is not for tempo matching</h1>
+<p>Confession. Warp lives in Live&rsquo;s Sample tab next to Fade, Gain, and a tempo box. The manual files it under <em>time-stretching</em>. Every tutorial on YouTube treats it as the thing you click to make a sample line up with the grid.</p>
+<p>That framing is correct, and it is also a waste of the feature.</p>
+<p>Warp mode is a <em>sound-design</em> surface. Pick the wrong one and a kick drum turns into wet cardboard. Pick the right one and a six-second drone becomes a sixteen-bar texture bed without a plugin in sight.</p>
+<p>This week we treat the Warp dropdown as an instrument. Six modes, each with its own character, its own cost. We will A/B them on one stem — the drums from NEU&rsquo;s &ldquo;Hallogallo&rdquo; — and pay attention to the thing that changes: transient shape, vowel content, noise floor.</p>
+<p>Cite: Live 12 manual, Warp Modes section — <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>Why Hallogallo is the test clip</h2>
+  
+  <div class="body"><h1>Why Hallogallo is the test clip</h1>
+<p>NEU — &ldquo;Hallogallo&rdquo; (1972). Klaus Dinger on drums, Michael Rother on guitar, Conny Plank at the desk. Ten minutes and six seconds of motorik: four-on-the-floor kick, closed hat on every eighth, snare on the two and the four, zero fills.</p>
+<p>For our purposes it is almost ideal material:</p>
+<ul>
+<li><strong>Repetitive</strong> — a warp artifact repeats too, so you can hear it clearly</li>
+<li><strong>Transient-rich</strong> — every kick and snare is a separate event to smear or not smear</li>
+<li><strong>Drone-adjacent</strong> — the guitar layer is effectively a static texture, which is what Texture mode eats</li>
+</ul>
+<p>Recipe: <code>stemforge:w04-hallogallo-warp-ab</code>. The source WAV for the Hallogallo track (see <code>stemforge-demo-material/recipes.yaml</code>) gets split with the default pipeline, no slicing — you end up with a clean <code>drums</code> stem and an <code>other</code> stem (guitar plus drift). We work off the drums stem for the warp A/B; we keep the <code>other</code> stem in the back pocket for Texture mode later.</p>
+<p>Cite: <code>bib:stemforge_repo</code>.</p></div>
+  <figure class="figure"><img src="assets/neu-1972-cover.jpg" alt="NEU (1972), Brain Records. Cover by Klaus Dinger. Hallogallo is track 1."><figcaption>NEU (1972), Brain Records. Cover by Klaus Dinger. Hallogallo is track 1.<div class="credit">Brain/Philips original art · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s03">
+  <h1>Slide s03 · reference</h1>
+  <h2>The warp-mode menu, short version</h2>
+  
+  <div class="body"><h1>The warp-mode menu, short version</h1>
+<p>Live 12 ships six modes. In plain language:</p>
+<ul>
+<li><strong>Beats</strong> — slices on transients, resyncs slices to the grid. Kicks stay punchy; held notes glitch. Drums, percussion, short one-shots.</li>
+<li><strong>Tones</strong> — monophonic pitch-tracking granular. Vocals, single-note bass, solo synths.</li>
+<li><strong>Texture</strong> — polyphonic granular. Pads, chords, noisy layers, drones. Flux and Grain Size are creative controls.</li>
+<li><strong>Re-Pitch</strong> — no time-stretching. Speed and pitch are locked together. Varispeed tape simulator. Chipmunk soul lives here.</li>
+<li><strong>Complex</strong> — legacy phase-vocoder. Use Complex Pro instead.</li>
+<li><strong>Complex Pro</strong> — phase-vocoder with Formants and Envelope. Full mixes, layered sources, anything polyphonic where Texture is too weird.</li>
+</ul>
+<p>Rule of thumb: if the audio is mostly transient, Beats. Mostly tonal, Tones or Complex Pro. Mostly drone, Texture. Want a tape deck, Re-Pitch.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>, Warp Modes section.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>Complex Pro — Formants and Envelope</h2>
+  
+  <div class="body"><h1>Complex Pro — Formants and Envelope</h1>
+<p>Two controls do the heavy lifting.</p>
+<p><strong>Formants (0–100).</strong> Formants are the resonant bumps in a signal&rsquo;s spectrum — for a voice, the vowel frequencies. Set to 100%, Complex Pro preserves them across pitch shifts. Pitch a vocal up an octave with Formants 100 and it still says &ldquo;ah,&rdquo; not &ldquo;eeeeh.&rdquo; Set to 0 and you get the aliased-chipmunk character — cheap and sometimes exactly right.</p>
+<p><strong>Envelope (16 / 32 / 64 / 128 / 256).</strong> Window size, in samples. Smaller windows = better time resolution, worse frequency resolution; larger = the inverse. Defaults:</p>
+<ul>
+<li><strong>Envelope 64</strong> — hi-hats, cymbals, anything with fast transients</li>
+<li><strong>Envelope 128</strong> — most full mixes and mid-range content</li>
+<li><strong>Envelope 256</strong> — bass, kick sustain, sub-heavy material</li>
+</ul>
+<p>If the clip is smeary on the top end, drop to 64. If the bass is chattering, raise to 256.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Hallogallo drums — Complex Pro default vs Envelope 256</div><div class="controls"><button data-src="stemforge/hallogallo_drums.wav" class="active">A — dry</button><button data-src="stemforge/hallogallo_drums.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/hallogallo_drums.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>Beats mode — transients intact, grid hostile</h2>
+  
+  <div class="body"><h1>Beats mode — transients intact, grid hostile</h1>
+<p>Beats mode is a slicer wearing a warp costume. Under the hood: detect transients, cut the audio at every marker, play each slice at its original speed, and truncate or loop the tail to hit the next grid position.</p>
+<p>Three controls matter:</p>
+<ul>
+<li><strong>Preserve</strong> (1/2, 1/4, 1/8, 1/16, 1/32, Transients). Sets the slice grid. Preserve 1/16 = a slice every sixteenth. Transients = slice at every detected hit.</li>
+<li><strong>Transient Loop Mode</strong> (Loop / Loop Off / Loop Forward). Off = clean tails, occasional gaps. Loop = fills gaps by looping the slice tail — can artifact on held notes.</li>
+<li><strong>Transient Envelope</strong> (0–100). Short decay on each slice. 100 = no envelope, clicks at every edge. 0 = fast fade, zipper noise on sustained content.</li>
+</ul>
+<p>Beats mode preserves kick punch. It also mangles anything tonal — sustained synths, vocals, chord stabs. Use it on drums and you are safe. Use it on a pad and you will notice.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s06">
+  <h1>Slide s06 · caveat</h1>
+  <h2>The pitfall — Complex Pro softens kicks</h2>
+  
+  <div class="body"><h1>The pitfall — Complex Pro softens kicks</h1>
+<p>Drop the Hallogallo drums stem on a track, set warp mode to Complex Pro, and listen to the kick. Something is off. The leading edge is rounded. The click is gone. It reads more like a floor tom than a kick.</p>
+<p>This is a known cost of Complex Pro, and it is not a bug. Phase-vocoder reconstruction averages spectral frames across the Envelope window; transients get spread across adjacent frames and lose their attack. Per the compass notes: <em>&ldquo;Complex Pro softens kick transients.&rdquo;</em></p>
+<p>Two fixes:</p>
+<ol>
+<li><strong>Nudge warp markers.</strong> For every kick, drag the warp marker a few milliseconds <em>before</em> the transient. This gives the algorithm a head-start so the attack sits on the grid cleanly.</li>
+<li><strong>Layer Beats underneath.</strong> Duplicate the track, set the duplicate to Beats mode, high-pass it around 80 Hz or so, low-volume underneath. The original carries the body; the Beats copy carries the punch.</li>
+</ol>
+<p>Pick per source. Do not default.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>. Stem: <code>stemforge:w04-hallogallo-warp-ab</code>.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Isolated kick — Complex Pro vs Beats</div><div class="controls"><button data-src="stemforge/hallogallo_drums.wav" class="active">A — dry</button><button data-src="stemforge/hallogallo_drums.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/hallogallo_drums.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide teaser" id="slide-s07">
+  <h1>Slide s07 · teaser</h1>
+  <h2>Aside — a studio in Cassadaga</h2>
+  
+  <div class="body"><h1>Aside — a studio in Cassadaga</h1>
+<p>Step out of the warp dropdown for a minute. Remember two weeks back — we mentioned a bass that does not live in a plugin, it lives in a signal path. Here is that signal path.</p>
+<p>Aside — since we&rsquo;re talking about warp modes as sound design, file this for later: there&rsquo;s a studio in Cassadaga, New York, built in 1997 by a producer named Dave Fridmann, that runs a Neve 88RS into a Dorrough 610 multiband compressor that was originally meant for FM broadcast. He feeds the bass through it until it crunches. Flaming Lips, Mercury Rev, MGMT, Tame Impala, Mogwai — all came through there. We&rsquo;ll revisit the <strong>Fridmann bass</strong> in Week 7 when we talk Squarepusher&rsquo;s half-speed bass trick, because the logic is the same: a constraint baked into the signal path, not a plugin added after.</p>
+<p>Cite: <code>bib:fridmann_davefridmann_com</code>. Studio equipment: <code>bib:tarbox_road_equipment</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s08">
+  <h1>Slide s08 · concept</h1>
+  <h2>Texture mode — Flux from stable to cloud</h2>
+  
+  <div class="body"><h1>Texture mode — Flux from stable to cloud</h1>
+<p>Texture is polyphonic granular warping. Two controls, both creative:</p>
+<ul>
+<li><strong>Grain Size</strong> (in milliseconds). 50 ms = smooth, blended, pad-like. 10 ms = glitchy, chattering, broken-CD character. Anywhere between is legitimate.</li>
+<li><strong>Flux</strong> (0–100%). The amount of random variation in grain positioning. Flux 0 = stable, locked-phase, almost Complex-Pro-like. Flux 80–100% = evolving cloud, each grain sampling a slightly different part of the source. The clip never quite repeats.</li>
+</ul>
+<p>Practical: take the Hallogallo <code>other</code> stem — guitar and drift — stretch it 2× by halving Seg. BPM, mode = Texture, Grain 50 ms, Flux 60%. You now have a sixteen-bar pad that tracks the original harmonic content but never loops identically.</p>
+<p>At Flux 100% with Grain 10 ms, Texture on a drum stem produces a noise wash you can use as a bed. Not what the source sounded like. That is the point.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>. Stem source: <code>bib:stemforge_repo</code>.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Hallogallo drums — Texture Flux 0 vs Flux 100</div><div class="controls"><button data-src="stemforge/hallogallo_drums.wav" class="active">A — dry</button><button data-src="stemforge/hallogallo_drums.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/hallogallo_drums.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s09">
+  <h1>Slide s09 · concept</h1>
+  <h2>Re-Pitch mode — chipmunk-soul territory</h2>
+  
+  <div class="body"><h1>Re-Pitch mode — chipmunk-soul territory</h1>
+<p>Re-Pitch is the simplest warp mode in Live. It does not time-stretch. It speeds the playback up or down; pitch and time are locked together. A tape varispeed in software. Pitch up a semitone, the clip gets shorter. Pitch down an octave, the clip plays at half speed.</p>
+<p>This is the mode that built Kanye&rsquo;s early beats and Just Blaze&rsquo;s Roc-A-Fella catalog. <strong>Chipmunk soul</strong> — per the lexicon, per the compass artifact — is Re-Pitch mode with the transpose dialled up 4 to 7 semitones on a soul record. Pitch it up 5 semitones and a baritone turns into a tenor, a tenor turns into a kid. Coupled pitch-and-tempo is the artifact; time-stretch loses the character.</p>
+<p>We will spend all of Week 9 on this. For today: pitch the Hallogallo drums up 5 semitones in Re-Pitch. Notice the formant shift, the faster kick decay, the shorter snare tail. Bank the sound.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Hallogallo drums — Re-Pitch +5st</div><div class="controls"><button data-src="stemforge/hallogallo_drums.wav" class="active">A — dry</button><button data-src="stemforge/hallogallo_drums.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/hallogallo_drums.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s10">
+  <h1>Slide s10 · concept</h1>
+  <h2>Walkthrough — Hallogallo drums, four modes</h2>
+  
+  <div class="body"><h1>Walkthrough — Hallogallo drums, four modes</h1>
+<p>Session view. Four clips, same stem (<code>hallogallo_drums.wav</code>), four warp modes. Use the live set <code>live-sets/w04-warp-ab-bed.als</code> or build it yourself:</p>
+<ol>
+<li><strong>Clip 1 — Beats.</strong> Preserve 1/16, Transient Loop Mode = Off, Transient Envelope 100. Baseline. Kick and snare stay intact.</li>
+<li><strong>Clip 2 — Complex Pro default.</strong> Formants 100, Envelope 128. Notice the softened kick. This is the pitfall slide in audio form.</li>
+<li><strong>Clip 3 — Complex Pro corrected.</strong> Same settings, but nudge the warp marker ~5 ms before each kick. Alternatively, duplicate to a Beats-mode track, HP 80 Hz, sum at −6 dB underneath.</li>
+<li><strong>Clip 4 — Texture.</strong> Grain 30 ms, Flux 70%. The motorik pattern dissolves into an evolving percussive cloud.</li>
+</ol>
+<p>Watch the waveform zoom — in Live 12 you can see the transient envelope change visually before you hit play. Cite: <code>bib:ableton_live_12_manual</code>. Stem: <code>stemforge:w04-hallogallo-warp-ab</code>.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Four-mode A/B test bed</div><div class="controls"><button data-src="stemforge/hallogallo_drums.wav" class="active">A — dry</button><button data-src="stemforge/hallogallo_other.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/hallogallo_drums.wav"></audio></div>
+  <div class="als"><a href="../../../lessons/w04-warp-modes/live-sets/w04-warp-ab-bed.als">w04-warp-ab-bed.als</a></div>
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s11">
+  <h1>Slide s11 · reference</h1>
+  <h2>Settings to remember, pitfalls to flag</h2>
+  
+  <div class="body"><h1>Settings to remember, pitfalls to flag</h1>
+<p>Compact reference. Commit these to muscle memory.</p>
+<p><strong>Complex Pro — presets</strong></p>
+<ul>
+<li>Vocals, pitched up: Formants 100, Envelope 64</li>
+<li>Full mix, moderate stretch: Formants 100, Envelope 128</li>
+<li>Sub bass, long stretch: Formants 100, Envelope 256</li>
+<li>Aliased chipmunk character: Formants 0, Envelope 64</li>
+</ul>
+<p><strong>Beats mode — presets</strong></p>
+<ul>
+<li>Clean breakbeats: Preserve Transients, Transient Loop Mode Off, Transient Envelope 100</li>
+<li>Stuttered rolls: Preserve 1/32, Loop Mode Loop, Envelope 60</li>
+</ul>
+<p><strong>Texture — presets</strong></p>
+<ul>
+<li>Pad from a drone: Grain 50 ms, Flux 60</li>
+<li>Noise wash from anything: Grain 10 ms, Flux 100</li>
+</ul>
+<p><strong>Re-Pitch</strong></p>
+<ul>
+<li>Chipmunk soul: +4 to +7 semitones</li>
+<li>Half-speed tape: −12 semitones</li>
+</ul>
+<p><strong>Pitfalls</strong></p>
+<ul>
+<li>Complex Pro softens kicks — nudge markers pre-transient or layer Beats</li>
+<li>Beats mode mangles tonal content — never use on vocals, pads, held chords</li>
+<li>Texture with Flux &gt; 0 never repeats identically — bounce before you rely on the print</li>
+</ul>
+<p>Cite: <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s12">
+  <h1>Slide s12 · exercise</h1>
+  <h2>Assignment — three modes, three sentences</h2>
+  
+  <div class="body"><h1>Assignment — three modes, three sentences</h1>
+<p>Take any drum loop. Yours, the Hallogallo stem from <code>stemforge:w04-hallogallo-warp-ab</code>, a free break, a loop you bought. One loop.</p>
+<p>Render it three times:</p>
+<ol>
+<li><strong>Complex Pro</strong> — Formants 100, Envelope default 128</li>
+<li><strong>Beats</strong> — Preserve Transients, Transient Envelope 100</li>
+<li><strong>Re-Pitch</strong> — unchanged pitch first, then a second render pitched up 5 semitones</li>
+</ol>
+<p>Write three sentences. One per mode. Each sentence should answer: what happened to the transient envelope, and what happened to the formant character.</p>
+<p>Label the +5 semitone Re-Pitch render <code>chipmunk_soul_bank.wav</code> and put it in a folder called <code>w09-bank/</code>. Week 9 will ask for it back.</p>
+<p><strong>Deliverable.</strong> Four audio files plus a three-sentence text note, zipped as <code>w04-&lt;yourname&gt;-warp-ab.zip</code>, uploaded by the deadline. Thirty to sixty minutes, no longer. If you spend ninety, you are over-thinking it.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">One drum loop, rendered three times — Complex Pro / Beats / Re-Pitch. Three sentences describing transient and formant character per mode. One Re-Pitch +5 semitone render labelled chipmunk-soul for the W9 bank. Zipped, uploaded.</div>
+  
+</section>
+
+
+<section class="slide concept" id="slide-wm01">
+  <h1>Slide wm01 · concept</h1>
+  <h2>What a warp mode actually is</h2>
+  
+  <div class="body"><h1>What a warp mode actually is</h1>
+<p>A warp mode is a dispatch table. Live looks at the clip, looks at the playhead, and routes the audio through one of five algorithms — <span class="term">Beats<span class="gloss"><strong>Beats warp</strong> — Warp mode that slices on transients and retriggers each slice at grid — preserving attack, introducing audible tails or gaps between hits. Default for drum loops. Preserve 1/4 with Transient Envelope 0 gives choppy stretched segments. Fast, low-CPU, honest about its artifacts. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span>, Tones, <span class="term">Texture<span class="gloss"><strong>Texture warp</strong> — Granular warp mode. Grain parameter controls window size (10 ms glitchy, 50 ms smooth). Flux adds random variation between grains — 0 for stable, 80–100% for evolving cloud. The mode that turns any source into a pad. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span>, <span class="term">Re-Pitch<span class="gloss"><strong>Re-Pitch warp</strong> — Warp mode that links pitch and tempo the way tape varispeed does — stretching a clip to half length takes it up an octave. The authentic chipmunk-soul artifact. Time-stretch modes lose this character because they preserve pitch. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span>, or <span class="term">Complex Pro<span class="gloss"><strong>Complex Pro warp</strong> — Ableton&#x27;s highest-fidelity phase-vocoder warp mode. Preserves formants at heavy pitch shifts (dial 0–100%), with an Envelope parameter that tunes window size — 64 for hats, 256 for bass. Softens kick transients as a side effect; nudge markers pre-kick or layer Beats mode to fix. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> — before sending samples to the output bus. Complex (legacy) is the same algorithm as Complex Pro with fewer controls; treat them as one.</p>
+<p>Each algorithm solves a different problem. Beats solves &ldquo;keep transients sharp.&rdquo; Complex Pro solves &ldquo;pitch and time independently on polyphonic material.&rdquo; Texture solves &ldquo;make this into a cloud.&rdquo; Re-Pitch does no solving at all — it changes the playback rate and hands you the coupled pitch-time result that tape always gave you.</p>
+<p>Pick wrong and the algorithm costs more than it gives. The rest of this mini-module is the cost ledger.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>, Warp Modes section.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Audio clip] --&gt; B{Warp mode dispatch}
+  B --&gt;|Beats| C[Transient slice + per-slice playback]
+  B --&gt;|Tones| D[Mono pitch-track + grain splice]
+  B --&gt;|Texture| E[Poly granular cloud]
+  B --&gt;|Re-Pitch| F[Varispeed — pitch+time locked]
+  B --&gt;|Complex / Complex Pro| G[Phase-vocoder FFT resynth]
+  C --&gt; H[Timeline grid]
+  D --&gt; H
+  E --&gt; H
+  F --&gt; H
+  G --&gt; H
+</div><div class="caption">One clip, five algorithms, one grid. Pick wrong and the algorithm costs more than it gives.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-wm02">
+  <h1>Slide wm02 · concept</h1>
+  <h2>Beats mode — slice, play, truncate</h2>
+  
+  <div class="body"><h1>Beats mode — slice, play, truncate</h1>
+<p><span class="term">Beats mode<span class="gloss"><strong>Beats warp</strong> — Warp mode that slices on transients and retriggers each slice at grid — preserving attack, introducing audible tails or gaps between hits. Default for drum loops. Preserve 1/4 with Transient Envelope 0 gives choppy stretched segments. Fast, low-CPU, honest about its artifacts. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> does three things in order.</p>
+<ol>
+<li><strong>Detect transients.</strong> Live runs an onset detector across the clip and drops a slice marker at every significant attack.</li>
+<li><strong>Play each slice at source rate.</strong> When the transport hits a slice, the slice plays back at the speed it was recorded. Transient intact.</li>
+<li><strong>Fill to the next grid point.</strong> If the slice ends before the next grid position, the remainder is either silenced (Loop Off), repeated (Loop), or played forward and stopped (Loop Forward).</li>
+</ol>
+<p>This is why Beats is cheap and fast: no FFT, no re-synthesis. The trade is that anything tonal — a held chord, a vowel, a sustained synth — gets chopped at arbitrary points and relooped, which produces an audible zipper or chatter.</p>
+<p>Use on drums, percussion, one-shots. Not on pads.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="320" fill="#f7f5f1"/>
+  <text x="20" y="30" font-family="monospace" font-size="14" fill="#222">BEFORE — continuous audio with 4 transients</text>
+  <path d="M20 90 Q40 50 60 90 L80 90 Q100 60 120 90 L360 90 Q380 55 400 90 L620 90 Q640 58 660 90 L780 90" stroke="#222" stroke-width="2" fill="none"/>
+  <line x1="60" y1="60" x2="60" y2="110" stroke="#c33" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="120" y1="60" x2="120" y2="110" stroke="#c33" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="400" y1="60" x2="400" y2="110" stroke="#c33" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="660" y1="60" x2="660" y2="110" stroke="#c33" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="20" y="170" font-family="monospace" font-size="14" fill="#222">AFTER — slices locked to grid, each played at source rate</text>
+  <rect x="20" y="200" width="180" height="60" fill="none" stroke="#222" stroke-width="1.5"/>
+  <rect x="210" y="200" width="180" height="60" fill="none" stroke="#222" stroke-width="1.5"/>
+  <rect x="400" y="200" width="180" height="60" fill="none" stroke="#222" stroke-width="1.5"/>
+  <rect x="590" y="200" width="180" height="60" fill="none" stroke="#222" stroke-width="1.5"/>
+  <path d="M30 230 Q50 205 70 230" stroke="#222" stroke-width="2" fill="none"/>
+  <path d="M220 230 Q240 205 260 230" stroke="#222" stroke-width="2" fill="none"/>
+  <path d="M410 230 Q430 205 450 230" stroke="#222" stroke-width="2" fill="none"/>
+  <path d="M600 230 Q620 205 640 230" stroke="#222" stroke-width="2" fill="none"/>
+  <text x="20" y="290" font-family="monospace" font-size="11" fill="#666">Gaps between slice-end and next grid point get truncated (Loop Off) or looped (Loop On)</text>
+</svg>
+<div class="caption">Beats mode is a slicer. Transients stay sharp; held-note tails get cut. Per Ableton Live 12 manual (bib:ableton_live_12_manual).</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-wm03">
+  <h1>Slide wm03 · concept</h1>
+  <h2>Complex Pro — phase vocoder block diagram</h2>
+  
+  <div class="body"><h1>Complex Pro — phase-vocoder block diagram</h1>
+<p><span class="term">Complex Pro<span class="gloss"><strong>Complex Pro warp</strong> — Ableton&#x27;s highest-fidelity phase-vocoder warp mode. Preserves formants at heavy pitch shifts (dial 0–100%), with an Envelope parameter that tunes window size — 64 for hats, 256 for bass. Softens kick transients as a side effect; nudge markers pre-kick or layer Beats mode to fix. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> is a <span class="term">phase vocoder<span class="gloss"><strong>phase vocoder</strong> — An FFT-based algorithm that decomposes a signal into short overlapping spectral frames, allowing independent manipulation of time and pitch. The engine behind most time-stretch plugins — Ableton&#x27;s Complex and Complex Pro warp modes, Elastique, PaulStretch. <a href="https://en.wikipedia.org/wiki/Phase_vocoder" target="_blank" rel="noopener">wikipedia↗</a></span></span>. The chain:</p>
+<ol>
+<li>Cut the signal into overlapping windows. Hann window is the textbook default, hop size typically a quarter of the window length — <strong>Ableton does not publish Complex Pro&rsquo;s actual internals</strong>, so treat these as the standard phase-vocoder recipe you&rsquo;d find in Roads 1996, not as spec. What you actually hear as artifacts is <strong>vertical phase coherence breakdown</strong> (phasiness on polyphonic transients) and <strong>transient smearing</strong> — Complex Pro adds formant preservation and phase-locking heuristics not shown in this diagram.</li>
+<li><span class="term">FFT<span class="gloss"><strong>FFT</strong> — Fast Fourier Transform — an O(N log N) algorithm that decomposes a signal into its frequency components. The underlying math of every spectrogram, EQ analyzer, and phase vocoder in your session. <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform" target="_blank" rel="noopener">wikipedia↗</a></span></span> each window to get a complex spectrum.</li>
+<li>Split into magnitude and phase. Keep magnitudes as-is, compute the phase <em>advance</em> per frame (how fast each bin&rsquo;s phase is rotating).</li>
+<li>Re-propagate the phase at a new hop size — this is where time changes without pitch changing.</li>
+<li><span class="term">IFFT<span class="gloss"><strong>IFFT</strong> — Inverse FFT — converts frequency-domain data back to the time domain. Always paired with an FFT on the way out of a spectral process. In image-to-sound tools like MetaSynth or Photosounder, the IFFT is where the drawing becomes audio. <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform" target="_blank" rel="noopener">wikipedia↗</a></span></span> back to the time domain.</li>
+<li>Overlap-add the windows at the new hop.</li>
+</ol>
+<p>That is the entire mechanism. &ldquo;Formants 100&rdquo; adds an extra step that shifts the spectral envelope back to the source envelope after pitch shifting — which is how it keeps vowels stable when you transpose. &ldquo;Envelope&rdquo; is the window size in samples; it sets the time/frequency trade.</p>
+<p>Cite: <code>bib:roads_computer_music_tutorial</code> (chapter on time-frequency processing); <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Input audio] --&gt; B[Windowed frames&lt;br/&gt;Hann typical, hop ~N/4&lt;br/&gt;Ableton internals not published]
+  B --&gt; C[FFT&lt;br/&gt;complex spectrum]
+  C --&gt; D[Magnitude + phase]
+  D --&gt; E[Phase advance&lt;br/&gt;re-scaled to new hop]
+  E --&gt; F[IFFT]
+  F --&gt; G[Overlap-add&lt;br/&gt;new hop size]
+  G --&gt; H[Output audio&lt;br/&gt;stretched]
+</div><div class="caption">Simplified phase-vocoder chain. Magnitude spectrum is preserved; phase is re-propagated at a new hop size, which is how time changes without pitch changing. Source: Roads 1996, chapter on time-frequency processing (bib:roads_computer_music_tutorial).</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-wm04">
+  <h1>Slide wm04 · concept</h1>
+  <h2>Complex Pro — pitch and formant as independent axes</h2>
+  
+  <div class="body"><h1>Complex Pro — pitch and formant as independent axes</h1>
+<p>The point of the Formants knob is that it gives you a second axis. Tape&rsquo;s varispeed only lets you move along the diagonal: pitch up, everything shifts up, vowels included. That is why pitched-up vocals sound like chipmunks — the resonant bumps that define &ldquo;ah&rdquo; versus &ldquo;ee&rdquo; (the formants) move with the pitch.</p>
+<p>Complex Pro separates the two. You can pitch up +5 semitones with Formants at 100%, and the formants stay at the source frequency — the vocal is higher but still sounds like the original singer. Drop Formants to 0% and the formants ride with the pitch — welcome back to chipmunk territory. Anything in between is a legitimate sound design choice.</p>
+<p>The diagram makes it explicit: four points in a plane, only one of which tape could reach.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>. Formant theory: <code>bib:roads_computer_music_tutorial</code>.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#f7f5f1"/>
+  <line x1="100" y1="350" x2="700" y2="350" stroke="#222" stroke-width="2"/>
+  <line x1="100" y1="50" x2="100" y2="350" stroke="#222" stroke-width="2"/>
+  <text x="400" y="385" font-family="monospace" font-size="13" fill="#222" text-anchor="middle">pitch shift (semitones)</text>
+  <text x="40" y="200" font-family="monospace" font-size="13" fill="#222" transform="rotate(-90 40 200)">formant shift (%)</text>
+  <circle cx="250" cy="250" r="6" fill="#222"/>
+  <text x="260" y="245" font-family="monospace" font-size="11" fill="#222">source — 0 st / 100%</text>
+  <circle cx="500" cy="250" r="6" fill="#c33"/>
+  <text x="370" y="230" font-family="monospace" font-size="11" fill="#c33">+5 st, formants 100% → natural-ish pitched vocal</text>
+  <circle cx="500" cy="100" r="6" fill="#36a"/>
+  <text x="380" y="90" font-family="monospace" font-size="11" fill="#36a">+5 st, formants 0% → chipmunk aliased vowel</text>
+  <circle cx="250" cy="100" r="6" fill="#696"/>
+  <text x="260" y="95" font-family="monospace" font-size="11" fill="#696">0 st, formants 0% → voice but smaller head</text>
+  <text x="100" y="30" font-family="monospace" font-size="12" fill="#666">Two knobs, two axes. Tape only gives you the diagonal.</text>
+</svg>
+<div class="caption">Complex Pro decouples pitch from formant. Tape&#x27;s varispeed (Re-Pitch in Live) only gives you the diagonal through this plane.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-wm05">
+  <h1>Slide wm05 · concept</h1>
+  <h2>Texture — grain cloud, Flux = stochastic offset</h2>
+  
+  <div class="body"><h1>Texture — grain cloud, Flux = stochastic offset</h1>
+<p><span class="term">Texture mode<span class="gloss"><strong>Texture warp</strong> — Granular warp mode. Grain parameter controls window size (10 ms glitchy, 50 ms smooth). Flux adds random variation between grains — 0 for stable, 80–100% for evolving cloud. The mode that turns any source into a pad. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> is <span class="term">granular synthesis<span class="gloss"><strong>granular synthesis</strong> — Sound built from thousands of short grains (1–100 ms slices) of a source, scattered in time and pitch. Theorized by Iannis Xenakis, formalized by Curtis Roads. In practice: feed any field recording to Granulator III and turn the Scan knob. <a href="https://en.wikipedia.org/wiki/Granular_synthesis" target="_blank" rel="noopener">wikipedia↗</a></span></span> with two creative controls.</p>
+<ul>
+<li><strong>Grain Size</strong> — the length of each individual grain in milliseconds. 50 ms = smooth blended clouds; 10 ms = chatter that reveals pitch of the grain boundary rather than pitch of the source.</li>
+<li><strong>Flux</strong> — the allowed randomness of the grain&rsquo;s sampling position within the source. Flux 0 = strictly sequential, pseudo-Complex-Pro behaviour. Flux 60 = grains drift a windowed amount. Flux 100 = the grain is allowed to wander, and the clip never repeats the same way twice.</li>
+</ul>
+<p>The diagram shows three flux settings for the same four grid positions. Flux 0 locks to the dashed markers; Flux 100 scatters anywhere in the source.</p>
+<p>Practical: Texture is what turns a drone into a pad bed; it is also what turns a drum loop into a noise wash when you dial Flux up. The cost: because Flux is stochastic, the print is different every time. Bounce the output, not the source.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>. Granular theory: <code>bib:roads_computer_music_tutorial</code>.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="340" fill="#f7f5f1"/>
+  <text x="20" y="30" font-family="monospace" font-size="13" fill="#222">Source timeline (top) → grain sampling positions (bottom, per playback)</text>
+  <rect x="20" y="60" width="760" height="30" fill="none" stroke="#222" stroke-width="1.5"/>
+  <line x1="100" y1="55" x2="100" y2="95" stroke="#c33" stroke-width="1" stroke-dasharray="2 2"/>
+  <line x1="280" y1="55" x2="280" y2="95" stroke="#c33" stroke-width="1" stroke-dasharray="2 2"/>
+  <line x1="460" y1="55" x2="460" y2="95" stroke="#c33" stroke-width="1" stroke-dasharray="2 2"/>
+  <line x1="640" y1="55" x2="640" y2="95" stroke="#c33" stroke-width="1" stroke-dasharray="2 2"/>
+  <text x="20" y="140" font-family="monospace" font-size="12" fill="#222">Flux 0 — strict, phase-locked</text>
+  <circle cx="100" cy="165" r="5" fill="#222"/>
+  <circle cx="280" cy="165" r="5" fill="#222"/>
+  <circle cx="460" cy="165" r="5" fill="#222"/>
+  <circle cx="640" cy="165" r="5" fill="#222"/>
+  <text x="20" y="220" font-family="monospace" font-size="12" fill="#222">Flux 60 — windowed random offset</text>
+  <circle cx="108" cy="245" r="5" fill="#36a"/>
+  <circle cx="270" cy="245" r="5" fill="#36a"/>
+  <circle cx="475" cy="245" r="5" fill="#36a"/>
+  <circle cx="627" cy="245" r="5" fill="#36a"/>
+  <text x="20" y="290" font-family="monospace" font-size="12" fill="#222">Flux 100 — unbounded, evolving cloud</text>
+  <circle cx="132" cy="315" r="5" fill="#c33"/>
+  <circle cx="245" cy="315" r="5" fill="#c33"/>
+  <circle cx="510" cy="315" r="5" fill="#c33"/>
+  <circle cx="595" cy="315" r="5" fill="#c33"/>
+</svg>
+<div class="caption">Flux = how far each grain is allowed to drift from its strict position. At 100, the clip never repeats identically — bounce before you commit.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-wm06">
+  <h1>Slide wm06 · concept</h1>
+  <h2>Re-Pitch — pitch and time locked, no DSP at all</h2>
+  
+  <div class="body"><h1>Re-Pitch — pitch and time locked, no DSP at all</h1>
+<p><span class="term">Re-Pitch<span class="gloss"><strong>Re-Pitch warp</strong> — Warp mode that links pitch and tempo the way tape varispeed does — stretching a clip to half length takes it up an octave. The authentic chipmunk-soul artifact. Time-stretch modes lose this character because they preserve pitch. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> is the odd one in the dropdown because it does no time-stretching. It reads the clip at an altered sample rate. That is it.</p>
+<p>Read faster, pitch goes up and duration goes down. Read slower, both go down. This is exactly what an analog tape machine does when you grab the reel and push it — which is why the result is called <span class="term">varispeed<span class="gloss"><strong>varispeed</strong> — Tape (or old-sampler) speed control that links pitch and duration. Double the speed = up an octave, half the length. The sound of chipmunk soul, of Squarepusher&#x27;s half-speed bass trick, and of the Akai S950&#x27;s crude pitch-shift. Re-Pitch warp in Ableton is the digital equivalent. <a href="https://en.wikipedia.org/wiki/Varispeed" target="_blank" rel="noopener">wikipedia↗</a></span></span>. No FFT, no granulation, no algorithmic artifacts. You get the sound of a tape transport running wrong.</p>
+<p>This is also the mode that built <span class="term">chipmunk soul<span class="gloss"><strong>chipmunk soul</strong> — A style of hip-hop built on pitched-up soul vocal samples — the Kanye West / Just Blaze / RZA lineage. The authentic artifact is varispeed (linked pitch/tempo via old-gear sampler), not time-stretch. In Ableton: Re-Pitch warp, +4 to +7 semitones. Time-stretch loses the character. <a href="https://en.wikipedia.org/wiki/Chipmunk_soul" target="_blank" rel="noopener">wikipedia↗</a></span></span> — Kanye&rsquo;s early Roc-A-Fella beats, pitched up four to seven semitones on a soul sample, with the duration contracting by the same ratio. Coupled pitch-and-duration is the whole character.</p>
+<p>When to reach for it: any time you <em>want</em> the artifact. Any time you <em>don&rsquo;t</em>, you want Complex Pro.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>. Chipmunk-soul origin: <code>bib:rbma_just_blaze_lecture</code> (Week 9 payoff).</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Audio clip] --&gt; B[Read at altered sample rate]
+  B --&gt; C[Pitch shifts]
+  B --&gt; D[Duration shifts]
+  C --&gt; E[Tape varispeed output]
+  D --&gt; E
+</div><div class="caption">Re-Pitch is varispeed. No FFT, no granulation. Change playback rate, pitch and time move together. This is the chipmunk-soul mechanism.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-01">
+  <h1>Slide gd-tarbox-01 · gear deep dive</h1>
+  <h2>Tarbox Road Studios — a converted dairy in Cassadaga, NY</h2>
+  
+  <div class="body"><h1>Tarbox Road Studios — a converted dairy in Cassadaga, NY</h1>
+<p>The teaser dropped one paragraph. Here is the payoff.</p>
+<p>Tarbox Road Studios is a residential facility in Cassadaga, New York, built by producer Dave Fridmann in 1997 in a converted dairy building. The published discography is not small: The Flaming Lips (<em>The Soft Bulletin</em>, <em>Yoshimi Battles the Pink Robots</em>, <em>Zaireeka</em>), Mercury Rev (<em>Deserter&rsquo;s Songs</em>), MGMT (<em>Oracular Spectacular</em>), Tame Impala (<em>Innerspeaker</em> — mixed at Tarbox from Kevin Parker&rsquo;s 16-track Boss BR-1600), Sleater-Kinney, Mogwai.</p>
+<p>The reason Tarbox lands in Week 4 is that the room&rsquo;s signal chain is the clearest living example of <em>sound design as signal-path choice</em>, the same pillar Warp modes sit on. We are using it as the worked example.</p>
+<p>Cite: <code>bib:fridmann_davefridmann_com</code>, <code>bib:tarbox_road_equipment</code>.</p></div>
+  <figure class="figure"><img src="assets/tarbox-exterior.jpg" alt="Tarbox Road Studios. Built 1997 by Dave Fridmann. Per bib:fridmann_davefridmann_com and bib:tarbox_road_equipment."><figcaption>Tarbox Road Studios. Built 1997 by Dave Fridmann. Per bib:fridmann_davefridmann_com and bib:tarbox_road_equipment.<div class="credit">Photo: Tarbox Road Studios / davefridmann.com · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-02">
+  <h1>Slide gd-tarbox-02 · gear deep dive</h1>
+  <h2>The console — Neve 88RS, 48 channels, discrete</h2>
+  
+  <div class="body"><h1>The console — Neve 88RS, 48 channels, discrete</h1>
+<p>The centrepiece at Tarbox is a Neve 88RS — Neve&rsquo;s flagship in-line console from the early 2000s, class-A discrete preamps on every input. Per the published Tarbox equipment list (<code>bib:tarbox_road_equipment</code>), 48 channels of 88RS sit in the control room with associated 88R outboard racks.</p>
+<p>The four controls that matter for the Fridmann bass chain, annotated on the photo:</p>
+<ol>
+<li><strong>Mic pre gain</strong> — pushed hot. The 88RS preamp has musical-sounding non-linearity at the top of its gain range. The grit starts at the pre.</li>
+<li><strong>Channel EQ</strong> — used minimally <em>before</em> compression. Post-compressor EQ happens at the return.</li>
+<li><strong>Insert send/return</strong> — the point where the Dorrough lives on the bass channel. Insert is pre-fader, pre-EQ-post-pre depending on the routing block.</li>
+<li><strong>Bus assign</strong> — routes the post-insert signal to the bus that feeds the Studer tape machine.</li>
+</ol>
+<p>Cite: <code>bib:tarbox_road_equipment</code>.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/tarbox-neve-88rs.jpg" alt="Neve 88RS centrepiece. Annotations mark the channels Fridmann routes bass through."><div class="callouts"><ol><li><strong>mic pre</strong>: Neve 88RS preamp stage — class-A discrete. Hot into the Dorrough; the grit starts here.</li><li><strong>channel EQ</strong>: 88RS channel EQ — used minimally pre-Dorrough; post-compressor is where the shaping happens.</li><li><strong>insert send/return</strong>: Channel insert point. Dorrough lives here on the bass channel.</li><li><strong>bus assign</strong>: Routing to bus — tape (Studer A80) receives from the bus, not the channel.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-03">
+  <h1>Slide gd-tarbox-03 · gear deep dive</h1>
+  <h2>Signal path — bass DI → 88RS pre → Dorrough insert → tape bus</h2>
+  
+  <div class="body"><h1>Signal path — bass DI → 88RS pre → Dorrough insert → tape bus</h1>
+<p>The whole chain fits on one line of Mermaid. The point is that the bass tone is not a plugin on a track — it is a sequence of analog stages, each adding harmonic content, before the signal ever sees tape.</p>
+<ul>
+<li><strong>DI or mic on the bass amp.</strong> Fridmann historically takes both; the balance varies.</li>
+<li><strong>Neve 88RS mic pre</strong>, gain into the musical non-linear region.</li>
+<li><strong>Channel insert</strong> out to the Dorrough 610.</li>
+<li><strong>Dorrough 610</strong> — three-band compressor, broadcast-grade limiter at the output. Driven hard enough to crunch.</li>
+<li><strong>Insert return</strong> back into the 88RS channel.</li>
+<li><strong>Bus send to tape.</strong></li>
+<li><strong>Studer A80 VU II</strong> — 2-inch 24-track. Prints at +3 to +6 VU on peaks; tape adds its own soft-clip and low-end thickening.</li>
+<li><strong>Playback</strong> from tape into the mix.</li>
+</ul>
+<p>Every stage is a choice. The bass is not &ldquo;recorded clean and processed later.&rdquo; It is committed to tape with the distortion already baked in, which is why you cannot undo it — and why, culturally, it is a <span class="term">Fridmann bass<span class="gloss"><strong>Fridmann bass</strong> — Dave Fridmann&#x27;s signature bass-distortion move — a Dorrough 610 broadcast loudness meter abused as a saturator, fed hot enough that it clips in a specific, musical way. No Wikipedia page; documented via Tarbox Road Studios gear lists and Fridmann&#x27;s own site. The aesthetic lives on MGMT&#x27;s Oracular Spectacular, Tame Impala&#x27;s Lonerism, and the Flaming Lips&#x27; output.</span></span> rather than a preset.</p>
+<p>Cite: <code>bib:tarbox_road_equipment</code>, <code>bib:fridmann_davefridmann_com</code>.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Bass DI or mic] --&gt; B[Neve 88RS mic pre&lt;br/&gt;gain hot]
+  B --&gt; C[Channel insert send]
+  C --&gt; D[Dorrough 610&lt;br/&gt;multiband comp]
+  D --&gt; E[Channel insert return]
+  E --&gt; F[88RS channel fader]
+  F --&gt; G[Bus/tape send]
+  G --&gt; H[Studer A80 VU II&lt;br/&gt;2-inch tape]
+  H --&gt; I[Playback to mix]
+</div><div class="caption">The Fridmann bass chain as reconstructed from Tarbox&#x27;s published equipment list (bib:tarbox_road_equipment) and Fridmann interviews (bib:fridmann_davefridmann_com). Compression and saturation happen before print.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-04">
+  <h1>Slide gd-tarbox-04 · gear deep dive</h1>
+  <h2>Dorrough 610 — FM broadcast processor, misused on purpose</h2>
+  
+  <div class="body"><h1>Dorrough 610 — FM broadcast processor, misused on purpose</h1>
+<p>The Dorrough 610 Discriminate Audio Processor was built by Dorrough Electronics in Woodland Hills, California. Its intended customer was an FM radio station. Its intended purpose was to maximise perceived loudness at the transmitter while preventing over-modulation. Broadcast engineers set it up and never touch it.</p>
+<p>Fridmann touches it. The four controls that carry the technique:</p>
+<ol>
+<li><strong>Low-band threshold</strong> — the knob that produces the crunch. Fridmann pushes it far enough into gain reduction that the compressor is working constantly. The low band&rsquo;s compression is not transparent; at deep reduction, it produces audible harmonic distortion. This is the texture.</li>
+<li><strong>Mid-band threshold</strong> — sets where the growl lives. A separate decision from the low band; this is the whole point of a multiband.</li>
+<li><strong>High-band threshold</strong> — kept tame on bass. The box&rsquo;s high-band behaviour is where broadcast engineers shape the &ldquo;air&rdquo; — if the unit is ever put on a mix bus, this knob changes role entirely.</li>
+<li><strong>Output limiter</strong> — the hard ceiling. Built so FM transmitters never clip; here it caps the crunch at a predictable level.</li>
+</ol>
+<p>Cite: <code>bib:tarbox_road_equipment</code>. Manufacturer manual flagged in <code>needs_bib:</code> — primary source for threshold defaults and ratio curves has not been located.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/dorrough-610-front.jpg" alt="Dorrough 610 Discriminate Audio Processor. Three-band compressor + limiter, originally a broadcast transmission tool."><div class="callouts"><ol><li><strong>low band</strong>: Low-frequency band threshold. On bass, Fridmann pushes this deep into gain reduction until the fundamental crunches.</li><li><strong>mid band</strong>: Midrange threshold — this is where the growl lives.</li><li><strong>high band</strong>: Highs — kept tame on bass; this knob&#x27;s purpose shifts when the box is on a mix bus.</li><li><strong>output limiter</strong>: Hard output ceiling. The Dorrough was designed so FM transmitters never clipped; here it caps the crunch.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-05">
+  <h1>Slide gd-tarbox-05 · gear deep dive</h1>
+  <h2>How Fridmann drives the Dorrough — crunch as a choice</h2>
+  
+  <div class="body"><h1>How Fridmann drives the Dorrough — crunch as a choice</h1>
+<p>Receipts first. Fridmann does not talk chain-and-verse in interviews — the davefridmann.com archive (<code>bib:fridmann_davefridmann_com</code>) is deliberately light on signal-flow — but the consistent pattern across Tarbox coverage:</p>
+<ul>
+<li>The bass is committed to tape with compression and saturation <em>already printed</em>. This is a choice; most mix engineers keep options open. Fridmann closes them on purpose.</li>
+<li>The Dorrough is the character shaper, not a transparent dynamic control. If a mix engineer wanted clean bass compression, a 1176 or dbx 160 would do it. The Dorrough is chosen because the non-transparent distortion profile is the sound.</li>
+<li>The compression is extreme. Per Happy Mag&rsquo;s reconstruction of the MGMT &ldquo;Kids&rdquo; vocal chain (<code>bib:happymag_mgmt_oracular_engineering</code>), Fridmann also reached for &ldquo;substandard 1990s compressors&rdquo; when he wanted more breakage — the Dorrough sits on that same aesthetic spectrum: gear used <em>past its transparent range</em>.</li>
+</ul>
+<p>The parallel to Week 4: you can reach for Complex Pro because it produces a softened kick, the same way Fridmann reaches for a broadcast compressor because it distorts. Artifact as design.</p>
+<p>Cite: <code>bib:fridmann_davefridmann_com</code>, <code>bib:happymag_mgmt_oracular_engineering</code>.</p></div>
+  <figure class="figure"><img src="assets/fridmann-at-desk.jpg" alt="Dave Fridmann at the Tarbox console. Photo cited per bib:fridmann_davefridmann_com."><figcaption>Dave Fridmann at the Tarbox console. Photo cited per bib:fridmann_davefridmann_com.<div class="credit">davefridmann.com · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-06">
+  <h1>Slide gd-tarbox-06 · gear deep dive</h1>
+  <h2>The Studer A80 as insert — tape is part of the compressor</h2>
+  
+  <div class="body"><h1>The Studer A80 as insert — tape is part of the compressor</h1>
+<p>The Studer A80 VU II is not downstream of the Dorrough — it is part of the same stage. Fridmann prints the Dorrough-crushed bass hot to tape, which means the tape itself performs a second round of soft-clip compression and harmonic addition. The two non-linearities stack.</p>
+<p>Three tape controls worth naming:</p>
+<ul>
+<li><strong>Record level.</strong> Hot. ~+3 to +6 VU on peaks. This is where the tape&rsquo;s soft clip begins. Running the tape at unity would skip this stage.</li>
+<li><strong>Bias.</strong> The high-frequency bias signal governs the hysteresis character. Too much bias dulls the top. Too little makes the highs brittle and lowers headroom at the bottom. Tarbox&rsquo;s bias setting is an engineering recipe, not a knob Fridmann tweaks on every session.</li>
+<li><strong>Tape speed.</strong> The A80 runs at 15 or 30 IPS. 15 IPS saturates the low end harder (more low-frequency harmonic content); 30 IPS is cleaner. Choice depends on whether the record wants thick or articulate low-end.</li>
+</ul>
+<p>Tape is not a warm glow. It is a programmable non-linearity with a specific transfer curve. The next slide shows the curve.</p>
+<p>Cite: <code>bib:tarbox_road_equipment</code>.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/studer-a80-vu.jpg" alt="Studer A80 VU II, 2-inch 24-track. Tarbox keeps one in the room."><div class="callouts"><ol><li><strong>record level</strong>: Fridmann prints the Dorrough-crushed bass hot — ~+6 VU on peaks. Tape adds its own soft-clip here.</li><li><strong>bias</strong>: Bias setting governs hysteresis character — too much bias = dull; too little = fragile highs.</li><li><strong>tape speed</strong>: A80 at 15 IPS gives more low-end saturation; 30 IPS is cleaner. Tarbox uses both.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-07">
+  <h1>Slide gd-tarbox-07 · gear deep dive</h1>
+  <h2>Compressor math — threshold, ratio, attack, release, knee</h2>
+  
+  <div class="body"><h1>Compressor math — threshold, ratio, attack, release, knee</h1>
+<p>The compressor transfer curve is the function from input level to output level. Below threshold, it is a straight line at unity gain (1:1). Above threshold, the slope flattens to 1/ratio. A 4:1 ratio means: for every 4 dB of input above threshold, only 1 dB appears at the output.</p>
+<p>Four parameters to hold in your head:</p>
+<ul>
+<li><strong>Threshold</strong> — where compression starts.</li>
+<li><strong>Ratio</strong> — how hard it squashes above threshold.</li>
+<li><strong>Attack</strong> — how fast it gets to the ratio slope after threshold is exceeded.</li>
+<li><strong>Release</strong> — how fast it lets go when input drops below threshold.</li>
+</ul>
+<p>The diagram compares two settings on the same axis. The blue line is a gentle bus compression — threshold −18 dB, ratio 4:1. The red line is a Fridmann-style setting — threshold −30 dB, ratio 10:1, fast attack. At those parameters, the compressor is in gain reduction nearly all the time, and the knee region (the curved corner) is where audible harmonic distortion starts to appear. This is the mechanism behind the crunch.</p>
+<p>Cite: compressor theory covered in <code>bib:roads_computer_music_tutorial</code>.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="420" fill="#f7f5f1"/>
+  <line x1="80" y1="380" x2="760" y2="380" stroke="#222" stroke-width="2"/>
+  <line x1="80" y1="40" x2="80" y2="380" stroke="#222" stroke-width="2"/>
+  <text x="420" y="410" font-family="monospace" font-size="13" fill="#222" text-anchor="middle">input level (dB)</text>
+  <text x="30" y="210" font-family="monospace" font-size="13" fill="#222" transform="rotate(-90 30 210)">output level (dB)</text>
+  <line x1="80" y1="380" x2="760" y2="40" stroke="#aaa" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="660" y="60" font-family="monospace" font-size="11" fill="#aaa">1:1 unity</text>
+  <path d="M80 380 L360 210 L760 140" stroke="#36a" stroke-width="2.5" fill="none"/>
+  <text x="400" y="200" font-family="monospace" font-size="11" fill="#36a">threshold −18 dB, ratio 4:1 — gentle bus</text>
+  <path d="M80 380 L260 280 L760 240" stroke="#c33" stroke-width="2.5" fill="none"/>
+  <text x="300" y="275" font-family="monospace" font-size="11" fill="#c33">Fridmann — threshold −30 dB, ratio 10:1, fast attack = crunch</text>
+  <circle cx="260" cy="280" r="4" fill="#c33"/>
+  <text x="265" y="300" font-family="monospace" font-size="10" fill="#c33">knee</text>
+</svg>
+<div class="caption">Compressor transfer curve. Above threshold, output rises at 1/ratio. Fridmann&#x27;s setting is not subtle — 10:1-ish with a very low threshold drives the Dorrough into constant gain reduction, which is where the harmonic distortion shows up.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-08">
+  <h1>Slide gd-tarbox-08 · gear deep dive</h1>
+  <h2>Tape hysteresis — the algorithm nobody codes on purpose</h2>
+  
+  <div class="body"><h1>Tape hysteresis — the algorithm nobody codes on purpose</h1>
+<p>Magnetic tape&rsquo;s input/output function is a hysteresis loop. At low levels the response is nearly linear; as input rises, the magnetic domains in the tape oxide saturate and the output compresses; when input reverses, the output lags. The shape traces a loop, not a line — the output is a function of both the input <em>and</em> the recent history of the input.</p>
+<p>Three consequences for audio:</p>
+<ol>
+<li><strong>Harmonic addition.</strong> The non-linear transfer function generates second- and third-order harmonics. On bass, this adds perceptible &ldquo;weight&rdquo; by doubling the fundamental an octave up.</li>
+<li><strong>Soft-knee compression.</strong> At high input levels, the loop flattens — the tape compresses without an explicit threshold.</li>
+<li><strong>Low-frequency thickening.</strong> At 15 IPS tape speed, the low-end saturation is heavier; the record label&rsquo;s thump on <em>The Soft Bulletin</em> is in part this.</li>
+</ol>
+<p>Modern tape plugins (Kramer Tape, U-he Satin, Ableton&rsquo;s Saturator in Soft Sine mode) model this loop. None reproduces it perfectly, because the physical system has thermal noise, tape formulation variance, and head wear that any static model ignores. Close is close enough for the Ableton bridge.</p>
+<p>Cite: <code>bib:roads_computer_music_tutorial</code>, chapter on non-linear processing.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="360" fill="#f7f5f1"/>
+  <line x1="400" y1="40" x2="400" y2="320" stroke="#222" stroke-width="1"/>
+  <line x1="100" y1="180" x2="700" y2="180" stroke="#222" stroke-width="1"/>
+  <text x="720" y="185" font-family="monospace" font-size="12" fill="#222">H (applied)</text>
+  <text x="405" y="35" font-family="monospace" font-size="12" fill="#222">M (magnetisation)</text>
+  <path d="M120 300 C200 290 320 220 400 180 C480 140 600 80 680 70 C600 75 520 100 450 160 C380 220 280 280 200 290 C180 292 150 298 120 300 Z" stroke="#c33" stroke-width="2" fill="none"/>
+  <text x="500" y="300" font-family="monospace" font-size="11" fill="#666">Hysteresis loop — output depends on input history</text>
+  <text x="120" y="340" font-family="monospace" font-size="11" fill="#666">Adds 2nd + 3rd order harmonics; soft-knee compression at high levels</text>
+</svg>
+<div class="caption">Hysteresis loop of a magnetic medium. Output is a non-linear function of input and recent history — this is where tape&#x27;s harmonic distortion, soft clip, and low-end &#x27;thickening&#x27; come from.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-09">
+  <h1>Slide gd-tarbox-09 · gear deep dive</h1>
+  <h2>Ableton bridge — approximating the Fridmann bass in the box</h2>
+  
+  <div class="body"><h1>Ableton bridge — approximating the Fridmann bass in the box</h1>
+<p>This is the load-bearing slide. You will not have a Dorrough 610 and a Studer A80. You will have Ableton.</p>
+<p>The approximation stacks three Ableton primitives against Fridmann&rsquo;s three stages:</p>
+<table>
+<thead>
+<tr>
+<th>Fridmann stage</th>
+<th>Ableton primitive</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Neve 88RS mic pre (hot)</td>
+<td>Saturator Analog Clip, Drive +3 to +6 dB, Dry/Wet 80%</td>
+<td>Input-stage non-linearity</td>
+</tr>
+<tr>
+<td>Dorrough 610 multiband</td>
+<td>Audio Effect Rack with 3 chains (EQ-8 band-split + Glue Compressor per chain)</td>
+<td>Multiband compression with per-band distortion via hard settings</td>
+</tr>
+<tr>
+<td>Studer A80 tape</td>
+<td>Saturator Soft Sine mode, Drive +6 dB, Dry/Wet 60%, plus subtle EQ-8 shelf boost around 80 Hz</td>
+<td>Tape saturation / low-end thickening</td>
+</tr>
+</tbody>
+</table>
+<p>Macros: Drive (Saturator #1), Low-band threshold (chain 1 Glue), Mid-band threshold (chain 2 Glue), Tape drive (Saturator #2). Four knobs, one Rack.</p>
+<p>The next slide shows the Rack structure.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code> (Glue Compressor, Saturator); <code>bib:soundtoys_decapitator_manual</code> for the plugin alternative.</p></div>
+  <figure class="figure"><img src="assets/ableton-glue-saturator.png" alt="Ableton Glue Compressor + Saturator. The two devices that carry most of the reconstruction."><figcaption>Ableton Glue Compressor + Saturator. The two devices that carry most of the reconstruction.<div class="credit">Ableton Live 12 screenshot, Zak rig. · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-10">
+  <h1>Slide gd-tarbox-10 · gear deep dive</h1>
+  <h2>Multiband Rack build — the Dorrough approximation</h2>
+  
+  <div class="body"><h1>Multiband Rack build — the Dorrough approximation</h1>
+<p>Build order.</p>
+<ol>
+<li>New Audio Effect Rack on the bass track.</li>
+<li>Inside the Rack, create three chains labelled <strong>low</strong>, <strong>mid</strong>, <strong>high</strong>.</li>
+<li>On each chain, first device is EQ-8 in bandpass mode:</li>
+<li>low: lowpass, 200 Hz, 48 dB/oct</li>
+<li>mid: bandpass, 200–1200 Hz</li>
+<li>high: highpass, 1200 Hz, 48 dB/oct</li>
+<li>After each EQ-8, a Glue Compressor:</li>
+<li>low chain: threshold −30 dB, ratio 10:1, attack 1 ms, release 100 ms — this is the crunch band</li>
+<li>mid chain: threshold −24 dB, ratio 6:1, attack 3 ms, release 60 ms — growl</li>
+<li>high chain: threshold −18 dB, ratio 4:1, attack 10 ms, release 100 ms — gentle control</li>
+<li>After the Rack, insert Saturator: Analog Clip, +6 dB, Dry/Wet 60%.</li>
+</ol>
+<p>The low-chain Glue at 10:1 with a fast attack is where the broadcast-style crunch comes from. The Saturator afterwards is the tape role.</p>
+<p>Caveat: Live&rsquo;s Glue is emulating an SSL bus compressor, not a broadcast limiter. The character is not identical to a Dorrough — it is the same <em>class</em> of tool. If you need more aggression, swap the Saturator for Decapitator Style N (next slide).</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Bass DI] --&gt; R[Audio Effect Rack]
+  R --&gt; LB[Chain 1: EQ-8 LP 200 Hz]
+  R --&gt; MB[Chain 2: EQ-8 BP 200–1200 Hz]
+  R --&gt; HB[Chain 3: EQ-8 HP 1200 Hz]
+  LB --&gt; LG[Glue Comp: thresh −30, ratio 10, atk 1 ms, rel 100 ms]
+  MB --&gt; MG[Glue Comp: thresh −24, ratio 6, atk 3 ms, rel 60 ms]
+  HB --&gt; HG[Glue Comp: thresh −18, ratio 4, atk 10 ms, rel 100 ms]
+  LG --&gt; S[Sum]
+  MG --&gt; S
+  HG --&gt; S
+  S --&gt; SAT[Saturator: Analog Clip +6 dB, Dry/Wet 60]
+  SAT --&gt; OUT[Bass out]
+</div><div class="caption">Split by EQ-8 bands inside an Audio Effect Rack, one Glue Compressor per chain, sum, then Saturator for the tape role. This is the Dorrough + Studer chain as Ableton primitives.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-11">
+  <h1>Slide gd-tarbox-11 · gear deep dive</h1>
+  <h2>Plugin shortcut — Decapitator Style N (Neve germanium)</h2>
+  
+  <div class="body"><h1>Plugin shortcut — Decapitator Style N (Neve germanium)</h1>
+<p>If you own SoundToys Decapitator, there is a faster route. Style N models a Neve 1057 germanium stage — not the 88RS, but same manufacturer, same era of non-linearity. Per the compass artifact&rsquo;s Decapitator decoder (<code>bib:soundtoys_decapitator_manual</code>):</p>
+<ul>
+<li><strong>Style N</strong> — dull/weighty, thickens synths and bass</li>
+<li><strong>Drive 7</strong> — deep into the modelled non-linearity</li>
+<li><strong>Punish on</strong> — engages an extra compression stage inside the plugin</li>
+<li><strong>Low-Cut halfway</strong> — keeps DC and mud out of the saturator</li>
+<li><strong>High-Cut ~6 kHz Steep on</strong> — drops the high-band character the way a Neve channel would</li>
+</ul>
+<p>Drop Decapitator Style N <em>after</em> the multiband Rack. The plugin handles both the &ldquo;hot Neve pre&rdquo; role and the &ldquo;tape thickening&rdquo; role in one stage. Less surgical than separate Saturators, more authentic character. Pick per mix.</p>
+<p>Caveat: the Style N model is of a Neve <em>input stage</em>, not a broadcast multiband compressor. It gets you the harmonic-character half of the Fridmann bass — it does not replace the multiband part. Keep the Rack upstream.</p>
+<p>Cite: <code>bib:soundtoys_decapitator_manual</code>.</p></div>
+  <figure class="figure"><img src="assets/decapitator-style-n.png" alt="SoundToys Decapitator Style N — Neve 1057 germanium model. Per bib:soundtoys_decapitator_manual."><figcaption>SoundToys Decapitator Style N — Neve 1057 germanium model. Per bib:soundtoys_decapitator_manual.<div class="credit">SoundToys Decapitator interface · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-12">
+  <h1>Slide gd-tarbox-12 · gear deep dive</h1>
+  <h2>Exercise A — patch the Fridmann bass on a sub sample</h2>
+  
+  <div class="body"><h1>Exercise A — patch the Fridmann bass on a sub sample</h1>
+<p>Find a sub-bass sample. Anything clean, 8 bars, one note or a simple pattern. The Hallogallo stem does not apply here — the drums-and-guitar split does not include isolated bass.</p>
+<p>Deliverables:</p>
+<ol>
+<li><strong>Dry bounce.</strong> Sub through a track with no processing. Label <code>fridmann-bass-01-dry.wav</code>.</li>
+<li><strong>Multiband Rack only.</strong> Build the three-chain Rack from the previous slide. Bounce. <code>fridmann-bass-02-rack.wav</code>.</li>
+<li><strong>Rack + Saturator.</strong> Add the Saturator Analog Clip after the Rack. Bounce. <code>fridmann-bass-03-rack-sat.wav</code>.</li>
+<li><strong>Optional — Rack + Decapitator Style N.</strong> If you own it. <code>fridmann-bass-04-decap.wav</code>.</li>
+</ol>
+<p>Write three sentences. One per stage (dry → Rack → Rack+Saturator). Each sentence should name what the stage added or removed: low-band compression artifact, harmonic thickness, top-end dulling.</p>
+<p>Zip as <code>w04-fridmann-bass-AB.zip</code>. 30 to 45 minutes. Do not spend 90.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>, <code>bib:soundtoys_decapitator_manual</code>.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">One 8-bar sub-bass loop bounced three times — dry, through the multiband Rack, through the multiband Rack + Saturator + optional Decapitator Style N. Three-sentence notes: where each stage adds what. Save as w04-fridmann-bass-AB/.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-tarbox-13">
+  <h1>Slide gd-tarbox-13 · gear deep dive</h1>
+  <h2>Exercise B — explore — broadcast-style multiband beyond bass</h2>
+  
+  <div class="body"><h1>Exercise B — explore — broadcast multiband beyond bass</h1>
+<p>The Dorrough 610 was not designed for bass guitar. It was designed to make FM radio loud without clipping the transmitter. Keep the Rack you built in Exercise A. Put it on three things it was not intended for, and listen.</p>
+<ol>
+<li><strong>Drum bus.</strong> The Rack on a stereo drum bus approximates New York mastering style — aggressive multiband crushing for loudness. Settings from Exercise A will be too aggressive; back the low-band threshold up to −20 dB, ratio 4:1. Bounce.</li>
+<li><strong>Full mix.</strong> Same Rack, insert before your mastering chain. This is what FM broadcast multiband actually does for a living. Bounce.</li>
+<li><strong>Vocal.</strong> Use it on a vocal take. The mid band will become brutal; this is how <span class="term">mid-side<span class="gloss"><strong>mid-side</strong> — A stereo representation in two channels: mid = L+R, side = L-R. Letting you EQ or compress the center independently of the stereo sides. The trick for gluing a bass to mono while keeping reverb wide. <a href="https://en.wikipedia.org/wiki/Joint_(audio_engineering)" target="_blank" rel="noopener">wikipedia↗</a></span></span> mastering tricks make a voice sit forward. Bounce.</li>
+</ol>
+<p>Write one paragraph — not a bullet list — explaining what broadcast multiband does when it is <em>not</em> abused on purpose. The answer is boring and useful: it equalises perceived loudness across the spectrum so the transmitter runs hotter without any one band popping the limiter. That is it.</p>
+<p>File deliverables as <code>w04-multiband-explore/</code>. Settings notes in a text file alongside.</p>
+<p>Cite: <code>bib:ableton_live_12_manual</code>; broadcast-processing context in <code>needs_bib:</code> (Dorrough manual flagged).</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">Take the Dorrough approximation Rack off bass and put it on a drum bus, a full mix, and a vocal. Bounce three examples. Keep the settings. One paragraph on what broadcast multiband actually does when it is not abused on purpose.</div>
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:audiotechnology_lonerism_feature">Lonerism — Tame Impala in the Studio — AudioTechnology <a href="https://www.audiotechnology.com/features/lonerism-tame-impala-in-the-studio" target="_blank" rel="noopener">↗</a></li><li id="bib:fridmann_davefridmann_com">Dave Fridmann — Dave Fridmann Archive <a href="https://www.davefridmann.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:happymag_mgmt_oracular_engineering">Engineering the Sound: Oracular Spectacular by MGMT — Happy Mag <a href="https://happymag.tv/engineering-the-sound-oracular-spectacular-by-mgmt/" target="_blank" rel="noopener">↗</a></li><li id="bib:rbma_just_blaze_lecture">Just Blaze — Just Blaze — Red Bull Music Academy lecture (chipmunk soul origins) — RBMA <a href="https://web.archive.org/web/*/rbma.com/lectures/just-blaze/" target="_blank" rel="noopener">↗</a></li><li id="bib:roads_computer_music_tutorial">Curtis Roads — The Computer Music Tutorial — MIT Press 1996</li><li id="bib:soundtoys_decapitator_manual">SoundToys Inc. — Decapitator User Guide — SoundToys <a href="https://www.soundtoys.com/support/" target="_blank" rel="noopener">↗</a></li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:tarbox_road_equipment">Tarbox Road Studios — Equipment <a href="http://www.tarboxroadstudios.com/equipment.html" target="_blank" rel="noopener">↗</a></li><li id="bib:zaireeka_wikipedia">Zaireeka — Wikipedia <a href="https://en.wikipedia.org/wiki/Zaireeka" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 87700}, {"id": "ch001", "title": "Warp is not for tempo matching", "start_ms": 88100, "end_ms": 199750}, {"id": "ch002", "title": "Why Hallogallo is the test clip", "start_ms": 200150, "end_ms": 325900}, {"id": "ch003", "title": "The warp-mode menu, short version", "start_ms": 326300, "end_ms": 436950}, {"id": "ch004", "title": "Complex Pro \u2014 Formants and Envelope", "start_ms": 437350, "end_ms": 554400}, {"id": "ch005", "title": "Beats mode \u2014 transients intact, grid hostile", "start_ms": 554800, "end_ms": 668250}, {"id": "ch006", "title": "The pitfall \u2014 Complex Pro softens kicks", "start_ms": 668650, "end_ms": 788950}, {"id": "ch007", "title": "Aside \u2014 a studio in Cassadaga", "start_ms": 789350, "end_ms": 927100}, {"id": "ch008", "title": "Texture mode \u2014 Flux from stable to cloud", "start_ms": 927500, "end_ms": 1056300}, {"id": "ch009", "title": "Re-Pitch mode \u2014 chipmunk-soul territory", "start_ms": 1056700, "end_ms": 1192550}, {"id": "ch010", "title": "Walkthrough \u2014 Hallogallo drums, four modes", "start_ms": 1192950, "end_ms": 1336300}, {"id": "ch011", "title": "Settings to remember, pitfalls to flag", "start_ms": 1336700, "end_ms": 1445350}, {"id": "ch012", "title": "Assignment \u2014 three modes, three sentences", "start_ms": 1445750, "end_ms": 1558700}, {"id": "ch013", "title": "Outro", "start_ms": 1559100, "end_ms": 1628150}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

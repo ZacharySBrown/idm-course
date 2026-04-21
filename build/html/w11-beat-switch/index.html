@@ -1,0 +1,1189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W11 — Week 11 — Beat switches, inverse drops, and the rub</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W11</span>
+  <span class="title-chip">Week 11 — Beat switches, inverse drops, and the rub</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>The drop is a subtraction problem</h2>
+  
+  <div class="body"><h1>The drop is a subtraction problem</h1>
+<ul>
+<li>The dance-music drop is a pile-up — more kick, more bass, more riser.</li>
+<li>The IDM drop is the opposite: the kick walks out of the room.</li>
+<li>This week is three punctuation moves lifted from hip-hop and UK bass:</li>
+<li><strong>TDE beat switch</strong> — replace the pattern at a bar boundary, no transition.</li>
+<li><strong>The rub</strong> — a bassline in a different mode than the sample it sits under (Bob Power&rsquo;s term, widely attributed, primary-source still open — <code>bib:charnas_dilla_time</code> does cover the Dilla side).</li>
+<li><strong>Inverse drop</strong> — remove the kick at the drop moment (Burial &ldquo;Archangel&rdquo; 1:30, per <code>bib:burial_soundforge_quote</code> production lore).</li>
+<li>No Stemforge recipe. You bring your own in-progress track. The dullest 8 bars you wrote last week — we are cutting into those.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Archangel</span><span class="by"> — Burial</span><span class="links"><a href="https://open.spotify.com/track/63FmCXIc4lmEq9fNqGkQ57" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/qgdL8S4hyUo" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Burial%20Archangel" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>TDE beat switches — punctuation, not disruption</h2>
+  
+  <div class="body"><h1>TDE beat switches — punctuation, not disruption</h1>
+<ul>
+<li><strong>The move:</strong> at bar 8, 16, or 32, replace the entire drum pattern with a contrasting one. No riser. No crash. No gradual transition. The lurch is the hook.</li>
+<li>Source: Zak-Handbook §4.5 — Sounwave and DJ Dahi use abrupt drum-pattern changes at the 8th or 16th bar as narrative punctuation, not as mixing choices (flag: Sounwave-specific quote is in <code>needs_bib:</code>, Dahi is covered by <code>bib:pitchfork_dj_dahi_money_trees</code>).</li>
+<li><strong>Contrast vectors</strong> — pick one axis and swap:</li>
+<li>straight feel → triplet feel</li>
+<li>busy 16ths → sparse half-time</li>
+<li>one sample source → a different sample source, no crossfade</li>
+<li>snare-on-2-and-4 → snare-on-3</li>
+<li>Kendrick tracks that do it cleanly: <em>Money Trees</em>, <em>Swimming Pools (Drank)</em>, <em>DUCKWORTH.</em>, <em>King Kunta</em> — confirm with <code>bib:whosampled_db</code> if you want sample receipts.</li>
+<li>The transplant to IDM is straightforward: your 32-bar loop gets a new drum kit at bar 33.</li>
+</ul></div>
+  
+  
+  
+  <div class="ab"><div class="label">Kendrick Lamar — Money Trees — pre-switch vs post-switch</div><div class="controls"><button data-src="00:00 — Beach House reversed bed" class="active">A — dry</button><button data-src="01:55 — kick-forward verse">B — wet</button></div><audio class="abplayer" preload="none" controls src="00:00 — Beach House reversed bed"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s03">
+  <h1>Slide s03 · concept</h1>
+  <h2>DJ Dahi&#x27;s reversal — Beach House into Money Trees</h2>
+  
+  <div class="body"><h1>DJ Dahi&rsquo;s reversal — Beach House into Money Trees</h1>
+<ul>
+<li>Per <code>bib:pitchfork_dj_dahi_money_trees</code> — Dahi heard a Beach House record, and, quoted: <em>&ldquo;reversed it and then put it through some turns and a couple effects and stuff.&rdquo;</em></li>
+<li>That is a complete production method. Write it down.</li>
+<li><strong>In Ableton, the four-step recipe:</strong></li>
+<li>Drag any 2-bar clip onto an audio track. Right-click → <strong>Reverse</strong>.</li>
+<li>Insert <strong>Auto Filter</strong> — LP24, Freq 400 Hz, Res 0.30, LFO Sync at 1/2, Amount 60%.</li>
+<li>Insert <strong>SoundToys Crystallizer</strong> (<code>bib:soundtoys_crystallizer_manual</code>) — preset <em>Reverse</em>, Mix 35%.</li>
+<li>Print to a new audio track. Delete source. You have the seed.</li>
+<li><strong>Why the reverse matters:</strong> the attack envelope is now a swell. Nothing hits you on the 1. The ear orients to the tail. When the dry version enters at bar 17, that entrance <em>is</em> the switch.</li>
+<li>This is the cheapest beat-switch setup in the book. One clip. Two effects. A bounce.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>The rub — Bob Power&#x27;s friction, Dilla&#x27;s bassline</h2>
+  
+  <div class="body"><h1>The rub — Bob Power&rsquo;s friction, Dilla&rsquo;s bassline</h1>
+<ul>
+<li><strong>The rub</strong> — engineer Bob Power&rsquo;s term for the compositional friction between a sample and the track it sits in. Widely cited in D&rsquo;Angelo / Roots engineering lore. Primary-source interview is in <code>needs_bib:</code>; treat as attributed, not yet confirmed.</li>
+<li><strong>The canonical example:</strong> J Dilla, <em>Get Dis Money</em>. Dilla chops a Herbie Hancock <em>Come Running to Me</em> vocal. He writes a synth bassline in the Aeolian — a different mode than the sample implies. <code>bib:charnas_dilla_time</code>, Ch. 14 on Dilla&rsquo;s counterpoint habit; <code>bib:whosampled_db</code> for the source ID.</li>
+<li><strong>Why it works:</strong> the sample carries one harmonic universe. The bass carries another. The ear tries to reconcile them. It does not get to. That unresolved tension is the hook.</li>
+<li><strong>Dissonance is not the point.</strong> The rub is <em>not</em> a clashing chord. It is a two-way pull where both voices still land inside a musical relationship. Think modal friction, not semitone collision.</li>
+<li>Callback to W9: we chopped vocals this way. This week the bassline is the countermelody.</li>
+</ul></div>
+  
+  
+  
+  <div class="ab"><div class="label">J Dilla — Get Dis Money — sample in isolation vs full loop</div><div class="controls"><button data-src="Herbie Hancock &#x27;Come Running to Me&#x27; vocal chop, dry" class="active">A — dry</button><button data-src="Same chop + Dilla&#x27;s synth bass in the Aeolian">B — wet</button></div><audio class="abplayer" preload="none" controls src="Herbie Hancock &#x27;Come Running to Me&#x27; vocal chop, dry"></audio></div>
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Get Dis Money</span><span class="by"> — Slum Village</span><span class="links"><a href="https://open.spotify.com/track/797IwT97Umk0KeReKvasJu" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/F-oLqMwzvBY" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Slum%20Village%20Get%20Dis%20Money" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>Inverse drop — Burial Archangel, Aphex Come to Daddy Dub</h2>
+  
+  <div class="body"><h1>Inverse drop — Burial Archangel, Aphex Come to Daddy Dub</h1>
+<ul>
+<li><strong>The move:</strong> at the moment the EDM producer would add a kick, you <strong>remove</strong> one.</li>
+<li>Source, two examples:</li>
+<li>Burial, <em>Archangel</em>, ~1:28–1:38 — the kick drops out. Pitched vocal stutters, vinyl crackle, and foregrounded foley carry the passage. Bevan on his toolchain: <em>&ldquo;Fuckit, I&rsquo;m going to stick to this shitty little computer program, Soundforge.&rdquo;</em> (<code>bib:burial_soundforge_quote</code>).</li>
+<li>Aphex Twin, <em>Come to Daddy (Pappy Mix)</em> — same idea, earlier. Textural density replaces rhythmic density.</li>
+<li><strong>What carries the moment when the kick leaves:</strong></li>
+<li>Pitched vocal stutters — chops at 1/32 or 1/64, re-pitched ±3 semitones.</li>
+<li>Vinyl crackle or rain foley, foregrounded at −9 dB.</li>
+<li>A sub drone one octave below the missing kick.</li>
+<li>A reverse cymbal half a bar before the drop. No white-noise riser.</li>
+<li><strong>The trick is the replacement, not the removal.</strong> If you just mute the kick, the track sounds broken. If you fill the hole with texture, the track sounds like it is listening.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Archangel</span><span class="by"> — Burial</span><span class="links"><a href="https://open.spotify.com/track/63FmCXIc4lmEq9fNqGkQ57" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/qgdL8S4hyUo" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Burial%20Archangel" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Scene-launch the switch — Session to Arrangement on a bar boundary</h2>
+  
+  <div class="body"><h1>Scene-launch the switch — Session to Arrangement on a bar boundary</h1>
+<ul>
+<li><strong>Scene 1</strong> — &ldquo;Pre-switch.&rdquo; Drum Rack A, bass pattern A, sample loop A.</li>
+<li><strong>Scene 2</strong> — &ldquo;Post-switch.&rdquo; Drum Rack B, bass pattern B, sample loop B. Contrasting feel — triplet vs straight, sparse vs dense.</li>
+<li><strong>Global Launch Quantization</strong> (top of Live window): set to <strong>1 Bar</strong>. Scene 2 fires clean on the next downbeat regardless of click timing. <code>bib:ableton_live_12_manual</code>, <em>Launching Clips and Scenes</em>.</li>
+<li>Arm <strong>Arrangement Record</strong>. Click Scene 1 → let it run 8–16 bars → click Scene 2. The switch records into Arrangement as a live performance; refine in the timeline.</li>
+<li><strong>Crossfade-tail caveat:</strong> long reverb/delay sends bleed into Scene 2. Two honest options:</li>
+<li>Mute the send on the last bar with a clip envelope — surgical.</li>
+<li>Leave the bleed — the tail becomes a linking fingerprint (Burial method).</li>
+<li>Anything other than 1 Bar or 1/2 Note quantization will smear the switch.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>Chain Selector + Macro Variations — the patch-flip alternative</h2>
+  
+  <div class="body"><h1>Chain Selector + Macro Variations — the patch-flip alternative</h1>
+<ul>
+<li>Callback to W8: <strong>Chain Selector</strong> inside an Instrument Rack or Drum Rack lets you stack 8–16 distinct instrument chains and expose a single macro to flip between them. <code>bib:ableton_live_12_manual</code>, <em>Instrument Rack → Chain Selector</em>.</li>
+<li>Live 12.2+ adds <strong>Macro Variations</strong> — rack snapshots of every macro position, saved as named presets, recallable from the Macro bar. You can store &ldquo;Verse A,&rdquo; &ldquo;Switch B,&rdquo; &ldquo;Outro C&rdquo; as snapshots on one rack.</li>
+<li><strong>Combined workflow for an in-track switch without leaving Arrangement:</strong></li>
+<li>Build one Instrument Rack for your synth bass. Three chains — clean sine, FM growl, bit-crushed square.</li>
+<li>Drag Chain Selector onto Macro 1. Store current setting as Variation &ldquo;A.&rdquo;</li>
+<li>Change chain to FM growl, tweak filter. Store as Variation &ldquo;B.&rdquo;</li>
+<li>In Arrangement, right-click the bar-33 boundary → <strong>Insert Locator</strong>. Automate Macro 1 to snap from A to B at that locator.</li>
+<li>This is the <strong>Autechre</strong> patch-flipping method from W8 applied to hip-hop structure. Same mechanic, different rhetorical goal. <code>bib:finish_more_music_variation</code> for the variation-as-arrangement mindset.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s08">
+  <h1>Slide s08 · caveat</h1>
+  <h2>Commit the pre-switch section before you flip chains</h2>
+  
+  <div class="body"><h1>Commit the pre-switch section before you flip chains</h1>
+<ul>
+<li><strong>CPU problem (callback from W8):</strong> eight-chain Racks with three reverbs each stutter once you stack a second full arrangement on top. Freeze works but blocks Session A/B auditioning.</li>
+<li><strong>The four-step discipline:</strong></li>
+<li>Dial in the pre-switch section (bars 1–32). Best version of itself.</li>
+<li><strong>Bounce Groups</strong> (Live 12.3) or Freeze + Flatten. <code>bib:ableton_live_12_manual</code>, <em>Freeze and Flatten</em>.</li>
+<li>Delete or Activate-disable source tracks. Save as <code>v02</code>, never overwrite.</li>
+<li>Build the post-switch chain with the CPU you just recovered.</li>
+<li>This is the Burial Bounce-and-Arrange half of the workflow (<code>bib:burial_soundforge_quote</code>, Zak-Handbook §8).</li>
+<li><strong>Honest cost:</strong> committed stems are recall-hostile. Tweaking a reverb tail means reopening the old set and re-rendering. The rule is <em>commit, then switch</em> — not <em>switch, then commit</em>.</li>
+<li>Bounce when you are bored with the pre-switch, not when you are still excited by it. Rick Rubin&rsquo;s rule, <code>bib:rick_rubin_creative_act</code>.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s09">
+  <h1>Slide s09 · reference</h1>
+  <h2>Four tracks to rip apart this week</h2>
+  
+  <div class="body"><h1>Four tracks to rip apart this week</h1>
+<ul>
+<li><strong>Kendrick Lamar — <em>Money Trees</em></strong> (2012). The Beach House <em>Silver Soul</em> reverse is the intro; the beat opens up at ~1:55. Switch happens without a riser. <code>bib:pitchfork_dj_dahi_money_trees</code>, <code>bib:whosampled_db</code>.</li>
+<li><strong>J Dilla — <em>Get Dis Money</em></strong> (<em>Welcome 2 Detroit</em>, 2001). Sample in one mode, Dilla&rsquo;s bass in another. The rub, distilled. <code>bib:charnas_dilla_time</code>, <code>bib:whosampled_db</code>.</li>
+<li><strong>Burial — <em>Archangel</em></strong> (<em>Untrue</em>, 2007). The 1:30 moment — the kick walks out, the vocal stutters carry the weight. <code>bib:burial_soundforge_quote</code> for Bevan&rsquo;s toolchain; the Archangel-specific production quote is in <code>needs_bib:</code>.</li>
+<li><strong>Aphex Twin — <em>Come to Daddy (Pappy Mix)</em></strong> (1997). The <em>(Mummy Mix)</em> is the textural cousin. Both are inverse-drop precedents — Aphex arrived first, Burial codified it.</li>
+<li><strong>How to listen:</strong> play each track with the kick soloed, then with the kick muted. You will hear the arrangement move without it. <code>bib:rick_rubin_creative_act</code>, pg 81–93 on listening away from the center.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Archangel</span><span class="by"> — Burial</span><span class="links"><a href="https://open.spotify.com/track/63FmCXIc4lmEq9fNqGkQ57" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/qgdL8S4hyUo" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Burial%20Archangel" target="_blank" rel="noopener">Apple</a> </span></div><div class="song-ref"><span class="title">Get Dis Money</span><span class="by"> — Slum Village</span><span class="links"><a href="https://open.spotify.com/track/797IwT97Umk0KeReKvasJu" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/F-oLqMwzvBY" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Slum%20Village%20Get%20Dis%20Money" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide exercise" id="slide-s10">
+  <h1>Slide s10 · exercise</h1>
+  <h2>The dullest eight bars — pick one of three moves</h2>
+  
+  <div class="body"><h1>The dullest eight bars — pick one of three moves</h1>
+<ul>
+<li><strong>Step 1 — Find it.</strong> Scrub your in-progress track. Identify the dullest 8-bar section. If nothing is obviously dull, pick the one you are tempted to skip on the walk home.</li>
+<li><strong>Step 2 — Pick one move. Not two. One.</strong></li>
+<li><strong>(a) TDE beat switch at bar 4</strong> — swap the drum kit and pattern for bars 5–8. Straight → triplet, dense → sparse. Session Scene Launch at 1-bar quantize or Chain Selector Macro Variation (s06–s07).</li>
+<li><strong>(b) Inverse drop at bar 4</strong> — mute the kick for bars 5–8. Replace with pitched vocal stutters, foley at −9 dB, sub drone, reverse cymbal on the bar-4 downbeat. No white-noise riser (s05).</li>
+<li><strong>(c) The rub</strong> — keep the drums, mute your current bass, write a 2-bar countermelody in a different mode than the sample (s04).</li>
+<li><strong>Step 3 — Bounce.</strong> Render 60–90 sec WAV of the new version, plus a 10-sec clip of the original for A/B.</li>
+<li><strong>Deliverable</strong> — <code>w11_&lt;trackname&gt;_&lt;switch|inverse|rub&gt;.wav</code> and <code>w11_&lt;trackname&gt;_original.wav</code>. Ship by Saturday. <code>bib:finish_more_music_variation</code>.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A bounced 60–90-second stereo WAV showing your chosen move applied to the dullest 8-bar section of your in-progress track. Filename: w11_&lt;trackname&gt;_&lt;switch|inverse|rub&gt;.wav. Include a 10-second A/B clip of the original underneath for comparison.</div>
+  
+</section>
+
+
+<section class="slide concept" id="slide-d01">
+  <h1>Slide d01 · concept</h1>
+  <h2>Beat-switch timing — bar-count visualization</h2>
+  
+  <div class="body"><h1>Beat-switch timing — where the lurch lands</h1>
+<ul>
+<li>The TDE switch is not random. It lands on a bar boundary the ear is already counting down to: bar 8, 16, 32, or at a pre-chorus / bridge hinge.</li>
+<li>Three common targets, in order of frequency on Kendrick&rsquo;s <em>good kid, m.A.A.d city</em> (see <code>bib:whosampled_db</code> for sample receipts):</li>
+<li><strong>Verse-to-chorus pivot</strong> — the switch <em>is</em> the chorus. <em>Money Trees</em> ~1:55, the Beach House reversal gives way to a kick-forward pocket.</li>
+<li><strong>Mid-song bridge</strong> — the switch is a narrative cut, the song&rsquo;s second act. <em>DUCKWORTH.</em> stacks three of these.</li>
+<li><strong>Coda</strong> — the final 16 bars go somewhere the song did not start. <em>King Kunta</em> rides one pocket; <em>DUCKWORTH.</em> reinvents twice.</li>
+<li><strong>The rule in IDM-land:</strong> place the switch on a power-of-two bar count. Bar 8 reads as a punctuation; bar 33 reads as a new section; bar 17 usually reads as a mistake.</li>
+<li>Read the diagram left-to-right as your 32-bar loop. Three candidate switch points. Pick one and commit.</li>
+</ul></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" aria-label="Beat-switch timing candidate bar positions on a 32-bar loop">
+  <rect x="0" y="0" width="800" height="260" fill="#f6f4ef"/>
+  <line x1="40" y1="180" x2="760" y2="180" stroke="#222" stroke-width="1.5"/>
+  <text x="40" y="200" font-family="monospace" font-size="10" fill="#222">bar 1</text>
+  <text x="200" y="200" font-family="monospace" font-size="10" fill="#222">bar 8</text>
+  <text x="380" y="200" font-family="monospace" font-size="10" fill="#222">bar 16</text>
+  <text x="560" y="200" font-family="monospace" font-size="10" fill="#222">bar 24</text>
+  <text x="720" y="200" font-family="monospace" font-size="10" fill="#222">bar 32</text>
+  <g font-family="monospace" font-size="10" fill="#222">
+    <line x1="40" y1="175" x2="40" y2="185" stroke="#222"/>
+    <line x1="220" y1="175" x2="220" y2="185" stroke="#222"/>
+    <line x1="400" y1="175" x2="400" y2="185" stroke="#222"/>
+    <line x1="580" y1="175" x2="580" y2="185" stroke="#222"/>
+    <line x1="760" y1="175" x2="760" y2="185" stroke="#222"/>
+  </g>
+  <!-- candidate switch markers -->
+  <line x1="220" y1="60" x2="220" y2="175" stroke="#c04a2a" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="170" y="52" font-family="monospace" font-size="11" fill="#c04a2a">bar 8 — punctuation</text>
+  <line x1="400" y1="80" x2="400" y2="175" stroke="#c04a2a" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="350" y="72" font-family="monospace" font-size="11" fill="#c04a2a">bar 16 — bridge</text>
+  <line x1="760" y1="100" x2="760" y2="175" stroke="#c04a2a" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="680" y="92" font-family="monospace" font-size="11" fill="#c04a2a">bar 33 — new section</text>
+  <!-- non-candidates -->
+  <line x1="320" y1="130" x2="320" y2="175" stroke="#999" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="275" y="124" font-family="monospace" font-size="10" fill="#999">bar 11 — reads as mistake</text>
+  <text x="40" y="240" font-family="monospace" font-size="11" fill="#3a7a4a">Power-of-two bar boundaries only. TDE rule.</text>
+</svg>
+<div class="caption">Three valid switch points on a 32-bar loop. Bar 11 shown as a counter-example.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d02">
+  <h1>Slide d02 · concept</h1>
+  <h2>Inverse drop — energy curve vs normal drop</h2>
+  
+  <div class="body"><h1>Inverse drop — the energy curve that runs the wrong way</h1>
+<ul>
+<li>A normal EDM drop climbs for 16 bars, dumps kick + sub + full mix at bar 0 of the drop, then rides. Energy curve: <code>low → rising → peak → plateau</code>.</li>
+<li>An inverse drop does the opposite. Energy rises for 16 bars, then the kick mutes at the moment the plateau would start. Energy curve: <code>low → rising → peak by absence → textural refill</code>.</li>
+<li>What changes in the listener&rsquo;s model: rhythmic density is replaced by <strong>textural density</strong>. The ear was tracking downbeats; now it tracks foley, crackle, and pitched stutters. Same excitation, different carrier.</li>
+<li><code>bib:burial_soundforge_quote</code> and the specs artifact (<code>compass_artifact_wf-efadee41</code>, §5) both frame this as a Burial signature — the 1:30 moment of <em>Archangel</em> is the canonical receipt.</li>
+<li><strong>The diagram:</strong> red curve is the EDM expectation. Grey curve is the inverse — peak at the same bar, but the peak is below the pre-peak line, not above it. The excitation is the <em>drop</em> in level, not the rise.</li>
+</ul></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" aria-label="Energy curve comparison between a normal EDM drop and an inverse drop">
+  <rect x="0" y="0" width="800" height="300" fill="#f6f4ef"/>
+  <line x1="60" y1="250" x2="760" y2="250" stroke="#222" stroke-width="1.5"/>
+  <line x1="60" y1="40" x2="60" y2="250" stroke="#222" stroke-width="1.5"/>
+  <text x="20" y="50" font-family="monospace" font-size="11" fill="#222">energy</text>
+  <text x="720" y="268" font-family="monospace" font-size="11" fill="#222">time</text>
+  <!-- bar markers -->
+  <g font-family="monospace" font-size="10" fill="#222">
+    <text x="120" y="268">bar 0</text>
+    <text x="280" y="268">bar 8</text>
+    <text x="420" y="268">bar 16 (drop)</text>
+    <text x="620" y="268">bar 24</text>
+  </g>
+  <line x1="440" y1="40" x2="440" y2="250" stroke="#999" stroke-width="1" stroke-dasharray="2 3"/>
+  <!-- normal drop curve (red) -->
+  <path d="M 60 230 L 200 210 L 340 150 L 440 60 L 620 70 L 760 80"
+        fill="none" stroke="#c04a2a" stroke-width="2.5"/>
+  <text x="620" y="60" font-family="monospace" font-size="11" fill="#c04a2a">normal drop</text>
+  <!-- inverse drop curve (grey) -->
+  <path d="M 60 230 L 200 210 L 340 150 L 440 100 L 460 200 L 620 190 L 760 195"
+        fill="none" stroke="#444" stroke-width="2.5"/>
+  <text x="620" y="185" font-family="monospace" font-size="11" fill="#444">inverse drop</text>
+  <!-- annotation -->
+  <text x="340" y="105" font-family="monospace" font-size="10" fill="#c04a2a">peak = more</text>
+  <text x="450" y="225" font-family="monospace" font-size="10" fill="#444">peak = absence</text>
+</svg>
+<div class="caption">Same time axis, same peak bar. Red: rhythmic density spikes. Grey: rhythmic density collapses; textural density takes over.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d03">
+  <h1>Slide d03 · concept</h1>
+  <h2>Chain Selector routing — MIDI in, one stereo out</h2>
+  
+  <div class="body"><h1>Chain Selector — what actually routes through the Rack</h1>
+<ul>
+<li><code>bib:ableton_live_12_manual</code>, <em>Instrument Rack → Chain Selector</em>. A Rack hosts N parallel instrument chains. The <span class="term">Chain Selector<span class="gloss"><strong>Chain Selector</strong> — An Instrument/Effect Rack&#x27;s Zone control that routes MIDI or audio to different chains based on a macro value. Combined with Macro Variations (Live 12.2+), gives you recallable snapshots — an Autechre-style patch-flipper in a single rack. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> value (0–127) selects which chain receives incoming MIDI and passes audio out.</li>
+<li>Zones on the Chain Selector strip define which chain responds to which selector value. Overlap zones crossfade two chains; hard zones hard-switch.</li>
+<li>Macros expose parameters from any chain to the Rack&rsquo;s top-level 8-macro bar. The same macro can address a filter cutoff on Chain 1 and a feedback send on Chain 3 — one knob, different destinations per chain.</li>
+<li><strong>This is the mechanism that makes an in-track beat switch work without leaving Arrangement View.</strong> Automate the Chain Selector macro from zone 1 (clean bass) to zone 2 (FM growl) at bar 33; audio path flips on the downbeat.</li>
+<li>See diagram — MIDI enters left, hits the Selector decision, audio exits right. The selector itself is just a MIDI-range gate with a UI.</li>
+</ul></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  M[MIDI in] --&gt; S{Chain Selector&lt;br/&gt;value 0-127}
+  S --&gt;|zone 0-42| A[Chain A&lt;br/&gt;clean saw sub]
+  S --&gt;|zone 43-85| B[Chain B&lt;br/&gt;FM growl]
+  S --&gt;|zone 86-127| C[Chain C&lt;br/&gt;bit-crushed square]
+  A --&gt; O[Rack audio out]
+  B --&gt; O
+  C --&gt; O
+</div><div class="caption">Active chain(s) determined by selector value. Hard zones = one chain at a time; overlapping zones crossfade.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d04">
+  <h1>Slide d04 · concept</h1>
+  <h2>The rub — two modes, shared pivot, non-shared friction</h2>
+  
+  <div class="body"><h1>The rub — two harmonic fields in the same bar</h1>
+<ul>
+<li><span class="term">The rub<span class="gloss"><strong>the rub</strong> — Engineer Bob Power&#x27;s term for the compositional friction between a sample and the track it sits in — a two-way pull where both voices land inside a musical relationship without resolving. Canonical example: J Dilla&#x27;s &#x27;Get Dis Money&#x27; — synth bassline in Aeolian against a Herbie Hancock vocal in a different mode. Widely cited in D&#x27;Angelo / Roots engineering lore; primary-source interview pending. Not dissonance — modal friction.</span></span> is not dissonance. Dissonance is a semitone collision inside one harmonic field. The rub is two <em>different</em> fields pulling on the same bar.</li>
+<li>Canonical example (<code>bib:charnas_dilla_time</code>, Ch. 14): Dilla&rsquo;s <em>Get Dis Money</em> samples a Herbie Hancock vocal that implies one mode; Dilla writes a bassline in the Aeolian. Both are musical. Neither resolves to the other.</li>
+<li><strong>What the diagram shows:</strong> top row — sample&rsquo;s implied mode (Mixolydian, say, because the sampled horn has a b7). Bottom row — Dilla&rsquo;s bassline mode (Aeolian, with a b6 the sample does not contain). The shared pitch classes are the pivot; the non-shared ones are the friction.</li>
+<li>The ear tries to settle on one of the two. It cannot. That unresolved tug is the hook.</li>
+<li><strong>Rule:</strong> ≥2 non-shared pitch classes between sample and bass to get a rub. 0 is parallel. 1 is accidental. 3+ usually reads as a mistake.</li>
+</ul></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" aria-label="Two scales showing shared and non-shared pitch classes between sample and bassline">
+  <rect x="0" y="0" width="800" height="260" fill="#f6f4ef"/>
+  <text x="40" y="40" font-family="monospace" font-size="12" fill="#222">sample (Mixolydian): A B C# D E F# G</text>
+  <text x="40" y="160" font-family="monospace" font-size="12" fill="#222">bass (Aeolian):     A B C  D E F  G</text>
+  <!-- pitch class boxes -->
+  <g font-family="monospace" font-size="14" text-anchor="middle">
+    <rect x="60" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="85" y="82" fill="#fff">A</text>
+    <rect x="120" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="145" y="82" fill="#fff">B</text>
+    <rect x="180" y="55" width="50" height="40" fill="#c04a2a" stroke="#222"/><text x="205" y="82" fill="#fff">C#</text>
+    <rect x="240" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="265" y="82" fill="#fff">D</text>
+    <rect x="300" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="325" y="82" fill="#fff">E</text>
+    <rect x="360" y="55" width="50" height="40" fill="#c04a2a" stroke="#222"/><text x="385" y="82" fill="#fff">F#</text>
+    <rect x="420" y="55" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="445" y="82" fill="#fff">G</text>
+
+    <rect x="60" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="85" y="202" fill="#fff">A</text>
+    <rect x="120" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="145" y="202" fill="#fff">B</text>
+    <rect x="180" y="175" width="50" height="40" fill="#c04a2a" stroke="#222"/><text x="205" y="202" fill="#fff">C</text>
+    <rect x="240" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="265" y="202" fill="#fff">D</text>
+    <rect x="300" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="325" y="202" fill="#fff">E</text>
+    <rect x="360" y="175" width="50" height="40" fill="#c04a2a" stroke="#222"/><text x="385" y="202" fill="#fff">F</text>
+    <rect x="420" y="175" width="50" height="40" fill="#3a7a4a" stroke="#222"/><text x="445" y="202" fill="#fff">G</text>
+  </g>
+  <text x="500" y="85" font-family="monospace" font-size="11" fill="#3a7a4a">green = shared (pivot)</text>
+  <text x="500" y="200" font-family="monospace" font-size="11" fill="#c04a2a">red = non-shared (rub)</text>
+  <text x="40" y="250" font-family="monospace" font-size="11" fill="#222">2 non-shared PCs = the rub. 0 = parallel. 3+ = mistake.</text>
+</svg>
+<div class="caption">Two modes over A. Shared pitch classes are the pivot the ear hears as continuity; non-shared ones are the friction Bob Power named.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-tde-01">
+  <h1>Slide tde-01 · reference</h1>
+  <h2>good kid, m.A.A.d city — the album that proved the switch</h2>
+  
+  <div class="body"><h1>good kid, m.A.A.d city — the album that proved the switch</h1>
+<ul>
+<li><em>good kid, m.A.A.d city</em> (Top Dawg / Aftermath / Interscope, 2012). Executive production: Dr. Dre, Anthony Tiffith. Musical director credit effectively: Sounwave.</li>
+<li>This is the record where the TDE beat switch becomes a stated compositional move, not a novelty. <em>Money Trees</em>, <em>m.A.A.d city</em>, <em>Swimming Pools (Drank) — Extended Version</em>, and <em>Sing About Me, I&rsquo;m Dying of Thirst</em> all switch pockets mid-track without a transition.</li>
+<li>The production credit distribution matters: DJ Dahi produces <em>Money Trees</em>; Hit-Boy does <em>Backseat Freestyle</em>; THC produces <em>m.A.A.d city</em> (with Sounwave co-producing). The switch is not one producer&rsquo;s signature — TDE adopted it as a house grammar.</li>
+<li>Sample-receipt check via <code>bib:whosampled_db</code>: <em>Money Trees</em> samples Beach House <em>Silver Soul</em> (2010), reversed. <em>m.A.A.d city</em> samples Ice Cube <em>Bird in the Hand</em> on the switch side. The switches are often also <em>sample</em> switches.</li>
+</ul></div>
+  <figure class="figure"><img src="assets/gkmc-cover.jpg" alt="Kendrick Lamar, good kid, m.A.A.d city (Top Dawg / Aftermath / Interscope, 2012)."><figcaption>Kendrick Lamar, good kid, m.A.A.d city (Top Dawg / Aftermath / Interscope, 2012).<div class="credit">Interscope Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-tde-02">
+  <h1>Slide tde-02 · reference</h1>
+  <h2>DJ Dahi — the reverse-and-filter seed</h2>
+  
+  <div class="body"><h1>DJ Dahi — the reverse-and-filter seed</h1>
+<ul>
+<li>Dahi (Dacoury Dahi Natche), producer on <em>Money Trees</em>, <em>Worst Behavior</em> (Drake), <em>ELEMENT.</em> (Kendrick). Interview of record: Pitchfork&rsquo;s 2014 piece on his <em>Money Trees</em> workflow (<code>bib:pitchfork_dj_dahi_money_trees</code>).</li>
+<li>The method, in Dahi&rsquo;s own words: <em>&ldquo;reversed it and then put it through some turns and a couple effects and stuff.&rdquo;</em> That is four operations — reverse, filter, time-modulate, resample.</li>
+<li>What that quote is not: a preset, a plugin chain, a signature synth. It is a short recipe. It transplants to Ableton in about 90 seconds (see s03).</li>
+<li><strong>Why it became TDE&rsquo;s method:</strong> it produces an opening texture that sounds finished before the beat arrives. The reversed, filtered source <em>is</em> the intro. When the dry pocket hits, the entrance is the switch — you do not need a transition.</li>
+<li>Dahi is the person the switch is usually attributed to on <em>Money Trees</em>. Sounwave is the one who made it a TDE-wide grammar. Neither is the same as inventing it — <code>bib:charnas_dilla_time</code> traces pocket-change moves to Dilla, Tribe, and pre-1990 jazz suites.</li>
+</ul></div>
+  <figure class="figure"><img src="assets/dj-dahi-portrait.jpg" alt="DJ Dahi (Dacoury Dahi Natche). Editorial / press photo."><figcaption>DJ Dahi (Dacoury Dahi Natche). Editorial / press photo.<div class="credit">Photo credit TBD (photo-sourcer) · editorial / fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-tde-03">
+  <h1>Slide tde-03 · reference</h1>
+  <h2>Beach House — Silver Soul — the exact source sample</h2>
+  
+  <div class="body"><h1>Beach House — Silver Soul — the exact source sample</h1>
+<ul>
+<li>Source: Beach House, <em>Silver Soul</em>, from <em>Teen Dream</em> (Sub Pop, 2010). Per <code>bib:whosampled_db</code> the Dahi chop lifts roughly the 2:00–2:08 region — the sustained guitar + organ bed, not the vocal.</li>
+<li>The reason the source matters: <em>Silver Soul</em> is itself a slow, drone-forward piece. Dahi did not pick a banger and reverse it; he picked a texture that was already doing half the work.</li>
+<li>Pedagogical takeaway — pick sources that are already textural, not rhythmic. A kick-forward source will fight the reverse; a pad-forward source will <em>become</em> the reverse.</li>
+<li><code>bib:charnas_dilla_time</code> on source selection (Ch. 9): Dilla&rsquo;s crate had more 70s fusion than funk 45s because the fusion records gave him sustained tones to loop. Same logic as Dahi&rsquo;s Beach House pick.</li>
+<li><strong>In Ableton:</strong> before you reverse anything, verify the source has ≥4 seconds of continuous tone with no hard transients. That is the raw material for a reverse-and-filter seed.</li>
+</ul></div>
+  <figure class="figure"><img src="assets/beach-house-teen-dream-cover.jpg" alt="Beach House, Teen Dream (Sub Pop, 2010). &#x27;Silver Soul&#x27; is track 2."><figcaption>Beach House, Teen Dream (Sub Pop, 2010). &#x27;Silver Soul&#x27; is track 2.<div class="credit">Sub Pop Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-tde-04">
+  <h1>Slide tde-04 · concept</h1>
+  <h2>Money Trees — bar count of the switch</h2>
+  
+  <div class="body"><h1>Money Trees — bar count of the switch</h1>
+<ul>
+<li><em>Money Trees</em> runs 6:26. The structural pivot is around 1:55 on the released master. Before: reversed Beach House bed + Kendrick&rsquo;s verse; after: dry kick-forward pocket with the Beach House source recontextualized as a loop.</li>
+<li><strong>Rough bar count</strong>, 4-bar intro then 8-bar blocks (time approximate; verify on your copy of the record with <code>bib:whosampled_db</code> receipts):</li>
+<li>0:00–0:15 — reversed bed alone, 4 bars</li>
+<li>0:15–1:55 — verse 1 over reversed bed, 48 bars</li>
+<li><strong>1:55 — switch</strong> (no riser, no crash, one bar of tail bleed)</li>
+<li>1:55–3:05 — dry pocket, 32 bars</li>
+<li>3:05 on — second verse + hook shuffle</li>
+<li>The switch lands at a bar that is a multiple of 16. That is not a coincidence; it is the move. The ear was tracking 16s from bar 0 onward; the switch arrives when the count says it should, but the <em>content</em> it arrives at is new.</li>
+<li><strong>Receipt:</strong> <code>bib:pitchfork_dj_dahi_money_trees</code> for Dahi&rsquo;s method; the timecode is observable from the released recording. Your copy may differ by a bar depending on master.</li>
+</ul></div>
+  
+  
+  
+  <div class="ab"><div class="label">Money Trees — pre-switch (0:45) vs post-switch (2:15)</div><div class="controls"><button data-src="00:45 — reversed Beach House bed + verse" class="active">A — dry</button><button data-src="02:15 — dry kick-forward pocket">B — wet</button></div><audio class="abplayer" preload="none" controls src="00:45 — reversed Beach House bed + verse"></audio></div>
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Archangel</span><span class="by"> — Burial</span><span class="links"><a href="https://open.spotify.com/track/63FmCXIc4lmEq9fNqGkQ57" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/qgdL8S4hyUo" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Burial%20Archangel" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-tde-05">
+  <h1>Slide tde-05 · concept</h1>
+  <h2>Constructing the switch — filter sweep + tail bleed</h2>
+  
+  <div class="body"><h1>Constructing the switch — filter sweep + level + tail</h1>
+<ul>
+<li>The switch is not literally a hard cut on the master fader. Three mechanical things happen in the last bar before 1:55:</li>
+<li>Auto Filter LP on the reversed bed sweeps closed — ~2 kHz down to ~400 Hz over one bar. Reads as darkening, not transition.</li>
+<li>Reverb send on the reversed bed is <em>not</em> muted — the tail bleeds 1.5–2 seconds into the new pocket, stitching the two halves.</li>
+<li>Kick drum of the dry pocket enters on the downbeat of the switch bar, no ramp. Full level on hit 1.</li>
+<li><code>bib:ableton_live_12_manual</code>, <em>Auto Filter</em>: LP24 mode with a 1-bar LFO-sync sweep gives you the closing move without drawing automation by hand.</li>
+<li><strong>Why this is not a transition in the DJ sense:</strong> the filter closes <em>on</em> the bed that is leaving; it does not introduce the bed that is arriving. There is no mix between the two beds. The old bed is darkening out as the new one enters at full.</li>
+<li><code>bib:soundtoys_crystallizer_manual</code> Reverse preset gives you an additional tail-smear if the sample is short; 35% Mix is usually enough.</li>
+<li><strong>Caveat:</strong> do this move on anything shorter than 24 bars and it reads as a fill, not a switch. Give the first pocket room to establish.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-id-01">
+  <h1>Slide id-01 · reference</h1>
+  <h2>Untrue — the record that codified absence</h2>
+  
+  <div class="body"><h1>Untrue — the record that codified absence</h1>
+<ul>
+<li>Burial (William Bevan), <em>Untrue</em> (Hyperdub HDBCD002, 2007). <em>Archangel</em> is track 2.</li>
+<li>Burial does not do press photos. The album cover — a red-tinged figure on black — is effectively the only public visual for the project. Use the cover when you need an image. <code>bib:burial_soundforge_quote</code> is the primary-source interview we have.</li>
+<li>Bevan on tools: <em>&ldquo;Fuckit, I&rsquo;m going to stick to this shitty little computer program, Soundforge.&rdquo;</em> This is not humility. This is a commit-to-a-constraint declaration — no plugins, no VSTs, waveform-level edits in Sound Forge.</li>
+<li>Why that matters for the inverse drop: Sound Forge does not have sidechain compression, does not have a mixer with sends, does not have automation lanes. If you want energy to <em>drop</em>, you mute a clip. The inverse drop is a <strong>tool-shaped move</strong> — it is what a drop looks like when the only verb you have is &ldquo;cut.&rdquo;</li>
+<li>W2 already cited this record for the Subtraction prehistory. W11 is where we ship it.</li>
+</ul></div>
+  <figure class="figure"><img src="assets/burial-untrue-cover.jpg" alt="Burial, Untrue (Hyperdub HDBCD002, 2007). Cover art by Burial."><figcaption>Burial, Untrue (Hyperdub HDBCD002, 2007). Cover art by Burial.<div class="credit">Hyperdub Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-id-02">
+  <h1>Slide id-02 · concept</h1>
+  <h2>Archangel, 1:28–1:38 — what actually happens</h2>
+  
+  <div class="body"><h1>Archangel, 1:28–1:38 — what happens in those ten seconds</h1>
+<ul>
+<li>Up to 1:28 the track has a 2-step kick-and-snare pocket, vocal chops (Ray J, <em>One Wish</em>, re-pitched), vinyl crackle bed, and a sub drone.</li>
+<li>At ~1:28 the kick drops out. It stays out for roughly 10 seconds. The pocket does not re-enter on a half-bar; it re-enters on the next 8-bar boundary.</li>
+<li><strong>What carries the moment:</strong></li>
+<li>Pitched vocal stutters — the Ray J chops get denser, re-pitched ±3 semitones, re-triggered at 1/16 and 1/32 intervals.</li>
+<li>Vinyl crackle is foregrounded ~9 dB hotter than it was under the kick. It becomes an instrument, not a bed.</li>
+<li>Sub drone one octave below where the kick fundamental sat — a half-beat low drone filling the 40–60 Hz band the kick had owned.</li>
+<li>A reverse cymbal swell half a bar before the drop-out, at about −12 dB, acting as an inverted downbeat.</li>
+<li><strong>What does not happen:</strong> no white-noise riser, no filter sweep on the master, no sidechain ducking because there is nothing to duck. The excitation is structural, not processed.</li>
+<li><code>bib:burial_soundforge_quote</code> for the toolchain; the timecode is observable on the released recording. Archangel-specific production quote still in <code>needs_bib:</code>.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Archangel</span><span class="by"> — Burial</span><span class="links"><a href="https://open.spotify.com/track/63FmCXIc4lmEq9fNqGkQ57" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/qgdL8S4hyUo" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Burial%20Archangel" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-id-03">
+  <h1>Slide id-03 · concept</h1>
+  <h2>Textural density as kick substitute — the replacement menu</h2>
+  
+  <div class="body"><h1>Textural density as kick substitute — the replacement menu</h1>
+<ul>
+<li>The core claim (<code>compass_artifact_wf-efadee41</code> §5): the inverse drop works because rhythmic density is swapped for textural density. Total excitation is roughly conserved; only the carrier changes.</li>
+<li><strong>Replacement menu</strong> — pick 2–3 of these, not all five, for the kick-out bars:</li>
+<li><strong>Pitched vocal stutters</strong> at 1/32 or 1/64, re-pitched ±3 semitones. Dense enough to read as a pulse.</li>
+<li><strong>Foregrounded foley</strong> — rain, vinyl crackle, found field recording — raised from −18 dB bed level to around −9 dB.</li>
+<li><strong>Sub drone</strong> one octave below the kick fundamental. Sine or low-passed noise, 40–60 Hz, no envelope.</li>
+<li><strong>Reverse cymbal</strong> half a bar before the mute, acting as an inverted downbeat.</li>
+<li><strong>Pitched stutter tail</strong> on whatever element is carrying the chord — gated at 1/16, 50% feedback on a short delay, low-passed at 2 kHz.</li>
+<li><strong>What not to add:</strong> a white-noise riser or a tom fill. Both of these read as &ldquo;transition&rdquo; and pull the listener into EDM-drop mode. The whole point is that the moment is <em>not</em> a drop.</li>
+<li><strong>Receipt:</strong> this menu is reverse-engineered from <em>Archangel</em>, <em>Come to Daddy (Pappy Mix)</em>, and <em>Untrue</em>&rsquo;s B-side. Not a universal law — it is a palette. Vary it or the trick becomes a tic.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-id-04">
+  <h1>Slide id-04 · reference</h1>
+  <h2>Aphex — Come to Daddy (Pappy Mix) — the earlier precedent</h2>
+  
+  <div class="body"><h1>Aphex — Come to Daddy (Pappy Mix) — the earlier precedent</h1>
+<ul>
+<li>Aphex Twin, <em>Come to Daddy</em>, <em>(Pappy Mix)</em> — Warp WAP94, 1997. Ten years before <em>Untrue</em>.</li>
+<li>The <em>Pappy Mix</em> (and its counterpart the <em>Mummy Mix</em>) does the inverse-drop move: at the point the hardcore side of the single would crank, the drums pull back and a textural pad/sub carries the passage. Richard D. James was there first; Burial codified it.</li>
+<li><strong>What Aphex did differently from Burial:</strong> James&rsquo;s textural replacement was synthesized pad + sub; Bevan&rsquo;s replacement was sampled foley + pitched vocals. Different sources, same structural move.</li>
+<li>This is a generally useful lesson — the structural move is language-independent. Once you can hear the shape (&ldquo;kick walks out at peak&rdquo;), you will hear it in Dilla (end of <em>Don&rsquo;t Cry</em>), in Mount Kimbie (<em>Before I Move Off</em>), in FKA Twigs&rsquo; <em>Two Weeks</em> second verse. It pre-dates Burial and outlasts him.</li>
+<li><strong>Receipt discipline:</strong> <code>compass_artifact_wf-efadee41</code> §5 names both Aphex and Burial as co-originators of the inverse drop in IDM discourse; no single interview proves Aphex did it first by intent, only the chronology of release.</li>
+</ul></div>
+  <figure class="figure"><img src="assets/aphex-come-to-daddy-cover.jpg" alt="Aphex Twin, Come to Daddy (Warp WAP94, 1997). Pappy Mix on the EP."><figcaption>Aphex Twin, Come to Daddy (Warp WAP94, 1997). Pappy Mix on the EP.<div class="credit">Warp Records · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-id-05">
+  <h1>Slide id-05 · concept</h1>
+  <h2>Ableton recipe — inverse drop in eight bars</h2>
+  
+  <div class="body"><h1>Ableton recipe — inverse drop in eight bars</h1>
+<ul>
+<li><strong>Setup (before the switch bar):</strong> kick on track 1, sub on track 2, chord bed on track 3, foley bed on track 4 at −18 dB. Pitched vocal chop rack on track 5 (idle).</li>
+<li><strong>Bar −1 (the bar before the drop-out):</strong></li>
+<li>Draw a clip envelope on track 4 (foley): ramp from −18 dB to −9 dB over the bar.</li>
+<li>Place a reverse cymbal on its own clip, aligned so the swell peak sits on the downbeat of the drop-out bar. Level ~−12 dB.</li>
+<li><strong>Bars 0–7 (the drop-out):</strong></li>
+<li>Mute the kick track via a Track Activator clip envelope or a muted clip. Do not mute by mixer fader — you want the automation committed.</li>
+<li>Retain the sub, the chord bed, and the foregrounded foley.</li>
+<li>Trigger the pitched vocal chop rack on 1/32 or 1/64 rhythms — <code>bib:ableton_live_12_manual</code> <em>Simpler Slicing Mode</em> or Drum Rack with Follow Actions for the stutter.</li>
+<li><strong>Bar 8 (the re-entry):</strong> kick returns on the downbeat at full level. No fade-in. Foley drops back to −18 dB over one bar.</li>
+<li><strong>Test:</strong> export 16 bars. Play it to someone who has not heard it. If they ask &ldquo;did something break?&rdquo; you overcooked the mute. If they say &ldquo;nice breakdown&rdquo; you under-committed. The aim is quiet unease.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-01">
+  <h1>Slide cs-01 · gear deep dive</h1>
+  <h2>Chain Selector + Macro Variations — the in-track switch engine</h2>
+  
+  <div class="body"><h1>Chain Selector + Macro Variations — the in-track switch engine</h1>
+<ul>
+<li>Ableton Live&rsquo;s <span class="term">Chain Selector<span class="gloss"><strong>Chain Selector</strong> — An Instrument/Effect Rack&#x27;s Zone control that routes MIDI or audio to different chains based on a macro value. Combined with Macro Variations (Live 12.2+), gives you recallable snapshots — an Autechre-style patch-flipper in a single rack. <a href="https://en.wikipedia.org/wiki/Ableton_Live" target="_blank" rel="noopener">wikipedia↗</a></span></span> and Macro Variations (Live 12.2+) together let you build an entire beat switch inside one Rack. No second track. No scene launch. One macro, two values, a bar boundary.</li>
+<li>This slide module treats Chain Selector + Macro Variations as the week&rsquo;s &ldquo;hardware equivalent&rdquo; — no physical box, but the same workflow depth as a gear deep-dive: annotated tour, technique execution, underlying mechanism, the parallel modern use, and an exercise.</li>
+<li><code>bib:ableton_live_12_manual</code>, <em>Instrument Rack → Chain Selector</em> and <em>Live 12.2 Release Notes → Macro Variations</em>.</li>
+<li>Callback: W8 used this same mechanism for Autechre&rsquo;s patch-flipping. This week we point it at a different rhetorical goal — a TDE-style pocket change — without changing the mechanism.</li>
+<li>What follows: eight slides on the mechanism, the parameters, and two concrete use cases.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-02">
+  <h1>Slide cs-02 · gear deep dive</h1>
+  <h2>Rack anatomy — the four controls that matter</h2>
+  
+  <div class="body"><h1>Rack anatomy — what you are looking at</h1>
+<ul>
+<li>Open any Instrument Rack or Drum Rack. Click the &ldquo;Show Chain List&rdquo; button (vertical chain icon, left edge of the Rack). The chain list appears. Above it: the <strong>Chain Selector ruler</strong> — a thin strip with a value from 0–127.</li>
+<li><strong>Four controls that matter for a switch:</strong></li>
+<li><strong>Chain Selector ruler</strong> — drag the yellow triangle to set the current selector value. Whatever zones that value falls inside are active.</li>
+<li><strong>Chain zone bar</strong> (one per chain) — a range with two edges. Default is 0–127 (always on). Narrow it to, e.g., 0–63 for &ldquo;active when selector ≤ 63.&rdquo;</li>
+<li><strong>Macros bar</strong> (top of Rack) — 8 or 16 macros. Assign Chain Selector to one macro via right-click → Map.</li>
+<li><strong>Macro Variations button</strong> (new in 12.2, right side of macros bar) — opens the snapshot drawer. Store, name, recall.</li>
+<li><code>bib:ableton_live_12_manual</code>, <em>Instrument Rack → Zones</em>. Zones have fade regions (the darker outer edges) that crossfade between adjacent chains; the hard-switch move uses zero-width fades.</li>
+<li><strong>Screenshot need:</strong> annotated shot of an open Instrument Rack with the Chain Selector ruler, zones, and macros visible (see images_needed: chain-selector-annotated).</li>
+</ul></div>
+  <figure class="figure"><img src="assets/ableton-chain-selector-annotated.png" alt="Ableton Instrument Rack with Chain Selector ruler, chain zones, and Macro Variations panel annotated."><figcaption>Ableton Instrument Rack with Chain Selector ruler, chain zones, and Macro Variations panel annotated.<div class="credit">Ableton Live 12.2 screenshot, annotated · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-03">
+  <h1>Slide cs-03 · gear deep dive</h1>
+  <h2>How the Rack routes audio — the mental model</h2>
+  
+  <div class="body"><h1>How the Rack routes audio — the mental model</h1>
+<ul>
+<li>MIDI enters the Rack at the top. It fans out to every chain whose zone contains the current Chain Selector value. Chains outside the selector value do not receive MIDI — they stop producing sound.</li>
+<li>Audio from each active chain is summed internally and exits the Rack as one stereo output. The Rack itself is a bus.</li>
+<li><strong>Key mental-model fact:</strong> switching chains does not re-trigger envelopes on the destination chain. If chain 2 has an 800 ms attack pad and you flip to it on a downbeat, you will hear the attack starting from zero. Plan for this or commit the destination chain first.</li>
+<li><strong>Zone fades matter.</strong> A zone with a 4-unit fade region will crossfade in over four selector values — so if you automate the macro from 40 to 60 over one bar, you get a 1-bar crossfade. Set fades to 0 for a hard cut; set fades wide for a DJ blend.</li>
+<li><code>bib:ableton_live_12_manual</code> diagrams this in the <em>Chains</em> section. See d03 in this lesson for a simplified flow.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-04">
+  <h1>Slide cs-04 · gear deep dive</h1>
+  <h2>Macro Variations — Live 12.2+ snapshot primitive</h2>
+  
+  <div class="body"><h1>Macro Variations — the snapshot primitive</h1>
+<ul>
+<li>Live 12.2 (released 2025) introduced Macro Variations: named snapshots of every macro&rsquo;s current position, stored on the Rack itself, recallable from the macros bar or via MIDI/automation.</li>
+<li><strong>What gets captured:</strong> macro values, including the Chain Selector macro. Not the underlying chain devices&rsquo; parameters (those are always live).</li>
+<li><strong>What that means operationally:</strong> you can store &ldquo;Verse A&rdquo; (Chain Selector = 20, Filter macro = 40%, Drive macro = 0%) and &ldquo;Switch B&rdquo; (Chain Selector = 80, Filter = 80%, Drive = 30%) as two variations. One click recalls the entire snapshot across all 8 macros.</li>
+<li><strong>Recall is not interpolation by default.</strong> A variation recall is an instantaneous jump — unless you assign a morph time in the variation settings (12.2+ supports per-variation morph ms), in which case it interpolates linearly.</li>
+<li><code>bib:ableton_live_12_manual</code> <em>Macro Variations</em> section for the full semantics. This is the closest Live gets to a modular-synth snapshot recall; Autechre&rsquo;s patch-flipping workflow (W8) maps cleanly onto it.</li>
+</ul></div>
+  <figure class="figure"><img src="assets/ableton-macro-variations-drawer.png" alt="Macro Variations drawer in Ableton Live 12.2. Named snapshots on one Rack."><figcaption>Macro Variations drawer in Ableton Live 12.2. Named snapshots on one Rack.<div class="credit">Ableton Live 12.2 screenshot · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-05">
+  <h1>Slide cs-05 · gear deep dive</h1>
+  <h2>In-track beat switch — the step-by-step</h2>
+  
+  <div class="body"><h1>Using it for an in-track beat switch — the step-by-step</h1>
+<ul>
+<li>Goal: switch the bass timbre at bar 33 without leaving Arrangement View. One MIDI track, one Rack, one automation lane.</li>
+<li><strong>Recipe:</strong></li>
+<li>Create an Instrument Rack on a MIDI track. Three chains: <strong>A</strong> — clean saw sub (Operator, Algorithm 1, 2 ops). <strong>B</strong> — FM growl (Operator, Algorithm 4, 4 ops with a −12 ratio). <strong>C</strong> — bit-crushed square (Analog Saw + Redux at 8-bit).</li>
+<li>Set zones: A at 0–42, B at 43–85, C at 86–127. Zero-width fades on all zones.</li>
+<li>Map Chain Selector to Macro 1 on the Rack.</li>
+<li>Store <strong>Variation &ldquo;Verse A&rdquo;</strong> — Macro 1 = 20 (chain A active), all other macros default.</li>
+<li>Store <strong>Variation &ldquo;Switch B&rdquo;</strong> — Macro 1 = 64 (chain B active), filter macro open 80%.</li>
+<li>In Arrangement, draw an automation envelope on Macro 1. At bar 33 boundary, step from 20 to 64. No ramp — a vertical edge.</li>
+<li><strong>Why this beats a scene launch:</strong> no new track, no scene reorg, the switch lives inside the Rack so you can move the whole clip around and the switch moves with it.</li>
+<li><strong>Callback to W8 (Autechre):</strong> W8 used this same rack to flip 8 patches across a long piece. Same engine; different use — W8 is timbral variation, W11 is pocket change.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-06">
+  <h1>Slide cs-06 · gear deep dive</h1>
+  <h2>The Autechre callback — same engine, different rate</h2>
+  
+  <div class="body"><h1>The Autechre callback — same engine, different goal</h1>
+<ul>
+<li>In W8 we built a Chain Selector Rack to reproduce Autechre&rsquo;s patch-flipping grammar: 8+ distinct synth voices inside one Rack, flipped via a macro or MIDI CC, snapshotted via Macro Variations.</li>
+<li>The rhetorical goal in W8 was <strong>timbral variation within one section</strong> — Booth flips voices every 4–8 bars to keep the texture alive; the underlying rhythm persists.</li>
+<li>The rhetorical goal in W11 is <strong>pocket change between sections</strong> — one flip, at one bar, lands a new section. The mechanism is the same; the <em>timing</em> is different.</li>
+<li><code>bib:sos_autechre_april_2004</code> (via W8) for the Autechre precedent; <code>bib:ableton_live_12_manual</code> for the current toolset.</li>
+<li><strong>Why this is worth naming out loud:</strong> most pedagogy treats Autechre-style patch flipping and TDE-style beat switches as separate techniques belonging to separate genres. They are the same mechanic at different rates. Once you see that, you do not need two separate Ableton workflows.</li>
+<li><strong>Rule:</strong> if you automate the selector macro at &gt;1 change per bar, you are doing the W8 move. If you automate it at 1 change per section (32+ bars), you are doing the W11 move.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-07">
+  <h1>Slide cs-07 · gear deep dive</h1>
+  <h2>Parameter table — what to set for a hard switch</h2>
+  
+  <div class="body"><h1>Parameter table — what to set for a hard switch</h1>
+<ul>
+<li><strong>Chain Selector macro (Macro 1):</strong></li>
+<li>Min: 0. Max: 127. Step: 1.</li>
+<li>Automation mode: <strong>Step</strong> (right-click envelope → Step). Prevents diagonal ramps that would crossfade chains.</li>
+<li><strong>Zone A (pre-switch chain):</strong></li>
+<li>Range: 0–42. Left fade: 0. Right fade: 0.</li>
+<li><strong>Zone B (post-switch chain):</strong></li>
+<li>Range: 43–85. Left fade: 0. Right fade: 0.</li>
+<li><strong>Automation envelope on Macro 1 (Arrangement View):</strong></li>
+<li>Break point 1: bar 1, value 20. Break point 2: bar 33, value 64. Step segment between.</li>
+<li><strong>Macro Variation settings:</strong></li>
+<li>Variation A: morph time 0 ms. Variation B: morph time 0 ms.</li>
+<li><strong>CPU safety:</strong> all chains are live all the time in Ableton&rsquo;s current implementation — inactive chains still use CPU. If the Rack stutters, <strong>Freeze</strong> or <strong>Bounce</strong> the Rack after committing the switch (see s08, commit before you flip).</li>
+<li><code>bib:ableton_live_12_manual</code> table of defaults matches this. Values above are the hard-switch preset — narrow both ranges and zero both fades.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-08">
+  <h1>Slide cs-08 · gear deep dive</h1>
+  <h2>What else the Rack can do — three creative uses</h2>
+  
+  <div class="body"><h1>What else the Rack can do — three creative uses</h1>
+<ul>
+<li><strong>1. Rhythmic re-trigger at audio rate</strong> — assign an LFO macro to modulate the Chain Selector between two narrow zones at 1/8 or 1/16. You get a gated timbral flicker — two synths cross-quilted at rhythmic rates. Basically a sample-and-hold between patches.</li>
+<li><strong>2. Per-drum-pad chain selection inside a Drum Rack</strong> — a Drum Rack is itself a Chain Selector Rack where selector = MIDI note. Use nested Instrument Racks inside the pads and you get per-pad timbral variation triggered by velocity layers or MIDI CC.</li>
+<li><strong>3. The &ldquo;wrong answer&rdquo; switch</strong> — store five Macro Variations labeled <em>verse</em>, <em>chorus</em>, <em>bridge</em>, <em>wrong-1</em>, <em>wrong-2</em>. The last two are deliberate-error patches (misfiring FM, bit-crushed nothing). Recall them at the 8-bar-rule mute points from W2 to get a Rick-Rubin &ldquo;trust the mistake&rdquo; effect.</li>
+<li><strong>4. Reaktor / Max device parallel</strong> — Max for Live&rsquo;s <em>M4L.CustomShaper</em> or Reaktor&rsquo;s Snapshots system do the same snapshot-recall job on non-Ableton devices. The difference: Macro Variations are rack-local; Reaktor snapshots can be library-wide.</li>
+<li><strong>Exercise A:</strong> build a 3-chain Instrument Rack for your in-progress track&rsquo;s bass. Store three Macro Variations (A, B, C). Automate a switch from A to B at bar 33, B to C at bar 49. Ship the MIDI clip + Rack preset.</li>
+<li><strong>Exercise B:</strong> take one of your W8 patch-flipping racks and re-use it for this week&rsquo;s switch, changing only the automation timing. No new sound design. Ship both: the original W8 arrangement and the W11 arrangement. Note what changed and what did not.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-09">
+  <h1>Slide cs-09 · gear deep dive</h1>
+  <h2>The Max for Live alternative — when Chain Selector is not enough</h2>
+  
+  <div class="body"><h1>The Max for Live alternative — when Chain Selector is not enough</h1>
+<ul>
+<li>Chain Selector + Macro Variations covers 90% of in-track switches. The 10% it does not cover: <strong>smooth morph between two patches at audio rate</strong>, and <strong>recall of parameters on the underlying devices</strong> (not just macros).</li>
+<li>Two Max for Live devices that fill the gap:</li>
+<li><strong>Snapshot</strong> (various authors; see maxforlive.com) — captures the full parameter state of any chain&rsquo;s devices, not just the exposed macros. Useful when your post-switch patch requires a filter cutoff change on a nested device that is not on the macro bar.</li>
+<li><strong>K-Devices Modulators 21 — KNOR</strong> — gesture recorder. Record a 1-bar macro movement once; re-trigger it as the switch automation. Humanizes what would otherwise be a clinical step.</li>
+<li><strong>When Reaktor beats Max:</strong> Reaktor&rsquo;s snapshot system is library-wide — you can build a patch library that travels across Ableton sets. Macro Variations are set-local. Reaktor also morphs snapshots with adjustable curve, which 12.2&rsquo;s linear morph does not.</li>
+<li><strong>Trade-offs:</strong> every extra device is CPU you have to commit before the switch (s08). Start with the stock Rack; add Snapshot only when the stock setup cannot express the move.</li>
+<li><code>bib:ableton_live_12_manual</code> <em>Max for Live</em> for the shell; the specific devices above are third-party.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-cs-10">
+  <h1>Slide cs-10 · gear deep dive</h1>
+  <h2>Exercise — ship a Chain Selector switch Rack</h2>
+  
+  <div class="body"><h1>Exercise — ship a Chain Selector switch Rack</h1>
+<ul>
+<li><strong>Deliverable:</strong> one <code>.adg</code> (Ableton Device Group / Rack preset) + one 60-second <code>.wav</code> demonstrating the switch.</li>
+<li><strong>Rack spec:</strong></li>
+<li>Instrument Rack, 3 chains.</li>
+<li>Chain A: any clean bass patch you already have. Chain B: same patch with added FM or distortion. Chain C: a deliberately wrong patch (bit-crushed, detuned, whatever).</li>
+<li>Chain Selector mapped to Macro 1. Three Macro Variations stored: <strong>A</strong>, <strong>B</strong>, <strong>C</strong>.</li>
+<li>Zones hard — 0 fades on all zones.</li>
+<li><strong>Arrangement spec:</strong></li>
+<li>64 bars. Switch from A to B at bar 33. Switch from B to C at bar 49. Return to A at bar 57 for outro.</li>
+<li>Use step-curve automation on Macro 1; no diagonal ramps.</li>
+<li><strong>Bounce spec:</strong></li>
+<li>Render bars 1–60 at the session tempo, 44.1 kHz 16-bit. Filename: <code>w11_&lt;trackname&gt;_cs-switch.wav</code>.</li>
+<li><strong>What &ldquo;good&rdquo; looks like:</strong> the three switches are audible without a riser, without a crash, without a filter sweep. The switch is the switch.</li>
+<li><strong>What will trip you up:</strong> envelopes on the destination chain re-trigger from zero on the switch bar. Either accept the attack, or commit the chain&rsquo;s sound to an audio clip and play the audio instead of the synth. <code>bib:ableton_live_12_manual</code> on Freeze + Flatten.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">An Ableton Rack preset (.adg) plus a 60-second rendered WAV demonstrating three Macro-Variation switches across a 64-bar arrangement. Filename: w11_&lt;trackname&gt;_cs-switch.wav. Include the .adg alongside.</div>
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:burial_soundforge_quote">Burial (interviewee) — Burial on Sound Forge and bedroom production</li><li id="bib:charnas_dilla_time">Dan Charnas — Dilla Time: The Life and Afterlife of J Dilla, Hip-Hop&#x27;s Producer Extraordinaire — MCD / Farrar, Straus and Giroux 2022</li><li id="bib:dblue_tapestop">dblue — dblue TapeStop — free VST <a href="https://illformed.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:finish_more_music_variation">Finish More Music — Variation Generation / Spawn from the Same Seed — Finish More Music <a href="https://finishmoremusic.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:pitchfork_dj_dahi_money_trees">DJ Dahi on &#x27;Money Trees&#x27; — reversing Beach House — Pitchfork <a href="https://pitchfork.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:rick_rubin_creative_act">Rick Rubin — The Creative Act: A Way of Being — Penguin Press 2023</li><li id="bib:sos_autechre_april_2004">Sean Booth (interviewee) — Autechre — Recording Strategies — Sound on Sound 2004 <a href="https://www.soundonsound.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:soundtoys_crystallizer_manual">SoundToys Inc. — Crystallizer User Guide <a href="https://www.soundtoys.com/support/" target="_blank" rel="noopener">↗</a></li><li id="bib:whosampled_db">WhoSampled — sample source database <a href="https://www.whosampled.com/" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 94850}, {"id": "ch001", "title": "The drop is a subtraction problem", "start_ms": 95250, "end_ms": 203750}, {"id": "ch002", "title": "TDE beat switches \u2014 punctuation, not disruption", "start_ms": 204150, "end_ms": 327300}, {"id": "ch003", "title": "DJ Dahi's reversal \u2014 Beach House into Money Trees", "start_ms": 327700, "end_ms": 460750}, {"id": "ch004", "title": "The rub \u2014 Bob Power's friction, Dilla's bassline", "start_ms": 461150, "end_ms": 592800}, {"id": "ch005", "title": "Inverse drop \u2014 Burial Archangel, Aphex Come to Daddy Dub", "start_ms": 593200, "end_ms": 727100}, {"id": "ch006", "title": "Scene-launch the switch \u2014 Session to Arrangement on a bar boundary", "start_ms": 727500, "end_ms": 865300}, {"id": "ch007", "title": "Chain Selector + Macro Variations \u2014 the patch-flip alternative", "start_ms": 865700, "end_ms": 998350}, {"id": "ch008", "title": "Commit the pre-switch section before you flip chains", "start_ms": 998750, "end_ms": 1128400}, {"id": "ch009", "title": "Four tracks to rip apart this week", "start_ms": 1128800, "end_ms": 1260050}, {"id": "ch010", "title": "The dullest eight bars \u2014 pick one of three moves", "start_ms": 1260450, "end_ms": 1391550}, {"id": "ch011", "title": "Outro", "start_ms": 1391950, "end_ms": 1453100}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

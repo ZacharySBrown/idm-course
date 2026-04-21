@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W7 — Week 7 — Squarepusher: hardware hostility &amp; Amen chopping</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W7</span>
+  <span class="title-chip">Week 7 — Squarepusher: hardware hostility &amp; Amen chopping</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>Jenkinson does not want you watching the screen</h2>
+  
+  <div class="body"><h1>Jenkinson does not want you watching the screen</h1>
+<p>The thing about Squarepusher is he does not like you — or anyone — watching the screen while he works. That is the whole plot.</p>
+<p>Tom Jenkinson, to Vijith Assar in <em>Tape Op</em> #89 (2012): <em>&ldquo;When the graphical information is too vivid, it makes it harder to retain the information in my memory.&rdquo;</em> <Citation bib="tape_op_89" /> He sequences on a <strong>Yamaha QY700</strong> — a 1997 hardware sequencer with a tiny LCD and numeric step entry — for exactly this reason. The screen is the enemy of the signal-path mental model.</p>
+<p>This week we steal from that posture. Not the QY700 itself — we will simulate it inside Ableton with discipline — but the <em>refusal</em>. Single-pass. No undo. Chop the Amen. Commit what you get.</p>
+<p>Source material: the <code>w07-funky-fanfare-amen</code> render from the <code>idm_crushed</code> pipeline. <Citation bib="stemforge_repo" /></p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">The Metallurgist</span><span class="by"> — Squarepusher</span><span class="links"><a href="https://open.spotify.com/track/6ReqI2SKrLLRrJqZQQqzpT" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/jLW96qNj8ec" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Squarepusher%20The%20Metallurgist" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>The QY700 as brain — blind numeric sequencing</h2>
+  
+  <div class="body"><h1>The QY700 as brain</h1>
+<p>The Yamaha QY700 (1997) is a six-track, sixteen-pattern hardware step sequencer with a 320×240 monochrome LCD. Jenkinson uses it as the central brain of the <em>Go Plastic</em> rig. <Citation bib="tape_op_89" /></p>
+<p>Jenkinson&rsquo;s operating principle, verbatim from Tape Op #89: <em>&ldquo;In order to really work fluently in a studio you need to have a model, or virtual image, of all those pathways in your head. If I&rsquo;m running bits of data through it, I run it through the same pathway in my mental image, and then I know exactly what the results are going to be.&rdquo;</em></p>
+<p>Two consequences for us:</p>
+<ul>
+<li><strong>Program like a player.</strong> The hardware sequencer is a musical instrument, not a step-editor. You perform into it. You do not sculpt after the fact.</li>
+<li><strong>Numeric entry trumps piano-roll prettiness.</strong> Blind numeric is a constraint on second-guessing. The low-res screen is the feature.</li>
+</ul>
+<p>Ableton mirror: <strong>Capture MIDI</strong> into a 16-bar clip. Do not open the piano roll to clean up. Commit. <Citation bib="ableton_live_12_manual" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-01">
+  <h1>Slide gd-qy700-01 · gear deep dive</h1>
+  <h2>Yamaha QY700 — the no-computer sequencer</h2>
+  
+  <div class="body"><h1>Yamaha QY700 — the no-computer sequencer</h1>
+<p>Tom Jenkinson&rsquo;s brain on <em>Go Plastic</em> is a thirteen-pound grey plastic box with a 320×240 monochrome LCD and a numeric keypad. That is the Yamaha QY700, released 1996. <Citation bib="tape_op_89" /></p>
+<p>Sixteen-part multitimbral AWM tone generator, 32-track sequencer, 480 PPQN resolution, 48-voice polyphony, step-entry-first interface. Four MIDI outs. No monitor. No mouse.</p>
+<p>Jenkinson, Tape Op #89: <em>&ldquo;In order to really work fluently in a studio you need to have a model, or virtual image, of all those pathways in your head.&rdquo;</em> The QY700 forces that. You cannot see the signal path — you have to carry it.</p>
+<p>The rest of this module is an annotated tour.</p></div>
+  <figure class="figure"><img src="assets/gear-qy700-hero.jpg" alt="Yamaha QY700, 1996. 32-track step sequencer + 16-part AWM tone generator."><figcaption>Yamaha QY700, 1996. 32-track step sequencer + 16-part AWM tone generator.<div class="credit">TBD · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-02">
+  <h1>Slide gd-qy700-02 · gear deep dive</h1>
+  <h2>Annotated tour (1/2) — the step grid</h2>
+  
+  <div class="body"><h1>Annotated tour (1/2) — the step grid</h1>
+<p>The QY700&rsquo;s front panel is organized around the step sequencer grid. Each track is a row; each column is a 1/16 (or finer, up to 1/96 at 480 PPQN). Jenkinson enters notes by typing pitch + velocity + gate-time as numbers. <Citation bib="tape_op_89" /></p>
+<p>Four controls that matter for the technique:</p>
+<ul>
+<li><strong>Step grid.</strong> One line per track, up to 32 tracks. No piano-roll view. You read pitches as hex/decimal numbers in columns.</li>
+<li><strong>Velocity editor.</strong> Per-step velocity curves. This is where Jenkinson &ldquo;humanized&rdquo; patterns — manually, step by step, not via groove template.</li>
+<li><strong>Pattern chain.</strong> Up to 16 patterns chained into a song. Each pattern is a loop; the chain is the arrangement.</li>
+<li><strong>Part select 1–16.</strong> Sixteen AWM voices, each on its own MIDI channel, addressable from any track.</li>
+</ul>
+<p>You can see why the screen was the enemy. The grid <em>is</em> the score.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-qy700-panel-grid.jpg" alt="Step grid + velocity editor highlighted"><div class="callouts"><ol><li><strong>step grid</strong>: One line per track. Pitches entered numerically, not via piano roll.</li><li><strong>velocity ed</strong>: Per-step velocity curves — hand-drawn, not groove-template.</li><li><strong>pattern chain</strong>: Up to 16 patterns chained into the arrangement.</li><li><strong>part 1-16</strong>: 16 AWM voices, each on its own MIDI channel.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-03">
+  <h1>Slide gd-qy700-03 · gear deep dive</h1>
+  <h2>Annotated tour (2/2) — MIDI I/O and the chain</h2>
+  
+  <div class="body"><h1>Annotated tour (2/2) — MIDI I/O and the chain</h1>
+<p>The back panel is why the QY700 ran the rig and not just a part of it.</p>
+<ul>
+<li><strong>MIDI Out A / Out B.</strong> Two independent 16-channel MIDI buses. Jenkinson used Out A to drive the internal AWM voices plus external FM synths; Out B went to samplers (S950, later S6000). <Citation bib="tape_op_89" /></li>
+<li><strong>MIDI In.</strong> For slaving additional controllers — though Jenkinson programmed step-first, not play-in.</li>
+<li><strong>Sync Out / Tape Sync.</strong> Used to clock the DR-660 and tape transport without a DAW.</li>
+<li><strong>Stereo L/R Out.</strong> The internal AWM voices sum out here. Every external synth had its own line into the Mackie 16-channel desk.</li>
+</ul>
+<p>Thirty-two sequencer tracks routed across two 16-channel MIDI buses driving up to a dozen external boxes. The QY700 is a patchbay with a clock.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-qy700-rear.jpg" alt="QY700 rear panel — MIDI Out A/B and sync"><div class="callouts"><ol><li><strong>MIDI Out A</strong>: Ch 1-16 — internal AWM + external FM synths (TX81Z, FS1R).</li><li><strong>MIDI Out B</strong>: Ch 1-16 — sampler bus (S950, later S6000).</li><li><strong>sync out</strong>: 24 PPQ clock to DR-660 and tape transport.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-04">
+  <h1>Slide gd-qy700-04 · gear deep dive</h1>
+  <h2>How Jenkinson tracked Go Plastic on it</h2>
+  
+  <div class="body"><h1>How Jenkinson tracked Go Plastic on it</h1>
+<p>Step-by-step, reconstructed from Tape Op #89. <Citation bib="tape_op_89" /></p>
+<ol>
+<li><strong>Patterns, not songs first.</strong> Each pattern is a 2- or 4-bar loop programmed into the step grid. Jenkinson builds ten to twenty patterns before chaining any of them.</li>
+<li><strong>No real-time play-in.</strong> Numeric entry only. The notes go in as values, not as performance data. The blind-numeric entry is the anti-second-guess tool.</li>
+<li><strong>Per-step velocity curves.</strong> Once pitches are in place, he walks the velocity editor and hand-draws per-step dynamics. This is the &ldquo;program like a player&rdquo; layer.</li>
+<li><strong>Pattern chain = arrangement.</strong> Patterns are chained into a song. Rearrangement is a chain edit, not a piano-roll move.</li>
+<li><strong>External voices assigned per track.</strong> TX81Z on ch 1, FS1R on ch 2, S6000 on ch 3–10, internal AWM fills the rest.</li>
+</ol>
+<p>No screen. No undo history. No view of the whole song at once. The mental model is the score.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-06">
+  <h1>Slide gd-qy700-06 · gear deep dive</h1>
+  <h2>Underlying algorithm — AWM tone generation</h2>
+  
+  <div class="body"><h1>Underlying algorithm — AWM tone generation</h1>
+<p>The QY700&rsquo;s internal voice is AWM (Advanced Wave Memory): PCM sample playback followed by a per-voice envelope + filter stage. Roads 1996 covers the same architecture as generic sample-playback synthesis; Yamaha&rsquo;s twist is the ROM library and the low-cost filter. <Citation bib="roads_computer_music_tutorial" /></p>
+<p>Signal flow inside one AWM voice:</p>
+<pre><code>PCM ROM sample → pitch shifter → LPF → VCA (envelope) → output bus
+</code></pre>
+<p>It is not why you care about the QY700 — Jenkinson routed the interesting voices (TX81Z, FS1R, S6000) externally. You care about the <strong>sequencer</strong> side:</p>
+<ul>
+<li><strong>480 PPQN resolution.</strong> Every 1/16 is subdivided into 120 ticks. Per-step timing offsets are quantized to this grid — the finest groove shift available is ~1 ms at 125 BPM.</li>
+<li><strong>32 tracks at 48-voice polyphony.</strong> Hard ceiling; dropped notes at peak load are a period signature.</li>
+<li><strong>Step entry is the native mode.</strong> Real-time record exists; nobody in Jenkinson&rsquo;s camp used it.</li>
+</ul></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[PCM ROM sample] --&gt; B[Pitch shifter]
+  B --&gt; C[Low-pass filter]
+  C --&gt; D[VCA + envelope]
+  D --&gt; E[Output bus]
+</div><div class="caption">Simplified AWM voice — sample playback, filter, envelope. Roads 1996 covers the family.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-07">
+  <h1>Slide gd-qy700-07 · gear deep dive</h1>
+  <h2>Algorithm continued — constraints as character</h2>
+  
+  <div class="body"><h1>Algorithm continued — constraints as character</h1>
+<p>The constraints below are not bugs. They are why the QY700 sounds like a QY700 when used as a brain.</p>
+<ul>
+<li><strong>No undo on the chain.</strong> Pattern-level changes are live. You edit a pattern; every reference to it updates in place. This is the hardware analogue of single-pass commitment.</li>
+<li><strong>MIDI jitter at peak load.</strong> Running 32 tracks across two MIDI buses drops timing — 1–3 ms jitter on the B bus under load, documented in Yamaha service notes. The groove absorbs it.</li>
+<li><strong>No per-step probability.</strong> Anything stochastic had to live in the external gear (Orville LFOs, FS1R random matrices). The QY700 itself is deterministic.</li>
+<li><strong>No swing beyond the groove-template page.</strong> Which is why Jenkinson hand-drew velocity and micro-timing per step.</li>
+</ul>
+<p>The machine forces a working style. Change the box, the style changes. That is why the Ableton translation is not &ldquo;emulate the QY700&rdquo; — it is &ldquo;emulate the discipline.&rdquo;</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-08">
+  <h1>Slide gd-qy700-08 · gear deep dive</h1>
+  <h2>Ableton bridge — Push step mode + MIDI generators</h2>
+  
+  <div class="body"><h1>Ableton bridge — Push step mode + MIDI generators</h1>
+<p>Ableton&rsquo;s answer to the QY700&rsquo;s step grid is the Push 3 step sequencer plus Live 12&rsquo;s native MIDI generator devices. <Citation bib="ableton_live_12_manual" /></p>
+<p>Parameter mapping:</p>
+<table>
+<thead>
+<tr>
+<th>QY700 feature</th>
+<th>Ableton equivalent</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Step grid</td>
+<td>Push step mode</td>
+<td>16 pads per bar, 1/16 default, shift for finer resolution</td>
+</tr>
+<tr>
+<td>Velocity editor</td>
+<td>Push per-step velocity + Velocity Shaper MIDI device</td>
+<td>Per-step values or a curve across selection</td>
+</tr>
+<tr>
+<td>Pattern chain</td>
+<td>Session view scene chain + Follow Actions</td>
+<td>Scenes = patterns; Follow Actions = chain logic</td>
+</tr>
+<tr>
+<td>16-part multitimbral</td>
+<td>16 MIDI tracks each with its own instrument</td>
+<td>External Instrument device for hardware MIDI outs</td>
+</tr>
+<tr>
+<td>480 PPQN internal</td>
+<td>Live is 24 PPQN clock, sub-tick timing via sample-accurate engine</td>
+<td>Ableton is finer than QY700 when bounced in-place</td>
+</tr>
+</tbody>
+</table>
+<p>The screen problem does not disappear. Push mitigates it — step entry on the pads, eyes down on hardware — but you still have a laptop behind you. Turn it away.</p></div>
+  <figure class="figure"><img src="assets/push3-step-mode.png" alt="Push 3 step sequencer in session view"><figcaption>Push 3 step sequencer in session view<div class="credit">Ableton AG, Live 12 Reference Manual · fair-use</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-09">
+  <h1>Slide gd-qy700-09 · gear deep dive</h1>
+  <h2>Parallel Max for Live — Rhythm and Seed</h2>
+  
+  <div class="body"><h1>Parallel Max for Live — Rhythm and Seed</h1>
+<p>Ableton ships two native MIDI generators that approximate the QY700&rsquo;s deterministic-but-hand-drawn character when chained:</p>
+<ul>
+<li><strong>Rhythm.</strong> Pattern-generating MIDI device. Seed-based, probability per step, density control. Swap the seed — swap the pattern. Deterministic given a seed, which is the replacement for blind-numeric entry. <Citation bib="ableton_live_12_manual" /></li>
+<li><strong>Seed.</strong> Companion device for randomizing pitch/velocity within a constrained palette. Drives Rhythm&rsquo;s seed input.</li>
+<li><strong>Velocity Shaper.</strong> Per-step velocity curves drawn as a ramp or freehand — literally the QY700 velocity editor reimplemented as a MIDI effect.</li>
+</ul>
+<p>The chain for a QY700-style track:</p>
+<pre><code>Rhythm (seed=N) → Velocity Shaper (hand-drawn curve) → MIDI track → Instrument
+</code></pre>
+<p>Swap <code>seed=N</code> to mutate the pattern while keeping the velocity contour. This is the Ableton analogue of Jenkinson editing one pattern on the QY700 chain and letting every reference update.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Rhythm seed=N] --&gt; B[Velocity Shaper curve]
+  B --&gt; C[MIDI track]
+  C --&gt; D[Instrument]
+</div><div class="caption">Deterministic-but-shaped MIDI chain — the Ableton analogue of blind numeric entry.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-12">
+  <h1>Slide gd-qy700-12 · gear deep dive</h1>
+  <h2>Exercise A — replicate the technique</h2>
+  
+  <div class="body"><h1>Exercise A — replicate the technique</h1>
+<p>Program a 32-step Squarepusher-style Amen fragment using <strong>only</strong> Ableton&rsquo;s step-input mode. No real-time play-in. No piano-roll draw.</p>
+<ol>
+<li>New MIDI track → load Drum Rack with the stemforge Funky Fanfare chops from <code>build/audio/stemforge-renders/w07/ff_chops/</code>. <Citation bib="stemforge_repo" /></li>
+<li>Empty MIDI clip, 2 bars. Push into step-input mode (Edit → Draw Mode + step pointer, or Push 3 step mode if you have hardware).</li>
+<li>Enter 32 steps of pitches by typing notes on the keyboard with the clip in step-input. Each keystroke advances the pointer by 1/16. <Citation bib="ableton_live_12_manual" /></li>
+<li>Do <strong>not</strong> open the piano roll to drag anything after the fact.</li>
+<li>Walk the velocity lane and hand-draw per-step values — top row kicks loud, mid-row snares medium, hat/ghost hits quiet.</li>
+</ol>
+<p>Bounce the clip. Name it <code>w07_qy700-style_&lt;yourname&gt;.wav</code>. One pass. If you make a mistake mid-entry, keep going — the mistake is the take.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">32-step Amen fragment programmed in Ableton step-input mode, no real-time play-in, no piano-roll edits. Bounce named w07_qy700-style_&lt;yourname&gt;.wav.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-qy700-13">
+  <h1>Slide gd-qy700-13 · gear deep dive</h1>
+  <h2>Exercise B — explore beyond</h2>
+  
+  <div class="body"><h1>Exercise B — explore beyond</h1>
+<p>Four-instance Rhythm-generator patchwork — Jenkinson&rsquo;s multitimbral posture in modern form.</p>
+<ol>
+<li>Four MIDI tracks. Each loads <strong>Rhythm</strong> → <strong>Velocity Shaper</strong> → <strong>Simpler</strong> (or Operator). <Citation bib="ableton_live_12_manual" /></li>
+<li>Assign a different seed to each Rhythm instance: 17, 42, 99, 203. Do not choose them — type them blind.</li>
+<li>Each track&rsquo;s Simpler gets a different sample — one kick, one snare chop, one FM-ish pluck (Operator preset), one percussion hit.</li>
+<li>Each Velocity Shaper gets a different hand-drawn curve. Track 1 ramps up; track 2 ramps down; track 3 is flat with random spikes; track 4 is two steps loud, six steps quiet.</li>
+<li>Clip length: 2 bars each, all free-running. Loop them against each other. The collisions are the composition.</li>
+<li>Bounce a 32-bar arrangement. No quantize fixes. No re-seeding.</li>
+</ol>
+<p>The output should feel like four different players reading four different sheets of music in the same room. That is the QY700 posture. The seeds are the blind numeric entry.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">32-bar bounce of four Rhythm-generator instances (seeds 17/42/99/203) each feeding its own Simpler/Operator. Bounce named w07_rhythm-seeds_&lt;yourname&gt;.wav.</div>
+  
+</section>
+
+
+<section class="slide teaser" id="slide-s03">
+  <h1>Slide s03 · teaser</h1>
+  <h2>Side note — the other anti-computer in the room</h2>
+  
+  <div class="body"><h1>Side note — the other anti-computer in the room</h1>
+<p>Side note — Squarepusher&rsquo;s QY700 is the anti-computer in its purest form, but it is not the only one. Kevin Parker walked into Tarbox Road in 2009 with a Boss BR-1600 sixteen-track digital recorder his dad had bought him when he was sixteen and handed it to Fridmann. Instead of laughing, Fridmann mixed <em>Innerspeaker</em> from it. Parker, afterward: <em>&ldquo;There&rsquo;s no way I could&rsquo;ve made the album sound as good as Fridmann made it sound.&rdquo;</em> The rig is a constraint; the engineer is the respect for it. <Citation bib="audiotechnology_lonerism_feature" /></p>
+<p>Two artists, two postures. Jenkinson refuses the computer because the screen pollutes the mental model. Parker refused it because the BR-1600 was the box he had learned on. Same outcome — arrangement-bound, commit-forward, recall-hostile — from opposite motivations.</p>
+<p>File the Parker story. We revisit the Fridmann bass next time it is relevant.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>Half-speed tape bass — Hard Normal Daddy&#x27;s bionic swing</h2>
+  
+  <div class="body"><h1>Half-speed tape bass</h1>
+<p>The <em>Hard Normal Daddy</em> (1997) bass does not sound programmed. It sounds like a player with a bionic wrist. That is a tape trick.</p>
+<p>Jenkinson in Tape Op #89: <em>&ldquo;I&rsquo;d run the tape machine at 7½ IPS and pitch everything down an octave, play it at half speed so that the tracking and timing issues would diminish once I put it back to 15 IPS. It completely interferes with human fallibility regarding timing. The whole thing just goes unnaturally tight.&rdquo;</em> <Citation bib="tape_op_89" /></p>
+<p>Tape chain of record: <strong>Fostex M80 → Tascam MSR16</strong> ½&rdquo; 16-track, then a move to Sonic Foundry Vegas, then Nuendo in 2001 — but Jenkinson keeps the <em>&ldquo;tape-recorder mentality&rdquo;</em> regardless.</p>
+<h2>Ableton translation</h2>
+<ol>
+<li>Halve the project tempo. If the track is at 160 BPM, set it to 80.</li>
+<li>Record your bass part — MIDI or a real instrument — an octave down, slowly, against the 80 BPM click.</li>
+<li>Return the tempo to 160. Warp the audio <strong>Complex Pro, Formants on</strong>. <Citation bib="ableton_live_12_manual" /></li>
+<li>The pitch snaps up an octave. The tracking tightens. The swing remains.</li>
+</ol></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d02">
+  <h1>Slide d02 · concept</h1>
+  <h2>Half-speed tape bass — the diagram</h2>
+  
+  <div class="body"><h1>Half-speed tape bass — diagram</h1>
+<p>The half-speed trick, visualized.</p>
+<pre><code>[ STAGE 1 — record at half speed ]
+project tempo:    160 BPM         →  set to 80 BPM
+bass part:        written in key  →  played an octave DOWN
+tape/sequencer:   runs at 7½ IPS  →  (tempo halved, pitch halved)
+result on disk:   slow, low bass, tracking errors DIMINISHED
+
+[ STAGE 2 — return to speed ]
+project tempo:    80 BPM          →  back to 160 BPM
+warp mode:        Complex Pro + Formants ON
+pitch:            snaps up one octave to original
+timing:           was loose at 80, becomes TIGHT at 160
+</code></pre>
+<p>The math: timing error of ±10 ms at the tracking stage (80 BPM) becomes ±5 ms at playback (160 BPM). Human-player jitter is halved. <Citation bib="tape_op_89" /></p>
+<p>The &ldquo;bionic swing&rdquo; Jenkinson describes is this halving applied to a player who already has feel. You are not quantizing; you are compressing time around the player&rsquo;s natural groove. It keeps the swing signature while killing the errors that would expose it as played-in.</p>
+<p>Ableton translation steps — see the <code>s04-halfspeed-bass</code> slide for the four-step recipe.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  A[Project tempo 160 BPM] --&gt; B[Halve to 80 BPM]
+  B --&gt; C[Play bass one octave down, slowly]
+  C --&gt; D[Return tempo to 160 BPM]
+  D --&gt; E[Warp Complex Pro, Formants ON]
+  E --&gt; F[Pitch snaps up one octave, timing tightens]
+</div><div class="caption">Jenkinson&#x27;s half-speed trick, Ableton equivalent flow. Error halves when tempo doubles.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s05">
+  <h1>Slide s05 · reference</h1>
+  <h2>Go Plastic — the no-computer rig, receipts</h2>
+  
+  <div class="body"><h1>Go Plastic — the rig, receipts</h1>
+<p>The <em>Go Plastic</em> (2001) rig, verbatim from Tape Op #89: <em>&ldquo;I didn&rsquo;t use a computer on Go Plastic. It was made with a Yamaha QY700, TX81Z and FS1R, an Eventide DSP4000 and Orville, an Akai S6000 and a Mackie 16-channel desk.&rdquo;</em> <Citation bib="tape_op_89" /></p>
+<p>Signal path, named:</p>
+<ul>
+<li><strong>Yamaha QY700</strong> — sequencer and MIDI brain.</li>
+<li><strong>Yamaha TX81Z</strong> (1987) + <strong>Yamaha FS1R</strong> (1998) — the FM voices. Metallic, brittle, lopsided by design.</li>
+<li><strong>Akai S6000</strong> — 128 MB sampler, the Amen lives here on <em>Go Plastic</em>-era material (the earlier S950 era precedes it).</li>
+<li><strong>Eventide DSP4000 + Orville</strong> — the effect hub. Running custom algorithms Jenkinson wrote in Eventide&rsquo;s <strong>VSIG</strong> modular-patch environment on a PC, transferred via SysEx.</li>
+<li><strong>Mackie 16-channel desk</strong> — sum. Nothing exotic. The character is upstream.</li>
+</ul>
+<p>Specific patch, same interview: <em>&ldquo;The bass distortion on &lsquo;Megazine&rsquo; was done with an old-school 110V Morley Wah pedal and an Orville distortion patch based on a curve, X/Y-mapping module.&rdquo;</em></p>
+<p>We do not need the hardware. We need the mental model.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Come On My Selector</span><span class="by"> — Squarepusher</span><span class="links"><a href="https://open.spotify.com/track/6lUoKi6r3AY4ECxPOqVs7F" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/MWCSw_cNxKc" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Squarepusher%20Come%20On%20My%20Selector" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Amen break in the S950 — and its Ableton translation</h2>
+  
+  <div class="body"><h1>Amen break — chopped in the S950, rebuilt in Simpler</h1>
+<p>The <strong>Amen break</strong> — the drum break from &ldquo;Amen, Brother&rdquo; by The Winstons (1969) — is the spine of drum-and-bass and of Squarepusher&rsquo;s early catalog. On <em>Big Loada</em>&rsquo;s &ldquo;Come On My Selector&rdquo; (1997), the Amen is chopped, re-pitched, ghost-reversed inside an <strong>Akai S950</strong> sampler, triggered from a <strong>Boss DR-660</strong> drum machine. <Citation bib="tape_op_89" /></p>
+<p>Jenkinson on the break: <em>&ldquo;You can pitch it up, down, stretch it, reverse it, it does everything. The Amen break is very sonically rich, very spectrally dense.&rdquo;</em></p>
+<p>The S950&rsquo;s pitch-shift aliases. That aliasing is part of the D&amp;B aesthetic — a crude repitch is a feature, not a defect.</p>
+<h2>Ableton translation</h2>
+<ol>
+<li>Drop <code>build/audio/stemforge-renders/w07/ff_drums.wav</code> onto an audio track. <Citation bib="stemforge_repo" /></li>
+<li>Right-click the clip → <strong>Slice to New MIDI Track</strong> → Slice to: <strong>1/16</strong>, Slicing Preset: <strong>Built-In</strong>. <Citation bib="ableton_live_12_manual" /></li>
+<li>Each pad in the resulting Drum Rack is one 1/16 of the break. Re-pitch individual pads by ±7 semitones from the Simpler tab for the S950-alias flavor.</li>
+<li>Arm a new MIDI clip. Finger-drum a new pattern. Commit.</li>
+</ol></div>
+  
+  
+  
+  <div class="ab"><div class="label">Funky Fanfare dry vs idm_crushed pipeline (stemforge w07)</div><div class="controls"><button data-src="stemforge/ff_drums.wav" class="active">A — dry</button><button data-src="stemforge/ff_chops">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/ff_drums.wav"></audio></div>
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Come On My Selector</span><span class="by"> — Squarepusher</span><span class="links"><a href="https://open.spotify.com/track/6lUoKi6r3AY4ECxPOqVs7F" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/MWCSw_cNxKc" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Squarepusher%20Come%20On%20My%20Selector" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-d01">
+  <h1>Slide d01 · concept</h1>
+  <h2>The Amen break — annotated waveform</h2>
+  
+  <div class="body"><h1>The Amen break — annotated waveform</h1>
+<p>The Amen break is the drum fill from The Winstons&rsquo; &ldquo;Amen, Brother&rdquo; (1969), 6 seconds, ~136 BPM, 4 bars. Its transients are what every Squarepusher chop session starts from. <Citation bib="tape_op_89" /></p>
+<p>The standard pad assignment — MPC-style, 16-pad layout, row-major from bottom-left:</p>
+<ul>
+<li><strong>Pad 1 (C1):</strong> kick 1 (bar 1 beat 1)</li>
+<li><strong>Pad 2 (C#1):</strong> snare 1 (bar 1 beat 2)</li>
+<li><strong>Pad 3 (D1):</strong> kick 2 (bar 1 beat 3)</li>
+<li><strong>Pad 4 (D#1):</strong> snare 2 (bar 1 beat 4)</li>
+<li><strong>Pad 5–8:</strong> bar 2 equivalents + hat</li>
+<li><strong>Pad 9–12:</strong> bar 3 — the famous &ldquo;pickup&rdquo; syncopation</li>
+<li><strong>Pad 13–16:</strong> bar 4 — the crash + trailing snare roll</li>
+</ul>
+<p>The 4-bar pickup in bars 3–4 is the reason the Amen became the Amen. The first two bars are a standard breakbeat; bars 3–4 are where Gregory C. Coleman plays <em>against</em> the grid. That displacement is where D&amp;B, jungle, and Squarepusher live.</p>
+<p>In Ableton: Slice to MIDI at 1/16 → 16 pads per bar → 64 pads total → round-trip through a bitcrush.</p></div>
+  <figure class="figure"><img src="assets/amen-break-waveform.png" alt="&quot;Amen, Brother&quot; drum break, 4 bars, transient markers and 16-pad assignments."><figcaption>&quot;Amen, Brother&quot; drum break, 4 bars, transient markers and 16-pad assignments.<div class="credit">The Winstons (1969), drum break excerpt for educational commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-01">
+  <h1>Slide gd-s950-01 · gear deep dive</h1>
+  <h2>Akai S950 + Boss DR-660 — the chop system</h2>
+  
+  <div class="body"><h1>Akai S950 + Boss DR-660 — the chop system</h1>
+<p>The Akai S950 (1988) is a 12-bit rack sampler with a two-line LCD and a knob. The Boss DR-660 (1992) is a compact drum machine with 16 voices, 100 patterns, and a sync-out port. Jenkinson paired them for <em>Big Loada</em> (1997): the S950 holds the Amen; the DR-660 triggers it. <Citation bib="tape_op_89" /></p>
+<p>Neither box was expensive. Neither was designed for what Jenkinson did with it. That is the point.</p>
+<p>The rest of this module is the chain, end-to-end: how the Amen gets into the S950, how the DR-660 drives it, and how the 12-bit companding ADC becomes a signature the way ropes become knots.</p></div>
+  <figure class="figure"><img src="assets/gear-s950-dr660-hero.jpg" alt="Akai S950 (12-bit rack sampler, 1988) + Boss DR-660 (drum machine, 1992), side by side."><figcaption>Akai S950 (12-bit rack sampler, 1988) + Boss DR-660 (drum machine, 1992), side by side.<div class="credit">TBD · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-02">
+  <h1>Slide gd-s950-02 · gear deep dive</h1>
+  <h2>Annotated tour (1/2) — S950 sample edit</h2>
+  
+  <div class="body"><h1>Annotated tour (1/2) — S950 sample edit</h1>
+<p>Four S950 controls that matter for the chop technique:</p>
+<ul>
+<li><strong>Truncate.</strong> Trim the sample start and end by ear, using the two-line LCD and the numeric wheel. No waveform view. You listen for the transient, mark it, commit.</li>
+<li><strong>Loop points.</strong> Set start and end for sustain loops. Not used for one-shot chops — but used for the held-snare rolls on <em>Hard Normal Daddy</em>.</li>
+<li><strong>Pitch shift (semitone + fine).</strong> Per-keygroup pitch. The S950 repitches by naive sample-rate conversion, which aliases above ±2 semitones. That alias is the D&amp;B signature. <Citation bib="roads_computer_music_tutorial" /></li>
+<li><strong>Output assign.</strong> Eight individual outs on the back. Each Amen chop can be bussed to its own channel on the Mackie, processed independently.</li>
+</ul>
+<p>The knob is 0–99 for every parameter. You learn the numbers you want by muscle memory. Blind numeric again.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-s950-panel.jpg" alt="S950 front panel — edit controls"><div class="callouts"><ol><li><strong>truncate</strong>: Trim sample start/end by ear. Two-line LCD, no waveform view.</li><li><strong>loop points</strong>: Sustain loops for held-snare rolls on Hard Normal Daddy.</li><li><strong>pitch shift</strong>: Naive sample-rate conversion — aliases above ±2 semitones. That alias is the signature.</li><li><strong>8 outs</strong>: Each chop to its own Mackie channel, parallel processing.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-03">
+  <h1>Slide gd-s950-03 · gear deep dive</h1>
+  <h2>Annotated tour (2/2) — DR-660 pattern grid + sync</h2>
+  
+  <div class="body"><h1>Annotated tour (2/2) — DR-660 pattern grid + sync</h1>
+<p>The DR-660 was a budget drum box that Jenkinson hotwired into a trigger sequencer for the S950.</p>
+<ul>
+<li><strong>Pattern programming.</strong> Step mode or real-time. Jenkinson used real-time tap-in for the feel, then re-quantized to 1/16 or 1/32.</li>
+<li><strong>Trigger Out (MIDI).</strong> Each pad sends MIDI note-on on a configurable channel. Route the DR-660&rsquo;s MIDI out to the S950&rsquo;s MIDI in; each pad fires a sample in a keygroup.</li>
+<li><strong>Sync Out.</strong> 24 PPQ clock — the tape-era standard. Slaves the S950&rsquo;s internal LFOs and the QY700 when used alongside.</li>
+<li><strong>Accent row.</strong> A second-level velocity lane. Three velocity tiers only; Jenkinson used the accent row as a ghost/loud switch, not as nuance.</li>
+</ul>
+<p>Limitation as feature: the DR-660 has no shuffle beyond a single global swing. The groove has to come from the pattern itself.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-dr660-panel.jpg" alt="Boss DR-660 front panel — pattern grid + sync/trigger"><div class="callouts"><ol><li><strong>pattern grid</strong>: Step mode or real-time tap-in. Jenkinson tap-in then 1/32 quantize.</li><li><strong>MIDI out</strong>: Each pad fires a note on configurable channel — routes to S950 in.</li><li><strong>sync out</strong>: 24 PPQ clock — slaves S950 LFOs and QY700 when present.</li><li><strong>accent row</strong>: Three velocity tiers. Ghost/loud switch, not nuance.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-04">
+  <h1>Slide gd-s950-04 · gear deep dive</h1>
+  <h2>How Jenkinson chopped the Amen on it — Big Loada method</h2>
+  
+  <div class="body"><h1>How Jenkinson chopped the Amen on it — Big Loada method</h1>
+<p>Reconstructed from Tape Op #89. <Citation bib="tape_op_89" /></p>
+<ol>
+<li><strong>Sample the Amen once into the S950.</strong> Full 4-bar loop, stereo sum in mono for the S950&rsquo;s mono ADC path.</li>
+<li><strong>Slice by ear.</strong> Truncate a copy per hit — kick, snare1, snare2, hat, hat2, rim. Six to ten keygroups.</li>
+<li><strong>Pitch-shift a subset by ±2 to ±7 semitones.</strong> Each pitched chop gets its own keygroup so you can fire it alongside its dry neighbour.</li>
+<li><strong>Reverse half of them.</strong> The S950 reverse function is destructive — commit it and save under a new keygroup.</li>
+<li><strong>Assign to DR-660 pads via MIDI note mapping.</strong> Each pad on the DR-660 fires one keygroup.</li>
+<li><strong>Program the pattern.</strong> Real-time tap-in, then 1/32 quantize for the rolls.</li>
+<li><strong>Record the run in one pass.</strong> Jenkinson&rsquo;s Tape Op claim: <em>&ldquo;Nobody believes that the tracks on Big Loada were a single pass of me sequencing my Akai S950 from my DR660.&rdquo;</em></li>
+</ol>
+<p>One take. One master. Onto tape. Done.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Come On My Selector</span><span class="by"> — Squarepusher</span><span class="links"><a href="https://open.spotify.com/track/6lUoKi6r3AY4ECxPOqVs7F" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/MWCSw_cNxKc" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Squarepusher%20Come%20On%20My%20Selector" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-06">
+  <h1>Slide gd-s950-06 · gear deep dive</h1>
+  <h2>Underlying algorithm — 12-bit companded ADC at 7.5–40 kHz</h2>
+  
+  <div class="body"><h1>Underlying algorithm — 12-bit companded ADC at 7.5–40 kHz</h1>
+<p>People mistake the S950 for a low-sample-rate sampler because they think of the SP-1200. The S950&rsquo;s grit is different and worth being precise about.</p>
+<ul>
+<li><strong>Sampling rate.</strong> User-selectable <strong>7.5–40 kHz</strong>. Jenkinson typically ran at the 40 kHz ceiling for pitch headroom; the lo-fi signature lives at the lower settings. Lower rate means lower Nyquist, which is the aliasing knob.</li>
+<li><strong>Bit depth.</strong> 12-bit linear quantization with a <strong>µ-law-style (Akai/E-mu 12→8-bit proprietary)</strong> companding curve applied before the ADC — not literal ITU G.711 µ-law, but the same shape. Roads 1996 covers the general principle: companding compresses dynamic range before quantization, decompresses on playback, effectively trading linear SNR for a perceptual SNR that is quieter on transients and noisier on low-level sustained content. <Citation bib="roads_computer_music_tutorial" /></li>
+<li><strong>Reconstruction filter.</strong> Fixed anti-alias filter at roughly half the sampling rate, gentle slope.</li>
+<li><strong>Pitch shift.</strong> Naive sample-rate conversion — repitching up an octave doubles playback rate. Aliasing appears on upward shifts past a threshold that&rsquo;s audible by roughly <strong>+4 semitones</strong>; downward shifts produce decimation artifacts (not aliasing) that thicken the tone rather than fold it.</li>
+</ul>
+<p>The &ldquo;classic sampler grit&rdquo; is the companding curve plus the aliasing, not the bit depth in isolation.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Input audio] --&gt; B[µ-law-style companding&lt;br/&gt;Akai/E-mu 12→8-bit proprietary]
+  B --&gt; C[12-bit linear quantize&lt;br/&gt;at 7.5–40 kHz user-selectable]
+  C --&gt; D[RAM]
+  D --&gt; E[Pitch = sample-rate conversion]
+  E --&gt; F[Aliasing above ±2 semitones]
+  F --&gt; G[Anti-alias LPF ~24 kHz, gentle slope]
+  G --&gt; H[Output]
+</div><div class="caption">S950 signal path. Companding + naive repitch = the grit, not the bit depth alone. Roads 1996 pp. 21-23.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-08">
+  <h1>Slide gd-s950-08 · gear deep dive</h1>
+  <h2>Ableton bridge — Drum Rack + Follow Actions + bitcrush</h2>
+  
+  <div class="body"><h1>Ableton bridge — Drum Rack + Follow Actions + bitcrush</h1>
+<p>Modern chain. <Citation bib="ableton_live_12_manual" /></p>
+<table>
+<thead>
+<tr>
+<th>S950/DR-660 feature</th>
+<th>Ableton equivalent</th>
+<th>Setting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chop per keygroup</td>
+<td>Drum Rack with Simpler per pad</td>
+<td>Slice to New MIDI Track, 1/16</td>
+</tr>
+<tr>
+<td>DR-660 pad-to-keygroup trigger</td>
+<td>MIDI clip on Drum Rack</td>
+<td>Native — each pad is a C1+n note</td>
+</tr>
+<tr>
+<td>12-bit companding</td>
+<td>TAL-Bitcrusher or Ableton Redux</td>
+<td>Bit depth 12, downsampling off, drive 3 dB</td>
+</tr>
+<tr>
+<td>Alias-on-repitch</td>
+<td>Simpler Classic mode + Transpose</td>
+<td>Classic mode does sample-rate conversion, aliases like S950</td>
+</tr>
+<tr>
+<td>Single-pass discipline</td>
+<td>Follow Actions on a clip pool + one-shot record</td>
+<td>No undo — Capture MIDI into a locked clip</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Bitcrush note.</strong> The 12-bit setting alone does not match the S950 grit. Add a 16 kHz LPF (Auto Filter, Type: LP, 12 dB/oct) <em>before</em> the bitcrusher to emulate the anti-alias filter, and ~1 dB of input drive <em>into</em> the bitcrusher to engage the companding-like behaviour.</p>
+<p>Decimort 2 is the closer match for period-authentic companding behaviour if you own it.</p></div>
+  <figure class="figure"><img src="assets/drumrack-bitcrush-chain.png" alt="Drum Rack → Auto Filter (16 kHz LPF) → Redux (12-bit) → Glue Compressor chain"><figcaption>Drum Rack → Auto Filter (16 kHz LPF) → Redux (12-bit) → Glue Compressor chain<div class="credit">Ableton AG, Live 12 Reference Manual · fair-use</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-09">
+  <h1>Slide gd-s950-09 · gear deep dive</h1>
+  <h2>Parallel Max / third-party — Decimort 2, Sandman Pro, Redux</h2>
+  
+  <div class="body"><h1>Parallel Max for Live / third-party devices</h1>
+<p>For closer period-correct processing:</p>
+<ul>
+<li><strong>Unfiltered Audio Sandman Pro.</strong> Matches the S950&rsquo;s pitch-shift-as-sample-rate-conversion behaviour when set to Classic mode and bit-reduce on.</li>
+<li><strong>D16 Decimort 2.</strong> Emulates specific vintage samplers — the E-mu SP-1200 preset is famous; the Akai S-series preset applies a gentle LPF + µ-law-shaped companding closer to the S950.</li>
+<li><strong>Ableton Redux (native, Live 12).</strong> Bit-depth + downsample. Simpler than Decimort but needs a pre-filter to match the S950&rsquo;s reconstruction curve. <Citation bib="ableton_live_12_manual" /></li>
+<li><strong>M4L Buffer Shuffler 2.0.</strong> Not a sampler emulator — a pattern tool. Pair it with a Drum Rack of Amen chops to get Squarepusher&rsquo;s <em>50 Cycles</em>-style re-sequenced bar-by-bar drum reshuffles. See W9 for deeper Dilla-era Shuffler work.</li>
+</ul>
+<p>The combo that gets closest to the Big Loada sound: Drum Rack → Classic-mode Simplers → Decimort 2 (S-series preset) → a slow Glue Compressor on the drum bus at 3:1.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-10">
+  <h1>Slide gd-s950-10 · gear deep dive</h1>
+  <h2>What else can you do with the S950 chain</h2>
+  
+  <div class="body"><h1>What else can you do with the S950 chain</h1>
+<p>Beyond the Amen:</p>
+<ul>
+<li><strong>Held-sample stretching.</strong> The S950&rsquo;s pitch-shift aliases; deliberately set the loop tight and run the pitch wheel on the DR-660 to create a sustained, pitched noise bed — the <em>Hard Normal Daddy</em> snare rolls were generated this way.</li>
+<li><strong>Reversed+pitched layers.</strong> Reverse a kick, repitch up 5 semitones, layer under the dry kick on a slight delay. The attack becomes a swell.</li>
+<li><strong>Inter-keygroup modulation.</strong> The S950 has per-keygroup filter envelopes. Assign two keygroups to the same pad via velocity ranges — low velocity triggers one, high velocity triggers the other. Effectively a per-pad round-robin.</li>
+<li><strong>Resample the S950 output back to tape.</strong> Jenkinson did this to flatten the dynamics and print the companding artifacts into a fixed source — then re-sampled <em>that</em> back into the S950 for a double-companded texture. The Metallurgist era is built on this.</li>
+</ul>
+<p>All of it translates to Drum Rack + Follow Actions + resample-to-clip.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-12">
+  <h1>Slide gd-s950-12 · gear deep dive</h1>
+  <h2>Exercise A — replicate the Big Loada single-pass</h2>
+  
+  <div class="body"><h1>Exercise A — replicate the Big Loada single-pass</h1>
+<p>Chop the Funky Fanfare drums via stemforge, load into Drum Rack, bitcrush to emulate the S950, play 32 bars single-pass. <Citation bib="stemforge_repo" /></p>
+<ol>
+<li>Open <code>build/audio/stemforge-renders/w07/ff_drums.wav</code> in Ableton.</li>
+<li>Right-click → <strong>Slice to New MIDI Track</strong> → Slice to: <strong>1/16</strong>, Slicing Preset: <strong>Built-In</strong>. <Citation bib="ableton_live_12_manual" /></li>
+<li>On the Drum Rack return or the rack itself, insert:</li>
+<li>Auto Filter → LPF, 16 kHz, 12 dB/oct (S950 reconstruction filter)</li>
+<li>Redux → Bit Depth 12, Downsampling off, Bit Dither off</li>
+<li>Glue Compressor → Ratio 3:1, Attack 1 ms, Release Auto, 2 dB of grab</li>
+<li>Arm a new MIDI clip on the Drum Rack track, 32 bars long.</li>
+<li>Press record. Perform the pattern finger-drumming on a MIDI controller or the QWERTY keys. <strong>No stopping.</strong> If you flub, keep going.</li>
+<li>At bar 32, stop. Do <strong>not</strong> open the clip to edit. Bounce-in-place.</li>
+</ol>
+<p>Name the bounce <code>w07_bigloada_&lt;yourname&gt;.wav</code>. One pass. The mistakes are the record.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">32-bar single-pass performance of the Funky Fanfare chops through a Drum Rack + 16 kHz LPF + Redux (12-bit) + Glue Compressor chain. No undo during the take. Bounce named w07_bigloada_&lt;yourname&gt;.wav.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-s950-13">
+  <h1>Slide gd-s950-13 · gear deep dive</h1>
+  <h2>Exercise B — Metallurgist / Hello Everything territory</h2>
+  
+  <div class="body"><h1>Exercise B — Metallurgist / Hello Everything territory</h1>
+<p>Reverse half the chops + shuffle them + bitcrush. Creates the synthetic-drum terrain of <em>The Metallurgist</em> (2001) and <em>Hello Everything</em> (2006).</p>
+<ol>
+<li>Start from the Drum Rack built in Exercise A.</li>
+<li>For every second pad (C1, D1, F#1, A1 — any half of the rack), open the Simpler and toggle <strong>Reverse</strong> on.</li>
+<li>Insert an <strong>M4L Buffer Shuffler 2.0</strong> before the Drum Rack. Set freeze length 1 bar, divisions 1/16, random mode ON.</li>
+<li>Shift the bitcrush harder — Redux Bit Depth 8, add a Saturator (Type: Soft Sine, Drive 6 dB) after the bitcrusher.</li>
+<li>Play the same 32-bar pattern from Exercise A through the modified rack.</li>
+<li>Capture MIDI. Freeze + Flatten the Shuffler so the re-sequence is printed.</li>
+</ol>
+<p>The output should not sound like the Amen. It should sound like someone sampled an Amen, lost it, and reconstructed it from memory. That is the Metallurgist posture.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">32-bar variant of Exercise A with half the chops reversed + Buffer Shuffler 2.0 (1-bar freeze, 1/16 divisions, random mode ON) + Saturator. Bounce named w07_metallurgist-territory_&lt;yourname&gt;.wav.</div>
+  
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>Single-pass — program like a player</h2>
+  
+  <div class="body"><h1>Single-pass — program like a player</h1>
+<p>Jenkinson on <em>Big Loada</em>, Tape Op #89: <em>&ldquo;To this day, nobody believes that the tracks on Big Loada were a single pass of me sequencing my Akai S950 from my DR660.&rdquo;</em> <Citation bib="tape_op_89" /></p>
+<p>And on <em>Hard Normal Daddy</em>: <em>&ldquo;It&rsquo;s just something I was trying to do — program like a player, make it have that swing, with a bionic aspect.&rdquo;</em></p>
+<p>The discipline is the point. One pass. No take-compiling. The sequencer runs; you perform; whatever happens is the record.</p>
+<h2>Why it works</h2>
+<ul>
+<li><strong>Commit forces identity.</strong> A take that cannot be undone develops a signature.</li>
+<li><strong>Errors become features.</strong> The S950&rsquo;s aliased pitch-shift is a signature because Jenkinson did not fix it.</li>
+<li><strong>The session ends on time.</strong> Single-pass is the 45-minute rabbit hole with the lid screwed on.</li>
+</ul>
+<h2>Ableton rule for this week</h2>
+<p>When you run the exercise at the end of this lesson, <strong>disable Edit → Undo</strong> in your head. Capture MIDI the performance in one take. Bounce. Delete the source MIDI. <Citation bib="ableton_live_12_manual" /></p>
+<p>If the result is ugly, the result is ugly. Ship it anyway. Week 10 teaches how to mutate ugly results. This week teaches how to make them.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s08">
+  <h1>Slide s08 · concept</h1>
+  <h2>The Metallurgist — sidechain as composition</h2>
+  
+  <div class="body"><h1>The Metallurgist — sidechain as composition</h1>
+<p>Jenkinson, on &ldquo;The Metallurgist&rdquo;: <em>&ldquo;The bass drum is the sidechain source, and each time it drops, the dynamics for other instruments are being changed to permit a sense of fluidity.&rdquo;</em> <Citation bib="tape_op_89" /></p>
+<p>Read that again. <strong>All</strong> other instruments. The kick does not just duck the bass. It modulates the dynamics of the pads, the leads, the vocal, the noise — the entire mix becomes one rhythmic envelope.</p>
+<p>Sidechain stops being a mix-bus trick and becomes the composition.</p>
+<h2>Ableton recipe — Metallurgist bus</h2>
+<ol>
+<li>Route the kick to a return track named <strong>kick-trigger</strong>, pre-fader, no audio output.</li>
+<li>On every other instrument track, insert <strong>Compressor</strong> → Sidechain ON → Source: <strong>kick-trigger</strong>. <Citation bib="ableton_live_12_manual" /></li>
+<li>Depth varies per track. Kick → sub: 6 dB ducking, 5 ms attack, 80 ms release. Kick → pad: 3 dB, 20 ms attack, 200 ms release (breathing). Kick → lead: 1 dB, 50 ms attack, 30 ms release (pumping glint).</li>
+<li>Optional: <strong>Glue Compressor</strong> on the master with sidechain from kick, 1 dB of grab — the whole mix moves together.</li>
+</ol>
+<p>The result is a mix that breathes on the one. Nothing in it is mixed; everything in it is composed.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">The Metallurgist</span><span class="by"> — Squarepusher</span><span class="links"><a href="https://open.spotify.com/track/6ReqI2SKrLLRrJqZQQqzpT" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/jLW96qNj8ec" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Squarepusher%20The%20Metallurgist" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-d03">
+  <h1>Slide d03 · concept</h1>
+  <h2>The Metallurgist — sidechain bus graph</h2>
+  
+  <div class="body"><h1>The Metallurgist — sidechain bus graph</h1>
+<p>Jenkinson on &ldquo;The Metallurgist&rdquo;: <em>&ldquo;The bass drum is the sidechain source, and each time it drops, the dynamics for other instruments are being changed to permit a sense of fluidity.&rdquo;</em> <Citation bib="tape_op_89" /></p>
+<p>The key word is <em>dynamics for other instruments</em> — plural, comprehensive. The sidechain graph is not a single duck on a bass track. It is a fan-out.</p>
+<pre><code>[KICK trigger bus — pre-fader, no audio out]
+            │
+            ├─► Compressor on SUB track       — 6 dB, 5 ms atk, 80 ms rel
+            ├─► Compressor on PAD track       — 3 dB, 20 ms atk, 200 ms rel
+            ├─► Compressor on LEAD track      — 1 dB, 50 ms atk, 30 ms rel
+            ├─► Compressor on VOX track       — 2 dB, 10 ms atk, 120 ms rel
+            ├─► Compressor on NOISE track     — 4 dB, 2 ms atk, 40 ms rel
+            └─► Glue Compressor on MASTER     — 1 dB grab (whole mix breathes)
+</code></pre>
+<p>Every non-kick track in the mix receives a gain-reduction envelope triggered by the kick. The mix is <strong>composed</strong> by the envelope, not just mixed.</p>
+<p>Receipt caveat: the specific threshold/release values above are Ableton-translated reconstructions, not Jenkinson&rsquo;s own numbers. The principle — every bus gets the sidechain — is the quote. See <code>needs_bib</code> for the source-of-quote flag.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  K[KICK trigger bus] --&gt; S[Sub compressor: 6 dB]
+  K --&gt; P[Pad compressor: 3 dB]
+  K --&gt; L[Lead compressor: 1 dB]
+  K --&gt; V[Vox compressor: 2 dB]
+  K --&gt; N[Noise compressor: 4 dB]
+  K --&gt; M[Master Glue: 1 dB]
+</div><div class="caption">Fan-out sidechain graph — every bus receives the kick envelope. Mix composed by envelope, not just mixed.</div></div>
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">The Metallurgist</span><span class="by"> — Squarepusher</span><span class="links"><a href="https://open.spotify.com/track/6ReqI2SKrLLRrJqZQQqzpT" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/jLW96qNj8ec" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Squarepusher%20The%20Metallurgist" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide caveat" id="slide-s09">
+  <h1>Slide s09 · caveat</h1>
+  <h2>Kronecker King — the 1–2ms snare, and what is unconfirmed</h2>
+  
+  <div class="body"><h1>Kronecker King — the 1–2ms snare</h1>
+<p>On <em>Hello Everything</em> (2006), the &ldquo;Kronecker King&rdquo; snare is reportedly a Kronecker-delta impulse: a snare sample trimmed to a <strong>1–2 ms transient-only envelope</strong>, so only the attack survives. The rest is synthesis built around that impulse.</p>
+<p>Caveat, inline: the 1–2 ms figure is KVR and Jenkinson-site community consensus, not a direct Tape Op quote. The general technique — transient-only envelope, synthesize the body — is confirmed by Jenkinson&rsquo;s broader <em>Go Plastic</em>-onward move to drums <em>&ldquo;synthesized inside Reaktor&rdquo;</em> rather than sampled. Flagged in <code>needs_bib:</code>.</p>
+<h2>Ableton translation</h2>
+<ol>
+<li>Load a snare into <strong>Simpler</strong> (One-Shot mode).</li>
+<li>Set <strong>Fade</strong> → 1 ms, <strong>Length</strong> → 2 ms. Only the click survives.</li>
+<li>On the same rack chain, drop a <strong>Meld</strong> or <strong>Operator</strong> instance tuned to the same pitch. Trigger them from the same MIDI note.</li>
+<li>The click is the transient. The synth is the body. The &ldquo;snare&rdquo; is a two-device sandwich. <Citation bib="ableton_live_12_manual" /></li>
+</ol>
+<p>Why it matters: once you start synthesizing the body, the drum stops being a sample and starts being a voice. The transient stays real; everything else is yours.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Cronecker King</span><span class="by"> — Squarepusher</span><span class="links"><a href="https://open.spotify.com/search/Squarepusher%20Hello%20Everything" target="_blank" rel="noopener">Spotify</a><a href="https://www.youtube.com/results?search_query=Squarepusher%20Hello%20Everything" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Squarepusher%20Hello%20Everything" target="_blank" rel="noopener">Apple</a> <span class="tier-1">search</span></span></div></div>
+</section>
+
+
+<section class="slide reference" id="slide-s10">
+  <h1>Slide s10 · reference</h1>
+  <h2>Iambic 9 Poetry — when the Orville fights the grid</h2>
+  
+  <div class="body"><h1>Iambic 9 Poetry — when the Orville fights the grid</h1>
+<p><em>Iambic 9 Poetry</em> (2004): roughly 78 BPM, D major feel (D/Bm/G/F♯m), live fretless-style bass from Jenkinson, likely live drums for the first half. The primary processor is the <strong>Eventide Orville</strong>.</p>
+<p>Jenkinson is self-taught in DSP via Curtis Roads&rsquo; <em>The Computer Music Tutorial</em> (MIT Press, 1996). <Citation bib="roads_computer_music_tutorial" /> The Orville patches are his own, written in <strong>VSIG</strong>, Eventide&rsquo;s modular-patch editor — programmed on a PC and transferred via SysEx to the hardware. <Citation bib="tape_op_89" /></p>
+<p>The track matters here for two reasons:</p>
+<ul>
+<li><strong>Live instrumentation is not forbidden.</strong> The Squarepusher catalog is not all stuttered breaks. Fretless bass through a custom Orville patch is still a Jenkinson track. The signature is the signal path, not the tempo.</li>
+<li><strong>Your Max for Live patches are your VSIG.</strong> Next week (Autechre) we sit with that idea. For now, file it: building the instrument is part of the composition.</li>
+</ul>
+<p>For us, this week: stay on the breaks. Iambic 9 Poetry is the reminder that once you can chop an Amen, you can also play over one.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Iambic 9 Poetry</span><span class="by"> — Squarepusher</span><span class="links"><a href="https://open.spotify.com/track/7v0X5s4VKoilJWp7iapIr9" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/4otl_CgwdU4" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=Squarepusher%20Iambic%209%20Poetry" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide exercise" id="slide-s11">
+  <h1>Slide s11 · exercise</h1>
+  <h2>Ship the chop — one pass, no undo</h2>
+  
+  <div class="body"><h1>Ship the chop — one pass, no undo</h1>
+<p><strong>Deliverable.</strong> A 30-second stereo bounce of an Amen-style rearrangement built from the <code>w07-funky-fanfare-amen</code> drums render.</p>
+<h2>Steps</h2>
+<ol>
+<li>Drop <code>build/audio/stemforge-renders/w07/ff_drums.wav</code> onto an audio track. <Citation bib="stemforge_repo" /></li>
+<li>Right-click → <strong>Slice to New MIDI Track</strong> → Slice to: <strong>1/16</strong>, Slicing Preset: <strong>Built-In</strong>. <Citation bib="ableton_live_12_manual" /></li>
+<li>On the resulting MIDI track, arm record. Set a 2-bar loop at project tempo.</li>
+<li><strong>Single pass.</strong> Finger-drum or keyboard-play a new pattern across the Drum Rack chains. No undo. No piano-roll editing after the take.</li>
+<li>Bounce-in-place the MIDI clip to audio. Delete the source MIDI. Keep the audio. <Citation bib="ableton_live_12_manual" /></li>
+<li>Trim to 30 seconds. Export as <code>w07_&lt;yourname&gt;_single-pass.wav</code> (24-bit, 44.1 kHz, stereo).</li>
+</ol>
+<h2>Constraint</h2>
+<p>If a pass is unusable — actually unusable, not just uncomfortable — you get exactly one re-pass. That is the budget. Ship the second pass even if it is worse.</p>
+<p>Include a one-line note: which slice you hit the most and why. Hand in via the course Dropbox.</p>
+<p>Go.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A 30-second stereo bounce of a rearranged Amen-style chop sourced from build/audio/stemforge-renders/w07/ff_drums.wav. Slice to MIDI at 1/16 into a Drum Rack, rearrange the hits in one pass with no undo, print. File named w07_&lt;yourname&gt;_single-pass.wav. Include a one-line note: which slice you hit the most and why.</div>
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:audiotechnology_lonerism_feature">Lonerism — Tame Impala in the Studio — AudioTechnology <a href="https://www.audiotechnology.com/features/lonerism-tame-impala-in-the-studio" target="_blank" rel="noopener">↗</a></li><li id="bib:roads_computer_music_tutorial">Curtis Roads — The Computer Music Tutorial — MIT Press 1996</li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:tape_op_89">Vijith Assar — Tom Jenkinson (Squarepusher) — Tape Op 2012 <a href="https://tapeop.com/interviews/89/squarepusher/" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 59150}, {"id": "ch001", "title": "Jenkinson does not want you watching the screen", "start_ms": 59550, "end_ms": 184850}, {"id": "ch002", "title": "The QY700 as brain \u2014 blind numeric sequencing", "start_ms": 185250, "end_ms": 318850}, {"id": "ch003", "title": "Side note \u2014 the other anti-computer in the room", "start_ms": 319250, "end_ms": 402450}, {"id": "ch004", "title": "Half-speed tape bass \u2014 Hard Normal Daddy's bionic swing", "start_ms": 402850, "end_ms": 564550}, {"id": "ch005", "title": "Go Plastic \u2014 the no-computer rig, receipts", "start_ms": 564950, "end_ms": 728900}, {"id": "ch006", "title": "Amen break in the S950 \u2014 and its Ableton translation", "start_ms": 729300, "end_ms": 903500}, {"id": "ch007", "title": "Single-pass \u2014 program like a player", "start_ms": 903900, "end_ms": 1045600}, {"id": "ch008", "title": "The Metallurgist \u2014 sidechain as composition", "start_ms": 1046000, "end_ms": 1218900}, {"id": "ch009", "title": "Kronecker King \u2014 the 1\u20132ms snare, and what is unconfirmed", "start_ms": 1219300, "end_ms": 1386800}, {"id": "ch010", "title": "Iambic 9 Poetry \u2014 when the Orville fights the grid", "start_ms": 1387200, "end_ms": 1536200}, {"id": "ch011", "title": "Ship the chop \u2014 one pass, no undo", "start_ms": 1536600, "end_ms": 1674050}, {"id": "ch012", "title": "Outro", "start_ms": 1674450, "end_ms": 1751200}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

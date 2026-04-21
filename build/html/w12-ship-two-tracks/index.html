@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W12 — Week 12 — Ship two tracks, mastering, metadata, delivery</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W12</span>
+  <span class="title-chip">Week 12 — Ship two tracks, mastering, metadata, delivery</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>Twelve weeks, maybe eight tracks, and a countdown</h2>
+  
+  <div class="body"><h1>Twelve weeks, maybe eight tracks, and a countdown</h1>
+<p>The twelve weeks are almost over. You have twelve sketches, twelve loops, maybe eight real tracks. The point was never twelve finished records. The point was the reps.</p>
+<p>This week you pick two, finish them, and press upload. The rest can wait until Year Two.</p>
+<p>Three topics, one exercise. Mastering workflow — LUFS targets, metering, A/B protocol, the true-peak ceiling nobody teaches you. Delivery — Bandcamp versus a distributor, metadata hygiene, file naming. Voice — what actually recurs across your twelve pieces, and what was one-week weather.</p>
+<p><Citation bib="rick_rubin_creative_act" /> Rubin in <em>The Creative Act</em>, page uncited here because the exact chapter varies by printing — &ldquo;the only way to know what you&rsquo;ve made is to make the next one.&rdquo; You are at the point where the next one is an EP.</p>
+<p>Ship is the verb.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>LUFS targets — −14 for streaming, louder for the club</h2>
+  
+  <div class="body"><h1>LUFS targets — −14 for streaming, louder for the club</h1>
+<p>LUFS — Loudness Units relative to Full Scale — is the unit every streaming platform normalizes to. ITU-R BS.1770 defines it; every LUFS meter obeys it. Cite the spec, not the forum.</p>
+<p>Two targets worth naming.</p>
+<ul>
+<li><strong>−14 LUFS integrated</strong> — Spotify and Apple Music normalization targets. Source above this and the platform turns you down; source below and the platform leaves you alone (Apple) or applies positive gain with a limiter ceiling (Spotify). The community-flagged Spotify documentation is the receipt here; I could not resolve a first-party URL in the bibliography, so treat the number as industry consensus pending a cited page.</li>
+<li><strong>−9 to −11 LUFS integrated</strong> — club and loud-listening contexts. No normalization. The track is heard as-printed. If your record is for a DJ tool, you master louder and accept that streaming will pull it back.</li>
+</ul>
+<p>You pick one target per track based on where it lives. Two tracks, two targets, or both to −14 and release a separate club-master if you actually have a club. <Citation bib="edmprod_intermediate" /></p>
+<p>Do not master by eye. The peak meter is lying.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s03">
+  <h1>Slide s03 · concept</h1>
+  <h2>The metering pair — Youlean and SPAN, both free</h2>
+  
+  <div class="body"><h1>The metering pair — Youlean and SPAN, both free</h1>
+<p>Two plugins, free, on the master. They are enough.</p>
+<ul>
+<li><strong>Youlean Loudness Meter 2</strong> — integrated LUFS, short-term LUFS, true peak, loudness range (LRA), history graph. You insert it <em>last</em> on the master. Read integrated LUFS over a full playthrough, not over the first four bars. This tool&rsquo;s free tier does the job — needs a first-party citation I have not yet entered in the bibliography; flagged.</li>
+<li><strong>Voxengo SPAN</strong> — spectrum analyzer, long-time averaging, L/R and M/S views. You use it to check sub energy, to catch the 300 Hz mud buildup, to confirm your 10 kHz air is not imaginary. Same caveat on the bib entry.</li>
+</ul>
+<p>Insert order on the master: SPAN (analyzer, no effect on signal) → master EQ → master compressor (optional) → limiter → Youlean (measurement only). <Citation bib="ableton_live_12_manual" /></p>
+<p>The two plugins tell you two different truths. SPAN shows you <em>what is there</em>. Youlean shows you <em>how loud it is</em>. Neither tells you if it sounds good. That is still your job.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>The A/B protocol — level-matched, three references</h2>
+  
+  <div class="body"><h1>The A/B protocol — level-matched, three references</h1>
+<p>You picked up this protocol in Week 1. Same shape, tighter scope. <Citation bib="edmprod_intermediate" /></p>
+<p>Pick <strong>two or three reference tracks</strong> from the same genre as the track you are mastering. Not your favorite tracks. Tracks whose mastering you want to sit next to on a playlist without embarrassment.</p>
+<p>Drop them on adjacent audio tracks in Live. Insert a Utility on each and on your master bus. Nudge the Utility gain until every track reads the same integrated LUFS on Youlean over a 30-second loop. That is level-matching. <Citation bib="ableton_live_12_manual" /></p>
+<p>Now listen. Switch between tracks in 30-second chunks. Five axes, written down:</p>
+<ul>
+<li>low-end energy</li>
+<li>midrange weight</li>
+<li>top-end air</li>
+<li>stereo width at the chorus</li>
+<li>transient snap on the snare or the kick</li>
+</ul>
+<p>Your track is not trying to beat the references. It is trying to not embarrass itself next to them. The phrase is <em>translation</em>, not <em>competition</em>.</p>
+<p>Commit to three A/B passes, max. Then bounce.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>True peak ceiling — −1.0 dBTP, not zero</h2>
+  
+  <div class="body"><h1>True peak ceiling — −1.0 dBTP, not zero</h1>
+<p>The one number that will bite you at upload: true peak, measured in dBTP.</p>
+<p>Sample-peak metering shows you the loudest <em>sample</em> in your file. True peak metering shows you the loudest <em>inter-sample</em> reconstruction — the peak the DAC will produce when the file is played back through lossy codecs (AAC, Ogg Vorbis, MP3). Streaming platforms re-encode. Re-encoding raises intersample peaks. A file that hits 0 dBFS in Live can clip on Spotify&rsquo;s AAC.</p>
+<p>Fix: <strong>limit to −1.0 dBTP</strong>, not 0 dBFS.</p>
+<ul>
+<li>FabFilter Pro-L 2 — ceiling set to −1.0 dBTP, true-peak oversampling enabled (default). <Citation bib="fabfilter_prol2_docs" /></li>
+<li>Brainworx bx_XL V2 — one option, not the only option. Useful if you want M/S limiting per band. <Citation bib="brainworx_bx_xl_docs" /></li>
+<li>iZotope Ozone Maximizer — fine if you already own Ozone. <Citation bib="izotope_ozone_maximizer_docs" /></li>
+<li>Live&rsquo;s stock Limiter — also fine. Set ceiling to −1.0.</li>
+</ul>
+<p>Youlean&rsquo;s true peak readout is the check. If it reads anything above −1.0, lower your ceiling or lower your input. Re-bounce. Re-check.</p>
+<p>This is the one place where &ldquo;near enough&rdquo; is actually not.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Headphones that translate — K371, HD600, monitor compare</h2>
+  
+  <div class="body"><h1>Headphones that translate — K371, HD600, monitor compare</h1>
+<p>Your mastering job is not to make the track sound great on your headphones. It is to make the track sound acceptable on <em>other people&rsquo;s</em> headphones and phone speakers and cars. That is translation.</p>
+<p>Two headphone pairs worth owning. Neither is expensive.</p>
+<ul>
+<li><strong>AKG K371</strong> — closed-back, studio reference. Frequency response close to the Harman target within ±3 dB from 40 Hz to 10 kHz per independent measurement (Crinacle / oratory1990 sources — I could not resolve a canonical bib URL for the measurement file; flagged). Good low-end translation. Isolates. Ugly cable.</li>
+<li><strong>Sennheiser HD600</strong> — open-back, thirty-year-old studio workhorse. Honest midrange. Weak sub below 50 Hz, so do not trust it for kick fundamentals. Pair with the K371 or with a single subwoofer check in a car.</li>
+</ul>
+<p>Protocol: mix on your main monitors, A/B on K371 headphones, spot-check on a phone speaker. Flag any mix where the kick disappears on one and booms on another. <Citation bib="edmprod_intermediate" /></p>
+<p>Your reference tracks go through the same three check-points. If theirs translate and yours does not, the difference is your master, not the room.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s07">
+  <h1>Slide s07 · caveat</h1>
+  <h2>Self-master or send it out — the Fridmann test</h2>
+  
+  <div class="body"><h1>Self-master or send it out — the Fridmann test</h1>
+<p>The decision is not about skill. It is about <em>finishing</em>.</p>
+<p>A line circulates in production forums, attributed to Dave Fridmann: <em>&ldquo;if it&rsquo;s not finished, it&rsquo;s not mastered.&rdquo;</em> <Citation bib="fridmann_davefridmann_com" /> I could not resolve the verbatim source in either the Handbook or the Compendium — treat the wording as community paraphrase that aligns with Fridmann&rsquo;s public philosophy, flagged in <code>needs_bib:</code>. The meaning holds either way.</p>
+<p>The point: mastering is not a process that rescues an unfinished mix. It is a translation pass applied to a mix that is already decided. If the low end is not committed, a mastering engineer cannot fix it. If the arrangement has four options and you have not chosen, no amount of Pro-L 2 will choose for you.</p>
+<p>The test is one question, honest: <strong>do you know what the track is supposed to sound like?</strong> If yes, self-master this week. Use the tools above. Translate. Move on.</p>
+<p>If no — send it to an engineer <em>after</em> you finish the mix. Not before. Not instead of. An engineer costs money. An unfinished mix costs more because it will not finish at their desk either.</p>
+<p>For the twelve-week course, self-master. Next year, decide per track.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s08">
+  <h1>Slide s08 · concept</h1>
+  <h2>Delivery — Bandcamp first, distributor later</h2>
+  
+  <div class="body"><h1>Delivery — Bandcamp first, distributor later</h1>
+<p>Three paths. Pick one for this week. You can add the others later.</p>
+<ul>
+<li><strong>Bandcamp</strong> — direct upload, direct sale, direct download. 10–15% revenue cut. Artist page acts as landing page. Allows &ldquo;private&rdquo; releases (unlisted, share-link only) which is exactly the shape of this week&rsquo;s exercise. WAV/FLAC/MP3 all accepted. No ISRC required at upload; you can add it in the track-level metadata. Bandcamp&rsquo;s upload spec is the primary receipt and is not yet in the bibliography; flagged.</li>
+<li><strong>SoundCloud</strong> — preview-friendly, single-track ecology, weaker paid-download story. Good for a pre-release or a &ldquo;free track&rdquo; drop. Poor for an EP.</li>
+<li><strong>Distributor</strong> — DistroKid, TuneCore, AWAL, CD Baby. They push your track to Spotify, Apple Music, Tidal, every major DSP. Annual fee (DistroKid) or per-release fee (TuneCore). They allocate ISRCs automatically. Use this when you have at least four tracks and you want DSP presence.</li>
+</ul>
+<p>For this week&rsquo;s ship exercise: Bandcamp private EP. No DSPs. No distributor fee. The friction is almost zero and the audience is one person. <Citation bib="jack_conte_ship_it" /></p>
+<p>Next year, if you have four EP-candidates from the curation exercise, route through DistroKid. For now, Bandcamp.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s09">
+  <h1>Slide s09 · concept</h1>
+  <h2>Metadata hygiene — ISRC, credits, artwork, file naming</h2>
+  
+  <div class="body"><h1>Metadata hygiene — ISRC, credits, artwork, file naming</h1>
+<p>The boring slide. Boring wins.</p>
+<ul>
+<li><strong>ISRC</strong> — International Standard Recording Code. Twelve characters, allocated per recording. Distributors allocate automatically. If you are Bandcamp-only, you can skip this initial release and add ISRCs when you move to a DSP distributor. The RIAA US ISRC agency page is the canonical reference; flagged as <code>needs_bib:</code>.</li>
+<li><strong>Composer credits</strong> — your legal name or a consistent pseudonym. This is what registers with PROs (ASCAP, BMI, SOCAN). Inconsistent credits across twelve releases means inconsistent royalty collection. Pick one. Write it the same way every time.</li>
+<li><strong>Genre tags</strong> — Bandcamp accepts multiple. &ldquo;IDM&rdquo; and &ldquo;Electronic&rdquo; plus one sub-tag (&ldquo;glitch,&rdquo; &ldquo;ambient,&rdquo; &ldquo;breakbeat&rdquo;) is enough. Searchability comes from accuracy, not from stuffing.</li>
+<li><strong>Artwork dimensions</strong> — 3000 × 3000 px, JPEG or PNG, under 10 MB. This is the DSP-common minimum. Lower resolution will upload; it will look worse on every platform.</li>
+</ul>
+<p>File naming convention worth committing to: <code>artist_trackname_v01_mixprint.wav</code>, then <code>v02</code>, <code>v03</code>. When you export a new master, version it and leave the old one. Do not overwrite. Do not use emoji. Do not use exclamation marks in track titles; some distributors silently strip them. Lowercase is the safer default. <Citation bib="edmprod_intermediate" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s10">
+  <h1>Slide s10 · concept</h1>
+  <h2>Voice is the consistency, not the uniqueness</h2>
+  
+  <div class="body"><h1>Voice is the consistency, not the uniqueness</h1>
+<p>Twelve weeks in, you have twelve pieces. Listen to them back-to-back. Some will sound like they were made by twelve different producers. That is the point of the course, and also the problem you now have.</p>
+<p>Voice is not the one idea that is unique to one track. Voice is <em>what recurs across tracks</em>.</p>
+<ul>
+<li>Your kick-to-the-root move from Week 5, used again in Week 7, then again in Week 10 — that is voice.</li>
+<li>Your tendency to leave 2 bars of silence before the drop, Autechre-style from Week 8 — if you did it twice, that is voice.</li>
+<li>The Fridmann-bass-distortion setting you discovered in Week 4 and reached for every time the low end felt thin — that is voice.</li>
+</ul>
+<p>What is <em>not</em> voice: the Week 9 vocal-chop experiment you never did again. The Week 2 subtraction exercise that produced a track you cannot listen to. The Week 11 beat-switch that only worked because the stem happened to cooperate.</p>
+<p>Voice is what you would do <em>without thinking</em>, if you had to make a record in two days. The twelve-week archive tells you what those defaults actually are, not what you told yourself they were. <Citation bib="rick_rubin_creative_act" /></p>
+<p>That is the curation exercise.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s11">
+  <h1>Slide s11 · exercise</h1>
+  <h2>Curate four from twelve — listen back before you re-master</h2>
+  
+  <div class="body"><h1>Curate four from twelve — listen back before you re-master</h1>
+<p>Before you touch a limiter, do this.</p>
+<p>Open a new Live set. Drag every bounce from Weeks 1–11 into the arrangement as audio clips, in order. Level-match them with Utility, the same way you level-matched references in slide s04. Listen to the whole stack, beginning to end, one pass, on headphones.</p>
+<p>On paper — this is a pen-and-paper slide — write one sentence per track. Not about what you <em>meant</em> to make. About what it <em>actually sounds like</em>. Two separate descriptions.</p>
+<p>Then circle four tracks that feel most like <em>you</em>. The four where your defaults showed up without being forced. These are not necessarily the best-produced. They are the most <em>recognizable</em>.</p>
+<p>Those four are the EP-candidates for Year Two. You will not master all four this week. You will master two of them — the two that are closest to finished. The other two go into a folder called <code>year-two-candidates</code> and wait.</p>
+<p>The deliverable for this slide is the text file, not the bounce. Ship the list first. The bounces come in the next slide. <Citation bib="rick_rubin_creative_act" /></p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">A single text file, w12_&lt;yourname&gt;_curation.txt, listing all twelve week-by-week sketches, each with one sentence on what it actually sounds like (not what you meant it to sound like). Circle the four that feel most like you. Those four are the EP candidates for Year Two.</div>
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s12">
+  <h1>Slide s12 · exercise</h1>
+  <h2>Ship two tracks — Bandcamp private EP, one friend</h2>
+  
+  <div class="body"><h1>Ship two tracks — Bandcamp private EP, one friend</h1>
+<p>Two tracks. Not one. Two.</p>
+<p>The &ldquo;one&rdquo; is a hedge. One track is a single, and a single can be an accident. Two is a <em>choice</em> — you picked a pair, you sequenced them, you said these two belong together. That is the smallest unit of a record.</p>
+<p>Protocol for each track.</p>
+<ul>
+<li>Open the Live set. Apply the master chain from slides s03–s05. SPAN, EQ, Pro-L 2 or stock Limiter at −1.0 dBTP. <Citation bib="fabfilter_prol2_docs" /></li>
+<li>A/B against two or three references at the same integrated LUFS. Three passes max.</li>
+<li>Bounce <strong>24-bit / 44.1 kHz WAV</strong>, full-mix, no dithering flags needed for 24-bit.</li>
+<li>Name the file per the convention: <code>yourname_trackname_v01_master.wav</code>.</li>
+</ul>
+<p>Upload both to Bandcamp. Mark the release as &ldquo;private&rdquo; — share-link only, not listed on your page. Upload artwork at 3000 × 3000 px. Fill the track titles in lowercase. Genre tag it honestly.</p>
+<p>Send the share link to <strong>exactly one friend</strong>. That friend does not need to listen. They do not need to respond. The work has already happened. <Citation bib="jack_conte_ship_it" /></p>
+<p>Ship the two files. Close the laptop.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">Two finished tracks. Not one. Two. Exported at 24-bit/44.1kHz WAV with −1.0 dBTP ceiling and integrated loudness within 1 LU of your chosen target. Uploaded to Bandcamp as a private EP with artwork, credits, and ISRCs (or distributor-allocated ISRCs). Link sent to exactly one friend. That friend does not need to respond. The work has already happened.</div>
+  
+</section>
+
+
+<section class="slide concept" id="slide-mast-01">
+  <h1>Slide mast-01 · concept</h1>
+  <h2>LUFS explained — ITU BS.1770-4, K-weighting, gating</h2>
+  
+  <div class="body"><h1>LUFS explained — what the meter is actually measuring</h1>
+<p><span class="term">LUFS<span class="gloss"><strong>LUFS</strong> — Loudness Units relative to Full Scale — the EBU R128 / ITU-R BS.1770 standard for perceived loudness, measured over time with K-weighting. Streaming platforms target roughly -14 LUFS integrated (Spotify, Apple Music); mastering for vinyl or club -8 to -10. Replaced RMS as the honest loudness metric. <a href="https://en.wikipedia.org/wiki/LUFS" target="_blank" rel="noopener">wikipedia↗</a></span></span> is not a volume knob. It is a perceptual average computed by ITU-R BS.1770-4 — the spec every streaming platform normalizes against.</p>
+<p>Three moving parts in the algorithm.</p>
+<ul>
+<li><strong>K-weighting filter</strong> — a high-shelf and high-pass pre-filter that approximates equal-loudness at moderate listening levels. Low bass and sub-bass count less than the 2–4 kHz presence region. The meter hears the way an ear at 83 dB SPL hears.</li>
+<li><strong>Gating</strong> — the measurement drops any 400 ms block below −70 LUFS absolute, then re-gates relative to the running mean at −10 LU. Silence and fade-ins do not pull the number down.</li>
+<li><strong>Integration</strong> — the reading you ship is the <strong>integrated</strong> LUFS, measured across the whole track. Short-term LUFS (3-second window) and momentary LUFS (400 ms) are diagnostic readouts for the loudest section, not the delivery number.</li>
+</ul>
+<p>The practical consequence: a track with a quiet intro and a loud drop reads closer to the <em>drop&rsquo;s</em> loudness than to the average, because the gate is throwing out the intro below −70 LUFS.</p>
+<p>Master to the integrated number. Watch the short-term for chorus-level danger. Ignore the momentary unless you are chasing a limiter spike. <Citation bib="edmprod_intermediate" /></p></div>
+  <figure class="figure"><img src="assets/itu-bs1770-k-weighting.png" alt="K-weighting filter response — high-pass + high-shelf, approximating equal-loudness at 83 dB SPL."><figcaption>K-weighting filter response — high-pass + high-shelf, approximating equal-loudness at 83 dB SPL.<div class="credit">After ITU-R BS.1770-4, Annex 1 · fair-use technical illustration</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-mast-02">
+  <h1>Slide mast-02 · concept</h1>
+  <h2>The loudness scale — −14 LUFS, −9 LUFS, −1 dBTP on one diagram</h2>
+  
+  <div class="body"><h1>The loudness scale — where −14, −9, and −1 actually sit</h1>
+<p>Three numbers define the entire mastering deliverable. On the same scale they look like this.</p>
+<p>Everything above the streaming target gets <em>turned down</em> on playback. Everything below it is either left alone (Apple Music) or boosted with a platform-side limiter you do not control (Spotify). The club-master sits louder <em>because nothing is normalizing it</em>. The true-peak ceiling is a codec-safety number, not a loudness number — it lives on a different axis entirely (dBTP, not LUFS) but it is the third clamp every master respects.</p>
+<p>Do not confuse the two scales. LUFS is perceptual-loudness. dBTP is reconstruction-peak. They read different numbers because they measure different things. <Citation bib="edmprod_intermediate" /></p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .axis { stroke: #333; stroke-width: 1.5; }
+    .tick { stroke: #333; stroke-width: 1; }
+    .label { font: 13px sans-serif; fill: #222; }
+    .hdr { font: 15px sans-serif; fill: #111; font-weight: 600; }
+    .band { opacity: 0.25; }
+    .note { font: 11px sans-serif; fill: #444; }
+    .marker { font: 12px sans-serif; fill: #b00; font-weight: 600; }
+  </style>
+  <text x="40" y="30" class="hdr">LUFS (integrated) — perceptual loudness scale</text>
+  <line x1="60" y1="80" x2="60" y2="340" class="axis" />
+  <line x1="60" y1="340" x2="740" y2="340" class="axis" />
+  <!-- scale tick marks from -24 to -6 LUFS -->
+  <g>
+    <line x1="60" y1="80" x2="55" y2="80" class="tick" /><text x="30" y="84" class="label">-6</text>
+    <line x1="60" y1="120" x2="55" y2="120" class="tick" /><text x="24" y="124" class="label">-9</text>
+    <line x1="60" y1="160" x2="55" y2="160" class="tick" /><text x="22" y="164" class="label">-11</text>
+    <line x1="60" y1="200" x2="55" y2="200" class="tick" /><text x="22" y="204" class="label">-14</text>
+    <line x1="60" y1="260" x2="55" y2="260" class="tick" /><text x="22" y="264" class="label">-18</text>
+    <line x1="60" y1="320" x2="55" y2="320" class="tick" /><text x="22" y="324" class="label">-24</text>
+  </g>
+  <!-- streaming normalization band -14 -->
+  <rect x="60" y="198" width="680" height="6" fill="#1a8917" />
+  <text x="280" y="216" class="marker">−14 LUFS — Spotify / Apple Music integrated target</text>
+  <!-- club band -9 to -11 -->
+  <rect x="60" y="120" width="680" height="44" fill="#b88200" class="band" />
+  <text x="280" y="146" class="marker">−9 to −11 LUFS — club / loud-listening master</text>
+  <!-- quiet / classical -->
+  <rect x="60" y="260" width="680" height="60" fill="#1a4e89" class="band" />
+  <text x="280" y="298" class="note">−18 to −24 LUFS — orchestral / film-score / dynamic masters</text>
+  <!-- dBTP note separate axis -->
+  <text x="40" y="380" class="hdr">dBTP (separate axis — codec safety ceiling, NOT LUFS)</text>
+  <text x="60" y="400" class="marker">−1.0 dBTP — streaming delivery ceiling (true-peak, 4× oversampled)</text>
+</svg>
+<div class="caption">LUFS is perceptual-loudness. dBTP is reconstruction-peak. Different axes, both clamped on delivery.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-mast-03">
+  <h1>Slide mast-03 · concept</h1>
+  <h2>True peak vs sample peak — why −1.0 dBTP, not 0 dBFS</h2>
+  
+  <div class="body"><h1>True peak vs sample peak — the four-times oversampling argument</h1>
+<p>The sample-peak meter lies by omission.</p>
+<p>A digital file is a sequence of samples at 44.1 or 48 kHz. The analog waveform the DAC reconstructs between those samples can — and often does — rise <em>above</em> the highest sample value. That is an <strong>intersample peak</strong>. On a lossless playback chain it is mostly benign. On an AAC, Ogg Vorbis, or MP3 re-encode, the lossy decoder rebuilds the analog wave and clips against the codec&rsquo;s internal ceiling. The file that measured 0.0 dBFS in Live now shows audible distortion on Spotify.</p>
+<p>True-peak metering oversamples the signal by 4× (BS.1770-4 minimum) and reports the <em>interpolated</em> peak — the peak the DAC would actually produce. That is the number to clamp.</p>
+<ul>
+<li>−1.0 dBTP — the industry-standard safety ceiling for streaming delivery</li>
+<li>−2.0 dBTP — cautious when the source is already hot; Apple&rsquo;s own delivery spec recommends −1.0 but some mastering houses use −2 for headroom</li>
+<li>0.0 dBFS — ceiling that <em>will</em> clip on at least one major platform</li>
+</ul>
+<p>FabFilter Pro-L 2 enables true-peak oversampling at 4× by default; it can be pushed to 16× for paranoid masters at a small CPU cost. <Citation bib="fabfilter_prol2_docs" /> Youlean&rsquo;s true-peak readout is the sanity check after bounce. If it reads worse than −1.0, lower the limiter ceiling and re-bounce. No exceptions.</p></div>
+  <figure class="figure"><img src="assets/intersample-peak-reconstruction.png" alt="Samples below 0 dBFS; reconstructed analog wave rises above. The intersample peak is what the DAC produces."><figcaption>Samples below 0 dBFS; reconstructed analog wave rises above. The intersample peak is what the DAC produces.<div class="credit">After Nielsen &amp; Lund, AES 2003 / Pro-L 2 documentation · fair-use technical illustration</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-mast-04">
+  <h1>Slide mast-04 · concept</h1>
+  <h2>The mastering chain — signal order, six stages</h2>
+  
+  <div class="body"><h1>The mastering chain — signal order that survives contact with reality</h1>
+<p>Six stages, in this order, on the master bus. Deviate and you will regret it.</p>
+<ol>
+<li><strong>Pre-master check</strong> — mix bounce imported on a new Live set, one stereo track, no plugins. Reference tracks on parallel tracks, Utility-gain-matched to the same integrated LUFS. This is the starting point. If the mix is broken here, mastering will not save it.</li>
+<li><strong>Master EQ</strong> — broad strokes only. Low-shelf below 30 Hz if there is sub-mud. High-shelf at 12 kHz if the top is dull. No narrow cuts. If you need surgery, the mix is not finished.</li>
+<li><strong>Master compression (optional)</strong> — 1.5:1 to 2:1 ratio, slow attack, auto release, 1–2 dB gain reduction max. Glue, not squash. Skip this if the mix already feels cohesive.</li>
+<li><strong>Limiter</strong> — Pro-L 2, stock Limiter, Ozone Maximizer, bx_XL. Ceiling at −1.0 dBTP. Threshold pulled down until integrated LUFS hits the target. <Citation bib="fabfilter_prol2_docs" /></li>
+<li><strong>Metering</strong> — Youlean (LUFS + TP) and SPAN (spectrum) at the end of the chain. Measurement only, zero effect on signal.</li>
+<li><strong>Export</strong> — 24-bit / 44.1 kHz WAV. Dither is automatic in Live on 16-bit export; skip for 24-bit.</li>
+</ol>
+<p>The order matters because EQ before limiter changes <em>what the limiter is limiting</em>. Limiter before EQ means the EQ is re-lifting content you already clamped. <Citation bib="ableton_live_12_manual" /></p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Mix bounce] --&gt; B[Pre-master check + references]
+  B --&gt; C[Master EQ]
+  C --&gt; D[Master comp optional]
+  D --&gt; E[Limiter -1.0 dBTP]
+  E --&gt; F[Youlean + SPAN metering]
+  F --&gt; G[Export 24-bit / 44.1]
+</div><div class="caption">Fixed order. EQ before limiter. Metering after limiter. Export last.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-mast-05">
+  <h1>Slide mast-05 · concept</h1>
+  <h2>A/B level-matched — close your eyes, then pick</h2>
+  
+  <div class="body"><h1>A/B level-matched — close your eyes, then pick</h1>
+<p>Level-matching is the whole trick. A louder track always sounds &ldquo;better.&rdquo; Your ear is not a meter; it is a prejudice engine. Fletcher-Munson bends toward the louder source.</p>
+<p>The protocol, tighter than slide s04.</p>
+<ol>
+<li>Bounce the mix. Drop it on track 1 in a fresh Live set.</li>
+<li>Drop two or three reference masters on tracks 2 and 3.</li>
+<li>Insert a Utility on each. Nudge gain on everything <em>except</em> the loudest until Youlean&rsquo;s integrated reads the same number on all of them over a 30-second loop.</li>
+<li><strong>Close your eyes.</strong> Solo each track in random order. Write down which one sounds best <em>as a thing</em>, not which one sounds loudest.</li>
+<li>If your mix wins — ship it. If a reference wins — the gap you heard is the translation you are trying to reach. Name the gap in words: <em>&ldquo;theirs has more 2 kHz snap,&rdquo; &ldquo;theirs has tighter sub,&rdquo;</em> etc. Then go back and address the named gap, not a vague feeling.</li>
+</ol>
+<p>Three A/B passes, maximum. Each pass longer than 30 seconds is not listening, it is second-guessing. <Citation bib="edmprod_intermediate" /></p>
+<p>Ear-fatigue rule: if you have been mastering for two hours, your decisions are worthless. Save. Close. Come back tomorrow. The protocol does not work when the instrument — your ear — is tired.</p></div>
+  <figure class="figure"><img src="assets/youlean-ab-levelmatched.png" alt="Three reference tracks + one mix, all gain-matched to the same integrated LUFS on Youlean."><figcaption>Three reference tracks + one mix, all gain-matched to the same integrated LUFS on Youlean.<div class="credit">Screenshot — Youlean Loudness Meter 2 free tier · fair-use product documentation</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-mast-06">
+  <h1>Slide mast-06 · concept</h1>
+  <h2>Translation matrix — four playback chains, four kinds of lying</h2>
+  
+  <div class="body"><h1>Translation matrix — K371, HD600, monitors, car</h1>
+<p>The master has to work on four listening chains minimum. None of them are the chain you mastered on.</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Strengths</th>
+<th>Lies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main monitors (NS-10, Adam, Kali, whatever)</td>
+<td>Stereo field, transient accuracy</td>
+<td>Bass is room-dependent; your room is not neutral</td>
+</tr>
+<tr>
+<td>AKG K371 (closed)</td>
+<td>Bass translation, isolation</td>
+<td>Upper-mid slightly recessed vs Harman target</td>
+</tr>
+<tr>
+<td>Sennheiser HD600 (open)</td>
+<td>Midrange honesty, vocals</td>
+<td>Sub below 50 Hz is absent; do not trust it</td>
+</tr>
+<tr>
+<td>Phone speaker</td>
+<td>Real-world midrange balance</td>
+<td>Below 200 Hz is gone</td>
+</tr>
+<tr>
+<td>Car</td>
+<td>Bass translation reality-check</td>
+<td>Cabin adds 6–8 dB of sub resonance</td>
+</tr>
+</tbody>
+</table>
+<p>Protocol: mix on monitors, spot-check on K371, listen on HD600 if vocals are present, bounce to phone, take it to the car on the next trip. If the bass disappears on the phone but booms in the car, the mix has a sub-bass hole around 50–80 Hz — the fundamentals are missing and only the overtones are there. Phones reproduce overtones; cars reproduce fundamentals plus resonance.</p>
+<p>Frequency-response measurements for the K371 and HD600 come from Crinacle and oratory1990 independent data; I could not resolve a single canonical URL at lint time, so treat the numeric specs as community-measured rather than manufacturer-published. The <em>shape</em> of each headphone&rsquo;s bias is stable across measurers. <Citation bib="edmprod_intermediate" /></p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .hdr { font: 14px sans-serif; fill: #111; font-weight: 600; }
+    .cell { font: 12px sans-serif; fill: #222; }
+    .system { font: 13px sans-serif; fill: #111; font-weight: 600; }
+    .grid { stroke: #999; stroke-width: 1; fill: none; }
+    .row-alt { fill: #f4f4f4; }
+  </style>
+  <text x="20" y="24" class="hdr">Four playback chains — what each one tells you, what it lies about</text>
+  <line x1="20" y1="40" x2="800" y2="40" class="grid" />
+  <text x="30" y="60" class="system">System</text>
+  <text x="220" y="60" class="system">Trust it for</text>
+  <text x="520" y="60" class="system">Do NOT trust it for</text>
+  <line x1="20" y1="70" x2="800" y2="70" class="grid" />
+  <rect x="20" y="70" width="780" height="40" class="row-alt" />
+  <text x="30" y="95" class="cell">Main monitors</text>
+  <text x="220" y="95" class="cell">Stereo field, transients</text>
+  <text x="520" y="95" class="cell">Low end (room-dependent)</text>
+  <text x="30" y="135" class="cell">AKG K371 (closed)</text>
+  <text x="220" y="135" class="cell">Bass translation, isolation</text>
+  <text x="520" y="135" class="cell">Slight upper-mid recession</text>
+  <rect x="20" y="150" width="780" height="40" class="row-alt" />
+  <text x="30" y="175" class="cell">Sennheiser HD600 (open)</text>
+  <text x="220" y="175" class="cell">Midrange honesty, vocals</text>
+  <text x="520" y="175" class="cell">Sub below 50 Hz (absent)</text>
+  <text x="30" y="215" class="cell">Phone speaker</text>
+  <text x="220" y="215" class="cell">Midrange balance, reality</text>
+  <text x="520" y="215" class="cell">Anything below 200 Hz (gone)</text>
+  <rect x="20" y="230" width="780" height="40" class="row-alt" />
+  <text x="30" y="255" class="cell">Car system</text>
+  <text x="220" y="255" class="cell">Sub-bass reality check</text>
+  <text x="520" y="255" class="cell">Cabin adds 6-8 dB sub resonance</text>
+</svg>
+<div class="caption">Each chain&#x27;s bias is known. Use them in combination, not in isolation.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-mast-07">
+  <h1>Slide mast-07 · caveat</h1>
+  <h2>Self-master vs send to engineer — the decision tree</h2>
+  
+  <div class="body"><h1>When to master vs send to an engineer — a blunt decision tree</h1>
+<p>The honest question is not &ldquo;am I good enough?&rdquo; It is &ldquo;is this track finished?&rdquo;</p>
+<p>Send it out when:</p>
+<ul>
+<li>You have a label release with a distributor timeline and actual money moving</li>
+<li>The mix is fully committed — bounces, arrangement, mutes, automation, done — and you want a second pair of ears to translate it</li>
+<li>You have four or more tracks for the same release and need loudness consistency across an EP</li>
+<li>The budget is real — $75–$300 per track for an independent engineer, $500+ for a mid-tier house, more for a name</li>
+</ul>
+<p>Self-master when:</p>
+<ul>
+<li>You are still exploring — the mix might change</li>
+<li>The release is a Bandcamp private EP to one friend (this week)</li>
+<li>The deadline is shorter than the turnaround of any engineer you would actually hire</li>
+<li>You are twelve weeks into a practice and the learning is the point</li>
+</ul>
+<p>An engineer cannot rescue an unfinished mix. A $300 pass on an unfinished track produces a louder version of the same unfinished track, shipped with your name on it. <Citation bib="fridmann_davefridmann_com" /></p>
+<p>For this week: self-master. Year Two: decide per release. The decision is situational, not skill-based.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-mast-08">
+  <h1>Slide mast-08 · concept</h1>
+  <h2>Reading Youlean + SPAN — the five-second glance</h2>
+  
+  <div class="body"><h1>Youlean + SPAN on the master — reading the screens</h1>
+<p>The two screens tell you two truths. Learn to read both in five seconds.</p>
+<p><strong>Youlean (measurement).</strong> Focus on three numbers during playback.</p>
+<ul>
+<li><strong>Integrated LUFS</strong> — the bottom-line delivery number. Reads across the whole track once play has looped through start to finish. This is what you match to target.</li>
+<li><strong>Short-term LUFS (3s window)</strong> — shows chorus or drop loudness. If this spikes more than 2–3 LU above integrated, the section is fighting the limiter.</li>
+<li><strong>True Peak (dBTP)</strong> — must read no worse than −1.0 on any playback. If it hits −0.9, lower the limiter ceiling.</li>
+</ul>
+<p><strong>SPAN (diagnostic).</strong> Focus on three regions.</p>
+<ul>
+<li><strong>30–60 Hz</strong> — sub energy. If this is a flat shelf you probably have kick and sub stacked; if it is spiky, one element is dominating.</li>
+<li><strong>200–400 Hz</strong> — the mud band. Too much here and the mix sounds boxy on any speaker that can reproduce it.</li>
+<li><strong>8–12 kHz</strong> — air. Too little and the mix sounds closed; too much and cymbals ice-pick on headphones.</li>
+</ul>
+<p>Set SPAN to long-time averaging (the default is short; change it). Average over a full playthrough, not four bars. <Citation bib="ableton_live_12_manual" /></p>
+<p>Neither tool tells you if the mix is <em>good</em>. That is why you also A/B against references. Meters confirm; ears decide.</p></div>
+  <figure class="figure"><img src="assets/youlean-span-master-chain.png" alt="Youlean integrated + short-term + true-peak on the left; SPAN long-time spectrum on the right."><figcaption>Youlean integrated + short-term + true-peak on the left; SPAN long-time spectrum on the right.<div class="credit">Screenshot — Youlean Loudness Meter 2 + Voxengo SPAN, both free tier · fair-use product documentation</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-rel-01">
+  <h1>Slide rel-01 · concept</h1>
+  <h2>Bandcamp upload — six fields that matter for the private EP</h2>
+  
+  <div class="body"><h1>Bandcamp upload — the fields that actually matter</h1>
+<p>The upload form has twenty fields. Six of them matter for the private-EP exercise.</p>
+<ul>
+<li><strong>Album title</strong> — lowercase or Title Case, consistent with your artist page. No trailing punctuation; some feeds strip it.</li>
+<li><strong>Release date</strong> — set to today or a near date. &ldquo;Private&rdquo; does not require a public date, but Bandcamp records it for later re-publish.</li>
+<li><strong>Privacy: Private</strong> — this is the setting for the exercise. Share-link only, not on your public artist page, not searchable.</li>
+<li><strong>Artwork</strong> — 3000 × 3000 px, JPEG or PNG, sRGB, under 10 MB. Anything smaller and it degrades on every platform it ever touches later.</li>
+<li><strong>Track titles</strong> — lowercase recommended. Do not use exclamation marks; some downstream DSP feeds silently strip them. No emoji. No brackets with credits — those go in the metadata, not the title.</li>
+<li><strong>Track file</strong> — 24-bit / 44.1 kHz WAV, your <code>artist_trackname_v01_master.wav</code> from slide s12.</li>
+</ul>
+<p>Bandcamp&rsquo;s own upload spec is the canonical receipt and was flagged in <code>needs_bib:</code> for a first-party URL. The dimensions and bit-depth numbers come from the upload form itself as of this lesson&rsquo;s authoring. <Citation bib="jack_conte_ship_it" /></p>
+<p>Ignore the &ldquo;About this track&rdquo; and &ldquo;Lyrics&rdquo; fields for the private exercise. Fill them before you make it public. Not now.</p></div>
+  <figure class="figure"><img src="assets/bandcamp-upload-dialog.png" alt="Bandcamp artist-page upload form — album title, privacy toggle, artwork, track files."><figcaption>Bandcamp artist-page upload form — album title, privacy toggle, artwork, track files.<div class="credit">Screenshot — Bandcamp artist dashboard · fair-use platform documentation</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-rel-02">
+  <h1>Slide rel-02 · concept</h1>
+  <h2>SoundCloud vs DistroKid vs TuneCore — route by the job</h2>
+  
+  <div class="body"><h1>SoundCloud vs DistroKid vs TuneCore — routing the track</h1>
+<p>Three different jobs. Pick by the job, not by the hype.</p>
+<ul>
+<li><strong>SoundCloud</strong> — broadcast platform, one-track ecology. Free tier accepts uploads; Pro tier removes the time cap and adds monetization. Best for: a preview, a free download, a single as promotion. Worst for: an EP. The platform does not sequence well and the download-gate friction is high. Useful as a <em>secondary</em> mirror, not a primary release.</li>
+<li><strong>DistroKid</strong> — subscription distributor. ~$23/year for unlimited uploads. Pushes to Spotify, Apple, Tidal, Amazon, ~150 DSPs. Allocates ISRCs automatically (per recording). You keep 100% of royalties minus per-stream micro-fees. Best for: volume releases, EP and album-length drops, artists who ship more than one record per year.</li>
+<li><strong>TuneCore</strong> — per-release distributor. ~$10–30 per single, more per album. Pushes to the same DSPs. You keep 100% of royalties. Best for: low-volume artists who release one thing a year and do not want an annual subscription.</li>
+<li><strong>AWAL / CD Baby</strong> — alternatives with different fee structures (CD Baby takes a percentage of royalties; AWAL is invite-only). Ignore for this week.</li>
+</ul>
+<p>Routing logic: Bandcamp for this week&rsquo;s private exercise. DistroKid when you have four tracks you actually stand behind. TuneCore if you only ever release one thing. SoundCloud if you need a public preview URL before any of the above. <Citation bib="jack_conte_ship_it" /></p>
+<p>ISRC agency for US artists is RIAA; DistroKid allocates under that agency automatically when you upload. Flagged in <code>needs_bib:</code> for a direct RIAA-ISRC URL.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  A[Finished master] --&gt; B{Release shape?}
+  B --&gt;|private, 1 friend| C[Bandcamp private]
+  B --&gt;|public single, preview| D[SoundCloud]
+  B --&gt;|EP / album, volume| E[DistroKid subscription]
+  B --&gt;|one release per year| F[TuneCore per-release]
+  E --&gt; G[Spotify / Apple / Tidal / ~150 DSPs]
+  F --&gt; G
+</div><div class="caption">Route by release shape, not hype. Bandcamp this week; DistroKid for Year Two volume.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-rel-03">
+  <h1>Slide rel-03 · concept</h1>
+  <h2>File versioning — `v01_mixprint` saves you in eighteen months</h2>
+  
+  <div class="body"><h1>File versioning — why <code>v01_mixprint</code> saves you in eighteen months</h1>
+<p>Future-you is a different person with worse memory than you think. Name files for that stranger.</p>
+<p>The convention that survives.</p>
+<pre><code>artist_trackname_v01_mixprint.wav       # first full mix bounce
+artist_trackname_v02_mixprint.wav       # revision
+artist_trackname_v07_mixprint.wav       # final mix, committed
+artist_trackname_v07_master.wav         # mastered from v07 mix
+artist_trackname_v07_master_club.wav    # louder club variant
+artist_trackname_v07_stems.zip          # stems bounced at same point
+</code></pre>
+<p>Rules that read paranoid and are not.</p>
+<ul>
+<li><strong>Never overwrite.</strong> Bump the version. Disk is cheap.</li>
+<li><strong>Never rename the project file.</strong> Duplicate it, bump the version, keep the old. Live&rsquo;s undo history dies on close.</li>
+<li><strong>The master is tied to a mix version.</strong> If you re-bounce the mix, you re-master. Do not apply the old master chain to a new mix bounce and call it the same track.</li>
+<li><strong>Stems and masters share a version number.</strong> <code>v07_master</code> was made from <code>v07_mixprint</code> from <code>v07.als</code>. Breaking that chain is how tracks lose their own lineage.</li>
+<li><strong>Final is not a word.</strong> The file called <code>trackname_final.wav</code> is always wrong. So is <code>final_FINAL</code>, <code>really_final</code>, and <code>final_v2</code>. Numbers do not lie.</li>
+</ul>
+<p>In eighteen months, when a label asks for the stems for a remix, you will find the session by version number and bounce from a known-good state. Without the convention you will open three projects that all look like the track and none of them are. <Citation bib="edmprod_intermediate" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-rel-04">
+  <h1>Slide rel-04 · concept</h1>
+  <h2>Metadata hygiene — composer, BPM, key, ISRC, the boring list</h2>
+  
+  <div class="body"><h1>Metadata hygiene — composer credits, BPM, key, ISRC</h1>
+<p>The metadata fields are boring. Shipping without them is boring-and-expensive.</p>
+<ul>
+<li><strong>Composer credits</strong> — your legal name or a single consistent pseudonym, spelled the same way on every release. This is what the PROs (ASCAP, BMI, SOCAN, PRS) register and what pays out performance royalties. &ldquo;Zak Brown&rdquo; on one release and &ldquo;Zak R. Brown&rdquo; on another registers as two rights-holders and collects half the royalties each. Pick one form. Commit.</li>
+<li><strong>Performer credits</strong> — typically same as composer for solo-producer releases. If someone else played on a track, name them in the performer field, not in the track title.</li>
+<li><strong>BPM</strong> — integer, honest. The DAW-reported tempo if the track is a single tempo. If the track has a tempo change, pick the dominant tempo or the final tempo; do not invent an average.</li>
+<li><strong>Key</strong> — use Camelot notation (1A, 2B, etc.) if you are releasing to DJ-focused platforms; use musical notation (A minor, F# major) for Bandcamp and general catalogs. If the track is not in a single key, leave it blank.</li>
+<li><strong>ISRC</strong> — 12 characters, agency-allocated. For Bandcamp-only, you can skip it initially and add it at DSP-distributor time. DistroKid auto-allocates; TuneCore does the same. Self-allocation via the RIAA US ISRC agency is available but only worth it if you release a lot. Flagged in <code>needs_bib:</code>.</li>
+<li><strong>Genre</strong> — &ldquo;IDM&rdquo; plus &ldquo;Electronic&rdquo; plus one sub-tag is enough. Over-tagging does not help discovery. Under-tagging does hurt it.</li>
+</ul>
+<p>The fifteen minutes you spend filling these fields accurately before release saves the three months of royalty chasing later. <Citation bib="edmprod_intermediate" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-voice-01">
+  <h1>Slide voice-01 · exercise</h1>
+  <h2>Listen to all twelve, back-to-back, once</h2>
+  
+  <div class="body"><h1>Listen to all twelve, back-to-back, once</h1>
+<p>The exercise you will not want to do. Do it anyway.</p>
+<p>Open a Live set. Drop every bounce from Weeks 1 through 11 onto the timeline in order, as audio clips. Utility-gain-match them to the same integrated LUFS (Youlean on the master, same protocol as slide mast-05). Set the timeline to continuous playback with no gap. Put on headphones. Play from the top.</p>
+<p><strong>Do not skip. Do not edit. Do not reach for the project file.</strong> Listen as if it were somebody else&rsquo;s record.</p>
+<p>You will hear four things.</p>
+<ol>
+<li>Tracks that sound nothing like you. These are experiments that did their job — the experiment was the deliverable.</li>
+<li>Tracks that sound like one specific reference artist. These are study tracks. Useful for technique, not for voice.</li>
+<li>Tracks that sound like the <em>same person made them</em>, even though they were made in different weeks with different techniques. These are the voice tracks.</li>
+<li>One or two tracks that surprise you — that you do not remember making, that sound better than you thought. File those away. The surprise is information.</li>
+</ol>
+<p>The first pass is pure listening. No notes. No Live-set open on the second monitor. Pen and paper only, and only after the last track fades. <Citation bib="rick_rubin_creative_act" /></p>
+<p>Voice is what survives the playthrough. Everything else is weather.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-voice-02">
+  <h1>Slide voice-02 · exercise</h1>
+  <h2>Curate four, re-master as a cohesive set</h2>
+  
+  <div class="body"><h1>Curate four, re-master as a set — the cohesion pass</h1>
+<p>You have circled four tracks from the curation exercise. Now treat them as an EP, not as four singles.</p>
+<p>The cohesion pass is about <em>relative</em> loudness, tone, and space — not absolute numbers per track. Four tracks that each hit −14 LUFS on their own will still sound mismatched if one is compressed to death and one has 14 LU of dynamic range. Fix that before it ships.</p>
+<p>Protocol for the four-track pass.</p>
+<ol>
+<li>Bounce the un-mastered mix of each of the four tracks. Drop all four on adjacent Live tracks.</li>
+<li>Level-match all four to the same integrated LUFS with Utility (mast-05 protocol).</li>
+<li>Play them back-to-back, 30 seconds each, in the proposed EP order. Write down what is <em>missing</em> on each track relative to the others — not what is wrong in isolation.</li>
+<li>Common gaps: one track has less sub-energy, one has more top-end, one has a noticeably different stereo width. These are the translation targets for the re-master.</li>
+<li>Re-master each track individually with the same master chain (mast-04) but with the cohesion gaps in mind. If track 2 sounded thin next to track 3 in the cohesion pass, track 2&rsquo;s re-master adds low-shelf weight before the limiter, not after.</li>
+<li>Second A/B pass against all four re-masters. Write down whether the gaps closed.</li>
+</ol>
+<p>This week you are only shipping two tracks. The four-track cohesion exercise is for Year Two. But you run the cohesion pass now so the <em>two</em> you pick are the ones that survive it best. <Citation bib="rick_rubin_creative_act" /></p>
+<p>Voice is audible across the four. If it is not, pick different four.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide teaser" id="slide-bernd-01">
+  <h1>Slide bernd-01 · teaser</h1>
+  <h2>Bernd says — the classical mastering mind</h2>
+  
+  <div class="body"><h1>Bernd says — the classical mastering mind</h1>
+<p>Before the outro lands, a detour worth the minute.</p>
+<p>Bernd Gottinger runs the mastering side of SUNY Fredonia&rsquo;s Sound Recording Technology program. His day-job credits include engineering GRAMMY-nominated recordings of the Buffalo Philharmonic — Danielpour, Foss, Kodály. Orchestral sessions, not electronic music. <Citation bib="fredonia_grammy_announcement" /></p>
+<p>The reason to name him in a lesson about shipping two IDM tracks is not gear overlap. It is ethos overlap.</p>
+<p>An orchestra plays the piece once, twice, maybe three times if the budget allows. Nobody multitracks ninety musicians and fixes things in the edit. The mastering engineer&rsquo;s job is not to rescue a performance — it is to <em>hear the performance more carefully than anyone else in the room</em>. Bernd listens to a take and hears the oboe two rows back that sat slightly flat on bar 47. He hears the air-conditioning hum at 60 Hz that needs a notch. He hears the second-chair violinist&rsquo;s chair creak.</p>
+<p>That ethos — listen harder than anyone else, then translate — transfers directly to self-mastering your own tracks. You are both the performer and the listener. The performer is done. The listener has one job left. <Citation bib="fredonia_srt_program" /></p>
+<p>This is not a pitch for SRT the program. It is a pitch for the posture.</p></div>
+  <figure class="figure"><img src="assets/gottinger-mastering-studio.jpg" alt="Bernd Gottinger at the SUNY Fredonia mastering lab; GRAMMY-nominated Buffalo Philharmonic credits."><figcaption>Bernd Gottinger at the SUNY Fredonia mastering lab; GRAMMY-nominated Buffalo Philharmonic credits.<div class="credit">SUNY Fredonia press / fair-use editorial · fair-use editorial</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide teaser" id="slide-bernd-02">
+  <h1>Slide bernd-02 · teaser</h1>
+  <h2>Listen harder than anyone in the room</h2>
+  
+  <div class="body"><h1>Listen harder than anyone in the room — applied to your two tracks</h1>
+<p>The orchestral-mastering frame, translated to what you are doing this week.</p>
+<p>An orchestra recording is a single take with ninety instruments. Your track is a single bounce with forty tracks folded into two channels. The engineer&rsquo;s posture is the same.</p>
+<ul>
+<li><strong>The recording is done.</strong> You cannot re-track the oboe. You cannot re-record the snare. Whatever is in the mix is what the master translates. If you are still reaching for the mixer, you are not mastering — you are mixing.</li>
+<li><strong>Listen for what the performer cannot hear.</strong> The producer-self heard the track a thousand times while building it. The mastering-self has to hear it for the first time, as a stranger. That is why you walk away before mastering. That is why you use level-matched A/B — so you hear the track and not the memory of it.</li>
+<li><strong>Every decision is a translation.</strong> Bernd&rsquo;s EQ choices on a Buffalo Philharmonic record are <em>not</em> about making the orchestra louder. They are about translating the hall&rsquo;s acoustics into a domestic playback chain. Your limiter is doing the same job. The goal is not &ldquo;louder.&rdquo; The goal is <em>recognizable at the other end of the cable</em>.</li>
+<li><strong>Stop before you ruin it.</strong> Classical mastering budgets time per minute of music because over-EQ&rsquo;d classical records are audibly bad in a way over-compressed pop records mask. Three passes. Two plugins. Commit. <Citation bib="fredonia_grammy_announcement" /></li>
+</ul>
+<p>Apply this posture for the next 48 hours while you master your two tracks. Then upload. Then close the laptop.</p></div>
+  <figure class="figure"><img src="assets/buffalo-philharmonic-session.jpg" alt="Buffalo Philharmonic orchestral session — the one-shot mastering posture that translates to your two tracks."><figcaption>Buffalo Philharmonic orchestral session — the one-shot mastering posture that translates to your two tracks.<div class="credit">Buffalo Philharmonic / fair-use editorial · fair-use editorial</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide teaser" id="slide-s13">
+  <h1>Slide s13 · teaser</h1>
+  <h2>Final note — the Fredonia payoff, then quiet</h2>
+  
+  <div class="body"><h1>Final note — the Fredonia payoff, then quiet</h1>
+<p>Final note — we mentioned Fredonia&rsquo;s SRT program back in Week 5. Here is the payoff. Bernd Gottinger, the professor who runs the mastering lab, has engineered GRAMMY-nominated Buffalo Philharmonic recordings of Danielpour, Foss, and Kodály. An orchestra cannot be re-tracked. Mastering it means listening harder than anyone else in the room. The program graduates forty engineers every two years. Most of them ship. That is the whole thing. Ship. Go. <Citation bib="fredonia_grammy_announcement" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:brainworx_bx_xl_docs">Brainworx / Plugin Alliance — bx_XL V2 Mastering Limiter <a href="https://www.plugin-alliance.com/en/products/bx_xl_v2.html" target="_blank" rel="noopener">↗</a></li><li id="bib:charnas_dilla_time">Dan Charnas — Dilla Time: The Life and Afterlife of J Dilla, Hip-Hop&#x27;s Producer Extraordinaire — MCD / Farrar, Straus and Giroux 2022</li><li id="bib:edmprod_intermediate">EDMProd — Intermediate Producer Mistakes and Finishing Tracks — EDMProd <a href="https://www.edmprod.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:fabfilter_prol2_docs">FabFilter — Pro-L 2 Limiter Documentation <a href="https://www.fabfilter.com/products/pro-l-2-limiter-plug-in" target="_blank" rel="noopener">↗</a></li><li id="bib:fredonia_grammy_announcement">SUNY Fredonia&#x27;s Gottinger and alumnus among GRAMMY nominees — SUNY Fredonia <a href="https://www.fredonia.edu/news/articles/suny-fredonia%E2%80%99s-gottinger-and-alumnus-among-grammy-nominees" target="_blank" rel="noopener">↗</a></li><li id="bib:fredonia_srt_program">SUNY Fredonia — Sound Recording Technology Program <a href="https://www.fredonia.edu/academics/colleges-schools/school-music/program/sound-recording-technology" target="_blank" rel="noopener">↗</a></li><li id="bib:fridmann_davefridmann_com">Dave Fridmann — Dave Fridmann Archive <a href="https://www.davefridmann.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:izotope_ozone_maximizer_docs">iZotope — Ozone Maximizer <a href="https://www.izotope.com/en/products/ozone.html" target="_blank" rel="noopener">↗</a></li><li id="bib:jack_conte_ship_it">Jack Conte — Ship the track — creative production philosophy</li><li id="bib:rick_rubin_creative_act">Rick Rubin — The Creative Act: A Way of Being — Penguin Press 2023</li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 96450}, {"id": "ch001", "title": "Twelve weeks, maybe eight tracks, and a countdown", "start_ms": 96850, "end_ms": 188450}, {"id": "ch002", "title": "LUFS targets \u2014 \u221214 for streaming, louder for the club", "start_ms": 188850, "end_ms": 298100}, {"id": "ch003", "title": "The metering pair \u2014 Youlean and SPAN, both free", "start_ms": 298500, "end_ms": 411300}, {"id": "ch004", "title": "The A/B protocol \u2014 level-matched, three references", "start_ms": 411700, "end_ms": 528700}, {"id": "ch005", "title": "True peak ceiling \u2014 \u22121.0 dBTP, not zero", "start_ms": 529100, "end_ms": 645350}, {"id": "ch006", "title": "Headphones that translate \u2014 K371, HD600, monitor compare", "start_ms": 645750, "end_ms": 760150}, {"id": "ch007", "title": "Self-master or send it out \u2014 the Fridmann test", "start_ms": 760550, "end_ms": 872900}, {"id": "ch008", "title": "Delivery \u2014 Bandcamp first, distributor later", "start_ms": 873300, "end_ms": 998000}, {"id": "ch009", "title": "Metadata hygiene \u2014 ISRC, credits, artwork, file naming", "start_ms": 998400, "end_ms": 1139600}, {"id": "ch010", "title": "Voice is the consistency, not the uniqueness", "start_ms": 1140000, "end_ms": 1246050}, {"id": "ch011", "title": "Curate four from twelve \u2014 listen back before you re-master", "start_ms": 1246450, "end_ms": 1366300}, {"id": "ch012", "title": "Ship two tracks \u2014 Bandcamp private EP, one friend", "start_ms": 1366700, "end_ms": 1496899}, {"id": "ch013", "title": "Final note \u2014 the Fredonia payoff, then quiet", "start_ms": 1497299, "end_ms": 1592699}, {"id": "ch014", "title": "Outro", "start_ms": 1593099, "end_ms": 1614249}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

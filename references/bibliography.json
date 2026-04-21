@@ -1,0 +1,1041 @@
+{
+  "_meta": {
+    "version": "0.2.0",
+    "note": "Expanded by Wave 1.2 bibliography-expander agent. Mined from both specs in /specs/. Preserves Phase 1 stubs; adds 60+ new entries.",
+    "bucket_legend": {
+      "A": "scriptable download — tools/fetch_pdfs.sh handles",
+      "B": "manual purchase / Zak provides — cite-only or own-copy scan",
+      "C": "link-only — references/links.yaml, do not mirror"
+    }
+  },
+
+  "bib:tape_op_89": {
+    "kind": "magazine_interview",
+    "authors": ["Vijith Assar"],
+    "title": "Tom Jenkinson (Squarepusher)",
+    "publisher": "Tape Op",
+    "issue": 89, "year": 2012,
+    "month": "May",
+    "url": "https://tapeop.com/interviews/89/squarepusher/",
+    "bucket": "B",
+    "local_pdf": "references/pdfs/tape_op_89_squarepusher.pdf",
+    "quote_policy": "short_quotes_only",
+    "license_note": "PDF via Zak's personal back-issue scan."
+  },
+
+  "bib:sos_autechre_april_2004": {
+    "kind": "magazine_interview",
+    "authors": ["Sean Booth (interviewee)"],
+    "title": "Autechre — Recording Strategies",
+    "publisher": "Sound on Sound",
+    "month": "April", "year": 2004,
+    "url": "https://www.soundonsound.com/",
+    "bucket": "B",
+    "quote_policy": "short_quotes_only",
+    "license_note": "SOS subscriber download, Zak's account."
+  },
+
+  "bib:tape_notes_140_four_tet": {
+    "kind": "podcast_episode",
+    "title": "Kieran Hebden (Four Tet) — Three",
+    "show": "Tape Notes",
+    "episode": 140, "year": 2024,
+    "url": "https://tapenotes.cc/",
+    "bucket": "B",
+    "local_transcript": "references/transcripts/tape_notes_140.md",
+    "quote_policy": "short_quotes_only",
+    "license_note": "MP3 purchased; transcript whisper-generated, audio not mirrored."
+  },
+
+  "bib:charnas_dilla_time": {
+    "kind": "book",
+    "authors": ["Dan Charnas"],
+    "title": "Dilla Time: The Life and Afterlife of J Dilla, Hip-Hop's Producer Extraordinaire",
+    "publisher": "MCD / Farrar, Straus and Giroux",
+    "year": 2022,
+    "isbn": "9780374246128",
+    "bucket": "B",
+    "quote_policy": "short_quotes_only_cite_page"
+  },
+
+  "bib:roads_computer_music_tutorial": {
+    "kind": "book",
+    "authors": ["Curtis Roads"],
+    "title": "The Computer Music Tutorial",
+    "publisher": "MIT Press",
+    "year": 1996,
+    "isbn": "9780262680424",
+    "bucket": "B",
+    "quote_policy": "short_quotes_only_cite_page"
+  },
+
+  "bib:oblique_strategies_eno": {
+    "kind": "card_deck",
+    "authors": ["Brian Eno", "Peter Schmidt"],
+    "title": "Oblique Strategies",
+    "first_printing": 1975,
+    "bucket": "A",
+    "url": "https://stoney.sb.org/eno/oblique.html",
+    "quote_policy": "public_domain_text_compilations"
+  },
+
+  "bib:ableton_live_12_manual": {
+    "kind": "software_manual",
+    "authors": ["Ableton AG"],
+    "title": "Ableton Live 12 Reference Manual",
+    "publisher": "Ableton AG",
+    "year": 2026,
+    "url": "https://www.ableton.com/en/manual/welcome-to-live/",
+    "bucket": "A",
+    "local_pdf": "references/pdfs/ableton_live_12_manual.pdf"
+  },
+
+  "bib:soundtoys_decapitator_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "Decapitator User Guide",
+    "publisher": "SoundToys",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:henke_granulator_iii": {
+    "kind": "software_doc",
+    "authors": ["Robert Henke"],
+    "title": "Granulator III",
+    "url": "https://roberthenke.com/technology/granulator.html",
+    "bucket": "A"
+  },
+
+  "bib:song_exploder_porter_robinson": {
+    "kind": "podcast_episode",
+    "title": "Porter Robinson — Get Your Wish",
+    "show": "Song Exploder",
+    "url": "https://songexploder.net/porter-robinson",
+    "bucket": "C"
+  },
+
+  "bib:aphex_pitchfork_microtuning": {
+    "kind": "article",
+    "title": "Aphex Twin on microtuning and the Monologue",
+    "publisher": "Pitchfork",
+    "year": 2017,
+    "url": "https://pitchfork.com/",
+    "bucket": "C"
+  },
+
+  "bib:korg_monologue_afx_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Korg Inc."],
+    "title": "Monologue (Aphex Twin Edition) — Microtuning Guide",
+    "year": 2017,
+    "url": "https://www.korg.com/us/support/download/product/1/562/",
+    "bucket": "A"
+  },
+
+  "bib:fridmann_davefridmann_com": {
+    "kind": "artist_site",
+    "authors": ["Dave Fridmann"],
+    "title": "Dave Fridmann Archive",
+    "url": "https://www.davefridmann.com/",
+    "bucket": "C"
+  },
+
+  "bib:tarbox_road_equipment": {
+    "kind": "studio_site",
+    "title": "Tarbox Road Studios — Equipment",
+    "url": "http://www.tarboxroadstudios.com/equipment.html",
+    "bucket": "C"
+  },
+
+  "bib:fredonia_srt_program": {
+    "kind": "institution_page",
+    "title": "SUNY Fredonia — Sound Recording Technology Program",
+    "url": "https://www.fredonia.edu/academics/colleges-schools/school-music/program/sound-recording-technology",
+    "bucket": "C"
+  },
+
+  "bib:fredonia_grammy_announcement": {
+    "kind": "press_release",
+    "title": "SUNY Fredonia's Gottinger and alumnus among GRAMMY nominees",
+    "publisher": "SUNY Fredonia",
+    "url": "https://www.fredonia.edu/news/articles/suny-fredonia%E2%80%99s-gottinger-and-alumnus-among-grammy-nominees",
+    "bucket": "C"
+  },
+
+  "bib:happymag_mgmt_oracular_engineering": {
+    "kind": "article",
+    "title": "Engineering the Sound: Oracular Spectacular by MGMT",
+    "publisher": "Happy Mag",
+    "url": "https://happymag.tv/engineering-the-sound-oracular-spectacular-by-mgmt/",
+    "bucket": "C"
+  },
+
+  "bib:audiotechnology_lonerism_feature": {
+    "kind": "article",
+    "title": "Lonerism — Tame Impala in the Studio",
+    "publisher": "AudioTechnology",
+    "url": "https://www.audiotechnology.com/features/lonerism-tame-impala-in-the-studio",
+    "bucket": "C"
+  },
+
+  "bib:zaireeka_wikipedia": {
+    "kind": "reference_article",
+    "title": "Zaireeka",
+    "publisher": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Zaireeka",
+    "bucket": "C"
+  },
+
+  "bib:stemforge_repo": {
+    "kind": "software_repo",
+    "authors": ["Zak"],
+    "title": "stemforge — stem separation + curation + M4L loader",
+    "location": "/Users/zak/zacharysbrown/stemforge",
+    "bucket": "A"
+  },
+
+  "bib:reverbmachine_rdj_gear": {
+    "kind": "blog_post",
+    "title": "Aphex Twin gear reconstruction",
+    "publisher": "Reverb Machine",
+    "url": "https://reverbmachine.com/",
+    "bucket": "C"
+  },
+
+  "bib:watmm_forum_general": {
+    "kind": "forum",
+    "title": "We Are The Music Makers (WATMM) — Autechre threads",
+    "url": "https://forum.watmm.com/",
+    "bucket": "C"
+  },
+
+  "bib:rbma_rza_lecture": {
+    "kind": "lecture",
+    "title": "RZA — Red Bull Music Academy lecture",
+    "publisher": "RBMA (archived via web.archive.org)",
+    "url": "https://web.archive.org/web/*/rbma.com/lectures/rza/",
+    "bucket": "C"
+  },
+
+  "bib:discogs_syro": {
+    "kind": "database",
+    "title": "Aphex Twin — Syro credits",
+    "publisher": "Discogs",
+    "url": "https://www.discogs.com/",
+    "bucket": "C"
+  },
+
+  "bib:future_music_aphex_1993": {
+    "kind": "magazine_interview",
+    "authors": ["Future Music staff"],
+    "title": "Aphex Twin — London Studio Tour",
+    "publisher": "Future Music",
+    "year": 1993,
+    "bucket": "B",
+    "quote_policy": "short_quotes_only",
+    "license_note": "Back-issue scan; Zak-supplied."
+  },
+
+  "bib:aphex_syrobonkers_interview": {
+    "kind": "article",
+    "title": "Aphex Twin — Syrobonkers Interview",
+    "publisher": "Noyzelab / Dave Noyze",
+    "year": 2014,
+    "url": "https://noyzelab.blogspot.com/2014/10/syrobonkers-interview-with-aphex-twin.html",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:aphex_bleep_qa_2017": {
+    "kind": "article",
+    "title": "Aphex Twin Q&A on Bleep",
+    "publisher": "Bleep",
+    "year": 2017, "month": "July",
+    "url": "https://bleep.com/",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:aphex_soundcloud_user18081971": {
+    "kind": "artist_site",
+    "authors": ["Richard D. James"],
+    "title": "user18081971 — Aphex Twin SoundCloud dumps",
+    "year": 2015,
+    "url": "https://soundcloud.com/user18081971",
+    "bucket": "C",
+    "license_note": "Primary source; metadata and hashtags used as citation only."
+  },
+
+  "bib:aphex_vimeo_vordhosbn": {
+    "kind": "youtube_video",
+    "authors": ["Richard D. James"],
+    "title": "Vordhosbn (beatless PlayerPro render)",
+    "publisher": "Vimeo",
+    "url": "https://vimeo.com/",
+    "bucket": "C"
+  },
+
+  "bib:aphex_pitchfork_2014": {
+    "kind": "magazine_interview",
+    "title": "Aphex Twin — Syro-era Pitchfork interview",
+    "publisher": "Pitchfork",
+    "year": 2014,
+    "url": "https://pitchfork.com/features/interview/",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:playerpro_tracker": {
+    "kind": "software_doc",
+    "title": "PlayerPro — Mac Classic Tracker",
+    "url": "https://playerpro.sourceforge.net/",
+    "bucket": "A"
+  },
+
+  "bib:metasynth_uisoftware": {
+    "kind": "software_doc",
+    "authors": ["U&I Software"],
+    "title": "MetaSynth — ImageSynth documentation",
+    "url": "https://uisoftware.com/MetaSynth/",
+    "bucket": "A"
+  },
+
+  "bib:supercollider_docs": {
+    "kind": "software_doc",
+    "title": "SuperCollider Documentation",
+    "url": "https://supercollider.github.io/",
+    "bucket": "A"
+  },
+
+  "bib:samplebrain_aphex": {
+    "kind": "software_repo",
+    "authors": ["Dave Griffiths", "Richard D. James (commissioner)"],
+    "title": "Samplebrain — concatenative sampler",
+    "url": "https://gitlab.com/then-try-this/samplebrain",
+    "bucket": "A"
+  },
+
+  "bib:sequentix_cirklon_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Sequentix"],
+    "title": "Cirklon Hardware Sequencer — User Manual",
+    "publisher": "Sequentix",
+    "url": "https://www.sequentix.com/cirklon/",
+    "bucket": "A"
+  },
+
+  "bib:korg_ms20_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Korg Inc."],
+    "title": "MS-20 Owner's Manual",
+    "url": "https://www.korg.com/us/support/download/",
+    "bucket": "A"
+  },
+
+  "bib:novation_bass_station_ii_afx": {
+    "kind": "hardware_manual",
+    "authors": ["Novation"],
+    "title": "Bass Station II — AFX Mode Guide",
+    "url": "https://downloads.novationmusic.com/novation/bass-station-ii",
+    "bucket": "A"
+  },
+
+  "bib:autechre_watmm_ama_2013": {
+    "kind": "forum",
+    "authors": ["Sean Booth", "Rob Brown"],
+    "title": "Autechre WATMM AMA (2013)",
+    "publisher": "We Are The Music Makers",
+    "year": 2013,
+    "url": "https://forum.watmm.com/",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:autechre_ra_2016": {
+    "kind": "magazine_interview",
+    "title": "Autechre — Resident Advisor feature",
+    "publisher": "Resident Advisor",
+    "year": 2016,
+    "url": "https://ra.co/features",
+    "bucket": "C"
+  },
+
+  "bib:autechre_pitchfork_nts_2018": {
+    "kind": "magazine_interview",
+    "title": "Autechre — NTS Sessions interview",
+    "publisher": "Pitchfork",
+    "year": 2018,
+    "url": "https://pitchfork.com/",
+    "bucket": "C"
+  },
+
+  "bib:nts_autechre_sessions": {
+    "kind": "archival",
+    "authors": ["Autechre"],
+    "title": "NTS Sessions 1–4 (8 hours)",
+    "publisher": "NTS Radio / Warp",
+    "year": 2018,
+    "url": "https://www.nts.live/shows/autechre",
+    "bucket": "C"
+  },
+
+  "bib:cycling74_max_msp_docs": {
+    "kind": "software_doc",
+    "authors": ["Cycling '74"],
+    "title": "Max/MSP + gen~ Documentation",
+    "url": "https://docs.cycling74.com/",
+    "bucket": "A"
+  },
+
+  "bib:motu_digital_performer_manual": {
+    "kind": "software_manual",
+    "authors": ["MOTU"],
+    "title": "Digital Performer User Guide",
+    "url": "https://motu.com/products/software/dp",
+    "bucket": "A"
+  },
+
+  "bib:elektron_machinedrum_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Elektron"],
+    "title": "Machinedrum SPS-1UW MKII User Manual",
+    "url": "https://www.elektron.se/support/",
+    "bucket": "A"
+  },
+
+  "bib:elektronauts_autechre_threads": {
+    "kind": "forum",
+    "title": "Elektronauts — Autechre and IDM threads",
+    "url": "https://www.elektronauts.com/",
+    "bucket": "C"
+  },
+
+  "bib:kvr_autechre_analysis": {
+    "kind": "forum",
+    "title": "KVR Audio — Autechre drum/FM synthesis analysis threads",
+    "url": "https://www.kvraudio.com/forum/",
+    "bucket": "C"
+  },
+
+  "bib:four_tet_rounds_interviews": {
+    "kind": "article",
+    "authors": ["Kieran Hebden (interviewee)"],
+    "title": "Four Tet on Rounds — Production Breakdown (composite sources)",
+    "year": 2003,
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:four_tet_unspoken_piano_train": {
+    "kind": "article",
+    "title": "Kieran Hebden on 'Unspoken' arrangement (Rounds)",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:prefuse_73_xlr8r": {
+    "kind": "magazine_interview",
+    "authors": ["Scott Herren (interviewee)"],
+    "title": "Prefuse 73 — MPC Philosophy",
+    "publisher": "XLR8R",
+    "url": "https://xlr8r.com/",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:akai_mpc3000_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Akai"],
+    "title": "MPC3000 Operator's Manual",
+    "url": "https://www.akaipro.com/",
+    "bucket": "A"
+  },
+
+  "bib:akai_mpc2000xl_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Akai"],
+    "title": "MPC2000XL Operator's Manual",
+    "url": "https://www.akaipro.com/",
+    "bucket": "A"
+  },
+
+  "bib:smithsonian_dilla_mpc3000": {
+    "kind": "archival",
+    "title": "J Dilla MPC3000 — National Museum of African American History and Culture",
+    "publisher": "Smithsonian Institution",
+    "url": "https://nmaahc.si.edu/",
+    "bucket": "C"
+  },
+
+  "bib:questlove_dilla_quote": {
+    "kind": "article",
+    "authors": ["Questlove"],
+    "title": "Questlove on J Dilla's Sloppy Precision",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:dj_shadow_entroducing_interview": {
+    "kind": "article",
+    "authors": ["DJ Shadow (interviewee)"],
+    "title": "DJ Shadow — Making Entroducing on the MPC60 II",
+    "year": 1996,
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:rbma_just_blaze_lecture": {
+    "kind": "lecture",
+    "authors": ["Just Blaze"],
+    "title": "Just Blaze — Red Bull Music Academy lecture (chipmunk soul origins)",
+    "publisher": "RBMA",
+    "url": "https://web.archive.org/web/*/rbma.com/lectures/just-blaze/",
+    "bucket": "C"
+  },
+
+  "bib:madlib_dave_cooley_interview": {
+    "kind": "article",
+    "authors": ["Dave Cooley (interviewee)"],
+    "title": "Mixing Madlib — Dave Cooley on Rough-Hewn Choices",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:premier_ten_crack_scratches": {
+    "kind": "article",
+    "authors": ["DJ Premier (interviewee)"],
+    "title": "DJ Premier on 'Ten Crack Commandments' scratch sampling",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:death_grips_equipboard": {
+    "kind": "reference_article",
+    "title": "Death Grips (Zach Hill, Andy Morin) — gear list",
+    "publisher": "Equipboard",
+    "url": "https://equipboard.com/pros/death-grips",
+    "bucket": "C"
+  },
+
+  "bib:whosampled_db": {
+    "kind": "database",
+    "title": "WhoSampled — sample source database",
+    "url": "https://www.whosampled.com/",
+    "bucket": "C"
+  },
+
+  "bib:reaktor_core_docs": {
+    "kind": "software_doc",
+    "authors": ["Native Instruments"],
+    "title": "Reaktor Core — Reference Documentation",
+    "url": "https://www.native-instruments.com/en/products/komplete/synths/reaktor-6/",
+    "bucket": "A"
+  },
+
+  "bib:eventide_dsp4000_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Eventide"],
+    "title": "DSP4000 Ultra-Harmonizer — Operating Manual",
+    "url": "https://www.eventideaudio.com/support/",
+    "bucket": "A"
+  },
+
+  "bib:eventide_orville_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Eventide"],
+    "title": "Orville — Operating Manual",
+    "url": "https://www.eventideaudio.com/support/",
+    "bucket": "A"
+  },
+
+  "bib:eventide_vsig_docs": {
+    "kind": "software_doc",
+    "authors": ["Eventide"],
+    "title": "VSIG — Modular Patch Editor Documentation",
+    "url": "https://www.eventideaudio.com/",
+    "bucket": "C"
+  },
+
+  "bib:yamaha_qy700_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Yamaha"],
+    "title": "QY700 Music Sequencer — Owner's Manual",
+    "url": "https://usa.yamaha.com/support/",
+    "bucket": "A"
+  },
+
+  "bib:k_devices_oog_docs": {
+    "kind": "software_doc",
+    "authors": ["K-Devices"],
+    "title": "K-Devices OOG Series — ESQ, HEXO, TATAT, TTAP, MOOR, Twistor, AutoTrig, TED FX",
+    "url": "https://k-devices.com/",
+    "bucket": "A"
+  },
+
+  "bib:dillon_bastan_devices": {
+    "kind": "software_doc",
+    "authors": ["Dillon Bastan"],
+    "title": "Dillon Bastan Max for Live Devices — Nirvana, Coalescence, Strange Mod, data.mod, Tree Tone, Entanglement, Markov Variations",
+    "url": "https://dillonbastan.com/",
+    "bucket": "A"
+  },
+
+  "bib:max_for_cats_bengal": {
+    "kind": "software_doc",
+    "authors": ["Max for Cats"],
+    "title": "Bengal (6-op FM), SQ8L, DROID — Max for Live instruments",
+    "url": "https://maxforcats.com/",
+    "bucket": "A"
+  },
+
+  "bib:iftah_sting_2": {
+    "kind": "software_doc",
+    "authors": ["Iftah"],
+    "title": "Sting 2 — acid bassline generator",
+    "url": "https://iftahmusic.com/",
+    "bucket": "A"
+  },
+
+  "bib:akihiko_matsumoto_mode": {
+    "kind": "software_doc",
+    "authors": ["Akihiko Matsumoto"],
+    "title": "MODE 5.0 — Modal Harmony Max for Live",
+    "url": "https://akihikomatsumoto.com/",
+    "bucket": "A"
+  },
+
+  "bib:soundtoys_echoboy_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "EchoBoy User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_crystallizer_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "Crystallizer User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_devil_loc_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "Devil-Loc Deluxe User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_little_alterboy_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "Little AlterBoy User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_microshift_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "MicroShift User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_phasemistress_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "PhaseMistress User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_tremolator_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "Tremolator User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_filterfreak_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "FilterFreak User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_radiator_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "Radiator User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:soundtoys_little_plate_manual": {
+    "kind": "software_manual",
+    "authors": ["SoundToys Inc."],
+    "title": "Little Plate User Guide",
+    "url": "https://www.soundtoys.com/support/",
+    "bucket": "C"
+  },
+
+  "bib:izotope_rx_docs": {
+    "kind": "software_doc",
+    "authors": ["iZotope"],
+    "title": "RX — Spectral Repair and Spectrogram Editing",
+    "url": "https://www.izotope.com/en/products/rx.html",
+    "bucket": "A"
+  },
+
+  "bib:izotope_ozone_maximizer_docs": {
+    "kind": "software_doc",
+    "authors": ["iZotope"],
+    "title": "Ozone Maximizer",
+    "url": "https://www.izotope.com/en/products/ozone.html",
+    "bucket": "A"
+  },
+
+  "bib:fabfilter_prol2_docs": {
+    "kind": "software_doc",
+    "authors": ["FabFilter"],
+    "title": "Pro-L 2 Limiter Documentation",
+    "url": "https://www.fabfilter.com/products/pro-l-2-limiter-plug-in",
+    "bucket": "A"
+  },
+
+  "bib:brainworx_bx_xl_docs": {
+    "kind": "software_doc",
+    "authors": ["Brainworx / Plugin Alliance"],
+    "title": "bx_XL V2 Mastering Limiter",
+    "url": "https://www.plugin-alliance.com/en/products/bx_xl_v2.html",
+    "bucket": "A"
+  },
+
+  "bib:paulxstretch_docs": {
+    "kind": "software_repo",
+    "authors": ["Xenakios"],
+    "title": "PaulXStretch — Extreme Time-stretch",
+    "url": "https://github.com/essej/paulxstretch",
+    "bucket": "A"
+  },
+
+  "bib:photosounder_docs": {
+    "kind": "software_doc",
+    "authors": ["Michel Rouzic"],
+    "title": "Photosounder — Image-to-Sound Synthesis",
+    "url": "https://photosounder.com/",
+    "bucket": "A"
+  },
+
+  "bib:spectrasonics_omnisphere_docs": {
+    "kind": "software_doc",
+    "authors": ["Spectrasonics"],
+    "title": "Omnisphere 2 Reference Guide",
+    "url": "https://www.spectrasonics.net/products/omnisphere/",
+    "bucket": "A"
+  },
+
+  "bib:ni_kontakt_docs": {
+    "kind": "software_doc",
+    "authors": ["Native Instruments"],
+    "title": "Kontakt Reference Manual",
+    "url": "https://www.native-instruments.com/en/products/komplete/samplers/kontakt-7/",
+    "bucket": "A"
+  },
+
+  "bib:ni_noire_docs": {
+    "kind": "software_doc",
+    "authors": ["Native Instruments"],
+    "title": "Noire — Felted Piano Instrument",
+    "url": "https://www.native-instruments.com/en/products/komplete/keys/noire/",
+    "bucket": "A"
+  },
+
+  "bib:attack_magazine_drum_layering": {
+    "kind": "blog_post",
+    "title": "Drum Layering Techniques",
+    "publisher": "Attack Magazine",
+    "url": "https://www.attackmagazine.com/",
+    "bucket": "C"
+  },
+
+  "bib:gearspace_idm_threads": {
+    "kind": "forum",
+    "title": "Gearspace (Gearslutz) — IDM production threads",
+    "url": "https://gearspace.com/",
+    "bucket": "C"
+  },
+
+  "bib:finish_more_music_variation": {
+    "kind": "blog_post",
+    "title": "Finish More Music — Variation Generation / Spawn from the Same Seed",
+    "publisher": "Finish More Music",
+    "url": "https://finishmoremusic.com/",
+    "bucket": "C"
+  },
+
+  "bib:mr_bill_resample_tutorial": {
+    "kind": "youtube_video",
+    "authors": ["Mr. Bill"],
+    "title": "Resample-and-Mutate workflow tutorials",
+    "publisher": "YouTube",
+    "url": "https://www.youtube.com/@MrBill",
+    "bucket": "A"
+  },
+
+  "bib:andrew_huang_sonic_boom": {
+    "kind": "youtube_video",
+    "authors": ["Andrew Huang"],
+    "title": "Sonic Boom — 24-hour track challenges",
+    "publisher": "YouTube",
+    "url": "https://www.youtube.com/@andrewhuang",
+    "bucket": "A"
+  },
+
+  "bib:andrew_huang_4_producers_1_sample": {
+    "kind": "youtube_video",
+    "authors": ["Andrew Huang"],
+    "title": "4 Producers 1 Sample series",
+    "publisher": "YouTube",
+    "url": "https://www.youtube.com/@andrewhuang",
+    "bucket": "A"
+  },
+
+  "bib:eno_the_mix_1994": {
+    "kind": "magazine_interview",
+    "authors": ["Brian Eno (interviewee)"],
+    "title": "Brian Eno on constraint and creativity",
+    "publisher": "The Mix",
+    "year": 1994,
+    "bucket": "B",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:getty_eno_papers": {
+    "kind": "archival",
+    "title": "Brian Eno Papers",
+    "publisher": "Getty Research Institute",
+    "url": "https://www.getty.edu/research/",
+    "bucket": "C"
+  },
+
+  "bib:rick_rubin_creative_act": {
+    "kind": "book",
+    "authors": ["Rick Rubin"],
+    "title": "The Creative Act: A Way of Being",
+    "publisher": "Penguin Press",
+    "year": 2023,
+    "isbn": "9780593652886",
+    "bucket": "B",
+    "quote_policy": "short_quotes_only_cite_page"
+  },
+
+  "bib:berklee_online_ompd_382": {
+    "kind": "institution_page",
+    "title": "Berklee Online OMPRD-382 — Critical Listening",
+    "publisher": "Berklee Online",
+    "url": "https://online.berklee.edu/",
+    "bucket": "C"
+  },
+
+  "bib:point_blank_curriculum": {
+    "kind": "institution_page",
+    "title": "Point Blank Music School — Production Curriculum",
+    "url": "https://www.pointblankmusicschool.com/",
+    "bucket": "C"
+  },
+
+  "bib:edmprod_intermediate": {
+    "kind": "blog_post",
+    "title": "EDMProd — Intermediate Producer Mistakes and Finishing Tracks",
+    "publisher": "EDMProd",
+    "url": "https://www.edmprod.com/",
+    "bucket": "C"
+  },
+
+  "bib:ali_jamieson_polyrhythm": {
+    "kind": "blog_post",
+    "authors": ["Ali Jamieson"],
+    "title": "Polyrhythms in Ableton Live — method",
+    "bucket": "C"
+  },
+
+  "bib:burial_soundforge_quote": {
+    "kind": "article",
+    "authors": ["Burial (interviewee)"],
+    "title": "Burial on Sound Forge and bedroom production",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:dblue_tapestop": {
+    "kind": "software_repo",
+    "authors": ["dblue"],
+    "title": "dblue TapeStop — free VST",
+    "url": "https://illformed.com/",
+    "bucket": "A"
+  },
+
+  "bib:shaperbox_3": {
+    "kind": "software_doc",
+    "authors": ["Cableguys"],
+    "title": "ShaperBox 3",
+    "url": "https://www.cableguys.com/shaperbox.html",
+    "bucket": "A"
+  },
+
+  "bib:xln_rc20": {
+    "kind": "software_doc",
+    "authors": ["XLN Audio"],
+    "title": "RC-20 Retro Color",
+    "url": "https://www.xlnaudio.com/products/addictive_fx/rc20",
+    "bucket": "A"
+  },
+
+  "bib:tal_bitcrusher": {
+    "kind": "software_repo",
+    "authors": ["TAL Software"],
+    "title": "TAL-Bitcrusher",
+    "url": "https://tal-software.com/products/tal-bitcrusher",
+    "bucket": "A"
+  },
+
+  "bib:decimort_2": {
+    "kind": "software_doc",
+    "authors": ["D16 Group"],
+    "title": "Decimort 2 — Bit/SR Reducer",
+    "url": "https://d16.pl/decimort-2",
+    "bucket": "A"
+  },
+
+  "bib:discogs_entroducing": {
+    "kind": "database",
+    "title": "DJ Shadow — Endtroducing..... credits",
+    "publisher": "Discogs",
+    "url": "https://www.discogs.com/",
+    "bucket": "C"
+  },
+
+  "bib:wikipedia_amen_break": {
+    "kind": "reference_article",
+    "title": "Amen break",
+    "publisher": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Amen_break",
+    "bucket": "A"
+  },
+
+  "bib:wikipedia_playerpro": {
+    "kind": "reference_article",
+    "title": "PlayerPro",
+    "publisher": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/PlayerPro",
+    "bucket": "A"
+  },
+
+  "bib:wikipedia_disklavier": {
+    "kind": "reference_article",
+    "title": "Yamaha Disklavier",
+    "publisher": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Disklavier",
+    "bucket": "A"
+  },
+
+  "bib:roland_sp303_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Roland/Boss"],
+    "title": "SP-303 Dr. Sample — Owner's Manual",
+    "url": "https://www.roland.com/global/support/",
+    "bucket": "A"
+  },
+
+  "bib:ensoniq_asr10_manual": {
+    "kind": "hardware_manual",
+    "authors": ["Ensoniq"],
+    "title": "ASR-10 Musician's Manual",
+    "url": "https://archive.org/details/ensoniq-asr-10-manual",
+    "bucket": "A"
+  },
+
+  "bib:sonic_foundry_vegas_docs": {
+    "kind": "software_doc",
+    "authors": ["Sonic Foundry / Magix"],
+    "title": "Sonic Foundry Vegas (legacy) — Documentation",
+    "url": "https://www.magix.com/us/video-editor/vegas-pro/",
+    "bucket": "C"
+  },
+
+  "bib:audiomulch_docs": {
+    "kind": "software_doc",
+    "authors": ["Ross Bencina"],
+    "title": "AudioMulch Documentation",
+    "url": "http://www.audiomulch.com/",
+    "bucket": "A"
+  },
+
+  "bib:cool_edit_pro_legacy": {
+    "kind": "software_doc",
+    "title": "Cool Edit Pro (Syntrillium / Adobe Audition lineage)",
+    "url": "https://en.wikipedia.org/wiki/Cool_Edit_Pro",
+    "bucket": "A"
+  },
+
+  "bib:pitchfork_dj_dahi_money_trees": {
+    "kind": "magazine_interview",
+    "title": "DJ Dahi on 'Money Trees' — reversing Beach House",
+    "publisher": "Pitchfork",
+    "url": "https://pitchfork.com/",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:jack_conte_ship_it": {
+    "kind": "article",
+    "authors": ["Jack Conte"],
+    "title": "Ship the track — creative production philosophy",
+    "bucket": "C",
+    "quote_policy": "short_quotes_only"
+  },
+
+  "bib:ableton_push_3_docs": {
+    "kind": "software_doc",
+    "authors": ["Ableton AG"],
+    "title": "Push 3 Manual — Rhythm Generator Drum Rack layout",
+    "url": "https://www.ableton.com/en/manual/push-3-introduction/",
+    "bucket": "A"
+  },
+
+  "bib:ableton_cv_tools": {
+    "kind": "software_doc",
+    "authors": ["Ableton AG"],
+    "title": "CV Tools Pack — Max for Live Documentation",
+    "url": "https://www.ableton.com/en/packs/cv-tools/",
+    "bucket": "A"
+  },
+
+  "bib:surreal_machines_magnetic": {
+    "kind": "software_doc",
+    "authors": ["Surreal Machines"],
+    "title": "Magnetic / Diffuse — tape + reverb Max for Live",
+    "url": "https://surrealmachines.com/",
+    "bucket": "A"
+  },
+
+  "bib:alkman_euclidean_pro": {
+    "kind": "software_doc",
+    "authors": ["alkman"],
+    "title": "Euclidean Sequencer Pro — Max for Live",
+    "bucket": "A"
+  },
+
+  "bib:polyrhythmus_m4l": {
+    "kind": "software_repo",
+    "title": "POLYRHYTHMUS — free polyrhythm engine for Max for Live",
+    "bucket": "A"
+  }
+}

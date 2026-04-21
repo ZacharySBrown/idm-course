@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W1 — Week 1 — Listen like an engineer, subtract like a producer</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W1</span>
+  <span class="title-chip">Week 1 — Listen like an engineer, subtract like a producer</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>The course begins with silence</h2>
+  
+  <div class="body"><h1>The course begins with silence</h1>
+<p>Specifically — the silence after you mute the drums on <em>Benjamins</em> and realize the bass was doing most of the work.</p>
+<p>This is not a production course. Not yet. This is a listening course that happens to use Ableton.</p>
+<p>Twelve weeks from now you will have shipped twelve tracks. Week 1 is the door. You do not open synths. You do not touch Roar. You load a reference track, pull a stem, and write down what is actually happening in the mix.</p>
+<p>The rest of the course is built on the assumption that you can do that.</p>
+<p><Citation bib="stemforge_repo" /> — <code>benjamins.wav</code> split into four stems via <code>w01-benjamins-stems</code>, pipeline <code>default --no-slice</code>.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>Listen like an engineer — the critical-listening protocol</h2>
+  
+  <div class="body"><h1>Listen like an engineer</h1>
+<p>The protocol is not romantic. Berklee Online OMPRD-382 teaches it in one paragraph, and every intermediate-producer curriculum repeats it: <strong>load reference and WIP on adjacent tracks, level-matched via LUFS meter, listen in 30-second chunks, switch.</strong></p>
+<p>Notes, five axes:</p>
+<ul>
+<li>Low-end energy — sub doing work, or implied by kick body?</li>
+<li>Stereo width — mono at 80 Hz, wider by 400 Hz, collapsing at the vocal</li>
+<li>Vocal/lead clarity — where it sits against everything else</li>
+<li>Transient sharpness — click vs thump</li>
+<li>Reverb depth — dry, 15 ms slap, or 2-second plate</li>
+</ul>
+<p>Notes get written on <em>paper</em>. The screen is the enemy this week. <Citation bib="sos_autechre_april_2004" /> — Booth: <em>&ldquo;the screen has to go off. It&rsquo;s an illusion that totally pollutes what you&rsquo;re thinking and what you&rsquo;re listening to.&rdquo;</em></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s03">
+  <h1>Slide s03 · caveat</h1>
+  <h2>What you listen on matters, and less than you think</h2>
+  
+  <div class="body"><h1>What you listen on matters, and less than you think</h1>
+<p>The rig sidebar, because it comes up every week:</p>
+<ul>
+<li><strong>Yamaha HS5</strong> (2014) — the dull, honest near-field. Translates to laptop speakers because it is almost a laptop speaker with a tweeter.</li>
+<li><strong>Neumann KH80 DSP</strong> (2016) — better near-field, room correction, if you have the room to justify it.</li>
+<li><strong>AKG K371</strong> (2019) — closed-back, Harman-curve-ish, the cheap tracking headphone most charts agree on.</li>
+<li><strong>Sennheiser HD600</strong> (1997) — open-back, mid-forward, still the reference your mastering engineer has in the hallway.</li>
+</ul>
+<p>Pick one pair of speakers and one pair of headphones. A/B between them every session. The goal is not <em>flat</em> — it is <em>known</em>. You cannot mix against a surface whose lies you have not memorized.</p>
+<p>This is why monitor arguments online are unwinnable. <Citation bib="ableton_live_12_manual" /> — Live&rsquo;s Reference track control assumes you already solved it.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s04">
+  <h1>Slide s04 · reference</h1>
+  <h2>Benjamins — your reference track for the next twelve weeks</h2>
+  
+  <div class="body"><h1>Benjamins — your reference for twelve weeks</h1>
+<p><code>benjamins.wav</code> lives in the stemforge root. This week stemforge has already split it into four stems via the <code>default --no-slice</code> pipeline. <Citation bib="stemforge_repo" /></p>
+<p>You will revisit this file in W4 (warp modes, because the bass line warps interestingly under Complex Pro), in W8 (as a source for feedback-loop resampling), and in W12 (as the benchmark against which your own final two tracks get A/B&rsquo;d).</p>
+<p>The stems, in order of how useful they are to Week 1:</p>
+<ul>
+<li><code>benjamins_drums.wav</code> — the rhythm grid, isolated. This is what you mute first.</li>
+<li><code>benjamins_bass.wav</code> — the harmonic skeleton. Solo it and you will hear the song structure.</li>
+<li><code>benjamins_vocals.wav</code> — the attentional anchor.</li>
+<li><code>benjamins_other.wav</code> — everything melodic and textural the separator could not classify.</li>
+</ul>
+<p>Load all four on adjacent audio tracks in Ableton. Leave them there for the week.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Full mix vs drums-muted</div><div class="controls"><button data-src="stemforge/benjamins_drums.wav" class="active">A — dry</button><button data-src="stemforge/benjamins_bass.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/benjamins_drums.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>Drop one stem — the single most useful ear exercise</h2>
+  
+  <div class="body"><h1>Drop one stem</h1>
+<p>The exercise is older than the course. Put a song in your DAW. Mute one part. Listen to what remains. Mute a different part. Listen again.</p>
+<p>Order of operations on Benjamins:</p>
+<ol>
+<li>Play the full mix for 15 seconds. Note the hook.</li>
+<li>Mute <code>benjamins_drums.wav</code>. Play again. Where does the <em>time</em> go? Most students realize the bass was holding the tempo.</li>
+<li>Un-mute drums, mute <code>benjamins_bass.wav</code>. The harmonic skeleton disappears; what is left is a rhythmic shell.</li>
+<li>Mute everything except <code>benjamins_other.wav</code>. This is where the identity of the track was hiding — the texture was doing more work than the arrangement hierarchy suggested.</li>
+</ol>
+<p>Write a single sentence per stem. Not an essay. One sentence. <Citation bib="stemforge_repo" /></p>
+<p>The trained ear is the one that can hear the absent part. Separators make that trainable without an analog console. <Citation bib="ableton_live_12_manual" /></p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Benjamins — vocals solo vs other solo</div><div class="controls"><button data-src="stemforge/benjamins_vocals.wav" class="active">A — dry</button><button data-src="stemforge/benjamins_other.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/benjamins_vocals.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Subtract like a producer — the densest-case principle</h2>
+  
+  <div class="body"><h1>Subtract like a producer</h1>
+<p>Subtraction is the most finish-friendly of the five arrangement methods this course teaches, and the one you can apply <em>as a listener</em> before you have a loop of your own.</p>
+<p>The move, formally:</p>
+<ol>
+<li>Identify the densest bar of the track.</li>
+<li>Treat that as the master state.</li>
+<li>Every other section is a mute of the master state — intro is everything muted except texture, A adds drums, B adds bass, breakdown drops drums, peak is unmuted, outro inverts the intro.</li>
+</ol>
+<p>Week 2 is where you build a track this way. Week 1 is for hearing it in someone else&rsquo;s mix. Play Benjamins and identify which version of the loop the producer treated as master state. Almost always the chorus, rarely the drop, occasionally the second verse. <Citation bib="stemforge_repo" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s07">
+  <h1>Slide s07 · caveat</h1>
+  <h2>The 45-minute rabbit hole — separate the mentalities</h2>
+  
+  <div class="body"><h1>The 45-minute rabbit hole</h1>
+<p>A rule that sounds arbitrary and is not: <strong>every new sound gets 45 minutes, then you commit or you move on.</strong> Kitchen timer on the desk. When it rings, bounce-in-place or freeze.</p>
+<p>This is not a productivity hack. It is a workflow that assumes you have already lost the other version of this fight. Separate the four mentalities into four separate sessions:</p>
+<ul>
+<li><strong>R&amp;D</strong> — sound design. Save presets. Nothing used yet.</li>
+<li><strong>Writing</strong> — only patches already saved. No new synths.</li>
+<li><strong>Arrangement</strong> — monitors down, Arrangement View full-screen, laptop lid closed.</li>
+<li><strong>Mixing</strong> — separate pass after arrangement is locked.</li>
+</ul>
+<p>Mixing <em>inside</em> a loop is the canonical intermediate-producer mistake. Every curriculum says so. <Citation bib="oblique_strategies_eno" /> — Eno keeps the cards on the desk for this moment.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s08">
+  <h1>Slide s08 · concept</h1>
+  <h2>Pre-place the locators, then close the laptop</h2>
+  
+  <div class="body"><h1>Pre-place the locators, then close the laptop</h1>
+<p>A session template, not aspirational, load-for-every-session:</p>
+<ul>
+<li>Locators at <strong>0:00 intro / 0:45 A / 2:00 B / 3:00 breakdown / 3:45 peak / 5:00 outro / 5:45 end.</strong></li>
+<li>A reference track on a muted audio lane. One Aphex, one Autechre, one Dilla, one Kendrick. A/B every 20 minutes.</li>
+<li>Drum / Bass / Melody / Texture / Vocal groups pre-grouped in the Session.</li>
+<li>One return for plate, one for tape delay, one for granular, one for Roar feedback. You are not using them this week — they are there so you do not spend the next 45 minutes building them.</li>
+</ul>
+<p>The locators are suggestions, not contracts. The point is that placing them converts the session from open-ended into <em>finite</em>. <Citation bib="ableton_live_12_manual" /></p>
+<p>Then close the laptop lid, route to speakers, and write notes on paper. <Citation bib="sos_autechre_april_2004" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-s09">
+  <h1>Slide s09 · reference</h1>
+  <h2>Twelve in twelve — the cadence the course assumes</h2>
+  
+  <div class="body"><h1>Twelve in twelve</h1>
+<p>One track per week, twelve weeks. No track is <em>the</em> track. The track is the <em>log</em>.</p>
+<p>Constraint and recombination beats sound design. Completion beats perfection. A shipped three-minute sketch in Week 3 teaches more than six months tweaking a kick.</p>
+<p>The pattern the finishing producers share:</p>
+<ul>
+<li>Kieran Hebden released <em>Three</em> near-unmastered because the mix was good enough and the idea was right. <Citation bib="tape_notes_140_four_tet" /></li>
+<li>Porter Robinson rebuilt &ldquo;Get Your Wish&rdquo; dozens of times over two years — the craft is re-shipping, not the first pass. <Citation bib="song_exploder_porter_robinson" /></li>
+<li>Burial on Sound Forge: <em>&ldquo;Fuckit, I&rsquo;m going to stick to this shitty little computer program.&rdquo;</em></li>
+</ul>
+<p>After each track, three lines: <em>what worked, what was hard, what to try next.</em> Over ten tracks, patterns emerge. <Citation bib="oblique_strategies_eno" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s10">
+  <h1>Slide s10 · caveat</h1>
+  <h2>A confession, and one Sound on Sound aside</h2>
+  
+  <div class="body"><h1>A confession, and one aside</h1>
+<p>Confession first. Every author of this kind of course will tell you gear does not matter and then publish a paragraph naming eight pieces of gear. The honest version: gear <em>mostly</em> does not matter, except when it does, and the skill is noticing which case you are in. <Citation bib="tape_op_89" /> — Jenkinson, asked about the QY700, answers mostly about <em>why</em> he refuses a computer rather than why he chose the sequencer.</p>
+<p>Aside, Sound on Sound-style. Ableton&rsquo;s Reference track control in Live 12&rsquo;s mixer was shipped because Reference 4-style plugins had made it obvious engineers were already doing this manually. The protocol predates the button by thirty years. The button is a convenience. <Citation bib="ableton_live_12_manual" /></p>
+<p>You will not need the button this week. An unmuted audio clip is the same protocol with fewer abstractions.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s11">
+  <h1>Slide s11 · exercise</h1>
+  <h2>Ship the listening — the 30-second mute-the-drums clip</h2>
+  
+  <div class="body"><h1>Ship the listening</h1>
+<p>The deliverable. Thirty seconds. No synths. No processing. This is a listening exercise and it stays a listening exercise.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Load <code>benjamins_drums.wav</code>, <code>benjamins_bass.wav</code>, <code>benjamins_vocals.wav</code>, <code>benjamins_other.wav</code> on four adjacent audio tracks. Align to bar 1. <Citation bib="stemforge_repo" /></li>
+<li>Solo each for 20 seconds. Write <em>one sentence</em> per stem on paper — what it is doing rhythmically, what it is doing harmonically.</li>
+<li>In Arrangement View, place a locator at 0:00 and 0:15. From 0:00 to 0:15, mute the drums track. At 0:15 un-mute it. Everything else plays through.</li>
+<li>Bounce the result as a 30-second stereo file named <code>w01_&lt;yourname&gt;_mute-ab.wav</code>. 44.1 kHz / 24-bit. <Citation bib="ableton_live_12_manual" /></li>
+</ol>
+<p><strong>Deliverable:</strong> the WAV and the four one-sentence notes. Post both. That is Week 1.</p>
+<p>No triumphant wrap-up. Go listen.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Your deliverable — 30-second A/B, drums muted for 15s</div><div class="controls"><button data-src="stemforge/benjamins_drums.wav" class="active">A — dry</button><button data-src="stemforge/benjamins_bass.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/benjamins_drums.wav"></audio></div>
+  
+  <div class="deliverable">A 30-second stereo bounce of Benjamins where the drums are muted from 0:00 to 0:15 and un-muted from 0:15 to 0:30. One-sentence note per stem describing what it is doing rhythmically and harmonically. File named w01_&lt;yourname&gt;_mute-ab.wav.</div>
+  
+</section>
+
+
+<section class="slide reference" id="slide-i01">
+  <h1>Slide i01 · reference</h1>
+  <h2>Benjamins — the cover, briefly</h2>
+  
+  <div class="body"><h1>Benjamins — album art, in context</h1>
+<p>The reference track lives with a cover. Look at it once, then ignore it for twelve weeks — the audio is the job, the artwork is the label.</p>
+<p><code>benjamins.wav</code> is loaded already in stemforge. The four-stem split was produced by the Demucs pipeline via <code>default --no-slice</code>. <Citation bib="stemforge_repo" /></p>
+<p>Hang the cover somewhere in the session as a muted clip marker if it helps you remember which track you&rsquo;re A/B-ing against. That is all the art needs to do this week.</p></div>
+  <figure class="figure"><img src="assets/benjamins-cover.jpg" alt="Benjamins, cover art. The reference track for the next twelve weeks."><figcaption>Benjamins, cover art. The reference track for the next twelve weeks.<div class="credit">Album art — fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i02">
+  <h1>Slide i02 · concept</h1>
+  <h2>The five axes, one pass at a time</h2>
+  
+  <div class="body"><h1>The five axes, one at a time</h1>
+<p>Unpacking the protocol. Each pass through a 30-second chunk, you&rsquo;re listening for exactly one thing. No multitasking.</p>
+<ul>
+<li><strong>Low-end energy</strong> — is the sub a distinct element, or is the kick&rsquo;s body carrying the low octaves?</li>
+<li><strong>Stereo width</strong> — mono around 80 Hz, widening through the midrange, narrowing again at the vocal.</li>
+<li><strong>Vocal/lead clarity</strong> — where does the lead element sit against the bed, and what got carved out to make room.</li>
+<li><strong>Transient sharpness</strong> — click vs thump. Short attack vs long attack. Engineers notice this first.</li>
+<li><strong>Reverb depth</strong> — dry, 15 ms slap, or two-second plate. Name the space.</li>
+</ul>
+<p>Five chunks, five sentences. That&rsquo;s the whole method. <Citation bib="berklee_online_ompd_382" /></p></div>
+  <figure class="figure"><img src="assets/five-axes-icons.svg" alt="Low-end, width, clarity, transient, reverb — five passes through the same 30-second chunk."><figcaption>Low-end, width, clarity, transient, reverb — five passes through the same 30-second chunk.<div class="credit">Original diagram · course-owned</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i03">
+  <h1>Slide i03 · concept</h1>
+  <h2>Paper, not screen</h2>
+  
+  <div class="body"><h1>Paper, not screen</h1>
+<p>Booth, in SOS April 2004: <em>&ldquo;the screen has to go off. It&rsquo;s an illusion that totally pollutes what you&rsquo;re thinking and what you&rsquo;re listening to.&rdquo;</em> <Citation bib="sos_autechre_april_2004" /></p>
+<p>The notebook is not aesthetic. It&rsquo;s that your eyes go to the meter if they can, and the meter lies about perceived loudness. Hand-write the five axes. Close the laptop lid if you have to.</p>
+<p>A kitchen timer on the desk enforces the 30-second chunk. Not a phone — phones pull attention the same way screens do.</p></div>
+  <figure class="figure"><img src="assets/notebook-timer.jpg" alt="A paper notebook and a kitchen timer. The only two instruments this week."><figcaption>A paper notebook and a kitchen timer. The only two instruments this week.<div class="credit">Stock photo · stock-to-purchase</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d01">
+  <h1>Slide d01 · concept</h1>
+  <h2>Where the four stems live</h2>
+  
+  <div class="body"><h1>Where the four stems live, frequency-wise</h1>
+<p>Rough occupancy, in Hz, for the four-stem Demucs split. Ranges overlap — that&rsquo;s the point; separation is a probabilistic classification, not a clean crossover network.</p>
+<ul>
+<li><strong>Drums (kick + snare + hats)</strong> — kick body sits 40-120 Hz, snare fundamental 150-250 Hz, hat content 3 kHz and up.</li>
+<li><strong>Bass</strong> — 40-250 Hz for the fundamental, harmonic content up to 800 Hz depending on synthesis.</li>
+<li><strong>Vocals</strong> — 200 Hz to 4 kHz for the lead range, sibilance out to 8-10 kHz.</li>
+<li><strong>Other</strong> — everything else: pads, leads, textures, typically 100 Hz to 8 kHz with the densest content in the 300 Hz-2 kHz band.</li>
+</ul>
+<p>The Demucs U-Net learns these masks from training data; it doesn&rsquo;t apply a fixed filterbank. <Citation bib="stemforge_repo" /></p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .label { font: 14px sans-serif; fill: #222; }
+    .axis  { stroke: #222; stroke-width: 1; fill: none; }
+    .tick  { font: 11px sans-serif; fill: #555; }
+    .bar-d { fill: #d35f5f; opacity: 0.75; }
+    .bar-b { fill: #5f8cd3; opacity: 0.75; }
+    .bar-v { fill: #67a867; opacity: 0.75; }
+    .bar-o { fill: #c69a3f; opacity: 0.75; }
+  </style>
+  <text class="label" x="20" y="24">Stem occupancy (Hz, log)</text>
+  <line class="axis" x1="80" y1="270" x2="760" y2="270" />
+  <g class="tick">
+    <text x="80"  y="290">20</text>
+    <text x="195" y="290">100</text>
+    <text x="310" y="290">500</text>
+    <text x="425" y="290">1k</text>
+    <text x="540" y="290">4k</text>
+    <text x="655" y="290">10k</text>
+    <text x="745" y="290">20k</text>
+  </g>
+  <rect class="bar-d" x="170" y="60"  width="490" height="30" />
+  <text class="label" x="670" y="80">drums</text>
+  <rect class="bar-b" x="165" y="105" width="205" height="30" />
+  <text class="label" x="380" y="125">bass</text>
+  <rect class="bar-v" x="255" y="150" width="345" height="30" />
+  <text class="label" x="610" y="170">vocals</text>
+  <rect class="bar-o" x="205" y="195" width="430" height="30" />
+  <text class="label" x="645" y="215">other</text>
+</svg>
+<div class="caption">Approximate frequency occupancy per stem. Ranges overlap; the separator classifies by more than frequency.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d02">
+  <h1>Slide d02 · concept</h1>
+  <h2>The listening protocol, as a loop</h2>
+  
+  <div class="body"><h1>The listening protocol, as a flowchart</h1>
+<p>The four-step loop. Run it until the reference and your WIP stop surprising you differently.</p>
+<p>The <span class="term">LUFS<span class="gloss"><strong>LUFS</strong> — Loudness Units relative to Full Scale — the EBU R128 / ITU-R BS.1770 standard for perceived loudness, measured over time with K-weighting. Streaming platforms target roughly -14 LUFS integrated (Spotify, Apple Music); mastering for vinyl or club -8 to -10. Replaced RMS as the honest loudness metric. <a href="https://en.wikipedia.org/wiki/LUFS" target="_blank" rel="noopener">wikipedia↗</a></span></span> level-match step is the one students skip. Without it you&rsquo;re comparing loudness, not balance — the louder track always wins the A/B. Integrated LUFS on a short-term window, matched within half a dB, is the floor. <Citation bib="berklee_online_ompd_382" /></p>
+<p>One sentence per pass. Not an essay. If you can&rsquo;t summarize the chunk in a sentence, you weren&rsquo;t listening for one thing.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Load reference + WIP&lt;br/&gt;adjacent tracks] --&gt; B[Level-match&lt;br/&gt;LUFS short-term]
+  B --&gt; C[Chunk to 30s&lt;br/&gt;one axis per pass]
+  C --&gt; D[A/B switch]
+  D --&gt; E[Write one&lt;br/&gt;sentence]
+  E --&gt; C
+</div><div class="caption">The Berklee critical-listening loop. Level-match first, chunk, switch, write — then repeat.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d03">
+  <h1>Slide d03 · concept</h1>
+  <h2>Demucs, at arm&#x27;s length</h2>
+  
+  <div class="body"><h1>How the stems got made — Demucs, briefly</h1>
+<p>Demucs is a U-Net-shaped neural separator. In the hybrid version, one branch processes the waveform directly, one branch processes a time-frequency representation, and the outputs fuse into four masks — drums, bass, vocals, other.</p>
+<p>You do not need to train it. stemforge wraps the pretrained weights and runs a single command: <code>stemforge default --no-slice benjamins.wav</code>. <Citation bib="stemforge_repo" /></p>
+<p>The separator is not clean. Sibilance leaks into <code>other</code>. Kick sub-harmonics smear into <code>bass</code>. Noticing the artifacts is itself a listening exercise — where the separator fails tells you what was tangled in the mix.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[benjamins.wav&lt;br/&gt;stereo 44.1kHz] --&gt; B[Demucs U-Net&lt;br/&gt;hybrid waveform+STFT]
+  B --&gt; C[drums.wav]
+  B --&gt; D[bass.wav]
+  B --&gt; E[vocals.wav]
+  B --&gt; F[other.wav]
+</div><div class="caption">Simplified stemforge dispatch. The real U-Net has hundreds of layers; this is the block view.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i04">
+  <h1>Slide i04 · concept</h1>
+  <h2>A spectrogram, in passing</h2>
+  
+  <div class="body"><h1>A spectrogram, in passing</h1>
+<p>Before we leave the separator — a spectrogram is just time on the x-axis, frequency on the y-axis, amplitude as color. Most producers look at one maybe twice a year and get nothing from it.</p>
+<p>The exception: when a stem separator fails, the failure is visible in the spectrogram. Drums leaking into the vocals stem shows up as wideband transient slashes at the attack points. Bass leaking into <code>other</code> shows up as low-frequency blobs under melodic content.</p>
+<p>You will not need this view this week. But the vocabulary matters for W8 when we come back to resynthesis. <Citation bib="stemforge_repo" /></p></div>
+  <figure class="figure"><img src="assets/spectrogram-4stem.png" alt="Spectrogram view of Benjamins with the four stems stacked — time on x, frequency on y, amplitude as color."><figcaption>Spectrogram view of Benjamins with the four stems stacked — time on x, frequency on y, amplitude as color.<div class="credit">Generated from stemforge output · course-owned</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i05">
+  <h1>Slide i05 · concept</h1>
+  <h2>The densest bar is master state</h2>
+  
+  <div class="body"><h1>The densest bar, as master state</h1>
+<p>Subtraction inverts the usual additive workflow. You do not build the intro first. You build the densest bar first — chorus, drop, peak — and treat every other section as a <em>mute</em> of that state.</p>
+<ul>
+<li>Intro — everything muted except one texture.</li>
+<li>A — drums unmute.</li>
+<li>B — bass joins.</li>
+<li>Breakdown — drums drop, texture returns.</li>
+<li>Peak — master state, all unmuted.</li>
+<li>Outro — inverse of the intro.</li>
+</ul>
+<p>This is finish-friendly because the arrangement becomes a mute-automation problem, not a sound-design problem. Rubin, in <em>The Creative Act</em>, frames it as removing everything that is not the song. <Citation bib="rick_rubin_creative_act" /></p></div>
+  <figure class="figure"><img src="assets/master-state-diagram.svg" alt="Arrangement as mute-automation over a single master state."><figcaption>Arrangement as mute-automation over a single master state.<div class="credit">Original diagram · course-owned</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i06">
+  <h1>Slide i06 · reference</h1>
+  <h2>Benjamins — find the master state</h2>
+  
+  <div class="body"><h1>Benjamins as the example case</h1>
+<p>Play Benjamins end to end once and mark which bar you think is the master state. Almost always the chorus. Rarely the drop. Occasionally the second verse, when the producer used the second chorus as the decisive arrangement.</p>
+<p>Note it on paper. Compare with your classmate&rsquo;s call. The point is not being right — it is noticing that you can <em>hear</em> master state once you are looking for it.</p>
+<p>Week 2 is where you build a track this way. Week 1 is for hearing it in someone else&rsquo;s mix. <Citation bib="stemforge_repo" /></p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Benjamins chorus vs second verse — which one is master state?</div><div class="controls"><button data-src="stemforge/benjamins_drums.wav" class="active">A — dry</button><button data-src="stemforge/benjamins_other.wav">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/benjamins_drums.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i07">
+  <h1>Slide i07 · reference</h1>
+  <h2>Tape Op and Sound on Sound</h2>
+  
+  <div class="body"><h1>Tape Op and Sound on Sound — the voice-references</h1>
+<p>Two magazines. Keep them both bookmarked.</p>
+<p><strong>Tape Op</strong> — engineer-to-engineer interviews, light on gear-porn, heavy on workflow. The Squarepusher feature in issue 89 is the template for how this course talks about gear. <Citation bib="tape_op_89" /></p>
+<p><strong>Sound on Sound</strong> — deeper technical breakdowns, the monthly <em>Inside Track</em> column that dissects hit records, signal chains with part numbers. The Autechre piece from April 2004 is the origin of the <em>turn the screen off</em> protocol this course inherits. <Citation bib="sos_autechre_april_2004" /></p>
+<p>Both magazines exist because <em>Mix</em> and <em>EQ Magazine</em> stopped answering the engineer&rsquo;s question. Read one article from each per week if you want to absorb the tone.</p></div>
+  <figure class="figure"><img src="assets/tape-op-89-cover.jpg" alt="Tape Op #89 — Squarepusher cover story."><figcaption>Tape Op #89 — Squarepusher cover story.<div class="credit">Tape Op magazine — fair-use commentary · fair-use commentary</div></figcaption></figure><figure class="figure"><img src="assets/sos-april-2004-cover.jpg" alt="Sound on Sound, April 2004 — Autechre feature."><figcaption>Sound on Sound, April 2004 — Autechre feature.<div class="credit">Sound on Sound magazine — fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-i08">
+  <h1>Slide i08 · caveat</h1>
+  <h2>The half-dB threshold (approximately)</h2>
+  
+  <div class="body"><h1>The half-decibel threshold</h1>
+<p>Andrew Huang&rsquo;s claim — roughly: most listeners, under controlled A/B, cannot reliably identify a half-decibel level difference. Above one dB, they can. Below half a dB, it&rsquo;s a coin flip. <Citation bib="andrew_huang_sonic_boom" /></p>
+<p>This is why <span class="term">LUFS<span class="gloss"><strong>LUFS</strong> — Loudness Units relative to Full Scale — the EBU R128 / ITU-R BS.1770 standard for perceived loudness, measured over time with K-weighting. Streaming platforms target roughly -14 LUFS integrated (Spotify, Apple Music); mastering for vinyl or club -8 to -10. Replaced RMS as the honest loudness metric. <a href="https://en.wikipedia.org/wiki/LUFS" target="_blank" rel="noopener">wikipedia↗</a></span></span> level-matching matters in the reference protocol. If your reference is 1.5 dB louder than your WIP, the louder track always wins the A/B — not because it&rsquo;s better, because it&rsquo;s louder.</p>
+<p>The linter policy at the top of this lesson flags unconfirmed attributions. The half-dB claim is well-repeated in production YouTube; an exact peer-reviewed source is not in bibliography.json. Treat as a studio-rat heuristic, not a double-blind result.</p></div>
+  <figure class="figure"><img src="assets/level-match-meter.png" alt="A short-term LUFS meter matched within half a dB. The threshold where most listeners stop being able to tell."><figcaption>A short-term LUFS meter matched within half a dB. The threshold where most listeners stop being able to tell.<div class="credit">Screenshot · screenshot-for-commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-le01">
+  <h1>Slide le01 · concept</h1>
+  <h2>Listening environment — the sidebar</h2>
+  
+  <div class="body"><h1>Listening environment — sidebar, six slides</h1>
+<p>You asked about monitors. Everyone asks about monitors. The short answer is in W1; the short answer is also <em>it matters less than you think</em>.</p>
+<p>The long answer is a four-pair reference rig — two monitors, two headphones — and a cross-reference habit. That&rsquo;s this sidebar.</p>
+<p>The goal is not <em>flat</em>. The goal is <em>known</em>. You cannot mix against a surface whose lies you have not memorized. <Citation bib="ableton_live_12_manual" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-le02">
+  <h1>Slide le02 · reference</h1>
+  <h2>Yamaha HS5 — the dull, honest near-field</h2>
+  
+  <div class="body"><h1>Yamaha HS5 — the dull, honest near-field</h1>
+<p>Yamaha HS5 (2014). Two-way, 5-inch woofer, 1-inch tweeter, 70 Hz-30 kHz, 54 dB SNR. The spiritual successor to the NS-10, which was the studio reference nobody actually liked listening to for thirty years.</p>
+<p>The HS5 translates to laptop speakers because it is almost a laptop speaker with a tweeter. Mixes that sound balanced on HS5 usually survive the car, the phone, and the AirPods test. Mixes that sound <em>good</em> on HS5 are suspicious — they probably have hyped lows you will hear on everything else.</p>
+<p>Entry-level near-field. If you only own one pair, you could do worse.</p></div>
+  <figure class="figure"><img src="assets/gear-yamaha-hs5.jpg" alt="Yamaha HS5 (2014). 5-inch near-field, 70 Hz-30 kHz."><figcaption>Yamaha HS5 (2014). 5-inch near-field, 70 Hz-30 kHz.<div class="credit">Yamaha product photography — fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-le03">
+  <h1>Slide le03 · reference</h1>
+  <h2>Neumann KH80 DSP — better, if the room deserves it</h2>
+  
+  <div class="body"><h1>Neumann KH80 DSP — better, if the room deserves it</h1>
+<p>Neumann KH80 DSP (2016). Four-inch woofer, one-inch tweeter, onboard DSP with room-correction via the MA 1 measurement mic. 57 Hz-21 kHz (-3 dB).</p>
+<p>The DSP is the feature. The KH80 can EQ out the worst of your room&rsquo;s bass modes and first-reflection buildup, within the limits of what EQ can fix (which is: less than you&rsquo;d hope, more than nothing).</p>
+<p>A better speaker than the HS5. Also twice the price, and wasted if your room has a slap-back off the back wall you haven&rsquo;t treated. Buy the treatment first.</p></div>
+  <figure class="figure"><img src="assets/gear-neumann-kh80.jpg" alt="Neumann KH80 DSP (2016). Onboard DSP, room correction via MA 1 mic."><figcaption>Neumann KH80 DSP (2016). Onboard DSP, room correction via MA 1 mic.<div class="credit">Neumann product photography — fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-le04">
+  <h1>Slide le04 · reference</h1>
+  <h2>AKG K371 + Sennheiser HD600 — the headphone A/B</h2>
+  
+  <div class="body"><h1>The headphone A/B — AKG K371 and Sennheiser HD600</h1>
+<p>Two headphones, two jobs.</p>
+<p><strong>AKG K371</strong> (2019) — closed-back, 50 mm driver, 5 Hz-40 kHz, 32 ohm. The cheapest headphone that measures close to the Harman target curve, which is the best-available proxy for <em>what most listeners find neutral</em>. Use it for tracking, late-night work, and when you cannot play through speakers.</p>
+<p><strong>Sennheiser HD600</strong> (1997) — open-back, 300 ohm, 12 Hz-40.5 kHz. The reference your mastering engineer has in the hallway. Mid-forward, honest, leaky. The 300-ohm impedance needs a real headphone amp; laptop outputs will sound anemic.</p>
+<p>Cross-reference between them. Mixes that agree on both are probably fine. <Citation bib="ableton_live_12_manual" /></p></div>
+  <figure class="figure"><img src="assets/gear-akg-k371.jpg" alt="AKG K371 (2019). Closed-back, Harman-target-adjacent."><figcaption>AKG K371 (2019). Closed-back, Harman-target-adjacent.<div class="credit">AKG product photography — fair-use commentary · fair-use commentary</div></figcaption></figure><figure class="figure"><img src="assets/gear-sennheiser-hd600.jpg" alt="Sennheiser HD600 (1997). Open-back, 300 ohm, mid-forward."><figcaption>Sennheiser HD600 (1997). Open-back, 300 ohm, mid-forward.<div class="credit">Sennheiser product photography — fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-le05">
+  <h1>Slide le05 · concept</h1>
+  <h2>Cross-reference, do not pick one</h2>
+  
+  <div class="body"><h1>Why you cross-reference, not pick one</h1>
+<p>No surface is neutral. The HS5 hypes 8 kHz. The KH80 is flatter but reveals room problems you would otherwise miss. The K371 has a closed-back low-frequency lift. The HD600 is mid-forward and slightly thin at 80 Hz.</p>
+<p>The cross-reference habit:</p>
+<ol>
+<li>Mix on speakers.</li>
+<li>Check on the closed-back headphone.</li>
+<li>Check on the open-back.</li>
+<li>Check in the car if you have one. Check on AirPods.</li>
+<li>When four out of five surfaces agree, the mix is probably done.</li>
+</ol>
+<p>The studio rat&rsquo;s joke: the mix is done when you have run out of surfaces that disagree. <Citation bib="berklee_online_ompd_382" /></p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-le06">
+  <h1>Slide le06 · concept</h1>
+  <h2>Room acoustics — first reflections and bass modes</h2>
+  
+  <div class="body"><h1>Room acoustics, the irreducible floor</h1>
+<p>Two things a room does to your mix that you cannot EQ out:</p>
+<ul>
+<li><strong>First reflections</strong> — sound leaves the monitor, bounces off the side wall or desk, arrives at your ear 3-15 ms after the direct sound. Your brain fuses the two into a comb filter. Result: midrange peaks and nulls that move when you move your head. Fix with absorption panels at the mirror points.</li>
+<li><strong>Bass modes</strong> — low-frequency standing waves between parallel walls. A 3-meter wall puts a mode at ~57 Hz; a 4-meter wall at ~43 Hz. Below 200 Hz the room is always louder than the speaker in some spots and quieter in others. Fix with bass traps in corners, or accept that sub-bass decisions made at this desk are negotiable.</li>
+</ul>
+<p>This is why the KH80&rsquo;s room correction helps and does not solve. EQ cannot delete a reflection; it can only pre-distort for one. <Citation bib="berklee_online_ompd_382" /></p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .wall    { stroke: #222; stroke-width: 2; fill: none; }
+    .speaker { fill: #444; }
+    .head    { fill: #b44; }
+    .direct  { stroke: #2a7; stroke-width: 2; fill: none; }
+    .reflect { stroke: #a62; stroke-width: 2; stroke-dasharray: 6 4; fill: none; }
+    .mode    { stroke: #55a; stroke-width: 1.5; stroke-dasharray: 2 4; fill: none; }
+    .label   { font: 13px sans-serif; fill: #222; }
+  </style>
+  <rect class="wall" x="80" y="60" width="640" height="280" />
+  <rect class="speaker" x="180" y="180" width="24" height="40" />
+  <rect class="speaker" x="596" y="180" width="24" height="40" />
+  <circle class="head" cx="400" cy="280" r="10" />
+  <line class="direct" x1="200" y1="200" x2="400" y2="280" />
+  <line class="direct" x1="608" y1="200" x2="400" y2="280" />
+  <polyline class="reflect" points="200,200 90,150 400,280" />
+  <polyline class="reflect" points="608,200 710,150 400,280" />
+  <path class="mode" d="M 90,330 Q 400,320 710,330" />
+  <path class="mode" d="M 90,330 Q 245,360 400,330 Q 555,300 710,330" />
+  <text class="label" x="90"  y="52">Room boundary</text>
+  <text class="label" x="180" y="175">L mon</text>
+  <text class="label" x="596" y="175">R mon</text>
+  <text class="label" x="380" y="305">listener</text>
+  <text class="label" x="510" y="145">first reflection</text>
+  <text class="label" x="510" y="380">bass mode (low-freq standing wave)</text>
+</svg>
+<div class="caption">Top-down room. Solid green lines — direct sound. Dashed brown — first reflections off side walls. Dashed blue — the lowest bass mode between front and back walls.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:oblique_strategies_eno">Brian Eno, Peter Schmidt — Oblique Strategies <a href="https://stoney.sb.org/eno/oblique.html" target="_blank" rel="noopener">↗</a></li><li id="bib:song_exploder_porter_robinson">Porter Robinson — Get Your Wish <a href="https://songexploder.net/porter-robinson" target="_blank" rel="noopener">↗</a></li><li id="bib:sos_autechre_april_2004">Sean Booth (interviewee) — Autechre — Recording Strategies — Sound on Sound 2004 <a href="https://www.soundonsound.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:tape_notes_140_four_tet">Kieran Hebden (Four Tet) — Three — 2024 <a href="https://tapenotes.cc/" target="_blank" rel="noopener">↗</a></li><li id="bib:tape_op_89">Vijith Assar — Tom Jenkinson (Squarepusher) — Tape Op 2012 <a href="https://tapeop.com/interviews/89/squarepusher/" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 90750}, {"id": "ch001", "title": "The course begins with silence", "start_ms": 91150, "end_ms": 188200}, {"id": "ch002", "title": "Listen like an engineer \u2014 the critical-listening protocol", "start_ms": 188600, "end_ms": 310050}, {"id": "ch003", "title": "What you listen on matters, and less than you think", "start_ms": 310450, "end_ms": 434600}, {"id": "ch004", "title": "Benjamins \u2014 your reference track for the next twelve weeks", "start_ms": 435000, "end_ms": 546000}, {"id": "ch005", "title": "Drop one stem \u2014 the single most useful ear exercise", "start_ms": 546400, "end_ms": 666850}, {"id": "ch006", "title": "Subtract like a producer \u2014 the densest-case principle", "start_ms": 667250, "end_ms": 783850}, {"id": "ch007", "title": "The 45-minute rabbit hole \u2014 separate the mentalities", "start_ms": 784250, "end_ms": 906600}, {"id": "ch008", "title": "Pre-place the locators, then close the laptop", "start_ms": 907000, "end_ms": 1039500}, {"id": "ch009", "title": "Twelve in twelve \u2014 the cadence the course assumes", "start_ms": 1039900, "end_ms": 1166250}, {"id": "ch010", "title": "A confession, and one Sound on Sound aside", "start_ms": 1166650, "end_ms": 1298650}, {"id": "ch011", "title": "Ship the listening \u2014 the 30-second mute-the-drums clip", "start_ms": 1299050, "end_ms": 1406800}, {"id": "ch012", "title": "Outro", "start_ms": 1407200, "end_ms": 1462250}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

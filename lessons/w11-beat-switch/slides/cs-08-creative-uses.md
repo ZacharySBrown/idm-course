@@ -1,0 +1,8 @@
+# What else the Rack can do — three creative uses
+
+- **1. Rhythmic re-trigger at audio rate** — assign an <term key="lfo">LFO</term> macro to modulate the Chain Selector between two narrow zones at 1/8 or 1/16. You get a gated timbral flicker — two synths cross-quilted at rhythmic rates. Basically a sample-and-hold between patches.
+- **2. Per-drum-pad chain selection inside a Drum Rack** — a Drum Rack is itself a Chain Selector Rack where selector = MIDI note. Use nested Instrument Racks inside the pads and you get per-pad timbral variation triggered by velocity layers or MIDI CC.
+- **3. The "wrong answer" switch** — store five Macro Variations labeled *verse*, *chorus*, *bridge*, *wrong-1*, *wrong-2*. The last two are deliberate-error patches (misfiring FM, bit-crushed nothing). Recall them at the 8-bar-rule mute points from W2 to get a Rick-Rubin "trust the mistake" effect.
+- **4. Reaktor / Max device parallel** — Max for Live's *M4L.CustomShaper* or Reaktor's Snapshots system do the same snapshot-recall job on non-Ableton devices. The difference: Macro Variations are rack-local; Reaktor snapshots can be library-wide.
+- **Exercise A:** build a 3-chain Instrument Rack for your in-progress track's bass. Store three Macro Variations (A, B, C). Automate a switch from A to B at bar 33, B to C at bar 49. Ship the MIDI clip + Rack preset.
+- **Exercise B:** take one of your W8 patch-flipping racks and re-use it for this week's switch, changing only the automation timing. No new sound design. Ship both: the original W8 arrangement and the W11 arrangement. Note what changed and what did not.

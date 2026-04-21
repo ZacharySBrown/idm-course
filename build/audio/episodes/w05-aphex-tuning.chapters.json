@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ch000",
+    "title": "Intro",
+    "start_ms": 0,
+    "end_ms": 88250
+  },
+  {
+    "id": "ch001",
+    "title": "The confession before we touch a synth",
+    "start_ms": 88650,
+    "end_ms": 170350
+  },
+  {
+    "id": "ch002",
+    "title": "Drums are harmonic content \u2014 the 1992 receipt",
+    "start_ms": 170750,
+    "end_ms": 274600
+  },
+  {
+    "id": "ch003",
+    "title": "The quote everyone paraphrases \u2014 what he actually said",
+    "start_ms": 275000,
+    "end_ms": 385750
+  },
+  {
+    "id": "ch004",
+    "title": "What microtuning actually is, in cents",
+    "start_ms": 386150,
+    "end_ms": 504300
+  },
+  {
+    "id": "ch005",
+    "title": "Express Yourself \u2014 dry kick vs tuned kick, on tape",
+    "start_ms": 504700,
+    "end_ms": 603400
+  },
+  {
+    "id": "ch006",
+    "title": "Simpler, Transpose, Detune \u2014 the three knobs that matter",
+    "start_ms": 603800,
+    "end_ms": 719200
+  },
+  {
+    "id": "ch007",
+    "title": "Live 12 Tuning Systems and the Scale device",
+    "start_ms": 719600,
+    "end_ms": 836450
+  },
+  {
+    "id": "ch008",
+    "title": "Snare to the fifth \u2014 harmony from the backbeat",
+    "start_ms": 836850,
+    "end_ms": 943700
+  },
+  {
+    "id": "ch009",
+    "title": "Live set \u2014 w05-drum-tuning-demo.als",
+    "start_ms": 944100,
+    "end_ms": 1044900
+  },
+  {
+    "id": "ch010",
+    "title": "The cost of tuned drums \u2014 what you give up",
+    "start_ms": 1045300,
+    "end_ms": 1162550
+  },
+  {
+    "id": "ch011",
+    "title": "For further listening \u2014 the Fredonia pipeline",
+    "start_ms": 1162950,
+    "end_ms": 1269350
+  },
+  {
+    "id": "ch012",
+    "title": "Ship it \u2014 kick to root, snare to fifth, thirty seconds",
+    "start_ms": 1269750,
+    "end_ms": 1375450
+  },
+  {
+    "id": "ch013",
+    "title": "Outro",
+    "start_ms": 1375850,
+    "end_ms": 1442850
+  }
+]

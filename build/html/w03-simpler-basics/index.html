@@ -1,0 +1,1432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W3 — Week 3 — Simpler, Drum Rack, one-shots</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W3</span>
+  <span class="title-chip">Week 3 — Simpler, Drum Rack, one-shots</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>Simpler is already most of the rack</h2>
+  
+  <div class="body"><h1>Simpler is already most of the rack</h1>
+<p>A confession before the device tour.</p>
+<p>Nine out of ten drum racks you will build this year are sixteen instances of Simpler. Not Sampler. Not Operator. Not a boutique plug-in. Simpler — the device Ableton ships in Intro, the one with three mode buttons at the top and a waveform that barely fits.</p>
+<p>Kieran Hebden, on Tape Notes #140, says he does not use Simpler or Sampler — <em>&ldquo;I&rsquo;m all about the mouse.&rdquo;</em> Fine. He works in a lane where every sound is already a bounced edit. For the rest of us — the ones triggering hits from a pattern — Simpler is the instrument.</p>
+<p>So this week we stop skipping past it. Three modes. Drop stemforge one-shots into a Drum Rack. Bounce a four-bar pattern.</p>
+<p>[ref: bib:ableton_live_12_manual, bib:tape_notes_140_four_tet]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>Three modes, one device</h2>
+  
+  <div class="body"><h1>Three modes, one device</h1>
+<p>Simpler has three modes. The tabs sit above the waveform. Same device, three jobs.</p>
+<ul>
+<li><strong>Classic</strong> — melodic play. Pitch tracks the keyboard; Warp keeps time locked at any transposition. Amp envelope, filter, LFO. This is the mode for chromatic chopping — one vocal chunk across sixteen keys.</li>
+<li><strong>One-Shot</strong> — a single sample fires start-to-end on each note. No loop, no release tail. Meant for drum hits. Fade In / Fade Out sliders, Trigger vs Gate, Snap-to-zero-crossing. This is where the kicks live.</li>
+<li><strong>Slicing</strong> — Simpler chops the sample into numbered segments. Each segment maps to its own MIDI note. Transient / Beat / Region / Manual decide where the markers fall.</li>
+</ul>
+<p>You pick the mode to match the job. Loading a drum hit into Classic mode and triggering from C3 is a mistake you make exactly once.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-sm01">
+  <h1>Slide sm01 · concept</h1>
+  <h2>Classic mode — chromatic play, warp on</h2>
+  
+  <div class="body"><h1>Classic mode — chromatic play, warp on</h1>
+<p>Classic is Simpler&rsquo;s chromatic playback mode. The sample is pitched up or down by the incoming MIDI note, interpolating with the warp engine so that timing and pitch can be decoupled.</p>
+<p>What actually happens under the hood:</p>
+<ul>
+<li>Incoming note number sets the ratio against the <strong>root key</strong> (C3 by default).</li>
+<li>If <strong>Warp</strong> is off, Simpler does straight varispeed — pitch and time move together, like pulling tape faster. A vocal chunk an octave up is half as long.</li>
+<li>If <strong>Warp</strong> is on — Beats, Tones, Texture, Re-Pitch, or Complex Pro — the warp engine time-stretches so the sample stays locked to project tempo while pitch tracks the keyboard.</li>
+<li><strong>Amp envelope</strong>, <strong>filter</strong>, <strong>LFO</strong>, <strong>voicing</strong> (Mono / Poly / Legato) — standard subtractive front-end.</li>
+</ul>
+<p>Use Classic for one-shot melodic sources — vocal chops, flute stabs, pitched hits — any time you want chromatic keyboard play over a pitched fragment.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  <figure class="figure"><img src="deferred/wave5/simpler-classic-annotated.png" alt="Simpler Classic — amp envelope, filter, LFO visible below the waveform"><figcaption>Simpler Classic — amp envelope, filter, LFO visible below the waveform<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-sm02">
+  <h1>Slide sm02 · concept</h1>
+  <h2>One-Shot mode — no envelope, just the sample</h2>
+  
+  <div class="body"><h1>One-Shot mode — no envelope, just the sample</h1>
+<p>One-Shot is Simpler&rsquo;s drum mode. The amp envelope and filter disappear from the GUI. You get start/end markers, fade in, fade out, and a Trigger/Gate switch.</p>
+<p>What actually happens under the hood:</p>
+<ul>
+<li>The note-on event triggers the sample from its start marker. Pitch is fixed — notes do <strong>not</strong> transpose the sample. That is the whole point. Load a kick, hit any key, get the same kick.</li>
+<li><strong>Trigger</strong> mode: the sample plays start-to-end regardless of note length. Release is ignored.</li>
+<li><strong>Gate</strong> mode: note-off cuts the sample. Rarely what you want for drums.</li>
+<li><strong>Fade In</strong> and <strong>Fade Out</strong> are linear ramps — typically 0–2 ms in, 5–15 ms out — applied independently of the sample&rsquo;s envelope.</li>
+<li><strong>Snap</strong> forces start/end markers to the nearest zero crossing, which suppresses the click you&rsquo;d otherwise hear when truncating mid-cycle.</li>
+</ul>
+<p>If you want pitched drum layers, transpose in semitones at the device level. Don&rsquo;t play them from the keyboard.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  <figure class="figure"><img src="deferred/wave5/simpler-oneshot-annotated.png" alt="Simpler One-Shot — Trigger/Gate, Fade In, Fade Out, Snap"><figcaption>Simpler One-Shot — Trigger/Gate, Fade In, Fade Out, Snap<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-sm03">
+  <h1>Slide sm03 · concept</h1>
+  <h2>Slicing mode — the sample becomes a drum rack</h2>
+  
+  <div class="body"><h1>Slicing mode — the sample becomes a drum rack</h1>
+<p>Slicing mode chops a sample into numbered segments. Each segment gets a MIDI note — by default chromatic from C1 upward. The device turns a single sample into a mini Drum Rack without the Drum Rack.</p>
+<p>What actually happens under the hood:</p>
+<ul>
+<li>On load, Simpler runs the <strong>Slice by</strong> detector across the sample and writes marker positions.</li>
+<li>Each marker becomes a slice; notes C1, C#1, D1&hellip; trigger slices 1, 2, 3&hellip;</li>
+<li><strong>Playback</strong>: Mono (new slice chokes previous), Poly (overlap allowed), Thru (current slice plays until next trigger, ignoring note length).</li>
+<li>Each slice has its own gain and can be reordered, deleted, or manually repositioned.</li>
+</ul>
+<p><strong>When to use it vs. Slice to New MIDI Track</strong> — Slicing mode keeps everything inside one Simpler; Slice to MIDI explodes the sample into a full Drum Rack with a Simpler per pad. Use Slicing mode for fast chopping where you won&rsquo;t add per-slice effects. Use Slice to MIDI when you want per-slice processing chains.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  <figure class="figure"><img src="deferred/wave5/simpler-slicing-annotated.png" alt="Simpler Slicing — numbered markers on the waveform, slice list at right"><figcaption>Simpler Slicing — numbered markers on the waveform, slice list at right<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-sm04">
+  <h1>Slide sm04 · concept</h1>
+  <h2>The three modes side-by-side</h2>
+  
+  <div class="body"><h1>The three modes side-by-side</h1>
+<p>A compact decision table. Pin this to the wall.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Classic</th>
+<th>One-Shot</th>
+<th>Slicing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Note transposes pitch?</td>
+<td>yes</td>
+<td>no</td>
+<td>no — picks a slice</td>
+</tr>
+<tr>
+<td>Release obeys note-off?</td>
+<td>yes</td>
+<td>no (Trigger)</td>
+<td>depends on mode</td>
+</tr>
+<tr>
+<td>Has amp envelope?</td>
+<td>yes</td>
+<td>no — fade in/out only</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Has filter + LFO?</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Warp engine runs?</td>
+<td>yes</td>
+<td>optional, usually off</td>
+<td>N/A (warp is baked in slice marker positions)</td>
+</tr>
+<tr>
+<td>Typical job</td>
+<td>chromatic vocal chop, pitched sources</td>
+<td>kicks, snares, hats, FX</td>
+<td>drum break reorder, glitch construction</td>
+</tr>
+</tbody>
+</table>
+<p>Two failure modes worth naming:</p>
+<ul>
+<li>Loading a kick in Classic and playing from C3 — kick is pitched up an octave, sounds wrong, you blame the sample.</li>
+<li>Loading a melodic vocal in One-Shot — no keyboard tracking, no envelope shaping, you can&rsquo;t play it chromatically.</li>
+</ul>
+<p>Mode is a choice, not a default. Read the tab before you load.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  A[Incoming MIDI note] --&gt; B{Simpler mode?}
+  B --&gt;|Classic| C[Pitch tracks note, Warp keeps time, Amp+Filter+LFO]
+  B --&gt;|One-Shot| D[Fixed pitch, no envelope, Fade In/Out only]
+  B --&gt;|Slicing| E[Note selects slice index, N markers on waveform]
+</div><div class="caption">Mode dispatch — same device, three signal paths</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s03">
+  <h1>Slide s03 · concept</h1>
+  <h2>One-Shot mode — drum hits without pitch drift</h2>
+  
+  <div class="body"><h1>One-Shot mode — drum hits without pitch drift</h1>
+<p>The parameter list, in the order you actually touch them:</p>
+<ul>
+<li><strong>Snap</strong> — on. Start and end markers jump to zero crossings. Kills the click you would otherwise add.</li>
+<li><strong>Fade In</strong> — 0 to 2 ms on a raw hit. Higher if the sample front-end is brittle.</li>
+<li><strong>Fade Out</strong> — 5 to 15 ms. Prevents the tail pop when a long kick is cut by the next note.</li>
+<li><strong>Trigger</strong> vs <strong>Gate</strong> — Trigger plays the full sample regardless of note length; Gate stops on note-off. One-shots are Trigger.</li>
+<li><strong>Transpose</strong> — in semitones. The pitch-tune-to-root move from Week 5 lives here.</li>
+<li><strong>Detune</strong> — cents. Use for layering the same hit against itself at ±5 cents.</li>
+</ul>
+<p>Warp is available in all three modes. Leave it off for one-shots unless you are deliberately time-locking a hit to tempo.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d01">
+  <h1>Slide d01 · concept</h1>
+  <h2>One-Shot envelope — what the fade sliders actually do</h2>
+  
+  <div class="body"><h1>One-Shot envelope — what the fade sliders actually do</h1>
+<p>One-Shot has no amp envelope. What it has are two linear ramps at the ends of the sample — Fade In and Fade Out. They are not ADSR stages; they are micro-ramps to suppress transients at the truncation points.</p>
+<p>Read the waveform above:</p>
+<ul>
+<li>The <strong>Fade In</strong> ramp climbs from zero to full gain over its millisecond window. At 0 ms you hear the raw sample front — fine for a kick that starts on a zero crossing, bad for a sample snipped mid-cycle.</li>
+<li>The <strong>Fade Out</strong> ramp drops from full gain to zero over its window before the End marker. This is the pop-suppressor for long hits that get cut short by the next note.</li>
+<li><strong>Snap</strong> pins Start and End to the nearest zero crossing. With Snap on, the fades are often unnecessary. With Snap off on a sample edited to arbitrary length, the fades do the work.</li>
+</ul>
+<p>The numbers from the Reference Manual: Fade In range 0 s–4 s, Fade Out range 0 s–4 s. You will live in the 0–20 ms end of both sliders for drum work.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .wf { fill: none; stroke: #555; stroke-width: 1.5; }
+    .env { fill: none; stroke: #c62; stroke-width: 2.5; }
+    .marker { stroke: #888; stroke-dasharray: 4 3; }
+    .lbl { font: 13px system-ui; fill: #333; }
+    .lbl-sm { font: 11px system-ui; fill: #666; }
+  </style>
+  <rect x="0" y="0" width="800" height="300" fill="#fafafa"/>
+  <path class="wf" d="M60,150 L80,60 L95,230 L110,90 L125,190 L145,140 L200,150 L260,145 L320,155 L380,150 L440,150 L500,150 L560,150 L620,150 L680,150 L720,150"/>
+  <path class="env" d="M60,260 L130,40 L620,40 L720,260"/>
+  <line class="marker" x1="60" y1="20" x2="60" y2="290"/>
+  <line class="marker" x1="130" y1="20" x2="130" y2="290"/>
+  <line class="marker" x1="620" y1="20" x2="620" y2="290"/>
+  <line class="marker" x1="720" y1="20" x2="720" y2="290"/>
+  <text class="lbl" x="65" y="285">Start</text>
+  <text class="lbl" x="135" y="285">Fade In end</text>
+  <text class="lbl" x="560" y="285">Fade Out start</text>
+  <text class="lbl" x="680" y="285">End</text>
+  <text class="lbl-sm" x="80" y="35">linear ramp up</text>
+  <text class="lbl-sm" x="640" y="35">linear ramp down</text>
+  <text class="lbl" x="300" y="35">Full gain plateau</text>
+</svg>
+<div class="caption">Fade In / Fade Out are linear ramps, not ADSR stages. They suppress click at truncation points.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>Slicing mode — Transient, Beat, Region, Manual</h2>
+  
+  <div class="body"><h1>Slicing mode — four ways to place the markers</h1>
+<p>Slicing mode cuts a sample into segments. The <strong>Slice by</strong> dropdown decides where the knife lands.</p>
+<ul>
+<li><strong>Transient</strong> — detected attacks. Sensitivity controls aggression. Best for dry drum loops. Messy on wet breaks.</li>
+<li><strong>Beat</strong> — fixed grid. Choices: 1/32, 1/16, 1/8, 1/4, 1/2, 1 bar. For a warped clip, 1/16 is the default for drum loops; 1/8 if the loop is half-time.</li>
+<li><strong>Region</strong> — equal divisions of the sample, independent of tempo. One through sixty-four. For pad textures or non-rhythmic sources.</li>
+<li><strong>Manual</strong> — you place markers with Cmd+I on a selected region. Use when the detector is wrong and you know better.</li>
+</ul>
+<p><strong>Playback modes</strong> under the slice list: <strong>Mono</strong> (new slice chokes the previous), <strong>Poly</strong> (slices overlap), <strong>Thru</strong> (current slice continues until a new one is triggered). Mono is the safe default for kicks and snares.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d02">
+  <h1>Slide d02 · concept</h1>
+  <h2>Slicing algorithms — how to pick the knife</h2>
+  
+  <div class="body"><h1>Slicing algorithms — how to pick the knife</h1>
+<p>Four Slice by options. They are not ranked; they solve different problems. The decision tree above the text dispatches by source type.</p>
+<ul>
+<li><strong>Transient</strong> runs an onset detector over the waveform. Works well on dry, well-recorded drum loops. On anything with reverb tail, bleed, or soft onsets, it misfires — you get slices on tail peaks instead of hits.</li>
+<li><strong>Beat</strong> ignores audio entirely and places markers at fixed note divisions (1/32 through 1 bar). Requires a warped clip. Safe for any warped clip where the grid is honest — 1/16 is the default for drum loops.</li>
+<li><strong>Region</strong> divides the sample into N equal pieces, tempo-blind. Useful for pads, drones, field recordings where rhythm is irrelevant and you want consistent fragment length.</li>
+<li><strong>Manual</strong> — no algorithm. Cmd+I on a selection. The escape hatch when the detector is wrong and you&rsquo;re certain where the markers should go.</li>
+</ul>
+<p>Practical rule: try <strong>Beat 1/16</strong> first. Fall back to <strong>Transient</strong> if the grid is loose. Use <strong>Manual</strong> to fix mistakes. <strong>Region</strong> is for non-rhythmic sources.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  A[Source sample] --&gt; B{What kind of source?}
+  B --&gt;|Drum loop, dry, clear onsets| C[Transient]
+  B --&gt;|Warped clip, honest grid| D[Beat 1/16 or 1/8]
+  B --&gt;|Pad, drone, field rec| E[Region N]
+  B --&gt;|Detector wrong, I know better| F[Manual Cmd+I]
+  C --&gt; G[Sensitivity controls aggression]
+  D --&gt; H[1/16 default, 1/8 for half-time]
+  E --&gt; I[1 to 64 equal divisions]
+  F --&gt; J[Place markers by hand]
+</div><div class="caption">Slice-by dispatch — pick by source type, not by habit</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s05">
+  <h1>Slide s05 · concept</h1>
+  <h2>Slice to New MIDI Track</h2>
+  
+  <div class="body"><h1>Slice to New MIDI Track</h1>
+<p>The hidden move that most tutorials botch.</p>
+<p>Workflow, exact clicks:</p>
+<ol>
+<li>Drop an audio clip onto an audio track.</li>
+<li>Warp it. Warp mode matters — Beats for drums, Complex Pro for messy breaks. If the transients fall on the grid, Re:warp From Here is fine.</li>
+<li>Right-click the clip header → <strong>Slice to New MIDI Track</strong>.</li>
+<li>Dialog appears. Pick <strong>Slicing Preset</strong> — the default preset is a Drum Rack with Simpler in Slicing mode, one slice per pad, chromatic from C1.</li>
+<li>Pick <strong>Create one slice per</strong> — Warp Marker, Transient, or Beat Division.</li>
+<li>Click Create.</li>
+</ol>
+<p>Live generates a new MIDI track, loads the Drum Rack, maps every slice to a pad, and writes a MIDI clip that re-plays the original sample one-for-one.</p>
+<p>That last clip is your chopping source. Re-sequence it. Do not replay the original pattern.</p>
+<p>[ref: bib:ableton_live_12_manual, bib:charnas_dilla_time]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d04">
+  <h1>Slide d04 · concept</h1>
+  <h2>Slice to New MIDI Track — the full flowchart</h2>
+  
+  <div class="body"><h1>Slice to New MIDI Track — the full flowchart</h1>
+<p>The flowchart above traces what Ableton actually does when you click <strong>Slice to New MIDI Track</strong>. Nothing is hidden. Everything is reversible.</p>
+<p>Under the hood:</p>
+<ol>
+<li>Live reads the source clip&rsquo;s warp markers, transient markers, or beat grid — whichever you selected in the dialog.</li>
+<li>Live creates a new MIDI track below the source.</li>
+<li>On that track, Live instantiates the <strong>Slicing Preset</strong> — by default a Drum Rack whose pads each contain a Simpler configured in Slicing mode, one slice per pad, chromatic from C1.</li>
+<li>Live writes a MIDI clip on the new track. Each note corresponds to one slice. The notes are placed at the <strong>original slice timings</strong>, so the new MIDI clip replays the source audio position-for-position.</li>
+<li>The source clip is unmuted and unchanged. You now have two tracks making the same sound. Mute the source.</li>
+</ol>
+<p>The whole point of the command: you now have a MIDI pattern you can edit. Re-sequence it. That step — <em>not</em> the slicing — is the compositional move.</p>
+<p>[ref: bib:ableton_live_12_manual, bib:charnas_dilla_time]</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  A[Audio clip, warped] --&gt; B[Right-click, Slice to New MIDI Track]
+  B --&gt; C{Slice to:}
+  C --&gt;|Warp Marker| D[Use existing warp markers]
+  C --&gt;|Transient| E[Run onset detector]
+  C --&gt;|Beat Division| F[1/32 through 1 bar grid]
+  D --&gt; G[New MIDI track created]
+  E --&gt; G
+  F --&gt; G
+  G --&gt; H[Drum Rack loaded, Simpler per pad]
+  H --&gt; I[Slices mapped chromatic from C1]
+  I --&gt; J[MIDI clip re-plays source position-for-position]
+  J --&gt; K[Source clip unchanged, mute it]
+</div><div class="caption">What Ableton actually does when you click Slice to New MIDI Track</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Drum Rack — chains are the point</h2>
+  
+  <div class="body"><h1>Drum Rack — chains are the point</h1>
+<p>A Drum Rack is not a sampler. It is a grid of independent device chains with MIDI notes routed to each chain.</p>
+<p>The architecture, from the outside in:</p>
+<ul>
+<li><strong>128 pads</strong> — one per MIDI note. The visible grid is 16 at a time; Page Up / Page Down scrolls octaves.</li>
+<li><strong>Per pad</strong>: a chain. A device list — Simpler, or Simpler plus EQ Eight plus Saturator, or a nested Instrument Rack. No rule says the chain must start with a sampler.</li>
+<li><strong>Send-Return chains</strong> (right column) — shared reverb, delay, parallel comp. Routed per-pad via the S knobs.</li>
+<li><strong>Choke groups</strong> — 1 through 16. Pads in a group silence each other. Closed hat chokes open hat.</li>
+<li><strong>Output routing</strong> — each pad can route to its own audio output.</li>
+</ul>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i01">
+  <h1>Slide i01 · concept</h1>
+  <h2>A populated Drum Rack — what you&#x27;re building toward</h2>
+  
+  <div class="body"><h1>A populated Drum Rack — what you&rsquo;re building toward</h1>
+<p>The screenshot above shows a Drum Rack with 16 pads populated — the first three rows loaded from a Stemforge render: three kicks, three snares, three hats, three toms, a clap, a rim, a shaker, a crash.</p>
+<p>Each pad is its own chain. The pad is not the sample — the pad is a route to a chain that contains a Simpler that contains the sample. Three layers of indirection that buy you per-pad effects, per-pad choke groups, per-pad Velocity Shaper, and per-pad audio-out routing.</p>
+<p>Notice the pad numbers: C1, C#1, D1, D#1, E1, F1&hellip; the chromatic mapping starting at C1 that Slice to New MIDI Track uses by default, and that the StemForgeLoader follows for drum kits.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  <figure class="figure"><img src="deferred/wave5/drum-rack-16-pads-populated.png" alt="A Drum Rack with 16 pads populated from a stemforge render"><figcaption>A Drum Rack with 16 pads populated from a stemforge render<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d03">
+  <h1>Slide d03 · concept</h1>
+  <h2>Drum Rack signal path — from MIDI to audio out</h2>
+  
+  <div class="body"><h1>Drum Rack signal path — from MIDI to audio out</h1>
+<p>A Drum Rack is MIDI-in, audio-out, with 128 parallel chains inside. Read the diagram left-to-right.</p>
+<ul>
+<li>MIDI enters the rack. Every chain receives every note.</li>
+<li>Each chain has a <strong>Receive Note</strong> — a single MIDI note (or note range). Only notes matching the receive pass through to that chain&rsquo;s devices.</li>
+<li>Inside a chain: the instrument (usually Simpler), optional insert effects (EQ Eight, Saturator, a Utility), optional sends to the Return chains.</li>
+<li>Return chains (the rack&rsquo;s own, not the project&rsquo;s) are shared across all pads — one reverb, one delay, fed by the S-knobs on each pad.</li>
+<li><strong>Choke groups</strong> operate at the MIDI layer, not the audio layer — when pad A fires, any pad in the same choke group receives a note-off. Closed-hat chokes open-hat by muting the source of its sound.</li>
+<li>Audio sums to the rack&rsquo;s output, or each pad can route to its own Live audio output for multi-out processing.</li>
+</ul>
+<p>The rack is not a sampler. The sampler is on the pad. The rack is the router.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  M[MIDI in] --&gt; R1[Chain 1: Receive C1]
+  M --&gt; R2[Chain 2: Receive C#1]
+  M --&gt; R3[Chain N ...]
+  R1 --&gt; S1[Simpler]
+  S1 --&gt; FX1[Insert FX]
+  FX1 --&gt; SEND[Sends to Return chains]
+  FX1 --&gt; OUT[Rack audio out]
+  R2 --&gt; S2[Simpler]
+  S2 --&gt; FX2[Insert FX]
+  FX2 --&gt; SEND
+  FX2 --&gt; OUT
+  SEND --&gt; RET[Reverb / Delay Returns]
+  RET --&gt; OUT
+  CK[Choke groups] -.-&gt; R1
+  CK -.-&gt; R2
+</div><div class="caption">Chains run in parallel, each routed by MIDI note, summing to the rack output</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i02">
+  <h1>Slide i02 · concept</h1>
+  <h2>Simpler in Classic mode — the full instrument</h2>
+  
+  <div class="body"><h1>Simpler in Classic mode — the full instrument</h1>
+<p>The screenshot shows Simpler with Classic selected. Waveform on top, three mode tabs above it, amp envelope and filter and LFO sections below.</p>
+<p>This is the mode most new users stay in for every job, which is a mistake. The filter and envelope are useful for melodic sources — pitched vocal chunks, a flute stab, a synth sample — but they add complexity when you just want a drum hit to fire.</p>
+<p>Key controls visible in the screenshot:</p>
+<ul>
+<li><strong>Voices</strong> — Mono / Poly / Legato at the top right. Set to Mono for bass sources, Poly for pads, Legato for portamento leads.</li>
+<li><strong>Warp</strong> toggle — leftmost of the three tabs above the waveform. On by default in Classic.</li>
+<li><strong>Filter</strong> section — 4-pole LP24 Moog-style by default. Multimode with key-tracking.</li>
+<li><strong>LFO</strong> — one, routable to pitch / filter / amp / pan.</li>
+</ul>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  <figure class="figure"><img src="deferred/wave5/simpler-classic-full.png" alt="Simpler, Classic mode selected — amp envelope, filter, LFO all visible"><figcaption>Simpler, Classic mode selected — amp envelope, filter, LFO all visible<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i03">
+  <h1>Slide i03 · concept</h1>
+  <h2>Simpler in One-Shot mode — the stripped-down drum device</h2>
+  
+  <div class="body"><h1>Simpler in One-Shot mode — the stripped-down drum device</h1>
+<p>The screenshot shows Simpler with One-Shot selected. Notice what is missing from the GUI compared to Classic — no filter, no LFO, no full ADSR envelope.</p>
+<p>What replaces them:</p>
+<ul>
+<li><strong>Trigger / Gate</strong> switch — the lone playback mode control.</li>
+<li><strong>Fade In</strong> — ramp at the sample start, 0 ms to 4 s range.</li>
+<li><strong>Fade Out</strong> — ramp at the sample end, 0 ms to 4 s range.</li>
+<li><strong>Snap</strong> button — pins start/end to the nearest zero crossing.</li>
+<li><strong>Transpose</strong> and <strong>Detune</strong> — for pitching the hit at the device level without relying on keyboard input.</li>
+</ul>
+<p>The waveform itself takes up more screen real estate because the envelope and filter sections are hidden. You spend your time here with the Start and End markers, not with a filter cutoff.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  <figure class="figure"><img src="deferred/wave5/simpler-oneshot-full.png" alt="Simpler, One-Shot mode — no envelope, just fade sliders"><figcaption>Simpler, One-Shot mode — no envelope, just fade sliders<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-i04">
+  <h1>Slide i04 · concept</h1>
+  <h2>Simpler in Slicing mode — waveform with numbered markers</h2>
+  
+  <div class="body"><h1>Simpler in Slicing mode — waveform with numbered markers</h1>
+<p>The screenshot shows Simpler with Slicing selected. The waveform is overlaid with numbered vertical markers, one per slice. The slice list sits to the right of the waveform with per-slice gain.</p>
+<p>Controls that matter:</p>
+<ul>
+<li><strong>Slice by</strong> dropdown — Transient / Beat / Region / Manual. The choice writes the markers.</li>
+<li><strong>Sensitivity</strong> (Transient only) — higher detects more onsets, fewer markers get merged.</li>
+<li><strong>Playback</strong> — Mono / Poly / Thru. The polyphony behavior between slices.</li>
+<li><strong>Slices</strong> list — right-hand column — each slice&rsquo;s start time, gain, and delete button. Reorder by dragging.</li>
+<li><strong>Cmd+I</strong> (Manual mode) — insert a new marker at the current cursor position.</li>
+</ul>
+<p>Slicing mode is where you spend time when you want fast chopping without spawning a full Drum Rack. For per-slice processing, use Slice to New MIDI Track instead.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  <figure class="figure"><img src="deferred/wave5/simpler-slicing-full.png" alt="Simpler, Slicing mode — numbered markers on waveform, slice list at right"><figcaption>Simpler, Slicing mode — numbered markers on waveform, slice list at right<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>Drum Sampler — per-pad MIDI tools in Live 12</h2>
+  
+  <div class="body"><h1>Drum Sampler — per-pad MIDI tools</h1>
+<p>Live 12 added <strong>Drum Sampler</strong>, a Drum Rack pad device with three pattern-shaping tools built into the pad itself. These run on inbound MIDI, not on audio. The sample stays clean.</p>
+<ul>
+<li><strong>Velocity Shaper</strong> — redraws incoming velocities against a curve you draw. Low end becomes ghost notes; peaks become accents. Per pad. Kick pads get steep curves; ghost snare pads get gentle ones.</li>
+<li><strong>Ornament</strong> — adds flams and mordents at a chosen length. 1/64 is the Aphex setting. Turn it on and every snare note becomes a short roll.</li>
+<li><strong>Time Warp</strong> — bends timing within a bar. Pulls hats late on off-beats, pushes the snare early. Per pad. Dilla time baked into the device.</li>
+</ul>
+<p>The sample is untouched. All three operate on the inbound MIDI.</p>
+<p>[ref: bib:ableton_live_12_manual, bib:charnas_dilla_time]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide caveat" id="slide-s08">
+  <h1>Slide s08 · caveat</h1>
+  <h2>Simpler vs Sampler — pick the warp</h2>
+  
+  <div class="body"><h1>Simpler vs Sampler — pick the warp</h1>
+<p>The short version:</p>
+<ul>
+<li><strong>Simpler has Warp. Sampler does not.</strong> That single fact decides ninety percent of the choice.</li>
+<li>If the sample needs to stay locked to project tempo — a looped break, a stretched pad, a sliced groove — use Simpler.</li>
+<li>If the sample needs multi-sample zones, round-robin alternation, crossfade between layers, or key-tracked filter modulation depth — use Sampler.</li>
+<li>Simpler&rsquo;s three modes cover drum hits, slicing, and chromatic playback. Sampler covers multisample libraries and velocity-split keymaps.</li>
+</ul>
+<p>Practical rule for this course: Drum Racks use Simpler on every pad unless you need round-robin. Chromatic vocal chops use Simpler in Classic mode. Sampler shows up in Week 6 when we layer and round-robin snares.</p>
+<p>The marketing positions them as a ladder from Intro to Suite. They are different tools.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-d05">
+  <h1>Slide d05 · concept</h1>
+  <h2>Simpler vs Sampler — the feature matrix</h2>
+  
+  <div class="body"><h1>Simpler vs Sampler — the feature matrix</h1>
+<p>A decision matrix, not a ladder. Ableton&rsquo;s marketing positions Sampler as the grown-up Simpler. The matrix below disagrees.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Simpler</th>
+<th>Sampler</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Warp engine</td>
+<td>yes (Beats / Tones / Texture / Complex / Complex Pro / Re-Pitch)</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Three modes (Classic / One-Shot / Slicing)</td>
+<td>yes</td>
+<td>no — one mode, multi-sample</td>
+</tr>
+<tr>
+<td>Multi-sample zones</td>
+<td>no</td>
+<td>yes (up to 1024)</td>
+</tr>
+<tr>
+<td>Round-robin / random-robin</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Velocity-split keymaps</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Key-tracked mod depth</td>
+<td>limited</td>
+<td>yes, across mod matrix</td>
+</tr>
+<tr>
+<td>Modulation matrix</td>
+<td>2 LFOs + envelopes</td>
+<td>full matrix, multiple LFOs, key/velocity/random sources</td>
+</tr>
+<tr>
+<td>Pad-friendly drum workflow</td>
+<td>yes (One-Shot is built for it)</td>
+<td>clumsy</td>
+</tr>
+</tbody>
+</table>
+<p>Rule of thumb for this course: Drum Rack pads hold Simpler unless you need round-robin. Vocal chops live in Simpler Classic. Sampler shows up when we build multi-layer snares in Week 6.</p>
+<p>They are different tools. The suite level is a licensing accident.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Need warp?] --&gt;|yes| S1[Simpler]
+  A --&gt;|no| B[Need multi-sample / round-robin / velocity zones?]
+  B --&gt;|yes| S2[Sampler]
+  B --&gt;|no| S1
+</div><div class="caption">Two-question decision tree; warp is the dominant axis</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-01">
+  <h1>Slide gd-mpc2kxl-01 · gear deep dive</h1>
+  <h2>Akai MPC2000XL — the Simpler predecessor</h2>
+  
+  <div class="body"><h1>Akai MPC2000XL — the Simpler predecessor</h1>
+<p>A contradiction to open the deep-dive.</p>
+<p>The MPC2000XL is not a Drum Rack. It is not even obviously a sampler — it is primarily a 32-track sequencer that happens to ship with 16-voice 16-bit sampling bolted on. Akai introduced it in 2000, a successor to the MPC2000 (1997), and built a machine that defined the Prefuse 73 / Madlib / Dilla-era hip-hop production aesthetic for the next decade.</p>
+<p>Why this deep-dive belongs in Week 3: the workflow Ableton calls <em>Drum Rack + Simpler in Slicing mode + resampling to a new track</em> is the MPC2000XL workflow translated to software. The pads, the chop mode, the Note Repeat, the resample button — Ableton&rsquo;s modern sampling stack is MPC vocabulary with a DAW under it.</p>
+<p>Scott Herren (Prefuse 73) made two albums — <em>Vocal Studies + Uprock Narratives</em> (2001) and <em>One Word Extinguisher</em> (2003) — on exactly this machine plus a pair of turntables into Pro Tools.</p>
+<p>[ref: bib:akai_mpc2000xl_manual, bib:prefuse_73_xlr8r]</p></div>
+  <figure class="figure"><img src="deferred/wave5/gear-mpc2kxl-hero.jpg" alt="Akai MPC2000XL, released 2000. 32-track sequencer + 16-voice sampler, 44.1 kHz 16-bit."><figcaption>Akai MPC2000XL, released 2000. 32-track sequencer + 16-voice sampler, 44.1 kHz 16-bit.<div class="credit">Wikimedia Commons / public domain product shot · CC-BY-SA-3.0</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-02">
+  <h1>Slide gd-mpc2kxl-02 · gear deep dive</h1>
+  <h2>Annotated tour (1/2) — the pad bank and its banks</h2>
+  
+  <div class="body"><h1>Annotated tour (1/2) — the pad bank and its banks</h1>
+<p>The annotated photo above highlights the right side of the faceplate. Four things matter for the Prefuse workflow.</p>
+<ul>
+<li><strong>16 velocity-sensitive pads</strong> (labeled A01–A16). Each pad holds one sample or one drum program entry. Pads are the performance surface; the Note Repeat button plus a pad holds a retriggered hit at the current TC (timing correct) value.</li>
+<li><strong>Bank A / B / C / D</strong> buttons — switch the 16 pads to four different banks, for a total of 64 assignable pads per program. Prefuse used banks A and B for vocal slices, C for drum hits, D for resampled stacks.</li>
+<li><strong>After</strong> — aftertouch on/off; enables the pads to send pressure data. Rarely used in hip-hop workflows, critical for melodic pad work.</li>
+<li><strong>Note Variation slider</strong> — the single fader above the pads. Assignable to tune, filter, or layer crossfade per-pad. Herren used this to pitch-shift vocal fragments on the fly during finger-drumming.</li>
+</ul>
+<p>[ref: bib:akai_mpc2000xl_manual]</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="deferred/wave5/gear-mpc2kxl-pads.jpg" alt="Right side of the faceplate — pad bank, Bank A/B/C/D, After, Note Variation slider"><div class="callouts"><ol><li><strong>16 pads</strong>: A01-A16 velocity-sensitive. Held with Note Repeat, they retrigger at current TC value.</li><li><strong>Bank A/B/C/D</strong>: Four banks = 64 total pad slots per program. Prefuse used A and B for vocal slices.</li><li><strong>Note Variation</strong>: Assignable slider. Herren routed it to pitch for on-the-fly fragment shifting.</li><li><strong>After button</strong>: Aftertouch on/off. Rarely used in hip-hop; critical for pad work.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-03">
+  <h1>Slide gd-mpc2kxl-03 · gear deep dive</h1>
+  <h2>Annotated tour (2/2) — chop mode, resample, track ghost</h2>
+  
+  <div class="body"><h1>Annotated tour (2/2) — chop mode, resample, track ghost</h1>
+<p>The second annotated photo highlights the left side of the faceplate — the buttons that make the chopping workflow function.</p>
+<ul>
+<li><strong>Sample/Record</strong> button (MODE 6) — holds you in sample-record mode while you drop in audio from the rear RCA inputs. 44.1 kHz, 16-bit, mono or stereo.</li>
+<li><strong>Trim/Edit Sample</strong> (MODE 6 → F4) — the Chop Shop and 16-Levels pages live here. Chop Shop auto-slices by threshold, regions, or equal divisions; 16-Levels spreads a single sample across 16 pads at chromatic semitones.</li>
+<li><strong>Resample</strong> — in OS 1.7+, press and hold during playback to record the MPC&rsquo;s stereo output back into a new sample slot. This is the <em>ladder rung</em> — chop a pattern, play it, resample it, re-chop the resample.</li>
+<li><strong>Track Mute</strong> page — each of the 64 tracks can be muted live from the pads. Serves as a performance mixer and as a track ghost — mute every track except one, solo-audition, confirm a hit.</li>
+</ul>
+<p>[ref: bib:akai_mpc2000xl_manual, bib:prefuse_73_xlr8r]</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="deferred/wave5/gear-mpc2kxl-left-panel.jpg" alt="Left side of the faceplate — mode buttons that make the chop workflow function"><div class="callouts"><ol><li><strong>Sample/Record (MODE 6)</strong>: Enters sample-record. 44.1 kHz 16-bit from rear RCA inputs.</li><li><strong>Trim/Edit (F4)</strong>: Chop Shop and 16-Levels pages. Auto-slice by threshold, regions, or chromatic.</li><li><strong>Resample</strong>: OS 1.7+: hold during playback, MPC records its own stereo output to a new sample slot.</li><li><strong>Track Mute</strong>: Solo-audition any of the 64 tracks from the pads during playback.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-04">
+  <h1>Slide gd-mpc2kxl-04 · gear deep dive</h1>
+  <h2>The 4-step resampling ladder</h2>
+  
+  <div class="body"><h1>The 4-step resampling ladder — sample, chop, pitch, resample</h1>
+<p>Herren&rsquo;s workflow, reconstructed from XLR8R and the MPC2000XL manual. The ladder is the move.</p>
+<p><strong>Rung 1 — Sample.</strong> Record a 2–4 second vocal phrase from a turntable into a single pad. 44.1 kHz, 16-bit, mono. The phrase is too long to be a hit and too short to be a loop.</p>
+<p><strong>Rung 2 — Chop.</strong> Enter Chop Shop (Trim → F4). Slice by Regions (16 equal divisions) or by Threshold (transient-based). Assign each slice to a pad in Bank A. The vocal phrase is now 16 independent fragments addressable as MIDI notes.</p>
+<p><strong>Rung 3 — Pitch.</strong> Use the Note Variation slider to re-pitch selected pads ±3 to ±7 semitones. Some up, some down. Finger-drum a new rhythm across the pitched fragments. Record the performance into a MIDI track.</p>
+<p><strong>Rung 4 — Resample.</strong> Press Resample during playback of the MIDI track. The MPC captures its own output into a fresh sample slot. Now that resampled take is a new 2–4 second phrase — loop back to rung 1.</p>
+<p>Two ladder cycles and the source is unrecognizable. Three, and it is no longer yours.</p>
+<p>[ref: bib:prefuse_73_xlr8r, bib:akai_mpc2000xl_manual]</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph TD
+  A[Sample: 2-4s vocal phrase to one pad] --&gt; B[Chop: Regions 16 or Threshold]
+  B --&gt; C[Pitch: Note Variation slider ±3 to ±7 semi]
+  C --&gt; D[Finger-drum new rhythm, record to MIDI track]
+  D --&gt; E[Resample: capture stereo output to new pad]
+  E --&gt; |loop back| A
+</div><div class="caption">Herren&#x27;s ladder — each cycle makes the source less recognizable</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-05">
+  <h1>Slide gd-mpc2kxl-05 · gear deep dive</h1>
+  <h2>Interview receipts — Herren on limitation</h2>
+  
+  <div class="body"><h1>Interview receipts — Herren on limitation as aesthetic</h1>
+<p>Receipts first. The ladder is not folk wisdom — it is how Herren explicitly describes his method.</p>
+<p>On the MPC as a constraint, from XLR8R:</p>
+<blockquote>
+<p><em>&ldquo;I value the artistic limits imposed by the more primitive technology. I feel they help me focus on the song, instead of the production.&rdquo;</em></p>
+</blockquote>
+<p>On his relationship to the Miami/Schematic IDM aesthetic of the early 2000s:</p>
+<blockquote>
+<p><em>&ldquo;Trying to fake what they did on computers with the MPC.&rdquo;</em></p>
+</blockquote>
+<p>On timing — and this is the one that matters for how you program patterns:</p>
+<blockquote>
+<p><em>&ldquo;The way I chop samples is kind of careless; I don&rsquo;t try to match bpms and shit.&rdquo;</em></p>
+</blockquote>
+<p>Translate: Prefuse 73 did not warp. He chopped at whatever the record happened to be at, finger-drummed over it, let the timing drift be the feel, and resampled. The carelessness is the point. A warped grid-locked recreation of a Prefuse beat will sound sterile no matter how accurate the chops are.</p>
+<p>On the source material, from the same interview:</p>
+<blockquote>
+<p><em>&ldquo;I don&rsquo;t care where they came from, I don&rsquo;t care how rare they are — I&rsquo;ll find a way to make it sound like you haven&rsquo;t heard it before&hellip; If you&rsquo;re going to chop your shit somehow, or find a small loop, you&rsquo;re not doing anything.&rdquo;</em></p>
+</blockquote>
+<p>The ethic: transformation is the permission.</p>
+<p>[ref: bib:prefuse_73_xlr8r]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-06">
+  <h1>Slide gd-mpc2kxl-06 · gear deep dive</h1>
+  <h2>Underlying algorithm — 44.1kHz, 16-bit, velocity curves</h2>
+  
+  <div class="body"><h1>Underlying algorithm — 44.1kHz, 16-bit, the velocity curve</h1>
+<p>The MPC2000XL is a 44.1 kHz, 16-bit sampler with 16 voices of polyphony. It is not a lo-fi machine in the SP-1200 sense — the specs are CD-quality. What shapes the sound is the <strong>velocity curve</strong> and the sample-playback algorithm, not the bit depth.</p>
+<p>From the manual and from Akai&rsquo;s service documentation:</p>
+<ul>
+<li><strong>Bit depth</strong>: 16-bit linear PCM, 44.1 kHz sample rate, no companding. Contrast with the SP-1200 at 12-bit 26.04 kHz companded — the MPC2000XL is already &ldquo;clean&rdquo; by hip-hop-sampler standards.</li>
+<li><strong>Playback engine</strong>: sample-and-hold interpolation by default; optional linear interpolation when pitched. Extreme re-pitch (+12 or more semitones) introduces aliasing you can hear — which is why 16-Levels chops at ±6 semitones stay musical while wider spreads get metallic.</li>
+<li><strong>Velocity curve</strong>: each pad has its own velocity-to-amp curve and velocity-to-filter curve. Default is linear; Herren and most MPC users bent the curve so that light touches produced ghost hits and hard touches produced accent hits — a three-tier dynamic map inside a single pad.</li>
+<li><strong>Timing correction</strong>: the global TC (timing correct) value quantizes incoming pad hits to the nearest 1/8, 1/16, 1/32, 1/16T, 1/32T, or Off. &ldquo;Off&rdquo; is the Prefuse setting. Every other setting grid-locks the performance.</li>
+</ul>
+<p>[ref: bib:akai_mpc2000xl_manual, bib:roads_computer_music_tutorial]</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .axis { stroke: #333; stroke-width: 1.5; fill: none; }
+    .grid { stroke: #ddd; stroke-width: 1; }
+    .curve-lin { stroke: #777; stroke-width: 2; fill: none; stroke-dasharray: 5 3; }
+    .curve-bent { stroke: #c62; stroke-width: 2.5; fill: none; }
+    .lbl { font: 13px system-ui; fill: #333; }
+    .lbl-sm { font: 11px system-ui; fill: #666; }
+  </style>
+  <rect x="0" y="0" width="800" height="350" fill="#fafafa"/>
+  <line class="grid" x1="80" y1="300" x2="720" y2="300"/>
+  <line class="grid" x1="80" y1="240" x2="720" y2="240"/>
+  <line class="grid" x1="80" y1="180" x2="720" y2="180"/>
+  <line class="grid" x1="80" y1="120" x2="720" y2="120"/>
+  <line class="grid" x1="80" y1="60" x2="720" y2="60"/>
+  <line class="axis" x1="80" y1="60" x2="80" y2="300"/>
+  <line class="axis" x1="80" y1="300" x2="720" y2="300"/>
+  <path class="curve-lin" d="M80,300 L720,60"/>
+  <path class="curve-bent" d="M80,300 Q200,290 350,250 Q500,190 600,130 Q680,80 720,60"/>
+  <text class="lbl" x="40" y="305">0</text>
+  <text class="lbl" x="30" y="65">127</text>
+  <text class="lbl" x="80" y="325">0</text>
+  <text class="lbl" x="700" y="325">127</text>
+  <text class="lbl" x="350" y="335">Incoming MIDI velocity</text>
+  <text class="lbl" x="15" y="180" transform="rotate(-90 15 180)">Amp gain / output</text>
+  <text class="lbl" x="550" y="80">Bent curve (Prefuse)</text>
+  <text class="lbl-sm" x="560" y="100">ghost → accent tier</text>
+  <text class="lbl" x="300" y="230">Default linear</text>
+</svg>
+<div class="caption">Per-pad velocity-to-amp curve. Herren bent it so light touches become ghost hits.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-07">
+  <h1>Slide gd-mpc2kxl-07 · gear deep dive</h1>
+  <h2>Algorithm constraints — why the MPC sounds like the MPC</h2>
+  
+  <div class="body"><h1>Algorithm constraints — why the MPC sounds like the MPC</h1>
+<p>The machine has three constraints that became aesthetic signatures. Every modern re-creation has to choose which of them to preserve and which to skip.</p>
+<p><strong>1. The TC swing curve.</strong> TC 1/16 with swing values 50% (straight) to 75% (maximum shuffle). Swing is applied to every <em>other</em> 1/16 note — the &ldquo;and&rdquo; counts are pushed later. The curve is not Dilla&rsquo;s. It is a fixed exponential mapping; Dilla (MPC3000) had a different chip revision with a subtly different curve. Herren (MPC2000XL) usually worked at 54–58% swing.</p>
+<p><strong>2. Sample memory as a ceiling.</strong> The base machine ships with 2 MB of RAM — 12 seconds of mono 16-bit. Expanded to the full 32 MB via EXM-E3 SIMMs, you get about 6 minutes mono or 3 minutes stereo. This forced short samples — a 2-second vocal phrase, not a 20-second loop. The short-phrase-into-chop method is not a choice; it is what fit in RAM.</p>
+<p><strong>3. No time-stretch, no warp.</strong> The MPC2000XL cannot time-stretch a sample while preserving pitch. If you record a 95 BPM break and your track is at 90 BPM, you either pitch the whole sample down (which slows it), or you chop it and re-trigger at the new tempo. The &ldquo;chop and re-trigger&rdquo; workflow is forced by the absence of warp.</p>
+<p>Ableton&rsquo;s Simpler breaks constraint 3 via Beats warp. Students who want the Prefuse sound should deliberately turn warp off.</p>
+<p>[ref: bib:akai_mpc2000xl_manual]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-08">
+  <h1>Slide gd-mpc2kxl-08 · gear deep dive</h1>
+  <h2>Ableton bridge — Drum Rack + Simpler Slicing + Resample track</h2>
+  
+  <div class="body"><h1>Ableton bridge — Drum Rack + Simpler Slicing + Resample track</h1>
+<p>The Ableton equivalent of the MPC ladder. Parameter table below.</p>
+<p><strong>Screenshot</strong> (to be supplied in Wave 5): a Live set with three tracks — a source audio track with the vocal phrase; a MIDI track named &ldquo;Chop 1&rdquo; with a Drum Rack full of Simpler-per-pad chains from Slice to New MIDI Track; a resample audio track set to record from &ldquo;Chop 1&rdquo;.</p>
+<table>
+<thead>
+<tr>
+<th>MPC2000XL</th>
+<th>Ableton Live 12 equivalent</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16 velocity-sensitive pads</td>
+<td>Drum Rack, 16 visible pads (one octave)</td>
+<td>Page Up/Down scrolls the other 96</td>
+</tr>
+<tr>
+<td>Bank A/B/C/D</td>
+<td>Page Up/Page Down on Drum Rack</td>
+<td>Each page is 16 pads, 8 pages = 128 pads</td>
+</tr>
+<tr>
+<td>Chop Shop (Regions)</td>
+<td>Slice to New MIDI Track → Slice to Beat Division or Transient</td>
+<td>Region count maps to 1/16 count for a bar</td>
+</tr>
+<tr>
+<td>16-Levels</td>
+<td>Simpler Classic mode + chromatic MIDI clip</td>
+<td>Load sample, play across keyboard</td>
+</tr>
+<tr>
+<td>Note Variation slider</td>
+<td>Drum Sampler&rsquo;s Velocity Shaper + Time Warp</td>
+<td>Per-pad in Live 12</td>
+</tr>
+<tr>
+<td>Note Repeat</td>
+<td>Push 3 Note Repeat, or Ableton Note Echo MIDI effect</td>
+<td>Push is the closest feel-match</td>
+</tr>
+<tr>
+<td>Resample</td>
+<td>Audio track, Input = &ldquo;Resample&rdquo;, record-arm</td>
+<td>No button, but the plumbing is the same</td>
+</tr>
+<tr>
+<td>TC 1/16 swing 54–58%</td>
+<td>Groove Pool: MPC-58 swing template</td>
+<td>Apply per-clip, not globally</td>
+</tr>
+</tbody>
+</table>
+<p>The bridge is faithful but not identical. Swing curves especially — Ableton&rsquo;s grooves are linear-time, not the MPC&rsquo;s chip-native curve.</p>
+<p>[ref: bib:ableton_live_12_manual, bib:akai_mpc2000xl_manual, bib:charnas_dilla_time]</p></div>
+  <figure class="figure"><img src="deferred/wave5/mpc-ableton-bridge-set.png" alt="A three-track Live set — Source audio, Chop 1 (MIDI + Drum Rack), Resample (audio record-arm)"><figcaption>A three-track Live set — Source audio, Chop 1 (MIDI + Drum Rack), Resample (audio record-arm)<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-09">
+  <h1>Slide gd-mpc2kxl-09 · gear deep dive</h1>
+  <h2>Parallel Max for Live devices</h2>
+  
+  <div class="body"><h1>Parallel Max for Live devices — if you want the feel without the bridge</h1>
+<p>Three M4L devices worth installing for the MPC-like experience inside Live.</p>
+<ul>
+<li><strong>Buffer Shuffler 2.0</strong> (native Ableton M4L) — drop it on an audio track, it captures the last N bars, and on each new bar it re-orders the 1/16 slices according to a probability pattern. This is the Prefuse chop-and-rearrange move automated. Useful for instant drum reshuffles over a static break.</li>
+<li><strong>K-Devices ESQ</strong> — step sequencer with per-step probability, per-step swing, and per-step retrigger. Behaves like an MPC sequence grid with the swing and probability sliders the MPC never had. Pair with a Drum Rack to program hip-hop patterns by step, not by recording.</li>
+<li><strong>Iftah&rsquo;s M4L suite</strong> or <strong>Dillon Bastan&rsquo;s Markov Variations</strong> — for the <em>generate-and-audition</em> feel that the MPC&rsquo;s step-edit mode does manually. Generate a MIDI pattern, audition it against the kit, commit if it works.</li>
+</ul>
+<p>Alternatively: buy a secondhand MPC2000XL. They are $500–$900 on reverb.com as of 2026. The workflow is different in ways you cannot replicate — tactile pads, the Note Repeat button as muscle memory, the forced linearity of a hardware screen. The argument for software is parity; the argument for hardware is that you will actually finish songs because there are no menus.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-10">
+  <h1>Slide gd-mpc2kxl-10 · gear deep dive</h1>
+  <h2>Creative uses beyond chopping vocals</h2>
+  
+  <div class="body"><h1>Creative uses beyond chopping vocals</h1>
+<p>The MPC2000XL was designed for hip-hop but its architecture supports more than the Prefuse workflow. Four uses worth knowing.</p>
+<ul>
+<li><strong>Sample-and-hold synthesis</strong>. Record 500 ms of a field recording into a pad. Set the pad to loop across its full length. Play chromatically across 16-Levels. You now have a wavetable-adjacent pitched instrument built from one captured sound. Aphex Twin&rsquo;s <em>Druqks</em>-era textures used this on a different Akai (S950), but the move transfers.</li>
+<li><strong>Beat-sliced drum programming with no MIDI input</strong>. Sample a 1-bar break. Chop by threshold. Drop the slices onto pads. Sequence a new 16-step pattern by entering notes in Step Edit mode — no tapping. The tracker-adjacent workflow that makes Autechre-style patterns possible on a non-computer.</li>
+<li><strong>Resampling as freeze</strong>. The MPC has no track freeze. Resampling the output of a CPU-heavy track — layered samples with filter sweeps — gives you a single flat sample you can treat as source. This is how you stack 60 pads of processing into a machine with 16 voices.</li>
+<li><strong>Live finger-drumming over DJ sets</strong>. Bank A drums, Bank B one-shots, Bank C vocals, Bank D FX. A MIDI clock in from a turntable rig keeps sequencer-based patterns locked to the set tempo. This is what Herren does on stage.</li>
+</ul>
+<p>[ref: bib:akai_mpc2000xl_manual, bib:prefuse_73_xlr8r]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-11">
+  <h1>Slide gd-mpc2kxl-11 · gear deep dive</h1>
+  <h2>Parallel modern workflows — the method outlived the metal</h2>
+  
+  <div class="body"><h1>Parallel modern workflows — who still works this way</h1>
+<p>The MPC2000XL workflow survived. It migrated. Three current examples.</p>
+<ul>
+<li><strong>Madlib on the SP-303 and later Akai MPC Live II</strong>. Same ladder — sample, chop, pitch, resample — on different hardware. His <em>Shades of Blue</em> (2003) and the later <em>Madvillainy</em> sessions are entirely this method. The takeaway is not <em>get the same hardware</em>; it is <em>sample → chop → resample is the unit of work.</em></li>
+<li><strong>Knxwledge and the MPC Renaissance</strong>. The Renaissance is a hardware controller for MPC software on a computer; the workflow is identical to the 2000XL with 2024 disk space. Knxwledge&rsquo;s 2010s output is MPC-native beats resampled into Ableton for arrangement.</li>
+<li><strong>The Push 3 standalone</strong>. Ableton shipped a standalone Push in 2023 that runs Live&rsquo;s sampling stack on embedded hardware. It is a Drum Rack with pads. The ladder works — sample, slice to MIDI, resample to audio track, re-slice. Push 3 is the 2026 equivalent of what the MPC2000XL was in 2001: a hardware-first sampler-sequencer with a screen you are allowed to ignore.</li>
+</ul>
+<p>The throughline: the method outlived the metal. If you understand the ladder, the box is interchangeable.</p>
+<p>[ref: bib:ableton_live_12_manual, bib:prefuse_73_xlr8r]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-12">
+  <h1>Slide gd-mpc2kxl-12 · gear deep dive</h1>
+  <h2>Exercise A — replicate the Prefuse ladder in Ableton</h2>
+  
+  <div class="body"><h1>Exercise A — replicate the Prefuse ladder in Ableton</h1>
+<p><strong>Deliverable.</strong> One <code>.wav</code> file. 8 bars. Project tempo. A single vocal source taken through two ladder cycles.</p>
+<p>Steps:</p>
+<ol>
+<li>Pick one vocal phrase from the stemforge <code>w03-express-oneshots</code> output — ideally a 2-4 second chunk with syllabic content (not a sustained note).</li>
+<li>Drop the phrase onto an audio track. Do <strong>not</strong> warp it. This is the Prefuse constraint — timing drift is the feel.</li>
+<li>Right-click the clip → <strong>Slice to New MIDI Track</strong>. Slice by Region, 16 slices. Call the new track <code>Chop 1</code>.</li>
+<li>Program 4 bars of MIDI across the 16 pads. Do not re-play the original phrase; rearrange. Use unusual pad orders; repeat fragments; leave gaps.</li>
+<li>On a new audio track, set the input to <code>Chop 1</code>. Record-arm. Play the 4-bar pattern and resample to a fresh audio clip.</li>
+<li>Drop that resampled clip onto another new audio track. <strong>Slice to New MIDI Track</strong> again — this is ladder rung 2. Call it <code>Chop 2</code>.</li>
+<li>Program another 4 bars on <code>Chop 2</code>. Now you are chopping a chop.</li>
+<li>Bounce all 8 bars from both <code>Chop 1</code> and <code>Chop 2</code> sequences as the final deliverable. File: <code>w03_&lt;yourname&gt;_prefuse_ladder.wav</code>.</li>
+</ol>
+<p>Time-box: sixty minutes.</p>
+<p>[ref: bib:prefuse_73_xlr8r, bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">w03_&lt;yourname&gt;_prefuse_ladder.wav — 8 bars, one vocal source, two ladder cycles, no warp.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc2kxl-13">
+  <h1>Slide gd-mpc2kxl-13 · gear deep dive</h1>
+  <h2>Exercise B — Buffer Shuffler + Drum Rack</h2>
+  
+  <div class="body"><h1>Exercise B — go beyond: Buffer Shuffler + Drum Rack</h1>
+<p><strong>Deliverable.</strong> One <code>.wav</code> file. 16 bars. A break that evolves — same source material, Buffer Shuffler re-ordering on a per-bar basis, plus a programmed Drum Rack layer underneath.</p>
+<p>Steps:</p>
+<ol>
+<li>Pick one drum loop from stemforge output — not a one-shot, a full bar of percussion. Drop it onto an audio track. Warp it to project tempo with Beats mode.</li>
+<li>Add <strong>Buffer Shuffler 2.0</strong> (Ableton&rsquo;s native M4L device) to that track. Set the buffer to 1 bar. Set re-order density to moderate — about 40% shuffle. Let it run; now the break reshuffles itself every bar.</li>
+<li>On a second MIDI track, load a Drum Rack from the StemForgeLoader&rsquo;s <code>w03-express-oneshots</code> output. Keep only kick, snare, hat. Program a simple 4-bar pattern.</li>
+<li>Record 16 bars of both tracks together to a new audio track. The Buffer Shuffler layer will produce a different reshuffle on each bar — 16 distinct bars from one source clip.</li>
+<li>On the bounced audio, <strong>Slice to New MIDI Track</strong> with Transient slicing. You now have a MIDI clip that re-plays the 16 reshuffled bars. Edit it — remove half the notes, double-time a section, whatever.</li>
+<li>Bounce the edited version. File: <code>w03_&lt;yourname&gt;_shuffler_remix.wav</code>.</li>
+</ol>
+<p>Time-box: ninety minutes. If the Buffer Shuffler feels random, it is random — that is the device. Audition until a bar lands.</p>
+<p>[ref: bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">w03_&lt;yourname&gt;_shuffler_remix.wav — 16 bars, one drum loop reshuffled per bar, plus a programmed Drum Rack layer.</div>
+  
+</section>
+
+
+<section class="slide reference" id="slide-s09">
+  <h1>Slide s09 · reference</h1>
+  <h2>StemForgeLoader.amxd — the loader does the plumbing</h2>
+  
+  <div class="body"><h1>StemForgeLoader.amxd — the loader does the plumbing</h1>
+<p>This is also the dedicated Max for Live lesson of the course. One device, one job.</p>
+<p>What the loader does when you drag it onto a MIDI track and press its button:</p>
+<ul>
+<li>Auto-creates <strong>seven template tracks</strong> — SF Source, Drums Rack, Bass Rack, Vocals Rack, Other Rack, Chromatic Simpler, Beat Chop Simpler.</li>
+<li>Each Rack template arrives with its own effect chain wired — EQ, gate, compressor, a send to a shared reverb.</li>
+<li>For a song manifest, the loader duplicates the Drums Rack template, renames it <code>Drums Rack | &lt;song&gt;</code>, and walks the manifest — each one-shot into its Simpler at chromatic C1 upward.</li>
+<li>Templates stay untouched; duplicates are what you edit.</li>
+</ul>
+<p>Screenshots deferred to Wave 5. The loader is in the stemforge repo under <code>m4l/</code>. For this lesson we will point it at the <code>w03-express-oneshots</code> output.</p>
+<p>[ref: bib:stemforge_repo]</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide reference" id="slide-i05">
+  <h1>Slide i05 · reference</h1>
+  <h2>StemForgeLoader.amxd — the UI</h2>
+  
+  <div class="body"><h1>StemForgeLoader.amxd — the UI</h1>
+<p>The screenshot shows the loader device in Live&rsquo;s device view. Single rack with a Manifest path field, a Build button, a template-list readout, and an operation log.</p>
+<p>What you see:</p>
+<ul>
+<li><strong>Manifest path</strong> — the <code>.json</code> produced by a stemforge recipe. For this week, point it at <code>build/audio/stemforge-renders/w03/express_oneshots/manifest.json</code>.</li>
+<li><strong>Build</strong> button — the single action. Duplicates the Drums Rack template, renames to <code>Drums Rack | &lt;song&gt;</code>, loads each one-shot into its Simpler at chromatic C1 upward.</li>
+<li><strong>Operation log</strong> — one line per action. Track rename, Simpler load, chain add. Use it to audit what the loader did.</li>
+<li><strong>Templates</strong> — the seven template tracks are created on first run if missing. SF Source, Drums Rack, Bass Rack, Vocals Rack, Other Rack, Chromatic Simpler, Beat Chop Simpler.</li>
+</ul>
+<p>Screenshot deferred to Wave 5 if the device UI changes between now and render.</p>
+<p>[ref: bib:stemforge_repo]</p></div>
+  <figure class="figure"><img src="deferred/wave5/stemforge-loader-annotated.png" alt="Loader device UI — manifest field, Build button, template list, operation log"><figcaption>Loader device UI — manifest field, Build button, template list, operation log<div class="credit">own-screenshot</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s10">
+  <h1>Slide s10 · exercise</h1>
+  <h2>Exercise — four bars, three drums, one bounce</h2>
+  
+  <div class="body"><h1>Exercise — four bars, three drums, one bounce</h1>
+<p><strong>Deliverable.</strong> One <code>.wav</code> file. Four bars. Project tempo. Drums only, from the kit you just built.</p>
+<p>Steps:</p>
+<ol>
+<li>Run the stemforge recipe <code>w03-express-oneshots</code> against <code>grooves/Express Yourself.wav</code>. Output lands in <code>build/audio/stemforge-renders/w03/express_oneshots/</code>. LarsNet classifies hits as kick / snare / hat / tom / cymbal.</li>
+<li>Drop the <strong>StemForgeLoader.amxd</strong> on a fresh MIDI track. Point its manifest at the <code>w03-express-oneshots</code> output. Let it build the seven templates and the song-specific Drums Rack.</li>
+<li>Keep only <strong>kick, snare, hat</strong> on C1, D1, F#1. Delete or mute the rest.</li>
+<li>Program <strong>4 bars</strong> of MIDI. Any pattern. Your pattern, not Charles Wright&rsquo;s.</li>
+<li>On each of the three pads, open the Drum Sampler and <strong>draw a Velocity Shaper curve</strong> — kick steep, snare medium, hat gentle.</li>
+<li>Bounce the track. File: <code>w03_&lt;yourname&gt;_4bar.wav</code>. Mute the source chain. Ship.</li>
+</ol>
+<p>Time-box: forty-five minutes.</p>
+<p>[ref: bib:stemforge_repo, bib:ableton_live_12_manual]</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">One .wav file, 4 bars at the project tempo, drums only from the stemforge w03-express-oneshots pack, per-pad Velocity Shaper applied. Bounced, source chain muted, file named `w03_&lt;yourname&gt;_4bar.wav`.</div>
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:akai_mpc2000xl_manual">Akai — MPC2000XL Operator&#x27;s Manual <a href="https://www.akaipro.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:charnas_dilla_time">Dan Charnas — Dilla Time: The Life and Afterlife of J Dilla, Hip-Hop&#x27;s Producer Extraordinaire — MCD / Farrar, Straus and Giroux 2022</li><li id="bib:prefuse_73_xlr8r">Scott Herren (interviewee) — Prefuse 73 — MPC Philosophy — XLR8R <a href="https://xlr8r.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:roads_computer_music_tutorial">Curtis Roads — The Computer Music Tutorial — MIT Press 1996</li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:tape_notes_140_four_tet">Kieran Hebden (Four Tet) — Three — 2024 <a href="https://tapenotes.cc/" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 111800}, {"id": "ch001", "title": "Simpler is already most of the rack", "start_ms": 112200, "end_ms": 252100}, {"id": "ch002", "title": "Three modes, one device", "start_ms": 252500, "end_ms": 388700}, {"id": "ch003", "title": "One-Shot mode \u2014 drum hits without pitch drift", "start_ms": 389100, "end_ms": 526900}, {"id": "ch004", "title": "Slicing mode \u2014 Transient, Beat, Region, Manual", "start_ms": 527300, "end_ms": 677050}, {"id": "ch005", "title": "Slice to New MIDI Track", "start_ms": 677450, "end_ms": 831600}, {"id": "ch006", "title": "Drum Rack \u2014 chains are the point", "start_ms": 832000, "end_ms": 967650}, {"id": "ch007", "title": "Drum Sampler \u2014 per-pad MIDI tools in Live 12", "start_ms": 968050, "end_ms": 1112800}, {"id": "ch008", "title": "Simpler vs Sampler \u2014 pick the warp", "start_ms": 1113200, "end_ms": 1248150}, {"id": "ch009", "title": "StemForgeLoader.amxd \u2014 the loader does the plumbing", "start_ms": 1248550, "end_ms": 1390800}, {"id": "ch010", "title": "Exercise \u2014 four bars, three drums, one bounce", "start_ms": 1391200, "end_ms": 1557600}, {"id": "ch011", "title": "Outro", "start_ms": 1558000, "end_ms": 1643550}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>

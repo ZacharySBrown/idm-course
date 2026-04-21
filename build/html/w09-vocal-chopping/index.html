@@ -1,0 +1,1363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDM — W9 — Week 9 — Vocal chopping: Prefuse, Dilla, Kanye, Premier</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg: #f4f0e8;
+  --ink: #111;
+  --dim: #5a5047;
+  --line: #2a2520;
+  --accent: #8b1a1a;
+  --pill-bg: #e8e0d2;
+  --pill-hover: #d8cdb8;
+  --deep-dive-bg: #ede3cf;
+  --mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Charter", "Iowan Old Style", "Georgia", serif;
+  --sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+body { font-family: var(--serif); font-size: 18px; line-height: 1.55; padding-top: 96px; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+code { font-family: var(--mono); font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+pre { font-family: var(--mono); background: rgba(0,0,0,0.06); padding: 12px 16px; border-left: 2px solid var(--ink); overflow-x: auto; font-size: 14px; }
+blockquote { margin: 0; padding: 0 1em; border-left: 2px solid var(--ink); color: var(--dim); font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* Podcast bar (sticky top) */
+.podcast-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: var(--bg); border-bottom: 2px solid var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-size: 13px;
+}
+.podcast-bar .crumb { color: var(--dim); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.podcast-bar .crumb a { color: var(--ink); }
+.podcast-bar .spacer { flex: 1; }
+.podcast-bar audio { height: 34px; flex: 2; min-width: 280px; max-width: 520px; }
+.podcast-bar .chapter { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; white-space: nowrap; }
+.podcast-bar button {
+  font-family: var(--mono); font-size: 11px; padding: 5px 10px;
+  background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+}
+.podcast-bar button:hover { background: var(--ink); color: var(--bg); }
+.podcast-bar .title-chip { font-weight: 500; letter-spacing: 0.02em; }
+
+/* Stage */
+.stage { max-width: 860px; margin: 0 auto; padding: 40px 32px 120px; min-height: 70vh; }
+.slide { display: none; }
+.slide.active { display: block; animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Typography */
+.slide h1 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px 0; font-weight: 500; }
+.slide h2 { font-family: var(--serif); font-size: 38px; line-height: 1.15; font-weight: 400; margin: 0 0 24px 0; letter-spacing: -0.01em; }
+.slide.title h2 { font-size: 52px; margin-top: 2rem; }
+.slide.title .sub { color: var(--dim); font-style: italic; font-size: 22px; margin-top: 12px; }
+.slide .body { font-size: 18px; }
+.slide .body ul, .slide .body ol { padding-left: 1.4em; }
+.slide .body li { margin: 6px 0; }
+.slide .body p { margin: 0 0 14px 0; }
+.slide .body img { max-width: 100%; height: auto; margin: 16px 0; border: 1px solid var(--line); }
+.slide.exercise h2 { border-left: 3px solid var(--accent); padding-left: 16px; }
+.slide.caveat h2 { font-style: italic; color: var(--dim); }
+.slide.teaser { background: #e8e0d2; margin: 20px -32px; padding: 28px 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.slide.teaser h2 { font-size: 28px; }
+.slide.gear_deep_dive { background: var(--deep-dive-bg); margin: 20px -32px; padding: 32px; border-left: 4px solid var(--accent); }
+.slide.gear_deep_dive h1::before { content: "GEAR DEEP-DIVE · "; color: var(--accent); }
+.deliverable { margin-top: 24px; padding: 14px 18px; background: rgba(139,26,26,0.08); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 14px; }
+.deliverable::before { content: "DELIVERABLE — "; color: var(--accent); font-weight: 600; }
+
+/* Images + figures */
+.figure { margin: 20px 0; }
+.figure img, .figure svg { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; display: block; }
+.figure figcaption { font-family: var(--sans); font-size: 12px; color: var(--dim); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.figure .credit { font-size: 10px; color: var(--dim); font-style: italic; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Annotated gear */
+.annotation { margin: 24px 0; border: 1px solid var(--line); padding: 0; background: #fff; }
+.annotation .gear-svg { display: block; width: 100%; height: auto; }
+.annotation .callouts { font-family: var(--sans); font-size: 13px; padding: 14px 18px; background: rgba(0,0,0,0.03); border-top: 1px solid var(--line); }
+.annotation .callouts ol { margin: 0; padding-left: 1.4em; }
+
+/* Diagrams (Mermaid + SVG) */
+.diagram { margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.03); border: 1px solid var(--line); text-align: center; }
+.diagram svg { max-width: 100%; height: auto; }
+.diagram .caption { font-family: var(--sans); font-size: 12px; color: var(--dim); margin-top: 10px; text-align: left; }
+
+/* A/B audio */
+.ab { margin: 20px 0; padding: 14px 16px; background: rgba(0,0,0,0.04); border: 1px solid var(--line); }
+.ab .label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 8px; }
+.ab .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab button { font-family: var(--mono); font-size: 12px; padding: 6px 12px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; color: var(--ink); }
+.ab button.active { background: var(--ink); color: var(--bg); }
+.ab button:hover:not(.active) { background: var(--pill-hover); }
+.ab audio { width: 100%; height: 32px; }
+
+/* Song refs */
+.song-refs { margin: 24px 0 12px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.song-refs .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 10px; }
+.song-ref { margin-bottom: 10px; }
+.song-ref .title { font-weight: 600; font-style: italic; }
+.song-ref .by { color: var(--dim); }
+.song-ref .links { display: inline-flex; gap: 6px; margin-left: 10px; }
+.song-ref .links a { font-family: var(--mono); font-size: 11px; padding: 3px 8px; background: var(--pill-bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.song-ref .links a:hover { background: var(--ink); color: var(--bg); }
+.song-ref .tier-1 { color: var(--dim); font-size: 10px; }
+
+/* Glossary term tooltips */
+.term { border-bottom: 1px dotted var(--dim); cursor: help; position: relative; }
+.term:hover .gloss { display: block; }
+.term .gloss {
+  display: none; position: absolute; bottom: 100%; left: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 4px;
+  font-family: var(--sans); font-size: 13px; font-weight: normal; font-style: normal;
+  width: 320px; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.4;
+}
+.term .gloss a { color: #e8e0d2; }
+
+/* Citations */
+.cites { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--sans); }
+.cites .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 8px; }
+.cites ol { padding-left: 1.4em; margin: 0; }
+.cites li { margin: 4px 0; }
+.cites a { color: var(--dim); }
+
+/* Live set download */
+.als { margin: 16px 0; padding: 10px 14px; background: rgba(0,0,0,0.04); border-left: 3px solid var(--ink); font-family: var(--mono); font-size: 13px; }
+.als::before { content: "LIVE SET — "; color: var(--accent); font-weight: 600; }
+
+/* Footer */
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 10px 32px; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; z-index: 40; }
+.foot .nav { display: flex; gap: 16px; align-items: center; }
+.foot .dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 50%; }
+.foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; opacity: 0.4; }
+.foot .dot.active { opacity: 1; background: var(--ink); }
+.foot .dot.dd { background: var(--accent); }
+.foot .dot:hover { opacity: 0.8; }
+.foot button { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--pill-bg); border: 1px solid var(--line); cursor: pointer; letter-spacing: 0.06em; }
+.foot button:hover { background: var(--ink); color: var(--bg); }
+.foot .keys { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* Index page */
+.idx { max-width: 860px; margin: 0 auto; padding: 60px 32px; }
+.idx h1 { font-family: var(--serif); font-size: 44px; letter-spacing: -0.01em; font-weight: 400; margin: 0 0 4px; }
+.idx .tag { font-family: var(--sans); font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+.idx .week { display: block; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.idx .week:last-child { border-bottom: 1px solid var(--line); }
+.idx .week:hover { background: rgba(0,0,0,0.04); }
+.idx .week .wk { font-family: var(--mono); font-size: 13px; color: var(--dim); letter-spacing: 0.06em; }
+.idx .week .title { font-size: 22px; margin: 4px 0; }
+.idx .week .meta { font-family: var(--sans); font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.idx .aux { margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.idx .aux a { display: inline-block; margin-right: 24px; font-family: var(--sans); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Persistent podcast bar -->
+<div class="podcast-bar">
+  <span class="crumb"><a href="../index.html">IDM</a> / W9</span>
+  <span class="title-chip">Week 9 — Vocal chopping: Prefuse, Dilla, Kanye, Premier</span>
+  <span class="spacer"></span>
+  <audio id="podcast" preload="metadata" controls src="episode.mp3"></audio>
+  <span class="chapter"></span>
+  <button id="jump-btn" title="Jump podcast audio to this slide's chapter">⤓ chapter</button>
+</div>
+
+<div class="stage">
+  
+<section class="slide title" id="slide-s01">
+  <h1>Slide s01 · title</h1>
+  <h2>Vocal chopping: four producers, four methods</h2>
+  
+  <div class="body"><h1>Vocal chopping: four producers, four methods</h1>
+<ul>
+<li>Prefuse 73 chopped an acapella into phonemes and finger-drummed the result — on an MPC2000XL patched into Pro Tools, per XLR8R (<code>bib:prefuse_73_xlr8r</code>).</li>
+<li>Dilla sliced vocals at 1/32 and rearranged them until the source was gone — MPC3000, per Charnas 2022 (<code>bib:charnas_dilla_time</code>).</li>
+<li>Kanye and Just Blaze pitched soul records up four to seven semitones — varispeed, not time-stretch, per Just Blaze at RBMA (<code>bib:rbma_just_blaze_lecture</code>).</li>
+<li>Premier sampled his own scratching and triggered it as a drum (<code>bib:premier_ten_crack_scratches</code>).</li>
+</ul>
+<p>Same source material. Four different hands on the same stem. This week the stem is the Hot Pants acapella pulled by LALAL (<code>bib:stemforge_repo</code>, recipe <code>w09-hot-pants-vocal-stem</code>).</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Ten Crack Commandments</span><span class="by"> — The Notorious B.I.G.</span><span class="links"><a href="https://open.spotify.com/track/0BknVuf853LEmEzTEO3LY4" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/ot9NT9W0Fog" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=The%20Notorious%20B.I.G.%20Ten%20Crack%20Commandments" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide concept" id="slide-s02">
+  <h1>Slide s02 · concept</h1>
+  <h2>The stem you&#x27;re working from</h2>
+  
+  <div class="body"><h1>The stem you&rsquo;re working from</h1>
+<ul>
+<li>Source: <em>Hot Pants (She Got to Use What She Got to Get What She Wants)</em>, James Brown, 1971 — pulled as vocal-only via the <code>w09-hot-pants-vocal-stem</code> recipe, LALAL backend (<code>bib:stemforge_repo</code>).</li>
+<li>The recipe carries a <code>determinism_note</code>: LALAL is <strong>non-deterministic</strong>. Re-running produces a different isolation. This run is the source-of-truth; the bounce on disk is canonical. Do not re-render to &ldquo;get a cleaner version.&rdquo;</li>
+<li>Expect bleed: reverb tails, a ghost of the horn stab, consonant smearing around plosives. This is not a flaw. It is texture.</li>
+<li><code>whosampled_db</code> lists 600+ uses of the Hot Pants breakdown (<code>bib:whosampled_db</code>). You are not clearing it — you are transforming it. Prefuse&rsquo;s ethic applies (<code>bib:prefuse_73_xlr8r</code>).</li>
+<li>Before you touch Simpler: commit the stem to a frozen audio track and bounce. The chopping happens on the bounce, not the original.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s03">
+  <h1>Slide s03 · concept</h1>
+  <h2>Prefuse 73 — the four-step resample ladder</h2>
+  
+  <div class="body"><h1>Prefuse 73 — the four-step resample ladder</h1>
+<p>Herren&rsquo;s rig: two turntables into Akai MPC2000XL into Pro Tools (<code>bib:akai_mpc2000xl_manual</code>, <code>bib:prefuse_73_xlr8r</code>).</p>
+<p>The ladder, per XLR8R:</p>
+<ol>
+<li>Sample a 2–4s vocal phrase to a pad.</li>
+<li>Slice across 16 pads, syllable- or phoneme-length.</li>
+<li>Finger-drum a new rhythm.</li>
+<li><strong>Resample to a single pad.</strong></li>
+<li>Repeat 2–4 on the resample. Third time too.</li>
+</ol>
+<p>Ableton: drop the Hot Pants bounce → Right-click → <strong>Slice to New MIDI Track</strong> → 1/16 or By Transient. Record with <strong>Note Repeat</strong>. Freeze, flatten, reload into a fresh Simpler. Repeat (<code>bib:ableton_live_12_manual</code>).</p>
+<p>Herren on timing: <em>&ldquo;I don&rsquo;t try to match bpms and shit&rdquo;</em>. Off-grid is load-bearing.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Source vs third-resample pass</div><div class="controls"><button data-src="stemforge/hp_vocals.wav" class="active">A — dry</button><button data-src="">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/hp_vocals.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s04">
+  <h1>Slide s04 · concept</h1>
+  <h2>Dilla time — 1/32 micro-chops and per-pad drift</h2>
+  
+  <div class="body"><h1>Dilla time — 1/32 micro-chops and per-pad drift</h1>
+<p>Per <em>Dilla Time</em> (<code>bib:charnas_dilla_time</code>): slice vocals at 1/32, rearrange until the source is gone, leave per-pad timing deliberately inconsistent. MPC3000 had per-voice swing — hats at one %, kicks at another, snares dragged 20–30 ms late (<code>bib:akai_mpc3000_manual</code>). Polyrhythmic hybrid, not sloppy.</p>
+<p><em>Dilla time</em> is the course term for this per-pad swing signature. Defined here.</p>
+<p>Ableton recipe:</p>
+<ol>
+<li>Drop Hot Pants bounce on an audio track.</li>
+<li>Right-click → <strong>Slice to New MIDI Track</strong> → Slice to <strong>1/32</strong>.</li>
+<li>Rearrange the MIDI — don&rsquo;t replay source order. Ornament flams at 1/64.</li>
+<li>In each chain&rsquo;s Simpler, nudge a handful of notes ±15–25 ms. Different per chain. That is the drift.</li>
+<li>Bounce, listen, commit.</li>
+</ol>
+<p><em>Don&rsquo;t Cry</em> is the A/B reference.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Don&#x27;t Cry</span><span class="by"> — J Dilla</span><span class="links"><a href="https://open.spotify.com/track/67c5M9gVWemCV5SGH5cc4v" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/NHn-G_YpQB0" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=J%20Dilla%20Don%27t%20Cry" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide caveat" id="slide-s05">
+  <h1>Slide s05 · caveat</h1>
+  <h2>Correcting the Donuts SP-303 myth</h2>
+  
+  <div class="body"><h1>Correcting the Donuts SP-303 myth</h1>
+<p>Charnas, <em>Dilla Time</em> (<code>bib:charnas_dilla_time</code>): <em>Donuts</em> was primarily <strong>Pro Tools + Akai MPC3000</strong> (<code>bib:akai_mpc3000_manual</code>). The SP-303 and SP-404 arrived at the hospital late, after most of the record was tracked. The Smithsonian holds the MPC3000 as the instrument of record (<code>bib:smithsonian_dilla_mpc3000</code>).</p>
+<p>The &ldquo;made entirely on an SP-303 from a hospital bed&rdquo; story is wrong. It mistakes circumstances for method. The method was the MPC.</p>
+<p>Why it matters here: chasing SP-303 sound won&rsquo;t get Dilla&rsquo;s sound. Per-pad swing and 1/32 chops were MPC3000 behaviors. Ableton Simpler in Slicing + Ornament + nudged note starts is the closer analogue. The lo-fi crunch people credit to the 303 on <em>Donuts</em> is mostly vinyl source material plus MPC3000 12-bit bus summing.</p>
+<p>Preserve this caveat when citing the lesson elsewhere.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s06">
+  <h1>Slide s06 · concept</h1>
+  <h2>Chipmunk soul — Re-Pitch, not time-stretch</h2>
+  
+  <div class="body"><h1>Chipmunk soul — Re-Pitch, not time-stretch</h1>
+<p>Just Blaze at RBMA (<code>bib:rbma_just_blaze_lecture</code>): <em>&ldquo;RZA started it in like 1996… we&rsquo;ll get seven pieces of a record, put it back together, add a breakdown part and make the sample do the hook.&rdquo;</em></p>
+<p>&ldquo;Chipmunk soul&rdquo; is the course term. Receipt as above.</p>
+<p>Ableton move — callback to W4 (<code>bib:ableton_live_12_manual</code>):</p>
+<ul>
+<li>Drop vocal on audio track. <strong>Warp: Re-Pitch</strong>. Transpose <strong>+5 semitones</strong> (try +4 and +7).</li>
+<li>Re-Pitch is varispeed — pitch and tempo stay coupled. Complex Pro decouples them and kills the character.</li>
+<li>Chop into seven non-contiguous pieces — vowel one, consonant two, tail three. Reassemble into a new hook. &ldquo;Seven pieces&rdquo; is literal.</li>
+<li>The sped-up artifact is the aesthetic. Do not smooth it.</li>
+</ul>
+<p>A/B: same phrase at +5 Re-Pitch vs +5 Complex Pro. Complex Pro sounds correct and wrong. Re-Pitch sounds incorrect and right.</p></div>
+  
+  
+  
+  <div class="ab"><div class="label">Re-Pitch +5 vs Complex Pro +5 on same phrase</div><div class="controls"><button data-src="stemforge/hp_vocals.wav" class="active">A — dry</button><button data-src="">B — wet</button></div><audio class="abplayer" preload="none" controls src="stemforge/hp_vocals.wav"></audio></div>
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s07">
+  <h1>Slide s07 · concept</h1>
+  <h2>Kanye/Mike Dean — 6–12 vocal stack, MicroShift, retune-speed zero</h2>
+  
+  <div class="body"><h1>Kanye/Mike Dean — 6–12 vocal stack, MicroShift, retune-speed zero</h1>
+<p>The MBDTF-era choral bed: six to twelve passes of the same phrase, detuned by ±5 and ±10 cents, slight micro-timing offsets, summed to one bed.</p>
+<p>Recipe:</p>
+<ul>
+<li>Duplicate the chopped-vocal track ×6. On each copy, nudge clip start ±5 to ±15 ms and detune ±5 or ±10 cents via clip Pitch Fine.</li>
+<li>Bus to a group. Insert <strong>SoundToys MicroShift</strong>, Style II, Detune 100%, Delay 100% (<code>bib:soundtoys_microshift_manual</code>). Style III goes wider.</li>
+<li>On the group: <strong>Auto-Tune, Retune Speed 0</strong>. Mike Dean&rsquo;s &ldquo;Heartbreak&rdquo; trick on chopped fragments — locks every pitch to scale, talk-box lock over the detune smear.</li>
+</ul>
+<p>Caveat: retune-speed-0 is technique-well-known, but we don&rsquo;t have a direct Mike Dean on-record quote in the bib yet. Flagged in <code>needs_bib:</code>. Treat as technique-known-not-cited until upgraded.</p>
+<p>Bounce the bed. Place under drums. Do not ride the fader.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s08">
+  <h1>Slide s08 · concept</h1>
+  <h2>Little AlterBoy — three settings worth memorizing</h2>
+  
+  <div class="body"><h1>Little AlterBoy — three settings worth memorizing</h1>
+<p>SoundToys Little AlterBoy (<code>bib:soundtoys_little_alterboy_manual</code>). Three settings cover the lesson:</p>
+<ol>
+<li>
+<p><strong>Chipmunk soul double</strong> — Transpose, <strong>Pitch +7, Formant +7, linked</strong>. Parallel layer under the Re-Pitch main, −10 dB in the group. Doubled sped-up move without touching the master pitch.</p>
+</li>
+<li>
+<p><strong>Robot lead from MIDI</strong> — Robot mode, MIDI input drives pitch, <strong>Drive 5</strong>. MIDI-controlled vocoder — instant talk-box lead off the chop. Fills the 1/32 holes in the Dilla pattern.</p>
+</li>
+<li>
+<p><strong>Bass from vowels</strong> — Transpose, <strong>Formant −8, Pitch 0, Link off</strong>. Strips vocal into a low, textured drone. Low-pass at 200 Hz → sub-bass layer made of James Brown backing singers. Devine-style source.</p>
+</li>
+</ol>
+<p>One plugin, three knobs each. Memorize and stop shopping.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide concept" id="slide-s09">
+  <h1>Slide s09 · concept</h1>
+  <h2>DJ Premier — scratch the loop, then sample yourself</h2>
+  
+  <div class="body"><h1>DJ Premier — scratch the loop, then sample yourself</h1>
+<p>Premier on <em>Ten Crack Commandments</em> (<code>bib:premier_ten_crack_scratches</code>): <em>&ldquo;That loop is me sampling my scratching by hand. It was me experimenting, and it sounded dope.&rdquo;</em> Not a breakbeat, not a horn. A scratched performance triggered as a drum.</p>
+<p>The method, verbs only:</p>
+<ol>
+<li>Perform a pass on a sound — turntable, MIDI retrigger, tape-stop, whatever has a hand on it.</li>
+<li>Bounce the pass.</li>
+<li>Load the bounce into a sampler and <strong>trigger as percussion</strong> — not melody, not loop.</li>
+</ol>
+<p>Ableton for the Hot Pants vocal: record yourself dragging the clip-start warp handle live. Bounce that performance. Load into Simpler. Trigger from a drum pad under the kick.</p>
+<p>Premier&rsquo;s rig was MPC60 + Technics 1200s. Method is not gear-dependent.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Ten Crack Commandments</span><span class="by"> — The Notorious B.I.G.</span><span class="links"><a href="https://open.spotify.com/track/0BknVuf853LEmEzTEO3LY4" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/ot9NT9W0Fog" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=The%20Notorious%20B.I.G.%20Ten%20Crack%20Commandments" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide reference" id="slide-s10">
+  <h1>Slide s10 · reference</h1>
+  <h2>The chopped-vocal signal path, committed</h2>
+  
+  <div class="body"><h1>The chopped-vocal signal path, committed</h1>
+<p>The common path for all four methods this week, expressed in Ableton verbs (<code>bib:ableton_live_12_manual</code>):</p>
+<ol>
+<li><strong>Stemforge bounce</strong> — load <code>build/audio/stemforge-renders/w09/hp_vocals.wav</code>. Freeze the track. Flatten. The LALAL output is the source-of-truth (<code>bib:stemforge_repo</code>, recipe <code>w09-hot-pants-vocal-stem</code>).</li>
+<li><strong>Slicer front-end</strong> — Simpler in Slicing mode, 1/16 for chipmunk, 1/32 for Dilla micro-chop, By Transient for Prefuse. Warp mode Re-Pitch when transposing. Classic when you want SP-1200-style pitch-time coupling.</li>
+<li><strong>Per-chain character</strong> — Little AlterBoy on individual chains for the &ldquo;eh-ah-oh&rdquo; doubles, Formant ±5 Pitch ±2 (<code>bib:soundtoys_little_alterboy_manual</code>).</li>
+<li><strong>Group width</strong> — MicroShift Style II, Detune 100%, Delay 100% across the chopped-vocal group (<code>bib:soundtoys_microshift_manual</code>).</li>
+<li><strong>Commit rule</strong> — every time you print a pass, delete the unused source track. The ladder only works if you can&rsquo;t go back.</li>
+</ol>
+<p>One track in. One bounce out. One commit per pass.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide exercise" id="slide-s11">
+  <h1>Slide s11 · exercise</h1>
+  <h2>Three methods, one phrase, three exports</h2>
+  
+  <div class="body"><h1>Three methods, one phrase, three exports</h1>
+<p>Source: stemforge Hot Pants vocal isolate, recipe <code>w09-hot-pants-vocal-stem</code> (<code>bib:stemforge_repo</code>). Pick a <strong>four-bar phrase</strong> and work only on that phrase.</p>
+<p>Three bounces, one per method. Time-box: 60 min total, 20 per method.</p>
+<ul>
+<li><strong>(a) Dilla 1/32 micro-chop</strong> — Slice to MIDI at 1/32. Break source order. Nudge 6–8 starts ±15–25 ms per-pad. Bounce <code>hp_dilla.wav</code> (<code>bib:charnas_dilla_time</code>).</li>
+<li><strong>(b) Kanye chipmunk +5 Re-Pitch</strong> — Warp Re-Pitch, +5 semitones. Seven non-contiguous pieces. Reassemble into a new four-bar hook. Bounce <code>hp_chipmunk.wav</code> (<code>bib:rbma_just_blaze_lecture</code>).</li>
+<li><strong>(c) Prefuse three-pass ladder</strong> — Slice by transient. Finger-drum, bounce, reload, slice, drum, bounce, reload, slice, drum. Bounce <code>hp_prefuse.wav</code> (<code>bib:prefuse_73_xlr8r</code>).</li>
+</ul>
+<p>Deliverable: three WAVs plus one sentence naming the most unrecognizable, and why. That sentence is the whole assignment after the bounces land.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">Three mono bounces of the same four-bar Hot Pants phrase — (a) Dilla 1/32 micro-chop rearrangement, (b) Kanye chipmunk +5 semitones Re-Pitch, (c) Prefuse three-pass resample ladder — plus a one-line note naming which bounce is most unrecognizable and why.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-01">
+  <h1>Slide gd-mpc3k-01 · gear deep dive</h1>
+  <h2>Akai MPC3000 — the machine Dilla actually used</h2>
+  
+  <div class="body"><h1>Akai MPC3000 — the machine Dilla actually used</h1>
+<p>The Akai MPC3000, 1994. Designed with Roger Linn. 16 velocity-sensitive pads, 16-bit 44.1 kHz sampling, SCSI, 760 KB base memory upgradable to 32 MB, 32-voice polyphony. The Smithsonian National Museum of African American History and Culture holds Dilla&rsquo;s personal unit as the instrument of record (<code>bib:smithsonian_dilla_mpc3000</code>).</p>
+<p>Forget the <em>Donuts</em> SP-303 myth — this is the machine that defined Dilla&rsquo;s sound from <em>Fantastic Vol. 2</em> through <em>The Shining</em> (<code>bib:charnas_dilla_time</code>). The SP-303/404 arrived late, after the record was already tracked.</p>
+<p>What this deep-dive covers: the controls that matter for <span class="term">Dilla time<span class="gloss"><strong>Dilla time</strong> — Dan Charnas&#x27;s term (Dilla Time, 2022) for J Dilla&#x27;s rhythmic signature — the deliberate superimposition of straight, swung, and micro-shifted elements within the same bar. On the MPC3000, per-pad swing and timing shift make this programmable. Canonical recipe: kicks on straight 16ths, hats at ~60–66% swing, snares dragged 20–30 ms late. <a href="https://en.wikipedia.org/wiki/Dilla_Time" target="_blank" rel="noopener">wikipedia↗</a></span></span>, the per-pad swing mechanic, the 96 PPQN timing grid, and how to approximate it in Ableton without lying to yourself about what&rsquo;s missing.</p></div>
+  <figure class="figure"><img src="assets/gear-mpc3000-hero.jpg" alt="Akai MPC3000, 1994. 16 velocity-sensitive pads, 32-voice polyphony. Designed with Roger Linn."><figcaption>Akai MPC3000, 1994. 16 velocity-sensitive pads, 32-voice polyphony. Designed with Roger Linn.<div class="credit">Photo: Smithsonian NMAAHC / fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-02">
+  <h1>Slide gd-mpc3k-02 · gear deep dive</h1>
+  <h2>Annotated tour, 1/2 — pads, swing, note repeat</h2>
+  
+  <div class="body"><h1>Annotated tour, 1/2 — pads, swing, note repeat</h1>
+<p>The four controls that matter for <span class="term">Dilla time<span class="gloss"><strong>Dilla time</strong> — Dan Charnas&#x27;s term (Dilla Time, 2022) for J Dilla&#x27;s rhythmic signature — the deliberate superimposition of straight, swung, and micro-shifted elements within the same bar. On the MPC3000, per-pad swing and timing shift make this programmable. Canonical recipe: kicks on straight 16ths, hats at ~60–66% swing, snares dragged 20–30 ms late. <a href="https://en.wikipedia.org/wiki/Dilla_Time" target="_blank" rel="noopener">wikipedia↗</a></span></span>:</p>
+<ol>
+<li><strong>16 velocity-sensitive pads</strong> — grouped in banks A–D. Each pad is one voice with its own sample, envelope, tuning, and — critical — its own timing parameters.</li>
+<li><strong>Swing %</strong> — 50% is straight, 62–66% is triplet-heavy. On the MPC3000 this is set <strong>per pad</strong>, not globally (<code>bib:akai_mpc3000_manual</code>). That is the whole game.</li>
+<li><strong>Note Repeat</strong> — hold a pad, tap Note Repeat, and the pad fires at the current subdivision. This is how hand-stepped hi-hat rolls happen without a piano roll.</li>
+<li><strong>Timing Correct %</strong> — quantize strength, 0 to 100. Dilla set this to 0 on most pads and nudged by ear. On <em>Fantastic Vol. 2</em> the snare is ~20 ms early, the hats are freehand, the kicks are ±20–30 ms off (<code>bib:charnas_dilla_time</code>).</li>
+</ol>
+<p>The 96 PPQN grid is the resolution underneath everything. One 16th note = 24 ticks. One millisecond at 90 BPM ≈ 0.14 ticks. When you nudge by a &ldquo;tick,&rdquo; you are nudging by ~7 ms.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-mpc3000-panel.jpg" alt="MPC3000 front panel — the four controls that make Dilla time possible."><div class="callouts"><ol><li><strong>16 pads</strong>: Each pad is one voice with independent timing params.</li><li><strong>Swing %</strong>: Per-pad, not global. Hats at 62%, kicks at 50%, snare at 50%.</li><li><strong>Note Repeat</strong>: Hold pad + Note Repeat to fire at current subdivision. Hi-hat rolls without a piano roll.</li><li><strong>Timing Correct %</strong>: Quantize strength. Dilla set this to 0 on most pads and nudged by ear.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-03">
+  <h1>Slide gd-mpc3k-03 · gear deep dive</h1>
+  <h2>Annotated tour, 2/2 — sample edit and signal path</h2>
+  
+  <div class="body"><h1>Annotated tour, 2/2 — sample edit and signal path</h1>
+<p>The sample-edit page is where the chop happens:</p>
+<ul>
+<li><strong>Truncate</strong> — crop head and tail. Destructive on the sample in RAM.</li>
+<li><strong>Loop points</strong> — set start/end loop in frames. Used for the sustained-vowel chipmunk-soul moves, not for the Dilla micro-chop.</li>
+<li><strong>Pitch (tune)</strong> — semitone + fine cents, implemented as <span class="term">varispeed<span class="gloss"><strong>varispeed</strong> — Tape (or old-sampler) speed control that links pitch and duration. Double the speed = up an octave, half the length. The sound of chipmunk soul, of Squarepusher&#x27;s half-speed bass trick, and of the Akai S950&#x27;s crude pitch-shift. Re-Pitch warp in Ableton is the digital equivalent. <a href="https://en.wikipedia.org/wiki/Varispeed" target="_blank" rel="noopener">wikipedia↗</a></span></span>. Raising pitch shortens the sample; lowering lengthens it. Pitch and time are <em>coupled</em>. This is not a bug. This is the reason every Dilla chop sounds like Dilla.</li>
+<li><strong>Filter</strong> — 2-pole low-pass per voice. The &ldquo;MPC low-pass&rdquo; character on Slum Village records came from here, not from an outboard box (<code>bib:akai_mpc3000_manual</code>).</li>
+</ul>
+<p>Signal path: pad trigger → sample RAM → varispeed pitch → envelope → LPF → assigned output → DAC → mix out. The DAC is a Burr-Brown PCM61P-K, 18-bit. The summing bus is where the MPC3000 gets its &ldquo;weight&rdquo; — a topic producers argue about and Akai never marketed.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-04">
+  <h1>Slide gd-mpc3k-04 · gear deep dive</h1>
+  <h2>How Dilla executed the technique</h2>
+  
+  <div class="body"><h1>How Dilla executed the technique</h1>
+<p>The step-by-step, from Charnas 2022 (<code>bib:charnas_dilla_time</code>):</p>
+<ol>
+<li>Sample a 2–4s vocal or drum break. Assign to pads by chop.</li>
+<li>Set <strong>Timing Correct = OFF</strong> on the sequencer track.</li>
+<li>Hand-play the pattern. Do not quantize.</li>
+<li>Open the Step Edit view. Find each hit&rsquo;s position in ticks.</li>
+<li>Nudge by ear. Snare: pull ~20 ms early (roughly 3 ticks at 90 BPM). Kicks: leave ±20–30 ms off-grid, direction inconsistent. Hats: do not touch.</li>
+<li>Set <strong>Swing %</strong> per pad. Hats 62–66%. Kicks 50%. Snare 50%.</li>
+<li>Play back. Listen. Nudge again.</li>
+</ol>
+<p>Questlove&rsquo;s line, cited by Charnas: <em>&ldquo;My mission to get accepted by the hip-hop nation was to sound synthetic like a drum machine, to sound like a sample. His approach was to sound as sloppy as a real musician. But it was so sloppy, I know he wasn&rsquo;t doing it by accident&rdquo;</em> (<code>bib:questlove_dilla_quote</code>).</p>
+<p>The sloppiness is engineered. That is the whole point.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-05">
+  <h1>Slide gd-mpc3k-05 · gear deep dive</h1>
+  <h2>Technique continued — receipts and track-level evidence</h2>
+  
+  <div class="body"><h1>Technique continued — receipts and track-level evidence</h1>
+<ul>
+<li><strong>&ldquo;Get Dis Money&rdquo;</strong> (Slum Village, <em>Fantastic Vol. 2</em>) — 7-bar Herbie Hancock loop, kick refuses the downbeat (<code>bib:charnas_dilla_time</code>). The hats are the only element on the grid; everything else drifts.</li>
+<li><strong>&ldquo;Runnin&rsquo;&rdquo;</strong> (The Pharcyde) — Stan Getz <em>&ldquo;Saudade Vem Correndo&rdquo;</em> guitar pitched up a half-semitone, then LPF&rsquo;d to extract a new bassline from the same source. One sample, two functions (<code>bib:charnas_dilla_time</code>).</li>
+<li><strong>&ldquo;Don&rsquo;t Cry&rdquo;</strong> (Dilla, <em>The Shining</em>) — 1/32 vocal micro-chop. The course-canonical reference for the method taught in s04.</li>
+</ul>
+<p>Why this matters pedagogically: Dilla didn&rsquo;t have groove templates. He had ears and a step editor. The per-pad swing setting on the MPC3000 was the <em>enabling</em> technology. Without it — e.g., on the SP-1200, which has one global swing — Dilla time as we know it is not possible.</p>
+<p>That constraint is the whole reason this deep-dive exists opposite the SP-1200 deep-dive.</p></div>
+  
+  
+  
+  
+  
+  
+  <div class="song-refs"><div class="label">♪ tracks</div><div class="song-ref"><span class="title">Don&#x27;t Cry</span><span class="by"> — J Dilla</span><span class="links"><a href="https://open.spotify.com/track/67c5M9gVWemCV5SGH5cc4v" target="_blank" rel="noopener">Spotify</a><a href="https://youtu.be/NHn-G_YpQB0" target="_blank" rel="noopener">YouTube</a><a href="https://music.apple.com/us/search?term=J%20Dilla%20Don%27t%20Cry" target="_blank" rel="noopener">Apple</a> </span></div></div>
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-06">
+  <h1>Slide gd-mpc3k-06 · gear deep dive</h1>
+  <h2>Underlying algorithm — per-pad timing on a 96 PPQN grid</h2>
+  
+  <div class="body"><h1>Underlying algorithm — per-pad timing on a 96 PPQN grid</h1>
+<p>The MPC3000 sequencer runs at <strong>96 pulses per quarter note (PPQN)</strong>. One 16th = 24 ticks. Timing shift per pad is expressed in ticks, stored as a signed offset in the pattern.</p>
+<p>At 90 BPM:
+- 1 beat = 666.67 ms
+- 1 tick = ~6.94 ms
+- 1 ms ≈ 0.14 ticks</p>
+<p>So the &ldquo;20 ms early snare&rdquo; in practice is a <strong>−3-tick offset</strong> on the snare pad, stored in the pattern&rsquo;s per-pad timing-shift field (<code>bib:akai_mpc3000_manual</code>). It applies on playback, after any Timing Correct but before the voice is assigned a sample. Swing % applies on the off-subdivisions of the assigned rate — so &ldquo;hats at 62% swing&rdquo; shifts every even 16th by roughly 12% of a 16th, ~8 ticks, ~55 ms at 90 BPM.</p>
+<p>Crucially: Swing and Timing Shift are <strong>independent per pad</strong>. Kicks at swing 50% + shift −3 ticks, hats at swing 64% + shift 0, snare at swing 50% + shift −3 ticks — all in the same pattern. The SP-1200 has one global swing parameter. That is the architectural delta.</p></div>
+  
+  <div class="diagram"><div class="mermaid">graph LR
+  A[Pattern playback] --&gt; B[Timing Correct %]
+  B --&gt; C[Per-pad Timing Shift&lt;br/&gt;± N ticks]
+  C --&gt; D[Per-pad Swing %]
+  D --&gt; E[Voice assigned]
+  E --&gt; F[Varispeed pitch]
+  F --&gt; G[2-pole LPF]
+  G --&gt; H[DAC out]
+</div><div class="caption">Per-pad timing chain on the MPC3000. Timing shift and swing are set independently per pad.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-07">
+  <h1>Slide gd-mpc3k-07 · gear deep dive</h1>
+  <h2>Algorithm continued — varispeed playback and the DAC</h2>
+  
+  <div class="body"><h1>Algorithm continued — varispeed playback and the DAC</h1>
+<p>Sample playback on the MPC3000 is <span class="term">varispeed<span class="gloss"><strong>varispeed</strong> — Tape (or old-sampler) speed control that links pitch and duration. Double the speed = up an octave, half the length. The sound of chipmunk soul, of Squarepusher&#x27;s half-speed bass trick, and of the Akai S950&#x27;s crude pitch-shift. Re-Pitch warp in Ableton is the digital equivalent. <a href="https://en.wikipedia.org/wiki/Varispeed" target="_blank" rel="noopener">wikipedia↗</a></span></span> — pitch and duration are coupled. Raise a pad&rsquo;s pitch by +5 semitones and the sample plays 1.335× faster (ratio = 2^(5/12)). There is no time-stretching algorithm involved — this is literally &ldquo;read the sample at a different rate.&rdquo;</p>
+<p>Why this is load-bearing for <span class="term">chipmunk soul<span class="gloss"><strong>chipmunk soul</strong> — A style of hip-hop built on pitched-up soul vocal samples — the Kanye West / Just Blaze / RZA lineage. The authentic artifact is varispeed (linked pitch/tempo via old-gear sampler), not time-stretch. In Ableton: Re-Pitch warp, +4 to +7 semitones. Time-stretch loses the character. <a href="https://en.wikipedia.org/wiki/Chipmunk_soul" target="_blank" rel="noopener">wikipedia↗</a></span></span> (taught in s06):
+- <strong>Pitch up = faster = chipmunk artifact preserved.</strong>
+- <strong>Pitch down = slower = tape-slow dusty artifact preserved.</strong>
+- A phase-vocoder or Complex Pro would <em>fix</em> this coupling — and kill the character.</p>
+<p>The 18-bit Burr-Brown PCM61P-K DAC and the summing bus give the MPC3000 a specific sound producers call &ldquo;weight&rdquo; or &ldquo;punch.&rdquo; It is not quantifiable in a spec sheet. Roads 1996 (<code>bib:roads_computer_music_tutorial</code>, Ch. 2) covers why coupled-pitch-time sample playback and simple-DAC summing have characteristic artifacts — intermodulation distortion in the bus, quantization noise floor, aperture error at the DAC — that together constitute &ldquo;the sound of the box.&rdquo;</p>
+<p>Constraint note: 32 MB RAM ceiling bounded sample lengths and forced the chop-and-rearrange workflow. Memory pressure is compositional pressure.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-08">
+  <h1>Slide gd-mpc3k-08 · gear deep dive</h1>
+  <h2>Ableton bridge — Drum Rack + per-pad Groove Pool</h2>
+  
+  <div class="body"><h1>Ableton bridge — Drum Rack + per-pad Groove Pool</h1>
+<p>The Ableton analogue is not one device. It is a discipline:</p>
+<ol>
+<li><strong>Drum Rack</strong> — 16-pad grid. Each pad is a chain. Each chain gets its own Simpler in <strong>Classic</strong> mode (pitch/time coupled) to preserve varispeed character (<code>bib:ableton_live_12_manual</code>).</li>
+<li><strong>Groove Pool, per pad</strong> — drag a different groove file onto each chain. Swing timing applies only to that chain&rsquo;s output. Ableton&rsquo;s Groove Pool is the closest native analogue to MPC3000 per-pad swing.</li>
+<li><strong>Per-pad note nudge in the MIDI editor</strong> — select a pad&rsquo;s notes, shift-arrow nudges by the project grid. For sub-grid nudges, turn off snap and drag.</li>
+<li><strong>Warp mode = Re-Pitch</strong> on audio triggers — if you&rsquo;re triggering samples from audio clips instead of Simpler, Re-Pitch preserves the varispeed coupling. Complex Pro breaks it.</li>
+</ol>
+<p>Parameter table for the approximation:</p>
+<table>
+<thead>
+<tr>
+<th>MPC3000</th>
+<th>Ableton equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Per-pad swing %</td>
+<td>Groove file dragged onto chain</td>
+</tr>
+<tr>
+<td>Per-pad timing shift (ticks)</td>
+<td>MIDI nudge, snap off</td>
+</tr>
+<tr>
+<td>Varispeed pitch</td>
+<td>Simpler Classic mode / Warp Re-Pitch</td>
+</tr>
+<tr>
+<td>2-pole LPF per voice</td>
+<td>Simpler filter, LPF 12 dB</td>
+</tr>
+<tr>
+<td>18-bit DAC character</td>
+<td>Leave headroom; light analog-summing emulation optional</td>
+</tr>
+</tbody>
+</table></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-09">
+  <h1>Slide gd-mpc3k-09 · gear deep dive</h1>
+  <h2>Max for Live parallels — Pad Swing, MPC Groove, Humanize</h2>
+  
+  <div class="body"><h1>Max for Live parallels — Pad Swing, MPC Groove, Humanize</h1>
+<p>Third-party M4L devices that close the gap:</p>
+<ul>
+<li><strong>Pad Swing</strong> (various authors on maxforlive.com) — puts a swing-% knob on every chain of a Drum Rack. The closest one-to-one MPC3000 per-pad swing clone.</li>
+<li><strong>MPC Groove</strong> — a Max device that loads classic MPC groove templates (swing 54, 58, 62, 66%) as groove files. Hand-tuned against MPC hardware by the author. Verify the specific version on maxforlive.com; bib slot flagged in <code>needs_bib:</code>.</li>
+<li><strong>Humanize</strong> (native Live MIDI effect) — randomizes timing within ±N ms. Not ideal — Dilla&rsquo;s drift is <em>deliberate</em>, not random. Useful for hats only, never for kicks or snares.</li>
+<li><strong>K-Devices TTAP</strong> or <strong>alkman Euclidean Pro</strong> (<code>bib:alkman_euclidean_pro</code>) — handle polyrhythmic accents if you want to replicate the MPC3000&rsquo;s quintuplet/septuplet tricks.</li>
+</ul>
+<p>The critical move: use these devices to set <strong>different</strong> values per chain. If every pad has the same swing %, you&rsquo;ve built a TR-909 feel, not a Dilla feel.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-10">
+  <h1>Slide gd-mpc3k-10 · gear deep dive</h1>
+  <h2>Beyond Dilla — what else the MPC3000 does</h2>
+  
+  <div class="body"><h1>Beyond Dilla — what else the MPC3000 does</h1>
+<p>The hardware&rsquo;s architecture enables moves beyond per-pad swing:</p>
+<ul>
+<li><strong>Chromatic chopping</strong> — map one sample chunk across 16 pads in semitone steps. Play the pads as a melodic instrument. Dilla used this on &ldquo;Runnin&rsquo;&rdquo; to extract a bassline from a pitched-up guitar sample (<code>bib:charnas_dilla_time</code>). In Ableton: Simpler Classic, map across keyboard range, ignore warp.</li>
+<li><strong>Layered kick stacking</strong> — three kicks on three pads, each with different pitch and filter. Trigger all three from one MIDI note via pad-link. On &ldquo;Get Dis Money&rdquo; the kick is a three-layer stack.</li>
+<li><strong>Resampling the internal bus</strong> — record the MPC&rsquo;s own mix output back into a new pad. A resample ladder native to the hardware. Prefuse used this on the MPC2000XL (s03); the MPC3000 does the same trick with better summing.</li>
+<li><strong>4-bar loop composition against a 7-bar sample</strong> — the MPC&rsquo;s odd loop lengths let you offset bar-counts deliberately. Dilla&rsquo;s 7-bar Herbie loop under a 4-bar kick pattern is the canonical case.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-11">
+  <h1>Slide gd-mpc3k-11 · gear deep dive</h1>
+  <h2>Modern workflows — who&#x27;s still using this approach</h2>
+  
+  <div class="body"><h1>Modern workflows — who&rsquo;s still using this approach</h1>
+<p>You do not need an MPC3000 to make <span class="term">Dilla time<span class="gloss"><strong>Dilla time</strong> — Dan Charnas&#x27;s term (Dilla Time, 2022) for J Dilla&#x27;s rhythmic signature — the deliberate superimposition of straight, swung, and micro-shifted elements within the same bar. On the MPC3000, per-pad swing and timing shift make this programmable. Canonical recipe: kicks on straight 16ths, hats at ~60–66% swing, snares dragged 20–30 ms late. <a href="https://en.wikipedia.org/wiki/Dilla_Time" target="_blank" rel="noopener">wikipedia↗</a></span></span>. You need the <em>discipline</em>. Producers who ported the method:</p>
+<ul>
+<li><strong>Knxwledge, Kaytranada, Mndsgn</strong> — Drum Rack + per-chain groove + deliberate off-grid nudging. All on record as Dilla disciples.</li>
+<li><strong>Madlib, post-MPC</strong> — moved to Boss SP-303 and later laptop workflows, kept the hand-programmed, quantize-off ethic (<code>bib:charnas_dilla_time</code>).</li>
+<li><strong>The entire LA beat scene (Flying Lotus, Teebs, Samiyam)</strong> — MPC60/2500/3000 + Ableton hybrid. The MPC sequences; Ableton arranges. The feel stays on the hardware.</li>
+<li><strong>Ableton Push 3 standalone</strong> — pads + step sequencer + per-pad swing via Groove Pool makes it the closest modern all-in-one (<code>bib:ableton_push_3_docs</code>). It is not an MPC. It is close enough for the feel.</li>
+</ul>
+<p>The technique survives the hardware. The feel is in the nudges, not the box.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-12">
+  <h1>Slide gd-mpc3k-12 · gear deep dive</h1>
+  <h2>Exercise A — replicate Dilla swing, snare-only</h2>
+  
+  <div class="body"><h1>Exercise A — replicate Dilla swing, snare-only</h1>
+<p>Goal: a 4-bar boom-bap pattern where the snare lags the grid by ~50 ms and the kicks stay straight. This is the signature <em>Fantastic Vol. 2</em> move, reduced to its smallest verifiable case.</p>
+<p>Steps:</p>
+<ol>
+<li>New Drum Rack. Load a kick sample on C1, a snare on D1, a closed hat on F#1.</li>
+<li>Program a basic 4-bar pattern: kicks on 1 and 3, snares on 2 and 4, hats on every 16th.</li>
+<li>Bounce this as the <strong>quantized baseline</strong>. Label <code>hp_baseline.wav</code>.</li>
+<li>Create a new groove file: <strong>Swing = 0%, Timing = +25%</strong> (at 90 BPM, +25% of a 16th ≈ +50 ms). Drag only onto the snare chain.</li>
+<li>Leave the kick and hat chains with no groove.</li>
+<li>Bounce as <code>hp_dillaswing.wav</code>.</li>
+<li>A/B the two bounces.</li>
+</ol>
+<p>Deliverable: two mono bounces, plus one sentence explaining which one sounds &ldquo;alive&rdquo; and why. The 50-ms snare drag is the smallest deliberate-sloppiness move that still reads as Dilla (<code>bib:charnas_dilla_time</code>).</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">Two mono bounces (hp_baseline.wav and hp_dillaswing.wav) of the same 4-bar boom-bap pattern — one fully quantized, one with a +50 ms snare drag via a groove file applied only to the snare chain. Plus one sentence naming which bounce reads as alive.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-13">
+  <h1>Slide gd-mpc3k-13 · gear deep dive</h1>
+  <h2>Exercise B — per-pad drift everywhere</h2>
+  
+  <div class="body"><h1>Exercise B — per-pad drift everywhere</h1>
+<p>Goal: a pattern where <em>every</em> hit has a unique per-pad timing offset. Prove to yourself that random offsets sound like noise and deliberate ones sound like a record.</p>
+<p>Steps:</p>
+<ol>
+<li>Program a 1-bar pattern with 4 kicks, 2 snares, 8 hats on a Drum Rack.</li>
+<li>On the kick chain, set MIDI offsets: kick 1 at 0 ms, kick 2 at +5 ms, kick 3 at −3 ms, kick 4 at +10 ms. These are pad-specific, not groove-based — nudge in the MIDI editor with snap off.</li>
+<li>On the snare chain: snare 1 at −3 ms (Dilla drag-early), snare 2 at −3 ms.</li>
+<li>On the hat chain: leave on the grid.</li>
+<li>Bounce as <code>hp_drift.wav</code>.</li>
+<li>Re-bounce the same pattern with all kicks at 0 ms. Label <code>hp_nodrift.wav</code>.</li>
+<li>A/B.</li>
+</ol>
+<p>Reflect (one paragraph): which kick feels most wrong? Which feels most right? The drift is not random — Dilla chose each offset. You are choosing too.</p>
+<p>Stretch: try all offsets in the <em>same direction</em> (all +5 to +15). Then all random-signed. The same-direction version reads as &ldquo;late&rdquo;; the random version reads as &ldquo;bad.&rdquo; That asymmetry is the hidden rule.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">Two bounces of a 1-bar pattern (hp_drift.wav with kicks at 0/+5/-3/+10 ms offsets; hp_nodrift.wav with all kicks at 0) plus a paragraph comparing the random-signed drift to a same-direction drift and identifying which feels deliberate.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-mpc3k-14">
+  <h1>Slide gd-mpc3k-14 · gear deep dive</h1>
+  <h2>Diagram — Dilla swing visualized on the 96 PPQN grid</h2>
+  
+  <div class="body"><h1>Diagram — Dilla swing visualized on the 96 PPQN grid</h1>
+<p>The tick-level reality: the 16th grid marks 24 ticks apart; the snare pad&rsquo;s notes sit 3 ticks <em>before</em> the grid; the kick pad varies ±3 to ±4 ticks off-grid; the hats stay on swing-64% positions (every odd 16th pushed ~8 ticks late).</p>
+<p>Close the diagram with the rule: <strong>different offsets per pad, all in the same 4-bar pattern.</strong> That is the single architectural fact that separates MPC3000 Dilla time from every SP-1200 record that came before.</p>
+<p>At 90 BPM, the perceptual threshold for &ldquo;late&rdquo; is about 8–12 ms (roughly 1–2 ticks). Anything below that is &ldquo;tight.&rdquo; Anything above ~40 ms starts reading as a separate event. Dilla&rsquo;s sweet spot: 15–30 ms off-grid per pad, direction varying.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="800" height="300" fill="#f8f8f5"/>
+  <text x="20" y="30" font-family="monospace" font-size="14" fill="#222">Dilla time at 90 BPM, 96 PPQN (1 tick = 6.94 ms)</text>
+  <!-- 16th grid -->
+  <g stroke="#ccc" stroke-width="1">
+    <line x1="60" y1="60" x2="780" y2="60"/>
+    <line x1="60" y1="120" x2="780" y2="120"/>
+    <line x1="60" y1="180" x2="780" y2="180"/>
+  </g>
+  <!-- 16th tick marks -->
+  <g stroke="#bbb" stroke-width="1">
+    <line x1="60" y1="55" x2="60" y2="195"/>
+    <line x1="105" y1="55" x2="105" y2="195"/>
+    <line x1="150" y1="55" x2="150" y2="195"/>
+    <line x1="195" y1="55" x2="195" y2="195"/>
+    <line x1="240" y1="55" x2="240" y2="195"/>
+    <line x1="285" y1="55" x2="285" y2="195"/>
+    <line x1="330" y1="55" x2="330" y2="195"/>
+    <line x1="375" y1="55" x2="375" y2="195"/>
+    <line x1="420" y1="55" x2="420" y2="195"/>
+    <line x1="465" y1="55" x2="465" y2="195"/>
+    <line x1="510" y1="55" x2="510" y2="195"/>
+    <line x1="555" y1="55" x2="555" y2="195"/>
+    <line x1="600" y1="55" x2="600" y2="195"/>
+    <line x1="645" y1="55" x2="645" y2="195"/>
+    <line x1="690" y1="55" x2="690" y2="195"/>
+    <line x1="735" y1="55" x2="735" y2="195"/>
+  </g>
+  <!-- HAT row label -->
+  <text x="20" y="65" font-family="monospace" font-size="12" fill="#222">HAT</text>
+  <!-- hats at 64% swing — every odd 16th pushed ~8 ticks -->
+  <g fill="#3b6ea5">
+    <circle cx="60" cy="60" r="6"/>
+    <circle cx="119" cy="60" r="6"/>
+    <circle cx="150" cy="60" r="6"/>
+    <circle cx="209" cy="60" r="6"/>
+    <circle cx="240" cy="60" r="6"/>
+    <circle cx="299" cy="60" r="6"/>
+    <circle cx="330" cy="60" r="6"/>
+    <circle cx="389" cy="60" r="6"/>
+  </g>
+  <!-- SNARE row -->
+  <text x="20" y="125" font-family="monospace" font-size="12" fill="#222">SNR</text>
+  <!-- snares at beat 2 and 4, pulled 3 ticks early (-20 ms) -->
+  <g fill="#b03030">
+    <circle cx="177" cy="120" r="6"/>
+    <circle cx="357" cy="120" r="6"/>
+  </g>
+  <line x1="180" y1="105" x2="180" y2="135" stroke="#b03030" stroke-dasharray="2,2"/>
+  <line x1="360" y1="105" x2="360" y2="135" stroke="#b03030" stroke-dasharray="2,2"/>
+  <text x="180" y="100" font-family="monospace" font-size="10" fill="#b03030" text-anchor="middle">grid</text>
+  <!-- KICK row -->
+  <text x="20" y="185" font-family="monospace" font-size="12" fill="#222">KCK</text>
+  <!-- kicks: beat 1 +5ms, beat 3 -3ms -->
+  <g fill="#2d7d46">
+    <circle cx="65" cy="180" r="6"/>
+    <circle cx="237" cy="180" r="6"/>
+  </g>
+  <line x1="60" y1="165" x2="60" y2="195" stroke="#2d7d46" stroke-dasharray="2,2"/>
+  <line x1="240" y1="165" x2="240" y2="195" stroke="#2d7d46" stroke-dasharray="2,2"/>
+  <text x="60" y="215" font-family="monospace" font-size="10" fill="#2d7d46" text-anchor="middle">+5ms</text>
+  <text x="240" y="215" font-family="monospace" font-size="10" fill="#2d7d46" text-anchor="middle">-3ms</text>
+  <!-- Legend -->
+  <text x="20" y="255" font-family="monospace" font-size="11" fill="#444">hat = swing 64%   snr = -3 ticks (~-20 ms)   kck = ± few ms, inconsistent direction</text>
+  <text x="20" y="275" font-family="monospace" font-size="11" fill="#666">rule: different offsets per pad, all in the same 4-bar pattern.</text>
+</svg>
+<div class="caption">Dilla time on the 96 PPQN grid. Hats swung, snare pulled early, kicks drifting ±, all independently.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-01">
+  <h1>Slide gd-sp1200-01 · gear deep dive</h1>
+  <h2>E-mu SP-1200 — the grit machine</h2>
+  
+  <div class="body"><h1>E-mu SP-1200 — the grit machine</h1>
+<p>The E-mu SP-1200, 1987. Designed by Dave Rossum. 12-bit companded PCM, 26.04 kHz sample rate, ~10 seconds of sample RAM divided into <strong>2.5 seconds per sound</strong> across 8 pads (two banks of 4), 8-voice polyphony. No anti-alias filter on input. No anti-alias filter on output. That omission is the entire character.</p>
+<p>This is the machine that defined a generation of hip-hop: <strong>Pete Rock on <em>T.R.O.Y.<em>, RZA on </em>Enter the Wu-Tang (36 Chambers)<em>, Premier on </em>Illmatic<em>, Slum Village on </em>Fantastic Vol. 1</em></strong>. Dilla used one before the MPC3000 arrived. Kanye chased its sound through software for years.</p>
+<p>What this deep-dive covers: the 2.5-second-per-pad constraint as composition force, the 12-bit companded ADC curve, the aliasing cliff at ~13 kHz, and the Ableton chain that approximates the grit without a $4,000 used hardware purchase.</p></div>
+  <figure class="figure"><img src="assets/gear-sp1200-hero.jpg" alt="E-mu SP-1200, 1987. Designed by Dave Rossum. 12-bit proprietary companded PCM at 26.04 kHz, 2.5 s per pad, famously permissive anti-alias filter (gentle analog roll-off, not absent)."><figcaption>E-mu SP-1200, 1987. Designed by Dave Rossum. 12-bit proprietary companded PCM at 26.04 kHz, 2.5 s per pad, famously permissive anti-alias filter (gentle analog roll-off, not absent).<div class="credit">Photo: manufacturer / fair-use commentary · fair-use commentary</div></figcaption></figure>
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-02">
+  <h1>Slide gd-sp1200-02 · gear deep dive</h1>
+  <h2>Annotated tour, 1/2 — sample rate, pitch, truncate</h2>
+  
+  <div class="body"><h1>Annotated tour, 1/2 — sample rate, pitch, truncate</h1>
+<p>The controls that matter:</p>
+<ol>
+<li><strong>Sample rate: fixed at 26.04 kHz.</strong> Not user-adjustable. Nyquist is ~13 kHz. Everything above that folds back as aliasing. Modern recordings at 44.1/48 kHz sound tame by comparison — this is the source of the &ldquo;dusty&rdquo; character.</li>
+<li><strong>Pitch — semitone + fine tune.</strong> Per-pad <span class="term">varispeed<span class="gloss"><strong>varispeed</strong> — Tape (or old-sampler) speed control that links pitch and duration. Double the speed = up an octave, half the length. The sound of chipmunk soul, of Squarepusher&#x27;s half-speed bass trick, and of the Akai S950&#x27;s crude pitch-shift. Re-Pitch warp in Ableton is the digital equivalent. <a href="https://en.wikipedia.org/wiki/Varispeed" target="_blank" rel="noopener">wikipedia↗</a></span></span>. Raising pitch shortens the sample <em>and</em> raises aliasing artifacts; lowering pitch lengthens it and moves the aliasing down into the mids. Pitch-and-time-coupled just like the MPC3000, but at lower bandwidth.</li>
+<li><strong>Truncate</strong> — head/tail crop at sample-level resolution. Destructive. The 2.5-second pad limit is a RAM division, not a truncate setting — you <em>cannot</em> load a longer sample, period.</li>
+<li><strong>The &ldquo;aliasing switch&rdquo;</strong> — producers&rsquo; slang, not an actual button. Refers to routing via the individual outputs rather than the stereo mix, which avoids the master bus DAC&rsquo;s slight low-pass and preserves more high-frequency aliasing. Pete Rock and RZA ran out of the individual outs for exactly this reason.</li>
+</ol>
+<p>2.5 seconds per pad is a compositional constraint. You cannot loop a whole phrase. You chop or you don&rsquo;t sample it.</p></div>
+  
+  
+  <div class="annotation"><img class="gear-svg" src="assets/gear-sp1200-panel.jpg" alt="SP-1200 front panel — the four controls that define the sound."><div class="callouts"><ol><li><strong>SR 26.04 kHz</strong>: Not user-adjustable. Nyquist at ~13 kHz. Everything above folds back.</li><li><strong>Pitch (semi + fine)</strong>: Per-pad varispeed. Pitch-and-time coupled.</li><li><strong>Truncate</strong>: Sample-level head/tail crop. 2.5 s per pad is a RAM division, not a setting.</li><li><strong>Individual outs</strong>: Skip the stereo summing bus. Preserves more high-freq aliasing — the &#x27;aliasing switch&#x27;.</li></ol></div></div>
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-03">
+  <h1>Slide gd-sp1200-03 · gear deep dive</h1>
+  <h2>Annotated tour, 2/2 — signal path and output routing</h2>
+  
+  <div class="body"><h1>Annotated tour, 2/2 — signal path and output routing</h1>
+<p>Signal path, input side: <strong>line in → sample-and-hold at 26.04 kHz → 12-bit companded ADC → sample RAM</strong>. No anti-alias filter at the input. Any frequency in the source above 13 kHz folds back as aliasing <em>and is printed into the sample</em>. Resampling a hot 16 kHz cymbal returns a ~10 kHz ghost. That ghost is permanent.</p>
+<p>Output side: <strong>pad trigger → sample RAM → varispeed playback → 12-bit DAC → individual output OR stereo mix bus → line out</strong>. The stereo mix bus has gentle summing coloration; the individual outputs skip it. Producers used the individuals for bass, mix bus for drums, or vice versa — personal taste.</p>
+<p><strong>No filters, no envelopes per voice.</strong> The MPC3000 has a 2-pole LPF per voice; the SP-1200 has nothing. Every shape comes from the sample itself — truncate, pitch, or re-sample.</p>
+<p>That radical simplicity is why SP-1200 records sound the way they do. There is no character knob. The character is baked into the ADC curve and the sample rate.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-04">
+  <h1>Slide gd-sp1200-04 · gear deep dive</h1>
+  <h2>How the RZA / Premier / Pete Rock method worked</h2>
+  
+  <div class="body"><h1>How the RZA / Premier / Pete Rock method worked</h1>
+<p>The canonical SP-1200 sampling move:</p>
+<ol>
+<li>Pull record on Technics 1200. Cue to a 1–2-second break.</li>
+<li><strong>Sample at 33 rpm or 45 rpm</strong> — 45 rpm shortens the sample by 1.35×, freeing pad RAM. Pitch down in the SP-1200 to recover the original key. The sample-at-45 trick is universal among SP-1200 producers (<code>bib:charnas_dilla_time</code>).</li>
+<li>Truncate to the break. The 2.5-second limit is hard. If you can&rsquo;t fit it, you chop.</li>
+<li>Assign to a pad. Set pitch. Play.</li>
+<li>For the Premier method: sample your own scratching as a pad hit, trigger as percussion (<code>bib:premier_ten_crack_scratches</code>). Covered in s09.</li>
+</ol>
+<p>Receipts:
+- <strong>Pete Rock</strong>: <em>&ldquo;I only sample stuff that gives me a good feel&rdquo;</em> — filtered full-mix stereo records through a studio EQ at Greene Street to extract basslines where no stem existed (<code>bib:charnas_dilla_time</code> via spec). &ldquo;T.R.O.Y.&rdquo; is two different sections of Tom Scott&rsquo;s &ldquo;Today&rdquo; pitched to match, drums from James Brown &ldquo;Say It Loud.&rdquo;
+- <strong>RZA</strong> used the SP-1200 through <em>&ldquo;Bring the Pain&rdquo;</em> and <em>&ldquo;Method Man,&rdquo;</em> then moved to the Ensoniq EPS-16 Plus for longer loops (<code>bib:rbma_rza_lecture</code>). The 2.5-second limit is why he switched.
+- <strong>DJ Premier</strong> on <em>Illmatic</em> and <em>Ten Crack Commandments</em> — MPC60 plus Technics plus SP-1200 grit; the drums were often SP-processed, the basses not.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-05">
+  <h1>Slide gd-sp1200-05 · gear deep dive</h1>
+  <h2>Technique continued — the 2.5-second constraint as composition force</h2>
+  
+  <div class="body"><h1>Technique continued — the 2.5-second constraint as composition force</h1>
+<p>The RAM division forced specific compositional choices that defined the era:</p>
+<ul>
+<li><strong>Chops not loops.</strong> You cannot load an 8-bar break at 26.04 kHz in 2.5 seconds; you load the first kick + snare + one hat and trigger each as separate pads. Wu-Tang&rsquo;s &ldquo;Method Man&rdquo; and Nas&rsquo;s &ldquo;N.Y. State of Mind&rdquo; drum programming is direct evidence.</li>
+<li><strong>Short samples, retriggered.</strong> The &ldquo;stabby&rdquo; feel of SP-1200-era hip-hop is a RAM-limit artifact: every hit is a short sample, not a sustain.</li>
+<li><strong>45-rpm sampling to steal headroom.</strong> Playing records at 45 rpm halves sample duration. RZA and Pete Rock both did this constantly (<code>bib:charnas_dilla_time</code>).</li>
+<li><strong>Global swing only.</strong> Unlike the MPC3000&rsquo;s per-pad swing, the SP-1200 had one swing value for the whole pattern. This is why <span class="term">Dilla time<span class="gloss"><strong>Dilla time</strong> — Dan Charnas&#x27;s term (Dilla Time, 2022) for J Dilla&#x27;s rhythmic signature — the deliberate superimposition of straight, swung, and micro-shifted elements within the same bar. On the MPC3000, per-pad swing and timing shift make this programmable. Canonical recipe: kicks on straight 16ths, hats at ~60–66% swing, snares dragged 20–30 ms late. <a href="https://en.wikipedia.org/wiki/Dilla_Time" target="_blank" rel="noopener">wikipedia↗</a></span></span> is not an SP-1200 aesthetic — the architecture doesn&rsquo;t support it.</li>
+</ul>
+<p>The result: SP-1200 records sound <em>tight</em>, <em>stabby</em>, <em>aliased</em>, <em>bandwidth-limited</em>. MPC3000 records sound <em>loose</em>, <em>wide</em>, <em>punchy</em>. Same producers could make both; the machine chose the feel.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-06">
+  <h1>Slide gd-sp1200-06 · gear deep dive</h1>
+  <h2>Underlying algorithm — 12-bit companded ADC</h2>
+  
+  <div class="body"><h1>Underlying algorithm — 12-bit companded ADC</h1>
+<p>The SP-1200 uses a <strong>12-bit companded PCM</strong> format. &ldquo;Companded&rdquo; means the amplitude range is non-linear — small values are finely resolved, large values are coarsely resolved. It&rsquo;s closer to µ-law companding than to plain 12-bit linear PCM.</p>
+<p>Why companding matters sonically:
+- <strong>Loud transients</strong> (snares, kick clicks) hit the coarse end of the curve → visible quantization noise at the attack. This is the &ldquo;crunch&rdquo; at the front of every SP-1200 snare.
+- <strong>Quiet content</strong> (reverb tails, vocal sustain) sits on the fine end → cleaner than a pure 12-bit linear would give.
+- The resulting quantization noise floor is <strong>signal-dependent</strong>, not constant. Linear 12-bit PCM at the same bit depth sounds noticeably different — flatter, less characterful.</p>
+<p>Bit-depth math: 12 bits = 4096 levels, theoretical SNR ≈ 72 dB. But with companding, effective dynamic range is pushed into the usable range where content lives, at the cost of top-end detail. Roads 1996 covers companding curves in Ch. 1 (<code>bib:roads_computer_music_tutorial</code>).</p>
+<p>Manufacturer documentation for the exact E-mu companding curve is thin — the SP-1200 service manual is the primary source, flagged in <code>needs_bib:</code>.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="800" height="320" fill="#f8f8f5"/>
+  <text x="20" y="30" font-family="monospace" font-size="14" fill="#222">Companded ADC curve — linear 12-bit vs SP-1200 proprietary (µ-law-like shape)</text>
+  <!-- axes -->
+  <g stroke="#888" stroke-width="1" fill="none">
+    <line x1="80" y1="270" x2="760" y2="270"/>
+    <line x1="80" y1="270" x2="80" y2="60"/>
+  </g>
+  <text x="400" y="300" font-family="monospace" font-size="11" fill="#444" text-anchor="middle">input amplitude (0 → full-scale)</text>
+  <text x="40" y="170" font-family="monospace" font-size="11" fill="#444" transform="rotate(-90 40 170)">quantization level density</text>
+  <!-- linear line (diagonal) -->
+  <line x1="80" y1="270" x2="760" y2="60" stroke="#3b6ea5" stroke-width="2"/>
+  <text x="560" y="100" font-family="monospace" font-size="11" fill="#3b6ea5">linear 12-bit (even)</text>
+  <!-- companded curve (logarithmic-ish) -->
+  <path d="M 80 270 Q 180 110 400 90 T 760 70" stroke="#b03030" stroke-width="2" fill="none"/>
+  <text x="180" y="140" font-family="monospace" font-size="11" fill="#b03030">SP-1200 proprietary 12→8-bit (µ-law-like shape, not G.711)</text>
+  <!-- labels -->
+  <text x="100" y="260" font-family="monospace" font-size="10" fill="#222">dense near zero</text>
+  <text x="600" y="80" font-family="monospace" font-size="10" fill="#222">sparse near full-scale</text>
+  <text x="20" y="310" font-family="monospace" font-size="11" fill="#666">consequence: crunchy transient attacks, cleaner quiet tails. quantization noise is signal-dependent.</text>
+</svg>
+<div class="caption">Companded ADC — dense quantization near zero, sparse near full-scale. The signature &#x27;crunchy transient, clean tail&#x27; shape.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-07">
+  <h1>Slide gd-sp1200-07 · gear deep dive</h1>
+  <h2>Algorithm continued — aliasing and the 13 kHz cliff</h2>
+  
+  <div class="body"><h1>Algorithm continued — aliasing and the 13 kHz cliff</h1>
+<p>26.04 kHz sample rate → Nyquist = 13.02 kHz. Anything in the source above 13 kHz folds back into the audible band as <strong>aliasing</strong>:</p>
+<ul>
+<li>A 16 kHz cymbal component folds to 26.04 − 16 = <strong>10.04 kHz</strong>.</li>
+<li>A 20 kHz source harmonic folds to 26.04 − 20 = <strong>6.04 kHz</strong>. Now you have a mid-range tone that wasn&rsquo;t in the original.</li>
+<li>A properly designed ADC has a <strong>steep brick-wall anti-alias filter</strong> (~20 kHz for 44.1 kHz systems). The SP-1200&rsquo;s filter is <strong>famously permissive</strong> — per the service manual there&rsquo;s a gentle ~1-pole analog roll-off starting around 10 kHz, so it&rsquo;s not absent, just lazy. Plenty of high-frequency content that would have been blocked elsewhere folds back into the audible band and gets printed directly into sample RAM.</li>
+</ul>
+<p>Combined with varispeed playback: pitch a pad up an octave and the aliased content shifts <em>with</em> the sample, creating non-harmonic content that intermodulates with the source. This is why SP-1200 records sound &ldquo;musically wrong in a way that works&rdquo; — they contain frequency content that is not mathematically related to the source spectrum.</p>
+<p>The frequency-response cliff is not at 13 kHz — it&rsquo;s at 26.04 − source-highest. That is a moving target dependent on what you sampled. Which is why every SP-1200 record has its own particular grit.</p></div>
+  
+  <div class="diagram"><svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="800" height="320" fill="#f8f8f5"/>
+  <text x="20" y="30" font-family="monospace" font-size="14" fill="#222">SP-1200 aliasing — 26.04 kHz, famously permissive AA filter (gentle ~1-pole from ~10 kHz)</text>
+  <!-- axes -->
+  <g stroke="#888" stroke-width="1" fill="none">
+    <line x1="80" y1="260" x2="760" y2="260"/>
+    <line x1="80" y1="260" x2="80" y2="60"/>
+  </g>
+  <text x="400" y="290" font-family="monospace" font-size="11" fill="#444" text-anchor="middle">frequency (kHz)</text>
+  <text x="140" y="275" font-family="monospace" font-size="10" fill="#444">0</text>
+  <text x="340" y="275" font-family="monospace" font-size="10" fill="#444">13 (Nyquist)</text>
+  <text x="540" y="275" font-family="monospace" font-size="10" fill="#444">20</text>
+  <text x="720" y="275" font-family="monospace" font-size="10" fill="#444">26</text>
+  <!-- source flat to 20 kHz -->
+  <line x1="80" y1="150" x2="540" y2="150" stroke="#3b6ea5" stroke-width="2"/>
+  <line x1="540" y1="150" x2="540" y2="260" stroke="#3b6ea5" stroke-width="2"/>
+  <text x="260" y="140" font-family="monospace" font-size="11" fill="#3b6ea5">source spectrum (flat to 20 kHz)</text>
+  <!-- Nyquist cliff -->
+  <line x1="340" y1="60" x2="340" y2="260" stroke="#b03030" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- aliased ghost (mirror of source above Nyquist, folded back) -->
+  <line x1="340" y1="200" x2="540" y2="200" stroke="#b03030" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="340" y1="200" x2="140" y2="200" stroke="#b03030" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="220" y="215" font-family="monospace" font-size="11" fill="#b03030">folded aliasing</text>
+  <!-- SP-1200 output = source + alias -->
+  <text x="20" y="310" font-family="monospace" font-size="11" fill="#666">content above 13 kHz folds back into the audible band. permanently printed into the sample.</text>
+</svg>
+<div class="caption">Aliasing cliff at 13 kHz. Any source content above Nyquist folds back as an inverted-image ghost, added to the sample.</div></div>
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-08">
+  <h1>Slide gd-sp1200-08 · gear deep dive</h1>
+  <h2>Ableton bridge — Redux + TAL-Bitcrusher + 13 kHz LPF</h2>
+  
+  <div class="body"><h1>Ableton bridge — Redux + TAL-Bitcrusher + 13 kHz LPF</h1>
+<p>The closest in-the-box approximation of SP-1200 character is a <strong>three-device serial chain on Simpler in One-Shot mode</strong>:</p>
+<ol>
+<li><strong>Redux</strong> (native Live sample-rate/bit-depth reducer) — set <strong>Sample Rate ≈ 13 kHz</strong> (or 13.02 kHz if the device permits fine setting) to simulate the Nyquist bandwidth limit. Bit depth <strong>12</strong>. Redux&rsquo;s default anti-alias setting is <em>cleaner</em> than the SP-1200 — for authenticity, turn anti-aliasing <em>off</em> or reduce it (<code>bib:ableton_live_12_manual</code>).</li>
+<li><strong>TAL-Bitcrusher</strong> (<code>bib:tal_bitcrusher</code>) — set bit depth 12, add a slight non-linear drive curve to approximate companding asymmetry. Alternate: Decimort 2 (<code>bib:decimort_2</code>) has a specific &ldquo;SP-1200&rdquo; preset that matches the companding curve closely.</li>
+<li><strong>EQ Eight, 12 dB/oct LPF at 13 kHz</strong> — enforces the bandwidth limit as a hard cliff. Some producers prefer 16 kHz LPF as more forgiving.</li>
+<li><strong>Simpler in One-Shot mode, Warp Re-Pitch</strong> on the input sample — preserves varispeed coupling.</li>
+</ol>
+<p>Parameter table:</p>
+<table>
+<thead>
+<tr>
+<th>SP-1200</th>
+<th>Ableton chain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>26.04 kHz sample rate (no AA filter)</td>
+<td>Redux SR 13 kHz, anti-alias off</td>
+</tr>
+<tr>
+<td>12-bit companded PCM</td>
+<td>TAL-Bitcrusher 12-bit + drive OR Decimort 2 &ldquo;SP-1200&rdquo; preset</td>
+</tr>
+<tr>
+<td>2.5 s per pad RAM</td>
+<td>Discipline — do not exceed (see Exercise B)</td>
+</tr>
+<tr>
+<td>No per-voice filter</td>
+<td>Chain&rsquo;s LPF is global, not per-voice — constraint preserved</td>
+</tr>
+<tr>
+<td>Varispeed playback</td>
+<td>Simpler Classic / Warp Re-Pitch</td>
+</tr>
+</tbody>
+</table>
+<p>This is the closest you get without a $4,000 hardware unit. It is not identical. It is close enough that a blind A/B requires careful listening on mids.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-09">
+  <h1>Slide gd-sp1200-09 · gear deep dive</h1>
+  <h2>Alternative paths — Decimort 2, Roar Bitgrunge, and the &#x27;don&#x27;t bother&#x27;</h2>
+  
+  <div class="body"><h1>Alternative paths — Decimort 2, Roar Bitgrunge, and the &ldquo;don&rsquo;t bother&rdquo;</h1>
+<p>Three other paths to the SP-1200 sound:</p>
+<ul>
+<li><strong>Decimort 2</strong> (D16 Group, <code>bib:decimort_2</code>) — dedicated decimator with an SP-1200 preset that models the companded ADC curve. Tighter approximation than Redux + Bitcrusher, single plugin. Paid but cheap.</li>
+<li><strong>Roar&rsquo;s Bitgrunge shape</strong> (native Live 12.1+, <code>bib:ableton_live_12_manual</code>) — one of Roar&rsquo;s internal saturation models includes bit-crushing behavior. Not a 1:1 SP-1200 clone but useful for per-band dusty character.</li>
+<li><strong>The &ldquo;don&rsquo;t bother&rdquo; path</strong> — accept that you&rsquo;re not making an SP-1200 record and stop chasing the sound. Use the stem untreated. Some of the best post-SP-1200 producers (Madlib after <em>Madvillainy</em>, Flying Lotus, Knxwledge) stopped reaching for the grit and let the sample breathe. The chase itself becomes a limitation.</li>
+</ul>
+<p>Rule of thumb: if the chain is taking longer than the beat, delete the chain. The SP-1200 made records fast because it had no knobs. The Ableton emulation has too many; that is its own trap.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-10">
+  <h1>Slide gd-sp1200-10 · gear deep dive</h1>
+  <h2>Beyond the boom-bap — creative SP-1200 moves</h2>
+  
+  <div class="body"><h1>Beyond the boom-bap — creative SP-1200 moves</h1>
+<p>The machine&rsquo;s architecture enables moves beyond chop-and-trigger:</p>
+<ul>
+<li><strong>Resample loops through the machine.</strong> Record a finished loop out, sample back in through the ADC, bounce. The double-ADC pass <em>doubles</em> the companding and aliasing character. Producers call this &ldquo;running it through the SP&rdquo; — a verb, not a box.</li>
+<li><strong>Abuse varispeed extremes.</strong> Pitch a sample down by two octaves — the sample plays 4× slower and all frequency content drops to 1/4 original. Aliasing at the top-end becomes audible in the mid-range. Madlib&rsquo;s &ldquo;boomsauce&rdquo; bass lineage.</li>
+<li><strong>Individual-output tricks.</strong> Route each pad to a different output, process each externally, recombine. Pete Rock&rsquo;s filtered-bass trick (Greene Street EQ) depended on this.</li>
+<li><strong>Sample the SP-1200 sampling a record.</strong> Chain two units. The spec debates whether this is myth or actually happened; either way, the conceptual move is about stacking the ADC coloration.</li>
+<li><strong>Use it as an effect, not an instrument.</strong> Run your modern DAW mix <em>through</em> a hardware SP-1200 and sample back in. The 2.5-second limit means you do this per-measure, not per-track. Kanye and Mike Dean reportedly used one this way during <em>MBDTF</em> sessions — flagged as unconfirmed in <code>needs_bib:</code>.</li>
+</ul></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-11">
+  <h1>Slide gd-sp1200-11 · gear deep dive</h1>
+  <h2>Modern parallels — who still sounds like this</h2>
+  
+  <div class="body"><h1>Modern parallels — who still sounds like this</h1>
+<p>The SP-1200 ceased production in 1998, but the sound lives on because the aesthetic can be reproduced in software and because the constraint-based composition style is independent of the hardware:</p>
+<ul>
+<li><strong>Knxwledge, Mndsgn, Swarvy</strong> — LA beat-scene producers using Decimort 2 or Redux chains to hit the grit on modern records. The sample-rate-reduction and companded-bitcrush combo is the common core.</li>
+<li><strong>Madlib (post-Madvillainy)</strong> — moved to Boss SP-303 (lower-fi, different character) and software, still composing with the &ldquo;short sample&rdquo; discipline (<code>bib:charnas_dilla_time</code> via spec).</li>
+<li><strong>Pete Rock, Premier, and RZA (when they want the sound)</strong> — all three are on record saying they still reach for the hardware when the track demands it, because the Ableton chain is &ldquo;close, not identical.&rdquo; Flagged as technique-known-not-directly-cited in <code>needs_bib:</code>.</li>
+<li><strong>Producers who <em>don&rsquo;t</em> chase it</strong> — Kaytranada, Flying Lotus (post-<em>Until the Quiet Comes</em>), The Alchemist on recent work. They use cleaner chains and trust modern fidelity.</li>
+</ul>
+<p>The SP-1200 sound is now a choice, not a given. Which means using it is also a statement about taste, not just gear availability.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-12">
+  <h1>Slide gd-sp1200-12 · gear deep dive</h1>
+  <h2>Exercise A — process a modern sample into SP-1200 territory</h2>
+  
+  <div class="body"><h1>Exercise A — process a modern sample into SP-1200 territory</h1>
+<p>Goal: take a modern 44.1 kHz vocal sample and reduce it through the three-device chain until the aliasing and companding artifacts are audible. Then A/B.</p>
+<p>Steps:</p>
+<ol>
+<li>Load the <code>hp_vocals.wav</code> bounce from the stemforge recipe onto an audio track (<code>bib:stemforge_repo</code>).</li>
+<li>Freeze and flatten the track. The bounce is the source-of-truth.</li>
+<li>Add the chain, in series: <strong>Redux</strong> (SR 13 kHz, Bit depth 12, anti-alias off) → <strong>TAL-Bitcrusher</strong> (12-bit, slight drive) → <strong>EQ Eight</strong> (LPF 13 kHz, 12 dB/oct). See bib references s01&rsquo;s slide-08.</li>
+<li>Set up a second track, identical but with the chain bypassed. Solo both in turn.</li>
+<li>Bounce both as <code>hp_sp1200.wav</code> and <code>hp_clean.wav</code>.</li>
+<li>Drop both into a DAW session. A/B at matched loudness.</li>
+</ol>
+<p>Deliverable: two bounces, plus one paragraph noting what the chain <em>removed</em> (top-end air, sibilance detail) and what it <em>added</em> (aliased mid-range artifacts, companded quantization noise at transient attacks). The point is not &ldquo;it sounds old&rdquo; — the point is specifically which artifacts are doing the work (<code>bib:roads_computer_music_tutorial</code>).</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">Two bounces of the same stemforge Hot Pants phrase (hp_sp1200.wav through Redux + TAL-Bitcrusher + 13 kHz LPF; hp_clean.wav untreated) plus a paragraph naming which artifacts the chain removed (top-end detail) vs added (aliased mid-range, companded transient crunch).</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-13">
+  <h1>Slide gd-sp1200-13 · gear deep dive</h1>
+  <h2>Exercise B — the 2.5-second constraint, self-imposed</h2>
+  
+  <div class="body"><h1>Exercise B — the 2.5-second constraint, self-imposed</h1>
+<p>Goal: make a 4-bar beat where every sampled element is <strong>≤ 2.5 seconds</strong>. Prove to yourself that the constraint shapes the beat, not the chain.</p>
+<p>Steps:</p>
+<ol>
+<li>Fresh project. Open a Drum Rack. Nothing loaded yet.</li>
+<li>Pick 8 source samples — vocal chops, drum breaks, bass hits, whatever. Each must be <strong>trimmed to 2.5 seconds or less</strong> in the Simpler start/end markers. Longer source material has to be chopped, not looped.</li>
+<li>Program a 4-bar pattern using only these 8 samples.</li>
+<li>No stretched loops. No 8-bar phrases. If you can&rsquo;t fit an idea in 2.5 seconds, you chop it or cut it.</li>
+<li>Bounce as <code>hp_2p5sec.wav</code>.</li>
+<li>For comparison: redo the same musical idea with no length limit. Bounce as <code>hp_unlimited.wav</code>.</li>
+</ol>
+<p>Deliverable: two bounces, plus one paragraph naming the specific musical decisions the 2.5-second limit forced — usually: more chops, shorter phrases, more retriggers, more dense patterns. This constraint is what made <em>Enter the Wu-Tang</em> sound different from <em>Illmatic</em> sound different from <em>Fantastic Vol. 1</em>. Same producers, same records, same limit, different outcomes (<code>bib:charnas_dilla_time</code>).</p>
+<p>Reflect: constraints beat chains every time.</p></div>
+  
+  
+  
+  
+  
+  <div class="deliverable">Two bounces of a 4-bar beat (hp_2p5sec.wav using only samples ≤2.5 s; hp_unlimited.wav with no length constraint) plus a paragraph naming the specific musical decisions the 2.5-second limit forced — more chops, shorter phrases, more retriggers, denser patterns.</div>
+  
+</section>
+
+
+<section class="slide gear_deep_dive" id="slide-gd-sp1200-14">
+  <h1>Slide gd-sp1200-14 · gear deep dive</h1>
+  <h2>Diagram — the aliasing cliff and the companding curve</h2>
+  
+  <div class="body"><h1>Diagram — the aliasing cliff and the companding curve</h1>
+<p>Two diagrams, one slide, both load-bearing:</p>
+<p><strong>Top: frequency-response cliff at 13 kHz.</strong> A 26.04 kHz sample rate means content above 13.02 kHz folds back into the audible band. The diagram shows a source spectrum (0–20 kHz flat) and the SP-1200 output: flat to ~13 kHz, with a mirror-image aliased ghost from 13 to 0 kHz. Folded content is <em>added</em> to the original — there is no filter to remove it.</p>
+<p><strong>Bottom: companded ADC curve (µ-law-style).</strong> Horizontal axis = input amplitude (linear). Vertical axis = quantization levels used. A linear 12-bit ADC uses evenly spaced levels; a companded ADC uses dense levels near zero and sparse levels near full-scale. The asymmetry is the &ldquo;crunchy transient, clean tail&rdquo; signature.</p>
+<p>Rule: <strong>aliasing is permanent, companding is permanent.</strong> Neither can be removed after sampling. That is why they define the sound. Source: Roads 1996, Ch. 1 on quantization and Ch. 3 on sampling theory (<code>bib:roads_computer_music_tutorial</code>).</p>
+<p>The two artifacts together are a fingerprint. Together with varispeed pitch and a 2.5-second RAM division, they are the SP-1200.</p></div>
+  
+  
+  
+  
+  
+  
+  
+</section>
+
+  <div class="cites"><div class="label">References</div><ol><li id="bib:ableton_live_12_manual">Ableton AG — Ableton Live 12 Reference Manual — Ableton AG 2026 <a href="https://www.ableton.com/en/manual/welcome-to-live/" target="_blank" rel="noopener">↗</a></li><li id="bib:ableton_push_3_docs">Ableton AG — Push 3 Manual — Rhythm Generator Drum Rack layout <a href="https://www.ableton.com/en/manual/push-3-introduction/" target="_blank" rel="noopener">↗</a></li><li id="bib:akai_mpc2000xl_manual">Akai — MPC2000XL Operator&#x27;s Manual <a href="https://www.akaipro.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:akai_mpc3000_manual">Akai — MPC3000 Operator&#x27;s Manual <a href="https://www.akaipro.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:alkman_euclidean_pro">alkman — Euclidean Sequencer Pro — Max for Live</li><li id="bib:charnas_dilla_time">Dan Charnas — Dilla Time: The Life and Afterlife of J Dilla, Hip-Hop&#x27;s Producer Extraordinaire — MCD / Farrar, Straus and Giroux 2022</li><li id="bib:decimort_2">D16 Group — Decimort 2 — Bit/SR Reducer <a href="https://d16.pl/decimort-2" target="_blank" rel="noopener">↗</a></li><li id="bib:prefuse_73_xlr8r">Scott Herren (interviewee) — Prefuse 73 — MPC Philosophy — XLR8R <a href="https://xlr8r.com/" target="_blank" rel="noopener">↗</a></li><li id="bib:premier_ten_crack_scratches">DJ Premier (interviewee) — DJ Premier on &#x27;Ten Crack Commandments&#x27; scratch sampling</li><li id="bib:questlove_dilla_quote">Questlove — Questlove on J Dilla&#x27;s Sloppy Precision</li><li id="bib:rbma_just_blaze_lecture">Just Blaze — Just Blaze — Red Bull Music Academy lecture (chipmunk soul origins) — RBMA <a href="https://web.archive.org/web/*/rbma.com/lectures/just-blaze/" target="_blank" rel="noopener">↗</a></li><li id="bib:rbma_rza_lecture">RZA — Red Bull Music Academy lecture — RBMA (archived via web.archive.org) <a href="https://web.archive.org/web/*/rbma.com/lectures/rza/" target="_blank" rel="noopener">↗</a></li><li id="bib:roads_computer_music_tutorial">Curtis Roads — The Computer Music Tutorial — MIT Press 1996</li><li id="bib:smithsonian_dilla_mpc3000">J Dilla MPC3000 — National Museum of African American History and Culture — Smithsonian Institution <a href="https://nmaahc.si.edu/" target="_blank" rel="noopener">↗</a></li><li id="bib:soundtoys_little_alterboy_manual">SoundToys Inc. — Little AlterBoy User Guide <a href="https://www.soundtoys.com/support/" target="_blank" rel="noopener">↗</a></li><li id="bib:soundtoys_microshift_manual">SoundToys Inc. — MicroShift User Guide <a href="https://www.soundtoys.com/support/" target="_blank" rel="noopener">↗</a></li><li id="bib:stemforge_repo">Zak — stemforge — stem separation + curation + M4L loader</li><li id="bib:tal_bitcrusher">TAL Software — TAL-Bitcrusher <a href="https://tal-software.com/products/tal-bitcrusher" target="_blank" rel="noopener">↗</a></li><li id="bib:whosampled_db">WhoSampled — sample source database <a href="https://www.whosampled.com/" target="_blank" rel="noopener">↗</a></li></ol></div>
+</div>
+
+<div class="foot">
+  <div class="nav">
+    <span class="counter">1 / 1</span>
+  </div>
+  <div class="dots"></div>
+  <div class="keys">← → nav · space play/pause · c jump-to-chapter · m mute · p play</div>
+</div>
+
+<script>window.__CHAPTERS__ = [{"id": "ch000", "title": "Intro", "start_ms": 0, "end_ms": 63450}, {"id": "ch001", "title": "Vocal chopping: four producers, four methods", "start_ms": 63850, "end_ms": 172900}, {"id": "ch002", "title": "The stem you're working from", "start_ms": 173300, "end_ms": 276400}, {"id": "ch003", "title": "Prefuse 73 \u2014 the four-step resample ladder", "start_ms": 276800, "end_ms": 410300}, {"id": "ch004", "title": "Dilla time \u2014 1/32 micro-chops and per-pad drift", "start_ms": 410700, "end_ms": 530100}, {"id": "ch005", "title": "Correcting the Donuts SP-303 myth", "start_ms": 530500, "end_ms": 646150}, {"id": "ch006", "title": "Chipmunk soul \u2014 Re-Pitch, not time-stretch", "start_ms": 646550, "end_ms": 773250}, {"id": "ch007", "title": "Kanye/Mike Dean \u2014 6\u201312 vocal stack, MicroShift, retune-speed zero", "start_ms": 773650, "end_ms": 904000}, {"id": "ch008", "title": "Little AlterBoy \u2014 three settings worth memorizing", "start_ms": 904400, "end_ms": 1024250}, {"id": "ch009", "title": "DJ Premier \u2014 scratch the loop, then sample yourself", "start_ms": 1024650, "end_ms": 1141150}, {"id": "ch010", "title": "The chopped-vocal signal path, committed", "start_ms": 1141550, "end_ms": 1275150}, {"id": "ch011", "title": "Three methods, one phrase, three exports", "start_ms": 1275550, "end_ms": 1401700}, {"id": "ch012", "title": "Outro", "start_ms": 1402100, "end_ms": 1452200}];</script>
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.querySelector('.foot .dots');
+  const counter = document.querySelector('.foot .counter');
+  const chapLabel = document.querySelector('.podcast-bar .chapter');
+  const jumpBtn = document.querySelector('#jump-btn');
+  const podcast = document.querySelector('#podcast');
+  const chapters = window.__CHAPTERS__ || [];
+  let idx = 0;
+
+  function chapterForSlide(i) {
+    // Slides with a narration script map 1:1 to a chapter in the podcast.
+    // If there are more slides (e.g. gear deep-dives) than chapters, match by position modulo.
+    if (chapters.length === 0) return null;
+    return chapters[Math.min(i, chapters.length - 1)];
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    const ch = chapterForSlide(idx);
+    chapLabel.textContent = ch ? `ch ${idx + 1}: ${ch.title}` : '';
+    history.replaceState(null, '', `#s${idx + 1}`);
+  }
+
+  function next() { if (idx < slides.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function jump(i) { if (i >= 0 && i < slides.length) { idx = i; render(); } }
+
+  function jumpPodcastToSlide() {
+    const ch = chapterForSlide(idx);
+    if (ch && podcast) {
+      podcast.currentTime = ch.start_ms / 1000;
+      podcast.play().catch(()=>{});
+    }
+  }
+
+  // Dots with visual distinction for deep-dive slides
+  const dots = [];
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (s.classList.contains('gear_deep_dive')) d.classList.add('dd');
+    d.title = `Slide ${i + 1}`;
+    d.onclick = () => jump(i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+    else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+    else if (e.key === ' ' || e.key === 'p') {
+      e.preventDefault();
+      if (podcast) { podcast.paused ? podcast.play().catch(()=>{}) : podcast.pause(); }
+    }
+    else if (e.key === 'c') { e.preventDefault(); jumpPodcastToSlide(); }
+    else if (e.key === 'm') { if (podcast) podcast.muted = !podcast.muted; }
+  });
+
+  if (jumpBtn) jumpBtn.addEventListener('click', jumpPodcastToSlide);
+
+  // A/B players
+  document.querySelectorAll('.ab').forEach(ab => {
+    const buttons = ab.querySelectorAll('button[data-src]');
+    const audio = ab.querySelector('audio.abplayer');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        audio.src = btn.dataset.src;
+        audio.play().catch(()=>{});
+      });
+    });
+  });
+
+  // Initial hash restore
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) idx = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+  render();
+})();
+</script>
+</body>
+</html>
