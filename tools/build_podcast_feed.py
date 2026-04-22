@@ -35,6 +35,7 @@ OUT = ROOT / "podcast.xml"
 
 REPO_RAW_BASE = "https://raw.githubusercontent.com/ZacharySBrown/idm-course/main"
 REPO_WEB = "https://github.com/ZacharySBrown/idm-course"
+ARTWORK_URL = f"{REPO_RAW_BASE}/artwork.jpg"
 
 SHOW_TITLE = "IDM Production — 12 Weeks, 12 Tracks"
 SHOW_AUTHOR = "Zak (raindog.ai)"
@@ -153,6 +154,12 @@ def main() -> int:
     <copyright>© 2026 Zak. Course content CC-BY-NC 4.0.</copyright>
     <lastBuildDate>{rfc822(now)}</lastBuildDate>
     <pubDate>{rfc822(base_pub)}</pubDate>
+    <image>
+      <url>{ARTWORK_URL}</url>
+      <title>{escape(SHOW_TITLE)}</title>
+      <link>{REPO_WEB}</link>
+    </image>
+    <itunes:image href="{ARTWORK_URL}" />
     <itunes:author>{escape(SHOW_AUTHOR)}</itunes:author>
     <itunes:summary>{escape(SHOW_DESC)}</itunes:summary>
     <itunes:owner>
