@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <atom:link href="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/podcast.xml" rel="self" type="application/rss+xml" />
+    <title>IDM Production — 12 Weeks, 12 Tracks</title>
+    <link>https://github.com/ZacharySBrown/idm-course</link>
+    <description>A twelve-week course reverse-engineering electronic music production from Aphex Twin, Autechre, Four Tet, Squarepusher, J Dilla, DJ Shadow, DJ Premier, Kanye, Madlib, Death Grips, and Burial. Narrated by Bernd. Constraint over options. Completion over polish. Ship twelve tracks in twelve weeks.</description>
+    <language>en-us</language>
+    <copyright>© 2026 Zak. Course content CC-BY-NC 4.0.</copyright>
+    <lastBuildDate>Wed, 22 Apr 2026 01:45:08 +0000</lastBuildDate>
+    <pubDate>Tue, 21 Apr 2026 12:00:00 +0000</pubDate>
+    <itunes:author>Zak (raindog.ai)</itunes:author>
+    <itunes:summary>A twelve-week course reverse-engineering electronic music production from Aphex Twin, Autechre, Four Tet, Squarepusher, J Dilla, DJ Shadow, DJ Premier, Kanye, Madlib, Death Grips, and Burial. Narrated by Bernd. Constraint over options. Completion over polish. Ship twelve tracks in twelve weeks.</itunes:summary>
+    <itunes:owner>
+      <itunes:name>Zak (raindog.ai)</itunes:name>
+      <itunes:email>zak@raindog.ai</itunes:email>
+    </itunes:owner>
+    <itunes:category text="Music" />
+    <itunes:category text="Education"><itunes:category text="Courses" /></itunes:category>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:type>serial</itunes:type>
+    <item>
+      <title>W1 — Listen like an engineer, subtract like a producer</title>
+      <description>Week 1 of 12. Listen like an engineer, subtract like a producer.
+
+Pillars: meta_listening.
+
+Concepts covered: reference_track_analysis, critical_listening_protocol, drop_one_stem, subtraction_method_preview, time_box_45min, session_mentalities, monitoring_environment, completion_over_perfection
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w01-listen-subtract/index.html</description>
+      <pubDate>Tue, 21 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w01-listen-subtract</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w01-listen-subtract.mp3" length="35441706" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>24:22</itunes:duration>
+      <itunes:episode>1</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Listen like an engineer, subtract like a producer</itunes:summary>
+    </item>
+    <item>
+      <title>W2 — The Subtraction method — finish by removing</title>
+      <description>Week 2 of 12. The Subtraction method — finish by removing.
+
+Pillars: arrangement.
+
+Concepts covered: subtraction_method, arrangement_template, eight_bar_rule, constant_anchor, silence_as_instrument, completion_over_perfection
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w02-subtraction/index.html</description>
+      <pubDate>Wed, 22 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w02-subtraction</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w02-subtraction.mp3" length="34988410" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>24:03</itunes:duration>
+      <itunes:episode>2</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>The Subtraction method — finish by removing</itunes:summary>
+    </item>
+    <item>
+      <title>W3 — Simpler, Drum Rack, one-shots</title>
+      <description>Week 3 of 12. Simpler, Drum Rack, one-shots.
+
+Pillars: sound_design_primitives, ableton_core.
+
+Concepts covered: simpler_modes, one_shot_drums, slicing_to_midi, drum_rack_chains, drum_sampler_per_pad, simpler_vs_sampler, stemforge_loader, mpc2kxl_resampling_ladder...
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w03-simpler-basics/index.html</description>
+      <pubDate>Thu, 23 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w03-simpler-basics</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w03-simpler-basics.mp3" length="39770981" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>27:23</itunes:duration>
+      <itunes:episode>3</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Simpler, Drum Rack, one-shots</itunes:summary>
+    </item>
+    <item>
+      <title>W4 — Warp modes as sound design — Complex Pro, Beats, Texture</title>
+      <description>Week 4 of 12. Warp modes as sound design — Complex Pro, Beats, Texture.
+
+Pillars: warp, sound_design_primitives.
+
+Concepts covered: complex_pro_formants, complex_pro_envelope, beats_mode_transient, texture_flux, repitch_chipmunk_soul, warp_marker_nudging, kick_transient_layering, phase_vocoder_dsp...
+
+Teasers: tarbox_road
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w04-warp-modes/index.html</description>
+      <pubDate>Fri, 24 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w04-warp-modes</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w04-warp-modes.mp3" length="39452873" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>27:08</itunes:duration>
+      <itunes:episode>4</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Warp modes as sound design — Complex Pro, Beats, Texture</itunes:summary>
+    </item>
+    <item>
+      <title>W5 — Aphex Pt.1 — Tuning drums to the track</title>
+      <description>Week 5 of 12. Aphex Pt.1 — Tuning drums to the track.
+
+Pillars: aphex_twin, microtuning.
+
+Concepts covered: drums_as_harmonic_content, repitched_808_as_bassline, simpler_transpose_per_pad, ableton_12_tuning_systems, scala_file_loading, scale_device_midi_effect, per_step_cent_offsets, community_attribution_vs_verbatim...
+
+Teasers: fredonia_srt
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w05-aphex-tuning/index.html</description>
+      <pubDate>Sat, 25 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w05-aphex-tuning</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w05-aphex-tuning.mp3" length="35001247" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>24:02</itunes:duration>
+      <itunes:episode>5</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Aphex Pt.1 — Tuning drums to the track</itunes:summary>
+    </item>
+    <item>
+      <title>W6 — Four Tet — subliminal layering &amp; preset discipline</title>
+      <description>Week 6 of 12. Four Tet — subliminal layering &amp; preset discipline.
+
+Pillars: four_tet, layering.
+
+Concepts covered: subliminal_layering, preset_discipline, kick_stack, midi_randomization, laptop_speaker_mixing, arrangement_primacy
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w06-fourtet-layering/index.html</description>
+      <pubDate>Sun, 26 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w06-fourtet-layering</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w06-fourtet-layering.mp3" length="37229187" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>25:35</itunes:duration>
+      <itunes:episode>6</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Four Tet — subliminal layering &amp; preset discipline</itunes:summary>
+    </item>
+    <item>
+      <title>W7 — Squarepusher — hardware hostility &amp; Amen chopping</title>
+      <description>Week 7 of 12. Squarepusher — hardware hostility &amp; Amen chopping.
+
+Pillars: squarepusher, breakbeat.
+
+Concepts covered: hardware_first_sequencing, blind_numeric_sequencer, half_speed_tape_bass, single_pass_discipline, amen_break_chopping, slice_to_midi, sidechain_as_composition, signal_path_mental_model...
+
+Teasers: tame_impala_boss
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w07-squarepusher-chops/index.html</description>
+      <pubDate>Mon, 27 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w07-squarepusher-chops</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w07-squarepusher-chops.mp3" length="42383075" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>29:11</itunes:duration>
+      <itunes:episode>7</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Squarepusher — hardware hostility &amp; Amen chopping</itunes:summary>
+    </item>
+    <item>
+      <title>W8 — Autechre — generative, not random</title>
+      <description>Week 8 of 12. Autechre — generative, not random.
+
+Pillars: autechre, generative_midi, max_for_live.
+
+Concepts covered: procedural_composition, nested_sequencers, feedback_routing, versioning_discipline, polymeter, clip_envelope_unlinked, bounce_commit, wrongness_as_signature
+
+Teasers: mgmt_kids_distortion
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w08-autechre-feedback/index.html</description>
+      <pubDate>Tue, 28 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w08-autechre-feedback</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w08-autechre-feedback.mp3" length="40260275" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>27:40</itunes:duration>
+      <itunes:episode>8</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Autechre — generative, not random</itunes:summary>
+    </item>
+    <item>
+      <title>W9 — Vocal chopping — Prefuse, Dilla, Kanye, Premier</title>
+      <description>Week 9 of 12. Vocal chopping — Prefuse, Dilla, Kanye, Premier.
+
+Pillars: hip_hop_integration, vocal_processing.
+
+Concepts covered: vocal_chopping, micro_chopping, chipmunk_soul, resample_ladder, per_pad_swing, vocal_stack_detune, self_scratched_loop
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w09-vocal-chopping/index.html</description>
+      <pubDate>Wed, 29 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w09-vocal-chopping</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w09-vocal-chopping.mp3" length="35200056" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>24:12</itunes:duration>
+      <itunes:episode>9</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Vocal chopping — Prefuse, Dilla, Kanye, Premier</itunes:summary>
+    </item>
+    <item>
+      <title>W10 — Variation generation — the five mutations</title>
+      <description>Week 10 of 12. Variation generation — the five mutations.
+
+Pillars: arrangement, resample_and_mutate.
+
+Concepts covered: five_mutations_method, drum_swap_mutation, bass_seed_mutation, filter_sweep_mutation, reverse_mutation, new_layer_mutation, resample_and_mutate_engine, commit_and_delete_source...
+
+Teasers: zaireeka_4cd
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w10-variation-generation/index.html</description>
+      <pubDate>Thu, 30 Apr 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w10-variation-generation</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w10-variation-generation.mp3" length="41426673" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>28:29</itunes:duration>
+      <itunes:episode>10</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Variation generation — the five mutations</itunes:summary>
+    </item>
+    <item>
+      <title>W11 — Beat switches, inverse drops, and the rub</title>
+      <description>Week 11 of 12. Beat switches, inverse drops, and the rub.
+
+Pillars: arrangement, hip_hop_integration.
+
+Concepts covered: tde_beat_switch, dj_dahi_reversal, the_rub_bob_power, inverse_drop, burial_archangel_method, scene_launch_switching, chain_selector_variations, follow_actions_as_switch...
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w11-beat-switch/index.html</description>
+      <pubDate>Fri, 01 May 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w11-beat-switch</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w11-beat-switch.mp3" length="35195963" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>24:13</itunes:duration>
+      <itunes:episode>11</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Beat switches, inverse drops, and the rub</itunes:summary>
+    </item>
+    <item>
+      <title>W12 — Ship two tracks — mastering, metadata, delivery</title>
+      <description>Week 12 of 12. Ship two tracks — mastering, metadata, delivery.
+
+Pillars: mastering, release_discipline, voice_consistency.
+
+Concepts covered: lufs_targets_streaming_vs_club, true_peak_ceiling_minus_one_dbtp, level_matched_ab_against_references, headphone_vs_monitor_translation, self_master_vs_send_out, distributor_choice_bandcamp_vs_distrokid, metadata_hygiene_isrc_composer_artwork, track_naming_and_versioning...
+
+Teasers: gottinger_alumni
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w12-ship-two-tracks/index.html</description>
+      <pubDate>Sat, 02 May 2026 12:00:00 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-w12-ship-two-tracks</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w12-ship-two-tracks.mp3" length="39144678" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>26:54</itunes:duration>
+      <itunes:episode>12</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Ship two tracks — mastering, metadata, delivery</itunes:summary>
+    </item>
+  </channel>
+</rss>
