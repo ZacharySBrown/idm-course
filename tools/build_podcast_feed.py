@@ -66,7 +66,10 @@ def main() -> int:
     weeks = course.get("weeks", [])
 
     items_xml = []
-    base_pub = datetime(2026, 4, 21, 12, 0, 0, tzinfo=timezone.utc)
+    # All pub-dates in the past so every episode is visible immediately.
+    # W1 was "published" 12 days ago; each subsequent week +1 day. W12 = yesterday.
+    now = datetime.now(timezone.utc)
+    base_pub = now - timedelta(days=12)
 
     for w in weeks:
         lesson_id = w["id"]

@@ -10,8 +10,8 @@
     <description>A twelve-week course reverse-engineering electronic music production from Aphex Twin, Autechre, Four Tet, Squarepusher, J Dilla, DJ Shadow, DJ Premier, Kanye, Madlib, Death Grips, and Burial. Narrated by Bernd. Constraint over options. Completion over polish. Ship twelve tracks in twelve weeks.</description>
     <language>en-us</language>
     <copyright>© 2026 Zak. Course content CC-BY-NC 4.0.</copyright>
-    <lastBuildDate>Wed, 22 Apr 2026 01:45:08 +0000</lastBuildDate>
-    <pubDate>Tue, 21 Apr 2026 12:00:00 +0000</pubDate>
+    <lastBuildDate>Wed, 22 Apr 2026 01:50:27 +0000</lastBuildDate>
+    <pubDate>Fri, 10 Apr 2026 01:50:27 +0000</pubDate>
     <itunes:author>Zak (raindog.ai)</itunes:author>
     <itunes:summary>A twelve-week course reverse-engineering electronic music production from Aphex Twin, Autechre, Four Tet, Squarepusher, J Dilla, DJ Shadow, DJ Premier, Kanye, Madlib, Death Grips, and Burial. Narrated by Bernd. Constraint over options. Completion over polish. Ship twelve tracks in twelve weeks.</itunes:summary>
     <itunes:owner>
@@ -31,7 +31,7 @@ Pillars: meta_listening.
 Concepts covered: reference_track_analysis, critical_listening_protocol, drop_one_stem, subtraction_method_preview, time_box_45min, session_mentalities, monitoring_environment, completion_over_perfection
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w01-listen-subtract/index.html</description>
-      <pubDate>Tue, 21 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Fri, 10 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w01-listen-subtract</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w01-listen-subtract.mp3" length="35441706" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -51,7 +51,7 @@ Pillars: arrangement.
 Concepts covered: subtraction_method, arrangement_template, eight_bar_rule, constant_anchor, silence_as_instrument, completion_over_perfection
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w02-subtraction/index.html</description>
-      <pubDate>Wed, 22 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Sat, 11 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w02-subtraction</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w02-subtraction.mp3" length="34988410" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -71,7 +71,7 @@ Pillars: sound_design_primitives, ableton_core.
 Concepts covered: simpler_modes, one_shot_drums, slicing_to_midi, drum_rack_chains, drum_sampler_per_pad, simpler_vs_sampler, stemforge_loader, mpc2kxl_resampling_ladder...
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w03-simpler-basics/index.html</description>
-      <pubDate>Thu, 23 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Sun, 12 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w03-simpler-basics</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w03-simpler-basics.mp3" length="39770981" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -93,7 +93,7 @@ Concepts covered: complex_pro_formants, complex_pro_envelope, beats_mode_transie
 Teasers: tarbox_road
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w04-warp-modes/index.html</description>
-      <pubDate>Fri, 24 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Mon, 13 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w04-warp-modes</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w04-warp-modes.mp3" length="39452873" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -115,7 +115,7 @@ Concepts covered: drums_as_harmonic_content, repitched_808_as_bassline, simpler_
 Teasers: fredonia_srt
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w05-aphex-tuning/index.html</description>
-      <pubDate>Sat, 25 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Tue, 14 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w05-aphex-tuning</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w05-aphex-tuning.mp3" length="35001247" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -135,7 +135,7 @@ Pillars: four_tet, layering.
 Concepts covered: subliminal_layering, preset_discipline, kick_stack, midi_randomization, laptop_speaker_mixing, arrangement_primacy
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w06-fourtet-layering/index.html</description>
-      <pubDate>Sun, 26 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Wed, 15 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w06-fourtet-layering</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w06-fourtet-layering.mp3" length="37229187" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -157,7 +157,7 @@ Concepts covered: hardware_first_sequencing, blind_numeric_sequencer, half_speed
 Teasers: tame_impala_boss
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w07-squarepusher-chops/index.html</description>
-      <pubDate>Mon, 27 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Thu, 16 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w07-squarepusher-chops</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w07-squarepusher-chops.mp3" length="42383075" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -179,7 +179,7 @@ Concepts covered: procedural_composition, nested_sequencers, feedback_routing, v
 Teasers: mgmt_kids_distortion
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w08-autechre-feedback/index.html</description>
-      <pubDate>Tue, 28 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Fri, 17 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w08-autechre-feedback</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w08-autechre-feedback.mp3" length="40260275" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -199,7 +199,7 @@ Pillars: hip_hop_integration, vocal_processing.
 Concepts covered: vocal_chopping, micro_chopping, chipmunk_soul, resample_ladder, per_pad_swing, vocal_stack_detune, self_scratched_loop
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w09-vocal-chopping/index.html</description>
-      <pubDate>Wed, 29 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Sat, 18 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w09-vocal-chopping</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w09-vocal-chopping.mp3" length="35200056" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -221,7 +221,7 @@ Concepts covered: five_mutations_method, drum_swap_mutation, bass_seed_mutation,
 Teasers: zaireeka_4cd
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w10-variation-generation/index.html</description>
-      <pubDate>Thu, 30 Apr 2026 12:00:00 +0000</pubDate>
+      <pubDate>Sun, 19 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w10-variation-generation</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w10-variation-generation.mp3" length="41426673" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -241,7 +241,7 @@ Pillars: arrangement, hip_hop_integration.
 Concepts covered: tde_beat_switch, dj_dahi_reversal, the_rub_bob_power, inverse_drop, burial_archangel_method, scene_launch_switching, chain_selector_variations, follow_actions_as_switch...
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w11-beat-switch/index.html</description>
-      <pubDate>Fri, 01 May 2026 12:00:00 +0000</pubDate>
+      <pubDate>Mon, 20 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w11-beat-switch</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w11-beat-switch.mp3" length="35195963" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -263,7 +263,7 @@ Concepts covered: lufs_targets_streaming_vs_club, true_peak_ceiling_minus_one_db
 Teasers: gottinger_alumni
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/html/w12-ship-two-tracks/index.html</description>
-      <pubDate>Sat, 02 May 2026 12:00:00 +0000</pubDate>
+      <pubDate>Tue, 21 Apr 2026 01:50:27 +0000</pubDate>
       <guid isPermaLink="false">idm-course-w12-ship-two-tracks</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/audio/episodes/w12-ship-two-tracks.mp3" length="39144678" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
