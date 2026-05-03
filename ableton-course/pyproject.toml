@@ -1,0 +1,16 @@
+[project]
+name = "ableton-course"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx",
+    "beautifulsoup4",
+    "pyyaml",
+    "openai",
+    "librosa",
+    "soundfile",
+    "ffmpeg-python",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]

@@ -1,0 +1,37 @@
+title: "Ableton Live Mastery"
+subtitle: "Devices, History, and Techniques for Serious Producers"
+format: walking-podcast
+target_duration_minutes: 40
+tts_model: gpt-4o-mini-tts
+tts_voice: onyx
+episodes:
+  - id: e01-operator
+    title: "Operator: The FM Machine"
+    status: in-progress
+  - id: e02-analog
+    title: "Analog: The Subtractive Foundation"
+    status: planned
+  - id: e03-wavetable
+    title: "Wavetable: Morphing Through Spectra"
+    status: planned
+  - id: e04-meld
+    title: "Meld: Physical Modelling Hybrid"
+    status: planned
+  - id: e05-warp-modes
+    title: "Warp Modes as Sound Design"
+    status: planned
+  - id: e06-drum-rack
+    title: "Drum Rack + Simpler: The Sampler Engine"
+    status: planned
+  - id: e07-granulator
+    title: "Granulator III: Clouds of Sound"
+    status: planned
+  - id: e08-spectral
+    title: "Spectral Time + Reverb: Designing Space"
+    status: planned
+  - id: e09-m4l-generative
+    title: "Max for Live: Generative Systems"
+    status: planned
+  - id: e10-racks
+    title: "The Rack: Signal Chains as Instruments"
+    status: planned

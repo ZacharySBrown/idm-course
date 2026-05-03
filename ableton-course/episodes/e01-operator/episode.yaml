@@ -1,0 +1,48 @@
+episode_id: e01-operator
+title: "Operator: The FM Machine"
+device: Operator
+synthesis_type: "FM (Frequency Modulation)"
+target_duration_minutes: 40
+ableton_manual_url: "https://www.ableton.com/en/manual/operator/"
+idm_primary_artists:
+  - Aphex Twin
+  - Squarepusher
+  - Autechre
+idm_primary_records:
+  - "Aphex Twin — Analogue Bubblebath 3"
+  - "Squarepusher — Burningn'n Tree"
+  - "Autechre — Incunabula"
+adjacent_genres:
+  - big beat
+  - ambient techno
+  - IDM
+song_acquisition_required:
+  - song: "Polynomial-C"
+    artist: "Aphex Twin"
+    album: "Analogue Bubblebath 3"
+    stemforge_pipeline: default
+  - song: "Xtal"
+    artist: "Aphex Twin"
+    album: "Selected Ambient Works 85-92"
+    stemforge_pipeline: ambient
+  - song: "Bike"
+    artist: "Autechre"
+    album: "Incunabula"
+    stemforge_pipeline: default
+  - song: "An Ending (Ascent)"
+    artist: "Brian Eno"
+    album: "Apollo"
+    stemforge_pipeline: ambient
+script_sections:
+  - id: "01-cold-open"
+    target_minutes: 1.5
+  - id: "02-history"
+    target_minutes: 9
+  - id: "03-synthesis-deep-dive"
+    target_minutes: 9
+  - id: "04-ableton-deep-dive"
+    target_minutes: 9
+  - id: "05-demo-walkthrough"
+    target_minutes: 6
+  - id: "06-idm-application"
+    target_minutes: 6
