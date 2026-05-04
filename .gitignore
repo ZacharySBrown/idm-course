@@ -22,6 +22,10 @@ courses/*/references/transcripts/*.md
 # Local screenshot inbox
 _screenshots-inbox/
 
+# Acquired source songs — copyrighted; cite via courses/<id>/references/songs.json,
+# don't commit the audio.
+songs/
+
 # Committed to repo:
 #   courses/<id>/lessons|episodes/   — all source content
 #   courses/<id>/references/         — glossary.json, bibliography.json, songs.json, images.json

@@ -9,7 +9,9 @@
 #                = build/ableton-devices/audio/clips/e01-operator/<id>.wav
 
 # Where the user drops acquired song WAVs. Override per entry if needed.
-song_source_dir: ~/zacharysbrown/songs/ableton-ep01
+# In-repo path so all build inputs live next to source; the songs/ dir itself
+# is git-ignored (copyrighted source material — cite, don't commit).
+song_source_dir: songs/ableton-ep01
 
 song_clips:
   - id: polynomial-c-cold-open
