@@ -73,6 +73,7 @@ function dump() {
         var p = new LiveAPI(devicePath + " parameters " + i);
         if (!p || p.id === "0") continue;
         try {
+            var quantized = parseInt(p.get("is_quantized")) === 1;
             params.push({
                 index: i,
                 name: stringVal(p.get("name")),
@@ -80,8 +81,8 @@ function dump() {
                 value: parseFloat(p.get("value")),
                 min: parseFloat(p.get("min")),
                 max: parseFloat(p.get("max")),
-                is_quantized: parseInt(p.get("is_quantized")) === 1,
-                value_items: getValueItems(p)
+                is_quantized: quantized,
+                value_items: quantized ? getValueItems(p) : null
             });
         } catch (e) {
             params.push({ index: i, error: String(e) });
@@ -109,14 +110,18 @@ function dump() {
 }
 
 function getValueItems(p) {
+    // value_items is a single property that returns a list (or empty for
+    // continuous params). Indexed access (`value_items 0`) doesn't work.
     try {
-        var n = parseInt(p.getcount("value_items"));
-        if (!n || isNaN(n)) return null;
-        var items = [];
-        for (var i = 0; i < n; i++) {
-            items.push(stringVal(p.get("value_items " + i)));
+        var v = p.get("value_items");
+        if (!v) return null;
+        if (typeof v === "object" && v.length !== undefined) {
+            if (v.length === 0) return null;
+            var items = [];
+            for (var i = 0; i < v.length; i++) items.push(String(v[i]));
+            return items;
         }
-        return items;
+        return null;
     } catch (e) {
         return null;
     }
@@ -128,10 +133,15 @@ function stringVal(v) {
 }
 
 function writeJson(posixPath, obj) {
+    // Max's File.writestring truncates at 32767 bytes per call. Chunk it.
     var f = new File(toMaxPath(posixPath), "write");
     if (!f.isopen) return false;
     try {
-        f.writestring(JSON.stringify(obj, null, 2));
+        var s = JSON.stringify(obj, null, 2);
+        var CHUNK = 16384;
+        for (var off = 0; off < s.length; off += CHUNK) {
+            f.writestring(s.substr(off, CHUNK));
+        }
         f.close();
         return true;
     } catch (e) {

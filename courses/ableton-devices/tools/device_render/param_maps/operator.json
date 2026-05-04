@@ -1,0 +1,2292 @@
+{
+  "captured_at": 1777927190797,
+  "track_path": "live_set tracks 0",
+  "device_path": "live_set tracks 0 devices 1",
+  "device_name": "Operator",
+  "device_class": "Operator",
+  "parameter_count": 195,
+  "parameters": [
+    {
+      "index": 0,
+      "name": "Device On",
+      "original_name": "Device On",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 1,
+      "name": "Algorithm",
+      "original_name": "Algorithm",
+      "value": 0,
+      "min": 0,
+      "max": 10,
+      "is_quantized": true,
+      "value_items": [
+        "Alg. 1",
+        "Alg. 2",
+        "Alg. 3",
+        "Alg. 4",
+        "Alg. 5",
+        "Alg. 6",
+        "Alg. 7",
+        "Alg. 8",
+        "Alg. 9",
+        "Alg. 10",
+        "Alg. 11"
+      ]
+    },
+    {
+      "index": 2,
+      "name": "Transpose",
+      "original_name": "Transpose",
+      "value": 0,
+      "min": -48,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 3,
+      "name": "PB Range",
+      "original_name": "PB Range",
+      "value": 5,
+      "min": 0,
+      "max": 24,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 4,
+      "name": "Volume",
+      "original_name": "Volume",
+      "value": 0.39999979734420776,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 5,
+      "name": "Panorama",
+      "original_name": "Panorama",
+      "value": 0,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 6,
+      "name": "Pan < Key",
+      "original_name": "Pan < Key",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 7,
+      "name": "Pan < Rnd",
+      "original_name": "Pan < Rnd",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 8,
+      "name": "Tone",
+      "original_name": "Tone",
+      "value": 0.699999988079071,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 9,
+      "name": "Spread",
+      "original_name": "Spread",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 10,
+      "name": "Glide On",
+      "original_name": "Glide On",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 11,
+      "name": "Glide Time",
+      "original_name": "Glide Time",
+      "value": 0.5397940278053284,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 12,
+      "name": "Osc-A On",
+      "original_name": "Osc-A On",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 13,
+      "name": "A Coarse",
+      "original_name": "A Coarse",
+      "value": 1,
+      "min": 0,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 14,
+      "name": "A Fine",
+      "original_name": "A Fine",
+      "value": 0,
+      "min": 0,
+      "max": 1000,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 15,
+      "name": "A Freq<Vel",
+      "original_name": "A Freq<Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 16,
+      "name": "A Quantize",
+      "original_name": "A Quantize",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 17,
+      "name": "A Fix On ",
+      "original_name": "A Fix On ",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 18,
+      "name": "A Fix Freq",
+      "original_name": "A Fix Freq",
+      "value": 0.4345879852771759,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 19,
+      "name": "A Fix Freq Mul",
+      "original_name": "A Fix Freq Mul",
+      "value": 4,
+      "min": 0,
+      "max": 5,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 20,
+      "name": "Osc-A Level",
+      "original_name": "Osc-A Level",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 21,
+      "name": "Osc-A Retrig",
+      "original_name": "Osc-A Retrig",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 22,
+      "name": "Osc-A Phase",
+      "original_name": "Osc-A Phase",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 23,
+      "name": "Osc-A Lev < Vel",
+      "original_name": "Osc-A Lev < Vel",
+      "value": 50,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 24,
+      "name": "Osc-A Lev < Key",
+      "original_name": "Osc-A Lev < Key",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 25,
+      "name": "Osc-A Wave",
+      "original_name": "Osc-A Wave",
+      "value": 0,
+      "min": 0,
+      "max": 22,
+      "is_quantized": true,
+      "value_items": [
+        "Sine",
+        "Sine 4 Bit",
+        "Sine 8 Bit",
+        "Saw 3",
+        "Saw 4",
+        "Saw 6",
+        "Saw 8",
+        "Saw 16",
+        "Saw 32",
+        "Saw 64",
+        "Saw D",
+        "Square 3",
+        "Square 4",
+        "Square 6",
+        "Square 8",
+        "Square 16",
+        "Square 32",
+        "Square 64",
+        "Square D",
+        "Triangle",
+        "Noise Looped",
+        "Noise White",
+        "User"
+      ]
+    },
+    {
+      "index": 26,
+      "name": "Osc-A Feedb",
+      "original_name": "Osc-A Feedb",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 27,
+      "name": "Osc-A < Pe",
+      "original_name": "Osc-A < Pe",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 28,
+      "name": "Osc-A < LFO",
+      "original_name": "Osc-A < LFO",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 29,
+      "name": "Ae Attack",
+      "original_name": "Ae Attack",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 30,
+      "name": "Ae Init",
+      "original_name": "Ae Init",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 31,
+      "name": "Ae Decay",
+      "original_name": "Ae Decay",
+      "value": 0.6278579235076904,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 32,
+      "name": "Ae Peak",
+      "original_name": "Ae Peak",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 33,
+      "name": "Ae Sustain",
+      "original_name": "Ae Sustain",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 34,
+      "name": "Ae Release",
+      "original_name": "Ae Release",
+      "value": 0.5445746183395386,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 35,
+      "name": "Ae Mode",
+      "original_name": "Ae Mode",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "None",
+        "Loop",
+        "Beat",
+        "Sync",
+        "Trigger"
+      ]
+    },
+    {
+      "index": 36,
+      "name": "Ae Loop",
+      "original_name": "Ae Loop",
+      "value": 0.5397940278053284,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 37,
+      "name": "Ae Retrig",
+      "original_name": "Ae Retrig",
+      "value": 3,
+      "min": 0,
+      "max": 14,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 38,
+      "name": "Ae R < Vel",
+      "original_name": "Ae R < Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 39,
+      "name": "Osc-B On",
+      "original_name": "Osc-B On",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 40,
+      "name": "B Coarse",
+      "original_name": "B Coarse",
+      "value": 1,
+      "min": 0,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 41,
+      "name": "B Fine",
+      "original_name": "B Fine",
+      "value": 0,
+      "min": 0,
+      "max": 1000,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 42,
+      "name": "B Freq<Vel",
+      "original_name": "B Freq<Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 43,
+      "name": "B Quantize",
+      "original_name": "B Quantize",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 44,
+      "name": "B Fix On ",
+      "original_name": "B Fix On ",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 45,
+      "name": "B Fix Freq",
+      "original_name": "B Fix Freq",
+      "value": 0.4345879852771759,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 46,
+      "name": "B Fix Freq Mul",
+      "original_name": "B Fix Freq Mul",
+      "value": 4,
+      "min": 0,
+      "max": 5,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 47,
+      "name": "Osc-B Level",
+      "original_name": "Osc-B Level",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 48,
+      "name": "Osc-B Retrig",
+      "original_name": "Osc-B Retrig",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 49,
+      "name": "Osc-B Phase",
+      "original_name": "Osc-B Phase",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 50,
+      "name": "Osc-B Lev < Vel",
+      "original_name": "Osc-B Lev < Vel",
+      "value": 50,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 51,
+      "name": "Osc-B Lev < Key",
+      "original_name": "Osc-B Lev < Key",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 52,
+      "name": "Osc-B Wave",
+      "original_name": "Osc-B Wave",
+      "value": 0,
+      "min": 0,
+      "max": 22,
+      "is_quantized": true,
+      "value_items": [
+        "Sine",
+        "Sine 4 Bit",
+        "Sine 8 Bit",
+        "Saw 3",
+        "Saw 4",
+        "Saw 6",
+        "Saw 8",
+        "Saw 16",
+        "Saw 32",
+        "Saw 64",
+        "Saw D",
+        "Square 3",
+        "Square 4",
+        "Square 6",
+        "Square 8",
+        "Square 16",
+        "Square 32",
+        "Square 64",
+        "Square D",
+        "Triangle",
+        "Noise Looped",
+        "Noise White",
+        "User"
+      ]
+    },
+    {
+      "index": 53,
+      "name": "Osc-B Feedb",
+      "original_name": "Osc-B Feedb",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 54,
+      "name": "Osc-B < Pe",
+      "original_name": "Osc-B < Pe",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 55,
+      "name": "Osc-B < LFO",
+      "original_name": "Osc-B < LFO",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 56,
+      "name": "Be Attack",
+      "original_name": "Be Attack",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 57,
+      "name": "Be Init",
+      "original_name": "Be Init",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 58,
+      "name": "Be Decay",
+      "original_name": "Be Decay",
+      "value": 0.5445746183395386,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 59,
+      "name": "Be Peak",
+      "original_name": "Be Peak",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 60,
+      "name": "Be Sustain",
+      "original_name": "Be Sustain",
+      "value": 0.3999996781349182,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 61,
+      "name": "Be Release",
+      "original_name": "Be Release",
+      "value": 0.5445746183395386,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 62,
+      "name": "Be Mode",
+      "original_name": "Be Mode",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "None",
+        "Loop",
+        "Beat",
+        "Sync",
+        "Trigger"
+      ]
+    },
+    {
+      "index": 63,
+      "name": "Be Loop",
+      "original_name": "Be Loop",
+      "value": 0.5397940278053284,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 64,
+      "name": "Be Retrig",
+      "original_name": "Be Retrig",
+      "value": 3,
+      "min": 0,
+      "max": 14,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 65,
+      "name": "Be R < Vel",
+      "original_name": "Be R < Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 66,
+      "name": "Osc-C On",
+      "original_name": "Osc-C On",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 67,
+      "name": "C Coarse",
+      "original_name": "C Coarse",
+      "value": 1,
+      "min": 0,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 68,
+      "name": "C Fine",
+      "original_name": "C Fine",
+      "value": 0,
+      "min": 0,
+      "max": 1000,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 69,
+      "name": "C Freq<Vel",
+      "original_name": "C Freq<Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 70,
+      "name": "C Quantize",
+      "original_name": "C Quantize",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 71,
+      "name": "C Fix On ",
+      "original_name": "C Fix On ",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 72,
+      "name": "C Fix Freq",
+      "original_name": "C Fix Freq",
+      "value": 0.4345879852771759,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 73,
+      "name": "C Fix Freq Mul",
+      "original_name": "C Fix Freq Mul",
+      "value": 4,
+      "min": 0,
+      "max": 5,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 74,
+      "name": "Osc-C Level",
+      "original_name": "Osc-C Level",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 75,
+      "name": "Osc-C Retrig",
+      "original_name": "Osc-C Retrig",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 76,
+      "name": "Osc-C Phase",
+      "original_name": "Osc-C Phase",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 77,
+      "name": "Osc-C Lev < Vel",
+      "original_name": "Osc-C Lev < Vel",
+      "value": 50,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 78,
+      "name": "Osc-C Lev < Key",
+      "original_name": "Osc-C Lev < Key",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 79,
+      "name": "Osc-C Wave",
+      "original_name": "Osc-C Wave",
+      "value": 0,
+      "min": 0,
+      "max": 22,
+      "is_quantized": true,
+      "value_items": [
+        "Sine",
+        "Sine 4 Bit",
+        "Sine 8 Bit",
+        "Saw 3",
+        "Saw 4",
+        "Saw 6",
+        "Saw 8",
+        "Saw 16",
+        "Saw 32",
+        "Saw 64",
+        "Saw D",
+        "Square 3",
+        "Square 4",
+        "Square 6",
+        "Square 8",
+        "Square 16",
+        "Square 32",
+        "Square 64",
+        "Square D",
+        "Triangle",
+        "Noise Looped",
+        "Noise White",
+        "User"
+      ]
+    },
+    {
+      "index": 80,
+      "name": "Osc-C Feedb",
+      "original_name": "Osc-C Feedb",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 81,
+      "name": "Osc-C < Pe",
+      "original_name": "Osc-C < Pe",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 82,
+      "name": "Osc-C < LFO",
+      "original_name": "Osc-C < LFO",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 83,
+      "name": "Ce Attack",
+      "original_name": "Ce Attack",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 84,
+      "name": "Ce Init",
+      "original_name": "Ce Init",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 85,
+      "name": "Ce Decay",
+      "original_name": "Ce Decay",
+      "value": 0.5445746183395386,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 86,
+      "name": "Ce Peak",
+      "original_name": "Ce Peak",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 87,
+      "name": "Ce Sustain",
+      "original_name": "Ce Sustain",
+      "value": 0.3999996781349182,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 88,
+      "name": "Ce Release",
+      "original_name": "Ce Release",
+      "value": 0.5445746183395386,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 89,
+      "name": "Ce Mode",
+      "original_name": "Ce Mode",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "None",
+        "Loop",
+        "Beat",
+        "Sync",
+        "Trigger"
+      ]
+    },
+    {
+      "index": 90,
+      "name": "Ce Loop",
+      "original_name": "Ce Loop",
+      "value": 0.5397940278053284,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 91,
+      "name": "Ce Retrig",
+      "original_name": "Ce Retrig",
+      "value": 3,
+      "min": 0,
+      "max": 14,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 92,
+      "name": "Ce R < Vel",
+      "original_name": "Ce R < Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 93,
+      "name": "Osc-D On",
+      "original_name": "Osc-D On",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 94,
+      "name": "D Coarse",
+      "original_name": "D Coarse",
+      "value": 1,
+      "min": 0,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 95,
+      "name": "D Fine",
+      "original_name": "D Fine",
+      "value": 0,
+      "min": 0,
+      "max": 1000,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 96,
+      "name": "D Freq<Vel",
+      "original_name": "D Freq<Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 97,
+      "name": "D Quantize",
+      "original_name": "D Quantize",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 98,
+      "name": "D Fix On ",
+      "original_name": "D Fix On ",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 99,
+      "name": "D Fix Freq",
+      "original_name": "D Fix Freq",
+      "value": 0.4345879852771759,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 100,
+      "name": "D Fix Freq Mul",
+      "original_name": "D Fix Freq Mul",
+      "value": 4,
+      "min": 0,
+      "max": 5,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 101,
+      "name": "Osc-D Level",
+      "original_name": "Osc-D Level",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 102,
+      "name": "Osc-D Retrig",
+      "original_name": "Osc-D Retrig",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 103,
+      "name": "Osc-D Phase",
+      "original_name": "Osc-D Phase",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 104,
+      "name": "Osc-D Lev < Vel",
+      "original_name": "Osc-D Lev < Vel",
+      "value": 50,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 105,
+      "name": "Osc-D Lev < Key",
+      "original_name": "Osc-D Lev < Key",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 106,
+      "name": "Osc-D Wave",
+      "original_name": "Osc-D Wave",
+      "value": 0,
+      "min": 0,
+      "max": 22,
+      "is_quantized": true,
+      "value_items": [
+        "Sine",
+        "Sine 4 Bit",
+        "Sine 8 Bit",
+        "Saw 3",
+        "Saw 4",
+        "Saw 6",
+        "Saw 8",
+        "Saw 16",
+        "Saw 32",
+        "Saw 64",
+        "Saw D",
+        "Square 3",
+        "Square 4",
+        "Square 6",
+        "Square 8",
+        "Square 16",
+        "Square 32",
+        "Square 64",
+        "Square D",
+        "Triangle",
+        "Noise Looped",
+        "Noise White",
+        "User"
+      ]
+    },
+    {
+      "index": 107,
+      "name": "Osc-D Feedb",
+      "original_name": "Osc-D Feedb",
+      "value": 0,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 108,
+      "name": "Osc-D < Pe",
+      "original_name": "Osc-D < Pe",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 109,
+      "name": "Osc-D < LFO",
+      "original_name": "Osc-D < LFO",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 110,
+      "name": "De Attack",
+      "original_name": "De Attack",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 111,
+      "name": "De Init",
+      "original_name": "De Init",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 112,
+      "name": "De Decay",
+      "original_name": "De Decay",
+      "value": 0.5445746183395386,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 113,
+      "name": "De Peak",
+      "original_name": "De Peak",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 114,
+      "name": "De Sustain",
+      "original_name": "De Sustain",
+      "value": 0.3999996781349182,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 115,
+      "name": "De Release",
+      "original_name": "De Release",
+      "value": 0.5445746183395386,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 116,
+      "name": "De Mode",
+      "original_name": "De Mode",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "None",
+        "Loop",
+        "Beat",
+        "Sync",
+        "Trigger"
+      ]
+    },
+    {
+      "index": 117,
+      "name": "De Loop",
+      "original_name": "De Loop",
+      "value": 0.5397940278053284,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 118,
+      "name": "De Retrig",
+      "original_name": "De Retrig",
+      "value": 3,
+      "min": 0,
+      "max": 14,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 119,
+      "name": "De R < Vel",
+      "original_name": "De R < Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 120,
+      "name": "Time",
+      "original_name": "Time",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 121,
+      "name": "Time < Key",
+      "original_name": "Time < Key",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 122,
+      "name": "Pe On",
+      "original_name": "Pe On",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 123,
+      "name": "Pe Attack",
+      "original_name": "Pe Attack",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 124,
+      "name": "Pe Init",
+      "original_name": "Pe Init",
+      "value": 12,
+      "min": -48,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 125,
+      "name": "Pe A Slope",
+      "original_name": "Pe A Slope",
+      "value": 0,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 126,
+      "name": "Pe Decay",
+      "original_name": "Pe Decay",
+      "value": 0.5445746183395386,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 127,
+      "name": "Pe Peak",
+      "original_name": "Pe Peak",
+      "value": 12,
+      "min": -48,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 128,
+      "name": "Pe D Slope",
+      "original_name": "Pe D Slope",
+      "value": 1,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 129,
+      "name": "Pe Sustain",
+      "original_name": "Pe Sustain",
+      "value": 0,
+      "min": -48,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 130,
+      "name": "Pe Release",
+      "original_name": "Pe Release",
+      "value": 0.35557058453559875,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 131,
+      "name": "Pe End",
+      "original_name": "Pe End",
+      "value": 0,
+      "min": -48,
+      "max": 48,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 132,
+      "name": "Pe R Slope",
+      "original_name": "Pe R Slope",
+      "value": 1,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 133,
+      "name": "Pe Mode",
+      "original_name": "Pe Mode",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "None",
+        "Loop",
+        "Beat",
+        "Sync",
+        "Trigger"
+      ]
+    },
+    {
+      "index": 134,
+      "name": "Pe Loop",
+      "original_name": "Pe Loop",
+      "value": 0.5397940278053284,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 135,
+      "name": "Pe Retrig",
+      "original_name": "Pe Retrig",
+      "value": 3,
+      "min": 0,
+      "max": 14,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 136,
+      "name": "Pe R < Vel",
+      "original_name": "Pe R < Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 137,
+      "name": "Pe Amount",
+      "original_name": "Pe Amount",
+      "value": 1,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 138,
+      "name": "Pe Amt A",
+      "original_name": "Pe Amt A",
+      "value": 100,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 139,
+      "name": "Pe Dst B",
+      "original_name": "Pe Dst B",
+      "value": 0,
+      "min": 0,
+      "max": 23,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "OSC Volume A",
+        "OSC Volume B",
+        "OSC Volume C",
+        "OSC Volume D",
+        "OSC Crossfade A/C",
+        "OSC Crossfade B/D",
+        "OSC Feedback",
+        "OSC Fixed Frequency",
+        "FM Drive",
+        "Filter Freq",
+        "Filter Q (Legacy)",
+        "Filter Res",
+        "Filter Morph",
+        "Filter Drive",
+        "Filter Envelope Amount",
+        "Shaper Drive",
+        "LFO Rate",
+        "LFO Amount",
+        "Aux Envelope Amount",
+        "Volume",
+        "Panorama",
+        "Tone",
+        "Time"
+      ]
+    },
+    {
+      "index": 140,
+      "name": "Pe Amt B",
+      "original_name": "Pe Amt B",
+      "value": 100,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 141,
+      "name": "LFO On",
+      "original_name": "LFO On",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 142,
+      "name": "LFO Type",
+      "original_name": "LFO Type",
+      "value": 0,
+      "min": 0,
+      "max": 6,
+      "is_quantized": true,
+      "value_items": [
+        "Sine",
+        "Square",
+        "Triangle",
+        "SwUp",
+        "SwDown",
+        "S&H",
+        "Noise"
+      ]
+    },
+    {
+      "index": 143,
+      "name": "LFO Range",
+      "original_name": "LFO Range",
+      "value": 0,
+      "min": 0,
+      "max": 2,
+      "is_quantized": true,
+      "value_items": [
+        "Low",
+        "High",
+        "Sync"
+      ]
+    },
+    {
+      "index": 144,
+      "name": "LFO Rate",
+      "original_name": "LFO Rate",
+      "value": 100,
+      "min": 0,
+      "max": 127,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 145,
+      "name": "LFO Sync",
+      "original_name": "LFO Sync",
+      "value": 3,
+      "min": 0,
+      "max": 14,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 146,
+      "name": "LFO R < K",
+      "original_name": "LFO R < K",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 147,
+      "name": "LFO Retrigger",
+      "original_name": "LFO Retrigger",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 148,
+      "name": "LFO Amt",
+      "original_name": "LFO Amt",
+      "value": 0.10000000149011612,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 149,
+      "name": "LFO Amt A",
+      "original_name": "LFO Amt A",
+      "value": 100,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 150,
+      "name": "LFO Dst B",
+      "original_name": "LFO Dst B",
+      "value": 0,
+      "min": 0,
+      "max": 23,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "OSC Volume A",
+        "OSC Volume B",
+        "OSC Volume C",
+        "OSC Volume D",
+        "OSC Crossfade A/C",
+        "OSC Crossfade B/D",
+        "OSC Feedback",
+        "OSC Fixed Frequency",
+        "FM Drive",
+        "Filter Freq",
+        "Filter Q (Legacy)",
+        "Filter Res",
+        "Filter Morph",
+        "Filter Drive",
+        "Filter Envelope Amount",
+        "Shaper Drive",
+        "LFO Rate",
+        "LFO Amount",
+        "Aux Envelope Amount",
+        "Volume",
+        "Panorama",
+        "Tone",
+        "Time"
+      ]
+    },
+    {
+      "index": 151,
+      "name": "LFO Amt B",
+      "original_name": "LFO Amt B",
+      "value": 100,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 152,
+      "name": "LFO < Vel",
+      "original_name": "LFO < Vel",
+      "value": 0,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 153,
+      "name": "LFO < Pe",
+      "original_name": "LFO < Pe",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 154,
+      "name": "Le Attack",
+      "original_name": "Le Attack",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 155,
+      "name": "Le Init",
+      "original_name": "Le Init",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 156,
+      "name": "Le Decay",
+      "original_name": "Le Decay",
+      "value": 0.581428050994873,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 157,
+      "name": "Le Peak",
+      "original_name": "Le Peak",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 158,
+      "name": "Le Sustain",
+      "original_name": "Le Sustain",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 159,
+      "name": "Le Release",
+      "original_name": "Le Release",
+      "value": 0.35557058453559875,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 160,
+      "name": "Le End",
+      "original_name": "Le End",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 161,
+      "name": "Le Mode",
+      "original_name": "Le Mode",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "None",
+        "Loop",
+        "Beat",
+        "Sync",
+        "Trigger"
+      ]
+    },
+    {
+      "index": 162,
+      "name": "Le Loop",
+      "original_name": "Le Loop",
+      "value": 0.5397940278053284,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 163,
+      "name": "Le Retrig",
+      "original_name": "Le Retrig",
+      "value": 3,
+      "min": 0,
+      "max": 14,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 164,
+      "name": "Le R < Vel",
+      "original_name": "Le R < Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 165,
+      "name": "Filter On",
+      "original_name": "Filter On",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 166,
+      "name": "Filter Type",
+      "original_name": "Filter Type",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "Lowpass",
+        "Highpass",
+        "Bandpass",
+        "Notch",
+        "Morph"
+      ]
+    },
+    {
+      "index": 167,
+      "name": "Filter Circuit - LP/HP",
+      "original_name": "Filter Circuit - LP/HP",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "Clean",
+        "OSR",
+        "MS2",
+        "SMP",
+        "PRD"
+      ]
+    },
+    {
+      "index": 168,
+      "name": "Filter Circuit - BP/NO/Morph",
+      "original_name": "Filter Circuit - BP/NO/Morph",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Clean",
+        "OSR"
+      ]
+    },
+    {
+      "index": 169,
+      "name": "Filter Slope",
+      "original_name": "Filter Slope",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "12 dB",
+        "24 dB"
+      ]
+    },
+    {
+      "index": 170,
+      "name": "Filter Freq",
+      "original_name": "Filter Freq",
+      "value": 0.9326211214065552,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 171,
+      "name": "Filter Res",
+      "original_name": "Filter Res",
+      "value": 0.2777777910232544,
+      "min": 0,
+      "max": 1.25,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 172,
+      "name": "Filter Morph",
+      "original_name": "Filter Morph",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 173,
+      "name": "Filter Drive",
+      "original_name": "Filter Drive",
+      "value": 0,
+      "min": 0,
+      "max": 24,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 174,
+      "name": "Filt < Vel",
+      "original_name": "Filt < Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 175,
+      "name": "Filt < Key",
+      "original_name": "Filt < Key",
+      "value": 100,
+      "min": -200,
+      "max": 200,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 176,
+      "name": "Fe Amount",
+      "original_name": "Fe Amount",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 177,
+      "name": "Filt < LFO",
+      "original_name": "Filt < LFO",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "index": 178,
+      "name": "Fe Attack",
+      "original_name": "Fe Attack",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 179,
+      "name": "Fe Init",
+      "original_name": "Fe Init",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 180,
+      "name": "Fe A Slope",
+      "original_name": "Fe A Slope",
+      "value": 0,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 181,
+      "name": "Fe Decay",
+      "original_name": "Fe Decay",
+      "value": 0.581428050994873,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 182,
+      "name": "Fe Peak",
+      "original_name": "Fe Peak",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 183,
+      "name": "Fe D Slope",
+      "original_name": "Fe D Slope",
+      "value": 1,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 184,
+      "name": "Fe Sustain",
+      "original_name": "Fe Sustain",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 185,
+      "name": "Fe Release",
+      "original_name": "Fe Release",
+      "value": 0.35557058453559875,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 186,
+      "name": "Fe End",
+      "original_name": "Fe End",
+      "value": 0,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 187,
+      "name": "Fe R Slope",
+      "original_name": "Fe R Slope",
+      "value": 1,
+      "min": -1,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 188,
+      "name": "Fe Mode",
+      "original_name": "Fe Mode",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "None",
+        "Loop",
+        "Beat",
+        "Sync",
+        "Trigger"
+      ]
+    },
+    {
+      "index": 189,
+      "name": "Fe Loop",
+      "original_name": "Fe Loop",
+      "value": 0.5397940278053284,
+      "min": 0,
+      "max": 1,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 190,
+      "name": "Fe Retrig",
+      "original_name": "Fe Retrig",
+      "value": 3,
+      "min": 0,
+      "max": 14,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 191,
+      "name": "Fe R < Vel",
+      "original_name": "Fe R < Vel",
+      "value": 0,
+      "min": -100,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 192,
+      "name": "Shaper Type",
+      "original_name": "Shaper Type",
+      "value": 0,
+      "min": 0,
+      "max": 4,
+      "is_quantized": true,
+      "value_items": [
+        "Off",
+        "Soft",
+        "Hard",
+        "Sine",
+        "4Bit"
+      ]
+    },
+    {
+      "index": 193,
+      "name": "Shaper Mix",
+      "original_name": "Shaper Mix",
+      "value": 100,
+      "min": 0,
+      "max": 100,
+      "is_quantized": false,
+      "value_items": null
+    },
+    {
+      "index": 194,
+      "name": "Shaper Drive",
+      "original_name": "Shaper Drive",
+      "value": 0,
+      "min": -12,
+      "max": 12,
+      "is_quantized": false,
+      "value_items": null
+    }
+  ]
+}
