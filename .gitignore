@@ -4,6 +4,8 @@ build/audio/stemforge-renders/
 build/glossary.md
 build/ableton-devices/audio/narration/
 build/ableton-devices/audio/stemforge-renders/
+build/ableton-devices/audio/clips/
+build/ableton-devices/tmp/
 
 # Local + Python noise
 node_modules/

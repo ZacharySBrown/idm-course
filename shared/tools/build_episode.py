@@ -50,9 +50,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _course_lib import (  # noqa: E402
     load_course,
     lessons_dir,
+    episodes_dir,
     narration_out,
     stemforge_out,
     episodes_out,
+    build_audio,
 )
 
 
@@ -127,12 +129,17 @@ def build_one(
     repo_root: Path,
     show_artist: str,
     show_album: str,
+    clips_root: Path | None = None,
 ) -> dict:
-    lesson_yaml = lesson_dir / "lesson.yaml"
-    if not lesson_yaml.exists():
-        return {"lesson": lesson_dir.name, "status": "missing-lesson-yaml"}
+    # Support both content_kind=lesson (lesson.yaml) and content_kind=episode (episode.yaml).
+    if (lesson_dir / "lesson.yaml").exists():
+        item_yaml = lesson_dir / "lesson.yaml"
+    elif (lesson_dir / "episode.yaml").exists():
+        item_yaml = lesson_dir / "episode.yaml"
+    else:
+        return {"lesson": lesson_dir.name, "status": "missing-lesson-or-episode-yaml"}
 
-    lesson = yaml.safe_load(lesson_yaml.read_text())
+    lesson = yaml.safe_load(item_yaml.read_text())
     lesson_id = lesson["id"]
     episode_cfg = lesson.get("episode", {})
 
@@ -140,15 +147,16 @@ def build_one(
     if not narr_dir.exists():
         return {"lesson": lesson_id, "status": "no-narration — run render_voiceover.py first"}
 
-    # Assemble pieces in slide order
+    clips_dir = clips_root / lesson_id if clips_root else None
+
+    # Assemble pieces in slide order, grouping each slide+its demos into one chapter block.
     intro = narr_dir / "intro.wav"
     outro = narr_dir / "outro.wav"
-    pieces: list[Path] = []
-    chapter_plan: list[tuple[str, str]] = []  # (title, wav_path_absolute_str)
+    blocks: list[tuple[str, list[Path]]] = []  # (chapter title, pieces in chapter)
+    missing_demos: list[str] = []
 
     if intro.exists():
-        pieces.append(intro)
-        chapter_plan.append(("Intro", str(intro)))
+        blocks.append(("Intro", [intro]))
 
     for slide in lesson.get("slides", []):
         script_rel = slide.get("script_md")
@@ -156,29 +164,53 @@ def build_one(
             continue
         wav_name = Path(script_rel).stem + ".wav"
         wav_path = narr_dir / wav_name
-        if wav_path.exists():
-            pieces.append(wav_path)
-            chapter_plan.append((slide.get("heading", slide["id"]), str(wav_path)))
+        if not wav_path.exists():
+            continue
+        block_pieces: list[Path] = [wav_path]
+        for demo_id in slide.get("demos", []) or []:
+            if clips_dir is None:
+                missing_demos.append(f"{slide['id']}:{demo_id} (no clips_root)")
+                continue
+            demo_wav = clips_dir / f"{demo_id}.wav"
+            if demo_wav.exists():
+                block_pieces.append(demo_wav)
+            else:
+                missing_demos.append(f"{slide['id']}:{demo_id}")
+        blocks.append((slide.get("heading", slide["id"]), block_pieces))
 
     if outro.exists():
-        pieces.append(outro)
-        chapter_plan.append(("Outro", str(outro)))
+        blocks.append(("Outro", [outro]))
 
+    pieces: list[Path] = [p for _, parts in blocks for p in parts]
     if not pieces:
         return {"lesson": lesson_id, "status": "no-narration-wavs"}
 
-    # Compute chapter start/end
+    # Per-piece durations + start cursors, accounting for 400ms inter-piece silence.
     durations = [ffprobe_duration_ms(p) for p in pieces]
-    chapters = []
+    piece_starts: list[int] = []
     cursor = 0
-    for (title, _), dur in zip(chapter_plan, durations):
+    for i, dur in enumerate(durations):
+        piece_starts.append(cursor)
+        cursor += dur
+        if i < len(durations) - 1:
+            cursor += 400
+    total_ms = cursor
+
+    # Chapter spans first piece's start → last piece's end within each block.
+    chapters = []
+    piece_idx = 0
+    for bidx, (title, parts) in enumerate(blocks):
+        n = len(parts)
+        start_ms = piece_starts[piece_idx]
+        last_idx = piece_idx + n - 1
+        end_ms = piece_starts[last_idx] + durations[last_idx]
         chapters.append({
-            "id": f"ch{len(chapters):03d}",
+            "id": f"ch{bidx:03d}",
             "title": title,
-            "start_ms": cursor,
-            "end_ms": cursor + dur,
+            "start_ms": start_ms,
+            "end_ms": end_ms,
         })
-        cursor += dur + 400  # matches 400ms inter-piece silence
+        piece_idx += n
 
     out_mp3 = out_dir / f"{lesson_id}.mp3"
     sidecar = out_dir / f"{lesson_id}.chapters.json"
@@ -195,27 +227,34 @@ def build_one(
         rel = str(out_mp3.relative_to(repo_root))
     except ValueError:
         rel = str(out_mp3)
-    return {
+    result = {
         "lesson": lesson_id,
         "status": "ok",
         "mp3": rel,
         "chapters": len(chapters),
-        "duration_ms": cursor,
+        "pieces": len(pieces),
+        "duration_ms": total_ms,
     }
+    if missing_demos:
+        result["missing_demos"] = missing_demos
+    return result
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--course-root", required=True)
-    ap.add_argument("--lesson")
+    ap.add_argument("--lesson", "--episode", dest="lesson",
+                    help="lesson|episode id, e.g. e01-operator")
     ap.add_argument("--include-stemforge", action="store_true",
                     help="(reserved) inline AB renders as musical interludes")
     args = ap.parse_args()
 
     cfg = load_course(args.course_root)
-    items_root = lessons_dir(cfg)
+    content_kind = cfg.get("content_kind", "lesson")
+    items_root = episodes_dir(cfg) if content_kind == "episode" else lessons_dir(cfg)
     narr_root = narration_out(cfg)
     out_dir = episodes_out(cfg)
+    clips_root = build_audio(cfg) / "clips"
     show_artist = cfg.get("episode_artist", f"{cfg.get('title', 'Course')} (narrator)")
     show_album = cfg.get("title", "Course")
 
@@ -235,12 +274,17 @@ def main() -> int:
             repo_root=cfg["_repo_root"],
             show_artist=show_artist,
             show_album=show_album,
+            clips_root=clips_root,
         )
         for t in targets
     ]
     for r in results:
-        print(f"[episode] {r['lesson']}: {r['status']}"
-              + (f" — {r['mp3']} ({r['chapters']} chapters)" if r['status'] == 'ok' else ''))
+        line = f"[episode] {r['lesson']}: {r['status']}"
+        if r["status"] == "ok":
+            line += f" — {r['mp3']} ({r['chapters']} chapters, {r.get('pieces', '?')} pieces)"
+            if r.get("missing_demos"):
+                line += f" [missing demos: {len(r['missing_demos'])}]"
+        print(line)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "_build_status.json").write_text(json.dumps(results, indent=2))
