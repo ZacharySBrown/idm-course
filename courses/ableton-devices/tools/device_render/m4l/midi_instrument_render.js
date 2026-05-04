@@ -183,6 +183,14 @@ function startResamplingRecord(demo) {
         throw new Error("audio render track at index " + AUDIO_TRACK_IDX + " not found");
     }
 
+    // Diagnostics: confirm the audio track is configured for capture.
+    var inputType = "?", monitor = "?";
+    try { inputType = stringVal(audio.get("input_routing_type")); } catch (e) {}
+    try { monitor = stringVal(audio.get("current_monitoring_state")); } catch (e) {}
+    status("audio track: arm=" + audio.get("arm") +
+           " input_routing_type=" + inputType +
+           " monitor=" + monitor);
+
     // Find first empty audio clip slot
     var slotCount = parseInt(audio.getcount("clip_slots"));
     var slotIdx = -1;
@@ -191,13 +199,12 @@ function startResamplingRecord(demo) {
         if (parseInt(s.get("has_clip")) === 0) { slotIdx = i; break; }
     }
     if (slotIdx < 0) throw new Error("no empty audio clip slot on track " + AUDIO_TRACK_IDX);
+    status("using audio slot " + slotIdx);
 
     audio.set("arm", 1);
 
-    // Disable session clip-trigger quantization so both clips fire instantly,
-    // not on the next bar boundary. (We restore on cleanup.)
     var song = new LiveAPI("live_set");
-    try { song.set("clip_trigger_quantization", 0); } catch (e) {}  // 0 = "None"
+    try { song.set("clip_trigger_quantization", 0); } catch (e) {}
 
     var midi = demo.midi || {};
     var len_s = (midi.length_s || demo.duration_s || 4) + TAIL_BUFFER_S;
@@ -208,14 +215,23 @@ function startResamplingRecord(demo) {
         startedAt: Date.now()
     };
 
-    // Fire both clips simultaneously. The audio slot fires into record because
-    // (a) the track is armed and (b) we set Song.record_mode = 1.
-    var song = new LiveAPI("live_set");
     song.set("record_mode", 1);
+    status("record_mode set; firing clips");
     new LiveAPI("live_set tracks " + MIDI_TRACK_IDX + " clip_slots 0").call("fire");
     new LiveAPI(audioPath + " clip_slots " + slotIdx).call("fire");
 
-    // Schedule stop after duration. Task.schedule takes ms.
+    // Sanity check 300ms after fire — confirm recording actually started.
+    var sanityT = new Task(function() {
+        var slot = new LiveAPI(audioPath + " clip_slots " + slotIdx);
+        var hasC = parseInt(slot.get("has_clip"));
+        var rec = "?";
+        if (hasC === 1) {
+            try { rec = String(new LiveAPI(audioPath + " clip_slots " + slotIdx + " clip").get("is_recording")); } catch (e) {}
+        }
+        status("300ms after fire: slot " + slotIdx + " has_clip=" + hasC + " is_recording=" + rec);
+    });
+    sanityT.schedule(300);
+
     var stopT = new Task(stopResamplingRecord);
     stopT.schedule(len_s * 1000);
 }
