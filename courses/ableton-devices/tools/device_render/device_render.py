@@ -54,6 +54,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import signal
 import sys
 import time
@@ -182,7 +183,20 @@ def watch(spec: dict, output_dir: Path, events_path: Path) -> int:
             kind_e = evt.get("event")
             did = evt.get("demo_id")
             if kind_e == "render_done" and did:
-                print(f"[event] render_done {did}")
+                src = evt.get("src_path")
+                if src:
+                    src_path = Path(src)
+                    ext = src_path.suffix.lower() or ".wav"
+                    dest = output_dir / f"{did}{ext}"
+                    try:
+                        shutil.copyfile(src_path, dest)
+                        size_kb = dest.stat().st_size // 1024
+                        print(f"[event] render_done {did} → {dest.name} ({size_kb}KB)")
+                    except Exception as e:
+                        print(f"[event] render_done {did} but copy failed: {e}")
+                        continue
+                else:
+                    print(f"[event] render_done {did} (no src_path)")
                 pending.discard(did)
             elif kind_e == "render_start" and did:
                 print(f"[event] render_start {did}")

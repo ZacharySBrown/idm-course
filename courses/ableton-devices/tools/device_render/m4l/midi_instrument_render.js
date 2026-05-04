@@ -305,21 +305,17 @@ function pollFlush() {
 }
 
 function finalizeCopy(src, did) {
-    // Match destination extension to source — Live records as .aif by default
-    // (configurable via Live preferences). Both formats are handled by ffmpeg
-    // downstream in build_episode.
-    var m = String(src).match(/\.(aif|aiff|wav)$/i);
-    var ext = m ? m[0].toLowerCase() : ".wav";
-    var dest = spec.output_dir + "/" + did + ext;
+    // Don't copy from Max — its File API mangles binary copies on paths with
+    // spaces. Instead emit the source path as an event; the Python CLI sees
+    // it and does the copy with shutil.copyfile (reliable).
     var size = fileSize(src);
-    status("finalizing: " + size + " bytes from " + src + " → " + dest);
-    if (copyFile(src, dest)) {
-        status("wrote " + dest);
-        emitEvent({ event: "render_done", demo_id: did, path: dest, bytes: size });
-    } else {
-        status("copy failed: " + src + " → " + dest);
-        emitEvent({ event: "error", demo_id: did, message: "copy failed" });
-    }
+    status("recorded " + size + " bytes at " + src);
+    emitEvent({
+        event: "render_done",
+        demo_id: did,
+        src_path: src,
+        bytes: size
+    });
     cleanupAndNext();
 }
 
