@@ -44,7 +44,9 @@ var AUDIO_TRACK_IDX  = 1;     // Audio track with Resampling input
 var TARGET_DEV_IDX   = 1;     // Target instrument index on the MIDI track
 var POLL_MS          = 100;
 var TAIL_BUFFER_S    = 0.5;   // extra time to capture release tail
-var STOP_SETTLE_MS   = 800;   // wait after stop before reading file_path
+var STOP_SETTLE_MS   = 1500;  // initial wait after stop before polling
+var FLUSH_TIMEOUT_S  = 10;    // max time to wait for Live to flush WAV
+var MIN_VALID_BYTES  = 1024;  // a real captured WAV must be larger than this
 
 var REPO_ROOT     = "/Users/zak/zacharysbrown/idm-course";
 var PARAM_MAP_DIR = "/courses/ableton-devices/tools/device_render/param_maps";
@@ -246,7 +248,10 @@ function captureRecorded() {
     }
 
     var clip = new LiveAPI(slotPath + " clip");
+    var isRec = parseInt(clip.get("is_recording") || 0);
     var src = stringVal(clip.get("file_path"));
+    status("clip state: is_recording=" + isRec + ", file_path=" + src);
+
     if (!src || src === "0" || src === "") {
         status("recorded clip has no file_path");
         emitEvent({ event: "error", demo_id: did, message: "no file_path" });
@@ -254,16 +259,66 @@ function captureRecorded() {
         return;
     }
 
+    currentRender.src = src;
+    currentRender.flushStartedAt = Date.now();
+    currentRender.lastSize = -1;
+    var pollT = new Task(pollFlush);
+    pollT.interval = 250;
+    pollT.repeat();
+}
+
+function pollFlush() {
+    if (!currentRender || !currentDemo) { this.cancel(); return; }
+    var did = currentDemo.id;
+    var src = currentRender.src;
+
+    // Check the recording state of the clip — if Live still claims it's
+    // recording, wait. (Stopping via record_mode=0 doesn't always finalize
+    // immediately.)
+    var slotPath = "live_set tracks " + AUDIO_TRACK_IDX + " clip_slots " + currentRender.audioSlotIdx;
+    var clip = new LiveAPI(slotPath + " clip");
+    var isRec = 0;
+    try { isRec = parseInt(clip.get("is_recording") || 0); } catch (e) {}
+
+    var size = fileSize(src);
+    var elapsed = (Date.now() - currentRender.flushStartedAt) / 1000;
+
+    if (isRec === 0 && size >= MIN_VALID_BYTES && size === currentRender.lastSize) {
+        // Recording stopped AND file size has stabilized between two polls.
+        this.cancel();
+        finalizeCopy(src, did);
+        return;
+    }
+    currentRender.lastSize = size;
+
+    if (elapsed > FLUSH_TIMEOUT_S) {
+        this.cancel();
+        status("flush timeout after " + elapsed + "s (size=" + size + ", is_recording=" + isRec + ")");
+        emitEvent({ event: "error", demo_id: did, message: "flush timeout (size=" + size + ")" });
+        cleanupAndNext();
+    }
+}
+
+function finalizeCopy(src, did) {
     var dest = spec.output_dir + "/" + did + ".wav";
+    var size = fileSize(src);
+    status("finalizing: " + size + " bytes from " + src);
     if (copyFile(src, dest)) {
         status("wrote " + dest);
-        emitEvent({ event: "render_done", demo_id: did, path: dest });
+        emitEvent({ event: "render_done", demo_id: did, path: dest, bytes: size });
     } else {
         status("copy failed: " + src + " → " + dest);
         emitEvent({ event: "error", demo_id: did, message: "copy failed" });
     }
-
     cleanupAndNext();
+}
+
+function fileSize(posixPath) {
+    var f = new File(toMaxPath(posixPath), "read");
+    if (!f.isopen) return -1;
+    var sz = f.eof;
+    f.close();
+    return sz;
 }
 
 function cleanupAndNext() {
