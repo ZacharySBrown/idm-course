@@ -1,0 +1,166 @@
+{
+  "bib:henke_operator": {
+    "title": "Operator: Technology",
+    "authors": ["Robert Henke"],
+    "publisher": "roberthenke.com",
+    "year": 2005,
+    "url": "https://roberthenke.com/technology/operator.html",
+    "kind": "designer-notes",
+    "notes": "Henke confirms Operator is phase modulation, not strict FM. Defines the 'PM is FM up to 90 degrees' equivalence used throughout the script."
+  },
+  "bib:chowning_1973": {
+    "title": "The Synthesis of Complex Audio Spectra by Means of Frequency Modulation",
+    "authors": ["John M. Chowning"],
+    "publisher": "Journal of the Audio Engineering Society",
+    "year": 1973,
+    "volume": 21,
+    "issue": 7,
+    "kind": "primary-paper",
+    "notes": "Foundational FM paper. Rejected by several journals before JAES accepted it."
+  },
+  "bib:patent_us_4018121": {
+    "title": "Method of Synthesizing a Musical Sound",
+    "authors": ["John M. Chowning"],
+    "publisher": "USPTO",
+    "year": 1977,
+    "patent_number": "US 4,018,121",
+    "filed": "1974",
+    "granted": "1977-04-19",
+    "kind": "patent",
+    "notes": "Stanford's second-most-lucrative patent. Generated ~$22.9M in royalties."
+  },
+  "bib:tape_op_89_squarepusher": {
+    "title": "Squarepusher Interview",
+    "authors": ["Tape Op editorial"],
+    "publisher": "Tape Op Magazine",
+    "issue": 89,
+    "year": 2012,
+    "kind": "interview",
+    "notes": "Squarepusher on FM synth setup and recording approach."
+  },
+  "bib:sos_tingen_squarepusher_2011": {
+    "title": "Squarepusher: Inside the Studio",
+    "authors": ["Paul Tingen"],
+    "publisher": "Sound on Sound",
+    "year": 2011,
+    "month": "May",
+    "kind": "interview",
+    "notes": "Confirms TX81Z + FS1R rig. Quote on Go Plastic gear: 'Yamaha QY700, TX81Z and FS1R, Eventide DSP4000 and Orville, Akai S6000, Mackie 16 channel desk.'"
+  },
+  "bib:watmm_autechre_ama_2013": {
+    "title": "Autechre AMA on We Are The Music Makers",
+    "authors": ["Sean Booth", "Rob Brown"],
+    "publisher": "watmm.com",
+    "year": 2013,
+    "kind": "ama",
+    "notes": "Booth confirms FM is favourite synthesis mode; line-between-sequencing-and-synthesis quote."
+  },
+  "bib:future_music_aphex_1993": {
+    "title": "Aphex Twin Interview",
+    "authors": ["Future Music editorial"],
+    "publisher": "Future Music",
+    "year": 1993,
+    "month": "April",
+    "kind": "interview",
+    "notes": "Lists rig: Roland SH-101, Korg MS-20, Yamaha DX7 through Alesis Quadraverb."
+  },
+  "bib:future_music_eno_1995": {
+    "title": "Brian Eno on the DX7",
+    "authors": ["Future Music editorial"],
+    "publisher": "Future Music",
+    "year": 1995,
+    "month": "December",
+    "kind": "interview",
+    "notes": "Eno: 'I use the DX7 because I understand it. I was quite ill for a while, and I filled the time by learning it.'"
+  },
+  "bib:keyboard_eno_patches_1987": {
+    "title": "Brian Eno's DX7 Patches: Glide, Kalimba 2, Tamboura, Violin 3",
+    "authors": ["Brian Eno"],
+    "publisher": "Keyboard Magazine",
+    "year": 1987,
+    "kind": "patch-sheets",
+    "notes": "Republished by CDM in 2017. Glide patch is the basis of An Ending (Ascent)."
+  },
+  "bib:reverb_machine_xtal_2022": {
+    "title": "Aphex Twin's Xtal: Sample Identification",
+    "authors": ["SynaMax"],
+    "publisher": "Reverb Machine",
+    "year": 2022,
+    "url": "https://reverbmachine.com/blog/aphex-twin-xtal/",
+    "kind": "teardown",
+    "notes": "Identifies the chord bed as a 1986 library sample from 'Evil at Play'. The bell motif and 'Actium' rely on DX7 ROM 11 E.PIANO 1."
+  },
+  "bib:gearspace_lanois_apollo": {
+    "title": "Daniel Lanois on the Apollo Sessions",
+    "authors": ["Daniel Lanois (interviewed on Gearspace forum)"],
+    "publisher": "Gearspace",
+    "year": 2014,
+    "kind": "forum-confirmation",
+    "notes": "Lanois quote: 'On top of that, we put all the DX7 sounds through a Mesa Boogie.' Main synth identified as Yamaha CS-80."
+  },
+  "bib:korg_takahashi_aphex_2017": {
+    "title": "Tatsuya Takahashi Interviews Richard D. James",
+    "authors": ["Tatsuya Takahashi"],
+    "publisher": "Korg / Self-released",
+    "year": 2017,
+    "kind": "interview",
+    "notes": "Aphex Twin: 'The first thoughts I had about tuning happened with my early noodlings on a Yamaha DX100, one of the first synths I saved up for.'"
+  },
+  "bib:yamaha_hub_chowning": {
+    "title": "John Chowning: The Discovery of FM",
+    "authors": ["Yamaha Corporation"],
+    "publisher": "Hub Magazine (Yamaha)",
+    "year": 2010,
+    "kind": "interview",
+    "notes": "Source of Chowning's 'discovery of the ear' quotes and the ten-minutes-Ishimura anecdote."
+  },
+  "bib:mix_online_stanford_patent": {
+    "title": "Stanford's $22.9M FM Patent",
+    "authors": ["Mix editorial"],
+    "publisher": "Mix Online",
+    "year": 2008,
+    "kind": "industry-history",
+    "notes": "Royalty totals for US 4,018,121 over its lifetime."
+  },
+  "bib:ableton_manual_operator": {
+    "title": "Operator (Live 12 Manual)",
+    "authors": ["Ableton AG"],
+    "publisher": "ableton.com",
+    "year": 2024,
+    "url": "https://www.ableton.com/en/manual/operator/",
+    "kind": "manual",
+    "notes": "Canonical parameter reference."
+  },
+  "bib:cytomic_filter_models": {
+    "title": "Cytomic Analog Filter Models in Ableton Live",
+    "authors": ["Andy Simper"],
+    "publisher": "cytomic.com",
+    "year": 2015,
+    "kind": "designer-notes",
+    "notes": "OSR (Oxford OSCar), MS2 (Korg MS-20), SMP, PRD (Moog Prodigy) circuit models. Live 9.5+."
+  },
+  "bib:carson_1922": {
+    "title": "Notes on the Theory of Modulation",
+    "authors": ["John R. Carson"],
+    "publisher": "Proceedings of the IRE",
+    "year": 1922,
+    "kind": "primary-paper",
+    "notes": "Carson's bandwidth rule: BW ≈ 2(I+1)f_m. Captures ≥98% of FM signal power for 1 ≤ I ≤ 5."
+  },
+  "bib:gearnews_dx100_detroit": {
+    "title": "How the DX100 Defined Detroit Techno Bass",
+    "authors": ["Gearnews editorial"],
+    "publisher": "gearnews.com",
+    "year": 2020,
+    "kind": "feature",
+    "notes": "DX100 was 'caned by the Detroit techno guys, especially Derrick May.'"
+  },
+  "bib:caesura_autechre_elseq": {
+    "title": "Autechre's elseq 1-5 and the FM Question",
+    "authors": ["Caesura editorial"],
+    "publisher": "Caesura Magazine",
+    "year": 2016,
+    "kind": "essay",
+    "notes": "Frames FM's centrality to Autechre's practice; cites Eno's claim that FM is the synthesis method by which one learns the most about sound."
+  }
+}

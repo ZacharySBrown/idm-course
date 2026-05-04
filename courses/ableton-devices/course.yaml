@@ -10,6 +10,28 @@ tts_model: gpt-4o-mini-tts
 tts_voice: onyx
 episode_artist: "Ableton Live Mastery (narrator)"
 
+# Podcast feed metadata (consumed by shared/tools/build_podcast_feed.py).
+# Separate feed from IDM — listeners subscribe to either.
+podcast:
+  feed_path: podcast-ableton.xml          # <repo_root>/podcast-ableton.xml
+  artwork_path: artwork-ableton.jpg       # TODO: build_podcast_art.py port
+  repo_raw_base: "https://raw.githubusercontent.com/ZacharySBrown/idm-course/main"
+  repo_web: "https://github.com/ZacharySBrown/idm-course"
+  show_author: "Zak (raindog.ai)"
+  show_email: "zak@raindog.ai"
+  show_description: >-
+    A device-by-device walking-podcast deep-dive into Ableton Live's instruments,
+    effects, and Max for Live. Each episode pairs a device's history and synthesis
+    theory with patch-walkthroughs and IDM-style production techniques. Hosted by
+    a sardonic studio rat who reads Tape Op and refuses to use the word "journey."
+  itunes_categories:
+    - ["Music", null]
+    - ["Education", "Courses"]
+  copyright: "© 2026 Zak. Course content CC-BY-NC 4.0."
+  itunes_type: serial
+  enclosure_path_template: "build/ableton-devices/audio/episodes/{lesson_id}.mp3"
+  deck_url_template: "{repo_web}/blob/main/build/ableton-devices/html/{lesson_id}/index.html"
+
 episodes:
   - id: e01-operator
     title: "Operator: The FM Machine"

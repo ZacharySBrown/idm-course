@@ -1,0 +1,156 @@
+# clip_manifest — every audio asset spliced into e01-operator.mp3.
+#
+# Two families:
+#   song_clips     — extracted from acquired tracks via shared/tools/extract_clips.py
+#   operator_demos — rendered by the operator-render tool (M4L freeze pipeline)
+#
+# Each entry's `id` matches a slide's `demos:` reference in episode.yaml.
+# Output paths: <build_root>/audio/clips/<episode>/<id>.wav
+#                = build/ableton-devices/audio/clips/e01-operator/<id>.wav
+
+# Where the user drops acquired song WAVs. Override per entry if needed.
+song_source_dir: ~/zacharysbrown/songs/ableton-ep01
+
+song_clips:
+  - id: polynomial-c-cold-open
+    source: "01_polynomial-c.wav"
+    start: "0:00"
+    end: "0:08"
+    fade_in_ms: 0
+    fade_out_ms: 800
+    normalize_lufs: -16
+    notes: "Solo plucky arpeggio, dry, unaccompanied. Fade under as narration enters."
+
+  - id: stria-excerpt-1
+    source: "09_stria.wav"
+    start: "1:30"
+    end: "1:45"
+    fade_in_ms: 200
+    fade_out_ms: 600
+    normalize_lufs: -16
+    notes: "Mid-Stria, golden-ratio inharmonic spectrum. Drop after Phoné mention."
+
+  - id: greatest-love-epiano
+    source: "07_greatest-love-of-all.wav"
+    start: "0:00"
+    end: "0:12"
+    fade_in_ms: 0
+    fade_out_ms: 600
+    normalize_lufs: -16
+    notes: "Solo E.PIANO 1 intro before Whitney enters. Velocity-sensitive bell-attack chirp."
+
+  - id: french-kiss-bass
+    source: "08_french-kiss.wav"
+    start: "1:22"
+    end: "1:30"
+    fade_in_ms: 100
+    fade_out_ms: 400
+    normalize_lufs: -16
+    notes: "TX81Z 'Lately Bass' on display. Adjust start if bass enters at different point in your rip."
+
+  - id: stria-excerpt-2
+    source: "09_stria.wav"
+    start: "3:30"
+    end: "3:45"
+    fade_in_ms: 200
+    fade_out_ms: 600
+    normalize_lufs: -16
+    notes: "Second Stria excerpt — drop after the 1:φ ratio explanation in 03c-ratios."
+
+# Operator patch demos — rendered via the operator-render M4L pipeline (see
+# courses/ableton-devices/tools/operator_render/README.md once built).
+# Each entry declares the patch parameters + MIDI clip + render settings.
+# Output: build/ableton-devices/audio/clips/e01-operator/<id>.wav
+#
+# Parameter names follow Operator's LOM exposed names. See
+#   https://docs.cycling74.com/max8/vignettes/live_object_model
+# A separate parameter-name dictionary will be built during operator-render
+# scaffolding; for now this is the spec for what each demo must contain.
+operator_demos:
+  - id: op-mod-index-sweep
+    description: "Single carrier (sine) + single modulator (sine) at 1:1. Ramp modulator Level from 0 to 100 over 8 seconds. Hold C3 throughout."
+    duration_s: 9
+    midi: { note: "C3", length_s: 8.5 }
+    automation: { OscB_Level: { from: 0, to: 100, ramp_s: 8 } }
+
+  - id: op-ratio-1to1
+    description: "Algorithm 1, A and B sine. Coarse 1:1. Modulator Level 80. Hold C3 5s."
+    duration_s: 5
+    midi: { note: "C3", length_s: 4.5 }
+
+  - id: op-ratio-1to2
+    description: "Same as 1to1 but B Coarse=2. Hollow-clarinet odd-harmonic spectrum."
+    duration_s: 5
+    midi: { note: "C3", length_s: 4.5 }
+
+  - id: op-ratio-1to3
+    description: "B Coarse=3. Hollow spectrum, missing every third partial."
+    duration_s: 5
+    midi: { note: "C3", length_s: 4.5 }
+
+  - id: op-ratio-1-sqrt2
+    description: "B Coarse=1, Fine=414 (approximates √2 offset). Bell/gong inharmonic."
+    duration_s: 5
+    midi: { note: "C3", length_s: 4.5 }
+
+  - id: op-ratio-1-phi
+    description: "B Coarse=1, Fine=618 (approximates φ ≈ 1.618). Stria-cloud inharmonic."
+    duration_s: 5
+    midi: { note: "C3", length_s: 4.5 }
+
+  - id: op-feedback-bifurcation
+    description: "Single operator A, sine, full sustain. Discrete steps: Feedback=0 (1.5s), Feedback=4 (1.5s), Feedback=6 (1.5s), Feedback=7 (1.5s). Hold C3 throughout."
+    duration_s: 6.5
+    midi: { note: "C3", length_s: 6.5 }
+    automation: { OscA_Feedback: { steps: [0, 40, 60, 70], step_s: 1.5 } }
+
+  - id: op-poly-bell-step1
+    description: "Default Operator. Algorithm 1. All operators set to Sine. Hold C3 3s — pure unmodulated sine."
+    duration_s: 3.5
+    midi: { note: "C3", length_s: 3 }
+
+  - id: op-poly-bell-step2
+    description: "Step 1 + carrier (A) ADSR shape: A=1ms, D=400ms, S=-inf, R=200ms. Coarse 1, Fine 0, Level -12dB. Pure sine pluck."
+    duration_s: 3
+    midi: { note: "C3", length_s: 2.5 }
+
+  - id: op-poly-bell-step3
+    description: "Step 2 + modulator B: Coarse 1, Fine 414 (≈√2), Level 80%. Envelope A=1ms D=120ms S=-inf R=80ms. Bell-like inharmonic ringing emerges."
+    duration_s: 3
+    midi: { note: "C3", length_s: 2.5 }
+
+  - id: op-poly-bell-step4
+    description: "Step 3 + modulator C feeding B: Coarse 7, Level 50%, envelope similar but D=60ms. High-frequency shimmer adds."
+    duration_s: 3
+    midi: { note: "C3", length_s: 2.5 }
+
+  - id: op-poly-bell-step5
+    description: "Step 4 + Feedback on C at 30%. Gritty edge appears in attack."
+    duration_s: 3
+    midi: { note: "C3", length_s: 2.5 }
+
+  - id: op-poly-bell-step6
+    description: "Step 5 + Spread 12% + Filter LP24 OSR at 8kHz, Drive +3dB. Stereo width and analog warmth."
+    duration_s: 3
+    midi: { note: "C3", length_s: 2.5 }
+
+  - id: op-poly-bell-step7
+    description: "Step 6 + velocity routing: Time<Vel on B at +30, Level<Vel at +50. Two notes: soft (vel 30) then hard (vel 110), 1.5s gap each."
+    duration_s: 6
+    midi: { notes: [{ note: "C3", vel: 30, t: 0 }, { note: "C3", vel: 110, t: 3 }], length_s: 5.5 }
+
+  - id: op-poly-bell-final
+    description: "Final saved 'Polynomial-Bell' patch. Demonstration arpeggio: C3-Eb3-G3-C4 sixteenth notes for 4 bars at 100 BPM."
+    duration_s: 10
+    midi: { pattern: "C3-Eb3-G3-C4 16ths, 4 bars, 100 BPM", length_s: 9.6 }
+
+  - id: op-rhythmic-single
+    description: "Algorithm 1, A & B sine. B envelope set to Beat 1/16, peak decay 30ms. A: Trigger envelope, decay 200ms. B Coarse=11. Hold C3 4 bars at 100 BPM."
+    duration_s: 10
+    midi: { note: "C3", length_s: 9.6 }
+
+  - id: op-rhythmic-layered
+    description: "Two Operator instances: instance 1 = op-rhythmic-single, instance 2 = same but B Coarse=13, Beat 1/8 dotted. Hold C3 on both for 4 bars at 100 BPM. Polyrhythm emerges."
+    duration_s: 10
+    midi: { note: "C3", length_s: 9.6 }
+    notes: "Render each instance separately and sum, OR render as a single track with both Operator devices. Implementation choice for the operator-render tool."

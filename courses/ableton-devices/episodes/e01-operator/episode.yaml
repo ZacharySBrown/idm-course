@@ -1,48 +1,183 @@
-episode_id: e01-operator
+id: e01-operator
 title: "Operator: The FM Machine"
 device: Operator
 synthesis_type: "FM (Frequency Modulation)"
+week: 1                       # episode-number alias for shared build_episode
 target_duration_minutes: 40
 ableton_manual_url: "https://www.ableton.com/en/manual/operator/"
+
 idm_primary_artists:
   - Aphex Twin
   - Squarepusher
   - Autechre
 idm_primary_records:
-  - "Aphex Twin — Analogue Bubblebath 3"
-  - "Squarepusher — Burningn'n Tree"
+  - "Aphex Twin — Selected Ambient Works 85-92"
+  - "Squarepusher — Hard Normal Daddy"
   - "Autechre — Incunabula"
 adjacent_genres:
   - big beat
   - ambient techno
   - IDM
-song_acquisition_required:
-  - song: "Polynomial-C"
-    artist: "Aphex Twin"
-    album: "Analogue Bubblebath 3"
-    stemforge_pipeline: default
-  - song: "Xtal"
-    artist: "Aphex Twin"
-    album: "Selected Ambient Works 85-92"
-    stemforge_pipeline: ambient
-  - song: "Bike"
-    artist: "Autechre"
-    album: "Incunabula"
-    stemforge_pipeline: default
-  - song: "An Ending (Ascent)"
-    artist: "Brian Eno"
-    album: "Apollo"
-    stemforge_pipeline: ambient
-script_sections:
-  - id: "01-cold-open"
-    target_minutes: 1.5
-  - id: "02-history"
-    target_minutes: 9
-  - id: "03-synthesis-deep-dive"
-    target_minutes: 9
-  - id: "04-ableton-deep-dive"
-    target_minutes: 9
-  - id: "05-demo-walkthrough"
-    target_minutes: 6
-  - id: "06-idm-application"
-    target_minutes: 6
+
+# Bibliography references checked by validate.ts; full entries in references/bibliography.json.
+references:
+  - bib:henke_operator
+  - bib:chowning_1973
+  - bib:patent_us_4018121
+  - bib:tape_op_89_squarepusher
+  - bib:sos_tingen_squarepusher_2011
+  - bib:watmm_autechre_ama_2013
+  - bib:future_music_aphex_1993
+  - bib:future_music_eno_1995
+  - bib:keyboard_eno_patches_1987
+  - bib:reverb_machine_xtal_2022
+  - bib:gearspace_lanois_apollo
+  - bib:korg_takahashi_aphex_2017
+  - bib:yamaha_hub_chowning
+  - bib:mix_online_stanford_patent
+  - bib:ableton_manual_operator
+  - bib:cytomic_filter_models
+  - bib:carson_1922
+  - bib:gearnews_dx100_detroit
+  - bib:caesura_autechre_elseq
+
+# Episode runs as a sequence of slides (chunks); shared/tools/build_episode.py concatenates
+# narration WAVs in this order, splicing demo clips after each slide's narration.
+# Each demo id resolves via clip_manifest.yaml to either a song-clip or operator-render WAV.
+slides:
+  # ── Cold Open (90s) ─────────────────────────────────────────────────────
+  - id: 01-cold-open
+    heading: "Cold Open"
+    script_md: script/01-cold-open.md
+    demos: [polynomial-c-cold-open]
+
+  # ── Section 2: History (8–9 min, 7 beats) ──────────────────────────────
+  - id: 02a-vibrato-accident
+    heading: "Chowning's Vibrato Accident (1967)"
+    script_md: script/02a-vibrato-accident.md
+  - id: 02b-compositions
+    heading: "The Stanford Compositions"
+    script_md: script/02b-compositions.md
+    demos: [stria-excerpt-1]
+  - id: 02c-american-failure
+    heading: "Hammond, Wurlitzer, Lowrey All Said No"
+    script_md: script/02c-american-failure.md
+  - id: 02d-yamaha-license
+    heading: "Yamaha Takes the Call"
+    script_md: script/02d-yamaha-license.md
+  - id: 02e-dx7-lands
+    heading: "The DX7 Defines Pop"
+    script_md: script/02e-dx7-lands.md
+    demos: [greatest-love-epiano]
+  - id: 02f-backlash
+    heading: "The Backlash"
+    script_md: script/02f-backlash.md
+  - id: 02g-tx81z-underground
+    heading: "TX81Z and the Underground"
+    script_md: script/02g-tx81z-underground.md
+    demos: [french-kiss-bass]
+
+  # ── Section 3: Synthesis Deep Dive (8–9 min, 6 beats) ──────────────────
+  - id: 03a-equation
+    heading: "The Equation in One Breath"
+    script_md: script/03a-equation.md
+  - id: 03b-bessel
+    heading: "Bessel Functions, Friendly"
+    script_md: script/03b-bessel.md
+    demos: [op-mod-index-sweep]
+  - id: 03c-ratios
+    heading: "Integer vs Irrational Ratios"
+    script_md: script/03c-ratios.md
+    demos:
+      - op-ratio-1to1
+      - op-ratio-1to2
+      - op-ratio-1to3
+      - op-ratio-1-sqrt2
+      - op-ratio-1-phi
+      - stria-excerpt-2
+  - id: 03d-mod-index
+    heading: "Modulation Index Equals Brightness"
+    script_md: script/03d-mod-index.md
+  - id: 03e-feedback
+    heading: "Feedback as Kepler's Equation"
+    script_md: script/03e-feedback.md
+    demos: [op-feedback-bifurcation]
+  - id: 03f-4op-vs-6op
+    heading: "Four Operators vs Six"
+    script_md: script/03f-4op-vs-6op.md
+
+  # ── Section 4: Ableton Deep Dive (8–9 min, 7 beats) ────────────────────
+  - id: 04a-origin
+    heading: "Operator Origin: Onyx, 2004"
+    script_md: script/04a-origin.md
+  - id: 04b-algorithms
+    heading: "The 11 Algorithms"
+    script_md: script/04b-algorithms.md
+  - id: 04c-operators-detail
+    heading: "Coarse, Fine, Fixed, Level"
+    script_md: script/04c-operators-detail.md
+  - id: 04d-envelopes
+    heading: "Envelopes and the Five Loop Modes"
+    script_md: script/04d-envelopes.md
+  - id: 04e-lfo
+    heading: "LFO as Fifth Operator"
+    script_md: script/04e-lfo.md
+  - id: 04f-filter-spread
+    heading: "Filter Circuits and Spread"
+    script_md: script/04f-filter-spread.md
+  - id: 04g-comparison
+    heading: "Operator vs FM8 vs Dexed"
+    script_md: script/04g-comparison.md
+
+  # ── Section 5: Patch Walkthrough — Polynomial-Bell (5–6 min, 8 steps) ──
+  - id: 05a-algo1
+    heading: "Step 1: Algorithm 1, all sines"
+    script_md: script/05a-algo1.md
+    demos: [op-poly-bell-step1]
+  - id: 05b-carrier
+    heading: "Step 2: Carrier (A)"
+    script_md: script/05b-carrier.md
+    demos: [op-poly-bell-step2]
+  - id: 05c-modulator-b
+    heading: "Step 3: Modulator B at √2 ratio"
+    script_md: script/05c-modulator-b.md
+    demos: [op-poly-bell-step3]
+  - id: 05d-modulator-c
+    heading: "Step 4: Modulator C feeding B"
+    script_md: script/05d-modulator-c.md
+    demos: [op-poly-bell-step4]
+  - id: 05e-feedback
+    heading: "Step 5: Feedback on C"
+    script_md: script/05e-feedback.md
+    demos: [op-poly-bell-step5]
+  - id: 05f-spread-filter
+    heading: "Step 6: Spread + Filter"
+    script_md: script/05f-spread-filter.md
+    demos: [op-poly-bell-step6]
+  - id: 05g-velocity
+    heading: "Step 7: Velocity Routing"
+    script_md: script/05g-velocity.md
+    demos: [op-poly-bell-step7]
+  - id: 05h-save
+    heading: "Step 8: Save the Patch"
+    script_md: script/05h-save.md
+    demos: [op-poly-bell-final]
+
+  # ── Section 6: IDM Application (5–6 min, 5 beats) ──────────────────────
+  - id: 06a-rhythmic-fm
+    heading: "Rhythmic FM via Loop Modes"
+    script_md: script/06a-rhythmic-fm.md
+    demos: [op-rhythmic-single]
+  - id: 06b-layer
+    heading: "Layered Polyrhythm"
+    script_md: script/06b-layer.md
+    demos: [op-rhythmic-layered]
+  - id: 06c-math-connect
+    heading: "Connecting Back to the Math"
+    script_md: script/06c-math-connect.md
+  - id: 06d-wet-dry
+    heading: "Wet/Dry, Squarepusher-Style"
+    script_md: script/06d-wet-dry.md
+  - id: 06e-exercise
+    heading: "Listener Exercise"
+    script_md: script/06e-exercise.md

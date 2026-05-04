@@ -1,0 +1,93 @@
+{
+  "song:polynomial-c": {
+    "title": "Polynomial-C",
+    "artist": "Polygon Window (Aphex Twin)",
+    "album": "Surfing on Sine Waves",
+    "label": "Warp",
+    "year": 1993,
+    "link_tier": 1,
+    "notes": "Cold-open arpeggio. Plucky 4-op FM signature, debate over SH-101 vs DX100 origin — frame as FM-style sound design regardless of source synth."
+  },
+  "song:xtal": {
+    "title": "Xtal",
+    "artist": "Aphex Twin",
+    "album": "Selected Ambient Works 85-92",
+    "label": "R&S",
+    "year": 1992,
+    "link_tier": 1,
+    "notes": "Bell motif uses DX7 ROM 11 E.PIANO 1. Pad bed is sampled from 1986 library record 'Evil at Play' — not synthesised. Reverb Machine 2022 teardown."
+  },
+  "song:bike": {
+    "title": "Bike",
+    "artist": "Autechre",
+    "album": "Incunabula",
+    "label": "Warp",
+    "year": 1993,
+    "link_tier": 1,
+    "notes": "Tuned-percussion FM signatures in opening 30 seconds. Often misattributed to Tri Repetae — flag this. Booth confirms 'loads of FM-Synths' on Incunabula in WATMM AMA."
+  },
+  "song:an-ending-ascent": {
+    "title": "An Ending (Ascent)",
+    "artist": "Brian Eno",
+    "album": "Apollo: Atmospheres and Soundtracks",
+    "label": "EG",
+    "year": 1983,
+    "link_tier": 1,
+    "notes": "DX7 'Glide' patch + Mesa Boogie + Lexicon PCM-70. Foundation pad is CS-80 per Lanois. The anti-pluck demo."
+  },
+  "song:beep-street": {
+    "title": "Beep Street",
+    "artist": "Squarepusher",
+    "album": "Hard Normal Daddy",
+    "label": "Warp",
+    "year": 1997,
+    "link_tier": 1,
+    "in_library": true,
+    "notes": "TX81Z lead with breath-controller character. Sampled drum break is James Brown's 'Soul Pride' (per WhoSampled). Already in stemforge library."
+  },
+  "song:take-on-me": {
+    "title": "Take On Me",
+    "artist": "a-ha",
+    "album": "Hunting High and Low",
+    "label": "Warner Bros",
+    "year": 1985,
+    "link_tier": 1,
+    "notes": "DX7 ROM 1A 15 'BASS 1' — single carrier with one modulator at 1:1, sharp modulator envelope. Eighty percent of '80s pop bass came from this exact patch."
+  },
+  "song:greatest-love-of-all": {
+    "title": "Greatest Love of All",
+    "artist": "Whitney Houston",
+    "album": "Whitney Houston",
+    "label": "Arista",
+    "year": 1985,
+    "link_tier": 1,
+    "notes": "Solo E.PIANO 1 introduction (0:00–0:25 unaccompanied). Carrier sine for the tine, modulator at high ratio for bell-attack chirp. Velocity-sensitive."
+  },
+  "song:french-kiss": {
+    "title": "French Kiss",
+    "artist": "Lil' Louis",
+    "album": "From the Mind of Lil Louis",
+    "label": "Epic",
+    "year": 1989,
+    "link_tier": 1,
+    "notes": "TX81Z 'Lately Bass' — named for Janet Jackson's 'What Have You Done For Me Lately' (1986), not Reese."
+  },
+  "song:stria": {
+    "title": "Stria",
+    "artist": "John Chowning",
+    "album": "Stria (CCRMA / IRCAM)",
+    "label": "CCRMA",
+    "year": 1977,
+    "link_tier": 1,
+    "notes": "Frequency components, temporal divisions, and formal proportions all based on powers of φ ≈ 1.618. Crystalline inharmonic spectra. Hard to source — try CCRMA archives or IRCAM catalogue. If unavailable: replace with hand-built Operator patch at 1:φ ratio."
+  },
+  "song:black-refraction": {
+    "title": "Black Refraction",
+    "artist": "Tim Hecker",
+    "album": "Ravedeath, 1972",
+    "label": "Kranky",
+    "year": 2011,
+    "link_tier": 1,
+    "notes": "Modern FM ambient practice: stacked Operator instances at irrational ratios, very long envelopes, modulator level automated by slow LFOs. The 2010s descendant of Apollo, darker."
+  }
+}
