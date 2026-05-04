@@ -13,21 +13,23 @@ python shared/tools/extract_clips.py --course-root courses/ableton-devices --les
 python shared/tools/extract_clips.py --course-root courses/ableton-devices --lesson e01-operator --dry-run
 ```
 
-### Operator patch demos (Live + Max for Live required)
+### Live device demos (Live + Max for Live required)
 
-See [`operator_render/README.md`](operator_render/README.md) for the full
-pipeline. Quick form:
+Generic for every device the course visits. See
+[`device_render/README.md`](device_render/README.md). Quick form for ep01:
 
 ```bash
-python courses/ableton-devices/tools/operator_render/operator_render.py \
-    --course-root courses/ableton-devices --episode e01-operator
-# → click RENDER in the OperatorRender.amxd M4L device
+python courses/ableton-devices/tools/device_render/device_render.py \
+    --course-root courses/ableton-devices --episode e01-operator --device Operator
+# → click RENDER in MidiInstrumentRender.amxd
 ```
+
+Other episodes pass `--device <Class> [--kind audio-fx] [--demos-key <key>]`.
 
 ### Legacy (deprecated)
 
-`ableton_render.py` predates the operator_render split — kept temporarily as a
-reference for the older IPC pattern. New work goes in `operator_render/`.
+`ableton_render.py` predates the device_render split — kept temporarily as a
+reference for the older IPC pattern. New work goes in `device_render/`.
 
 ## Voiceover (shared tool)
 

@@ -1,22 +1,27 @@
-// operator_render.js
+// midi_instrument_render.js
 // ─────────────────────────────────────────────────────────────────────────────
-// Classic Max [js] script for the OperatorRender.amxd device. Reads a spec.json
-// produced by operator_render.py, applies LOM-set parameters per demo onto an
-// Operator instance, runs the track through `track.freeze()`, then copies the
-// frozen WAV to the spec's output_dir under <demo_id>.wav. Emits one NDJSON
-// line per state transition into spec.events_path so the Python CLI can tail.
+// Classic Max [js] script for the MidiInstrumentRender.amxd device. Generic —
+// works for any Live MIDI instrument (Operator, Analog, Wavetable, Meld, Drum
+// Rack/Simpler, Granulator). Reads a spec.json produced by device_render.py,
+// applies LOM-set parameters per demo onto the instrument, drops a MIDI clip,
+// runs the track through `track.freeze()`, then copies the frozen WAV to the
+// spec's output_dir under <demo_id>.wav. Emits one NDJSON line per state
+// transition into spec.events_path so the Python CLI can tail.
 //
-// Track layout assumed: the device sits on a MIDI track whose device chain is
-//     [OperatorRender.amxd, Operator]
-// device index 0 = self (this M4L device), 1 = Operator. Edit OPERATOR_DEV_IDX
-// below if your layout differs.
+// Track layout assumed:
+//     [0] MidiInstrumentRender.amxd
+//     [1] target instrument
+// Edit TARGET_DEV_IDX if your layout differs.
+//
+// The script loads param_maps/<spec.device_class>.json automatically so it
+// can translate friendly param names ("Algorithm", "OSC1 Wave") into LiveAPI
+// indices. Run lom_probe first to generate this file.
 //
 // Inlet messages:
-//     load_spec <abs_spec_path>       — load + parse spec.json, store in memory
-//     render                           — render every demo in the loaded spec
-//                                        sequentially, writing one WAV each
+//     load_spec <abs_spec_path>       — load + parse spec.json
+//     render                           — render every demo in the spec, sequentially
 //     render_one <demo_id>             — render just one demo
-//     status                           — outlet 0: a dump of current state
+//     status                           — outlet 0: dump current state
 //
 // Outlets:
 //     0: status / progress messages (free-form)
@@ -27,17 +32,20 @@
 inlets  = 1;
 outlets = 3;
 
-var OPERATOR_DEV_IDX = 1;     // Operator is at device index 1 (0 = this M4L)
+var TARGET_DEV_IDX   = 1;     // Target instrument is at device index 1 (0 = this M4L)
 var FREEZE_POLL_MS   = 250;   // poll interval for freeze completion
 var FREEZE_TIMEOUT_S = 60;    // give up after this many seconds
 var TAIL_BUFFER_S    = 0.5;   // extra silence at end of MIDI clip for release
 
+var REPO_ROOT     = "/Users/zak/zacharysbrown/idm-course";
+var PARAM_MAP_DIR = "/courses/ableton-devices/tools/device_render/param_maps";
+
 var spec = null;              // parsed spec.json
-var paramMap = null;          // optional: lom_param_map.json for friendly names → indices
-var renderQueue = [];         // demo IDs queued for sequential rendering
+var paramMap = null;          // loaded from param_maps/<device_class>.json
+var renderQueue = [];
 var currentDemo = null;
 var freezeStartedAt = 0;
-var preFreezeFiles = null;    // snapshot of freeze dir before render
+var preFreezeFiles = null;
 
 function status(msg) {
     outlet(0, "status", String(msg));
@@ -70,9 +78,7 @@ function load_spec() {
         var f = new File(toMaxPath(path), "read");
         if (!f.isopen) { status("cannot open " + path); return; }
         raw = "";
-        while (f.position < f.eof) {
-            raw += f.readstring(4096);
-        }
+        while (f.position < f.eof) raw += f.readstring(4096);
         f.close();
     } catch (e) {
         status("read failed: " + e);
@@ -84,32 +90,29 @@ function load_spec() {
         status("parse spec failed: " + e);
         return;
     }
-    status("spec loaded: " + spec.episode_id + " (" + spec.demos.length + " demos)");
+    status("spec loaded: " + spec.episode_id + " (" + spec.demos.length + " demos, device=" + (spec.device_class || "?") + ")");
     loadParamMap();
 }
 
 function loadParamMap() {
-    // Try to locate lom_param_map.json next to the spec, or fall back to the
-    // canonical repo path. Optional — without it we use raw indices in spec.
     if (!spec) return;
-    var candidates = [
-        "/Users/zak/zacharysbrown/idm-course/courses/ableton-devices/tools/operator_render/lom_param_map.json"
-    ];
-    for (var i = 0; i < candidates.length; i++) {
-        try {
-            var f = new File(toMaxPath(candidates[i]), "read");
-            if (!f.isopen) continue;
-            var raw = "";
-            while (f.position < f.eof) raw += f.readstring(4096);
-            f.close();
-            paramMap = JSON.parse(raw);
-            status("paramMap loaded: " + paramMap.parameter_count + " params");
+    var slug = (spec.device_class || "").toLowerCase().replace(/[^a-z0-9]+/g, "_");
+    if (!slug) { status("spec missing device_class — paramMap not loaded"); return; }
+    var path = REPO_ROOT + PARAM_MAP_DIR + "/" + slug + ".json";
+    try {
+        var f = new File(toMaxPath(path), "read");
+        if (!f.isopen) {
+            status("paramMap not found: " + path + " (run LomProbe first)");
             return;
-        } catch (e) {
-            // continue
         }
+        var raw = "";
+        while (f.position < f.eof) raw += f.readstring(4096);
+        f.close();
+        paramMap = JSON.parse(raw);
+        status("paramMap loaded: " + paramMap.parameter_count + " params for " + paramMap.device_class);
+    } catch (e) {
+        status("paramMap load failed: " + e);
     }
-    status("paramMap not loaded (run probe first to enable named params)");
 }
 
 function render() {
@@ -124,11 +127,7 @@ function render_one() {
     var args = arrayfromargs(messagename, arguments);
     if (args.length < 2) { status("render_one: need demo id"); return; }
     var did = String(args[1]);
-    var found = false;
-    for (var i = 0; i < spec.demos.length; i++) {
-        if (spec.demos[i].id === did) { found = true; break; }
-    }
-    if (!found) { status("demo not found: " + did); return; }
+    if (!findDemo(did)) { status("demo not found: " + did); return; }
     renderQueue = [did];
     nextRender();
 }
@@ -158,11 +157,9 @@ function nextRender() {
         applyParams(demo.params);
         ensureMidiClip(demo);
         snapshotFreezeDir();
-        var trackPath = "this_device canonical_parent";
-        var track = new LiveAPI(trackPath);
+        var track = new LiveAPI("this_device canonical_parent");
         track.call("freeze");
         freezeStartedAt = Date.now();
-        // Defer to async polling
         var t = new Task(pollFreeze);
         t.interval = FREEZE_POLL_MS;
         t.repeat();
@@ -170,19 +167,16 @@ function nextRender() {
         status("render failed: " + e);
         emitEvent({ event: "error", demo_id: did, message: String(e) });
         currentDemo = null;
-        // Continue with next
         nextRender();
     }
 }
 
 function pollFreeze() {
-    var trackPath = "this_device canonical_parent";
-    var track = new LiveAPI(trackPath);
-    var frozen = parseInt(track.get("freeze_state"));  // verify property name
+    var track = new LiveAPI("this_device canonical_parent");
+    var frozen = parseInt(track.get("freeze_state"));
     var elapsed = (Date.now() - freezeStartedAt) / 1000;
 
     if (frozen === 2) {
-        // 2 = frozen (per Live LOM convention; verify via probe)
         this.cancel();
         completeFreeze();
     } else if (elapsed > FREEZE_TIMEOUT_S) {
@@ -193,16 +187,13 @@ function pollFreeze() {
         currentDemo = null;
         nextRender();
     }
-    // else keep polling
 }
 
 function completeFreeze() {
     if (!currentDemo) return;
     var did = currentDemo.id;
-    var trackPath = "this_device canonical_parent";
-    var track = new LiveAPI(trackPath);
+    var track = new LiveAPI("this_device canonical_parent");
 
-    // Find the new frozen WAV
     var newWav = findNewFreezeWav();
     if (!newWav) {
         status("freeze complete but no new WAV found");
@@ -224,16 +215,15 @@ function completeFreeze() {
 
     try { track.call("unfreeze"); } catch (e) {}
     currentDemo = null;
-    // Brief pause before next demo to let unfreeze settle
     var t = new Task(nextRender);
     t.schedule(500);
 }
 
 function applyParams(params) {
-    var devPath = "this_device canonical_parent devices " + OPERATOR_DEV_IDX;
+    var devPath = "this_device canonical_parent devices " + TARGET_DEV_IDX;
     var device = new LiveAPI(devPath);
     if (!device || device.id === "0") {
-        throw new Error("Operator not at device " + OPERATOR_DEV_IDX);
+        throw new Error("target device not at index " + TARGET_DEV_IDX);
     }
     for (var name in params) {
         if (!params.hasOwnProperty(name)) continue;
@@ -264,15 +254,13 @@ function lookupParamIndex(name) {
 function enumValueIndex(p, label) {
     var n = parseInt(p.getcount("value_items"));
     for (var i = 0; i < n; i++) {
-        var item = String(p.get("value_items " + i));
-        if (item === label) return i;
+        if (String(p.get("value_items " + i)) === label) return i;
     }
     return null;
 }
 
 function ensureMidiClip(demo) {
     var trackPath = "this_device canonical_parent";
-    var track = new LiveAPI(trackPath);
     var slot = new LiveAPI(trackPath + " clip_slots 0");
     if (parseInt(slot.get("has_clip")) === 1) {
         slot.call("delete_clip");
@@ -285,15 +273,13 @@ function ensureMidiClip(demo) {
     var pitch = noteNameToMidi(midi.note || "C3");
     var dur_beats = secondsToBeats(midi.length_s || (len_s - TAIL_BUFFER_S));
     var vel = midi.vel || 100;
-    // single-note insert via add_new_notes — multi-note paths add later
     clip.call("add_new_notes", JSON.stringify({
         notes: [{ pitch: pitch, start_time: 0, duration: dur_beats, velocity: vel, mute: 0 }]
     }));
 }
 
 function secondsToBeats(s) {
-    var live = new LiveAPI("live_set");
-    var bpm = parseFloat(live.get("tempo"));
+    var bpm = parseFloat(new LiveAPI("live_set").get("tempo"));
     return s * bpm / 60.0;
 }
 
@@ -301,15 +287,10 @@ function noteNameToMidi(name) {
     var map = { C: 0, "C#": 1, Db: 1, D: 2, "D#": 3, Eb: 3, E: 4, F: 5, "F#": 6, Gb: 6, G: 7, "G#": 8, Ab: 8, A: 9, "A#": 10, Bb: 10, B: 11 };
     var m = String(name).match(/^([A-G][b#]?)(-?\d+)$/);
     if (!m) return 60;
-    var pc = map[m[1]];
-    var oct = parseInt(m[2]);
-    return (oct + 2) * 12 + pc;  // Live convention: C3 = 60 → octave shift +2
+    return (parseInt(m[2]) + 2) * 12 + map[m[1]];  // Live convention: C3 = 60
 }
 
-function snapshotFreezeDir() {
-    var dir = freezeDir();
-    preFreezeFiles = listDir(dir);
-}
+function snapshotFreezeDir() { preFreezeFiles = listDir(freezeDir()); }
 
 function findNewFreezeWav() {
     var now = listDir(freezeDir());
@@ -319,9 +300,7 @@ function findNewFreezeWav() {
             return freezeDir() + "/" + now[i];
         }
     }
-    // Fallback: most recent .wav
-    var newest = null;
-    var newestT = 0;
+    var newest = null, newestT = 0;
     for (var j = 0; j < now.length; j++) {
         if (!/\.wav$/i.test(now[j])) continue;
         var p = freezeDir() + "/" + now[j];
@@ -335,15 +314,12 @@ function findNewFreezeWav() {
 }
 
 function freezeDir() {
-    var live = new LiveAPI("live_set");
-    var setPath = stringVal(live.get("file_path") || live.get("name"));
-    // file_path may be empty for unsaved sets; warn upstream
+    var setPath = stringVal(new LiveAPI("live_set").get("file_path"));
     var setDir = setPath.replace(/\/[^/]+$/, "");
     return setDir + "/Samples/Processed/Freeze";
 }
 
 function listDir(posixPath) {
-    // Max File doesn't enumerate dirs natively; use Folder.
     var folder = new Folder(toMaxPath(posixPath));
     var names = [];
     while (!folder.end) {
@@ -360,10 +336,8 @@ function copyFile(srcPosix, dstPosix) {
         if (!src.isopen) return false;
         var dst = new File(toMaxPath(dstPosix), "write");
         if (!dst.isopen) { src.close(); return false; }
-        var buf;
         while (src.position < src.eof) {
-            buf = src.readbytes(65536);
-            dst.writebytes(buf);
+            dst.writebytes(src.readbytes(65536));
         }
         src.close();
         dst.close();
@@ -390,11 +364,4 @@ function toMaxPath(posixPath) {
     var p = String(posixPath);
     if (p.indexOf("/") === 0) return "Macintosh HD:" + p;
     return p;
-}
-
-function status_msg() {
-    var msg = "spec=" + (spec ? spec.episode_id : "(none)") +
-              " queue=" + renderQueue.length +
-              " current=" + (currentDemo ? currentDemo.id : "(idle)");
-    status(msg);
 }

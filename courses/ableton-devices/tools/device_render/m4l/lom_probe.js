@@ -1,30 +1,31 @@
-// operator_render_probe.js
+// lom_probe.js
 // ─────────────────────────────────────────────────────────────────────────────
-// One-shot LOM parameter dump. Drop into a [js operator_render_probe.js] box
-// in a Max for Live device on a track that has Operator (or any device) at a
-// known device index. Send `dump <track_idx> <device_idx>` to the inlet — gets
-// every parameter name + index + min/max/value from that device, plus any
-// nested chain devices, and writes the result to:
+// One-shot LOM parameter dump. Drop into a [js lom_probe.js] box inside
+// LomProbe.amxd. Send `dump` to the inlet (or `dump <track_idx> <device_idx>`)
+// to walk every exposed parameter on that device and write the result to:
 //
-//     <repo_root>/courses/ableton-devices/tools/operator_render/lom_param_map.json
+//     <repo_root>/courses/ableton-devices/tools/device_render/param_maps/<class>.json
 //
-// (The repo root is hardcoded below — edit if your checkout lives elsewhere.)
+// where <class> is the device's `class_name` lowercased (e.g. "operator",
+// "analog", "wavetable"). Same probe works for every Live device.
 //
-// Usage from Max:
-//     [dump 0 0]    → walk track 0, device 0 (assumes Operator is at device 0)
-//     [dump]        → defaults to (selected_track, device 0)
+// (REPO_ROOT is hardcoded below — edit if your checkout lives elsewhere.)
+//
+// Inlet messages:
+//     dump                       — selected track, device 0
+//     dump <track_idx>           — track N, device 0
+//     dump <track_idx> <dev_idx> — track N, device D
 //
 // Outlets:
 //     0: status messages
-//     1: complete: <count> when finished
+//     1: complete: <count>
 // ─────────────────────────────────────────────────────────────────────────────
 
 inlets  = 1;
 outlets = 2;
 
-// EDIT if your repo lives elsewhere. POSIX path; toMaxPath() converts.
-var REPO_ROOT = "/Users/zak/zacharysbrown/idm-course";
-var OUT_REL   = "/courses/ableton-devices/tools/operator_render/lom_param_map.json";
+var REPO_ROOT     = "/Users/zak/zacharysbrown/idm-course";
+var PARAM_MAP_DIR = "/courses/ableton-devices/tools/device_render/param_maps";
 
 function status(msg) {
     outlet(0, "status", String(msg));
@@ -62,7 +63,7 @@ function dump() {
         return;
     }
 
-    var deviceName = stringVal(device.get("name"));
+    var deviceName  = stringVal(device.get("name"));
     var deviceClass = stringVal(device.get("class_name"));
     status("dumping device " + deviceIdx + ": " + deviceName + " [" + deviceClass + "]");
 
@@ -97,7 +98,8 @@ function dump() {
         parameters: params
     };
 
-    var outPath = REPO_ROOT + OUT_REL;
+    var slug = String(deviceClass).toLowerCase().replace(/[^a-z0-9]+/g, "_");
+    var outPath = REPO_ROOT + PARAM_MAP_DIR + "/" + slug + ".json";
     if (writeJson(outPath, result)) {
         status("wrote " + paramCount + " params → " + outPath);
         outlet(1, "complete", paramCount);
@@ -107,15 +109,12 @@ function dump() {
 }
 
 function getValueItems(p) {
-    // Quantized params (enum-like, e.g. Algorithm, Wave) expose enumerated
-    // string values via `value_items`. Continuous params don't.
     try {
         var n = parseInt(p.getcount("value_items"));
         if (!n || isNaN(n)) return null;
         var items = [];
         for (var i = 0; i < n; i++) {
-            var v = p.get("value_items " + i);
-            items.push(stringVal(v));
+            items.push(stringVal(p.get("value_items " + i)));
         }
         return items;
     } catch (e) {
@@ -129,8 +128,7 @@ function stringVal(v) {
 }
 
 function writeJson(posixPath, obj) {
-    var maxPath = toMaxPath(posixPath);
-    var f = new File(maxPath, "write");
+    var f = new File(toMaxPath(posixPath), "write");
     if (!f.isopen) return false;
     try {
         f.writestring(JSON.stringify(obj, null, 2));

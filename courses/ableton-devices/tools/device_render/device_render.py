@@ -1,45 +1,54 @@
 #!/usr/bin/env python3
 """
-operator_render.py — driver for the Operator-patch render pipeline.
+device_render.py — generic driver for any Live-device render pipeline.
 
-Splits responsibility with the Max for Live device `OperatorRender.amxd`
-(see m4l/README.md):
+One tool for every Ableton device covered by the course. Pairs with one of two
+M4L devices:
 
-    Python (this file)            M4L device (operator_render.js)
-    ────────────────────          ───────────────────────────────
+    --kind midi-instrument   →  MidiInstrumentRender.amxd  (e01 Operator,
+                                e02 Analog, e03 Wavetable, e04 Meld,
+                                e06 Drum Rack, e07 Granulator)
+    --kind audio-fx          →  AudioFxRender.amxd         (e05 Warp Modes,
+                                e08 Spectral, e10 Racks)
+
+Splits responsibility:
+
+    Python (this file)            M4L device
+    ────────────────────          ──────────────────────────────────────
     read clip_manifest.yaml   →   spec.json
     write spec.json           ↓
     [user clicks RENDER]      ←   read spec.json
-    watch output dir + NDJSON ↔   apply LOM params, freeze track,
-                                  copy frozen WAV to output_dir,
+    watch output dir + NDJSON ↔   apply LOM params, drop MIDI clip OR fire
+                                  audio clip, freeze track, copy WAV out,
                                   emit NDJSON event per demo
 
-The CLI does no IPC beyond flat files. This works because the user runs
-this script in a terminal alongside Live; the M4L device produces files;
-the script tails them. Exit cleanly on Ctrl-C.
-
 Usage:
-    # Default — write spec, watch for renders, exit when all demos done
-    python courses/ableton-devices/tools/operator_render/operator_render.py \\
-        --course-root courses/ableton-devices --episode e01-operator
+    # ep01 Operator (default kind = midi-instrument, default demos-key = operator_demos)
+    python courses/ableton-devices/tools/device_render/device_render.py \\
+        --course-root courses/ableton-devices --episode e01-operator \\
+        --device Operator
 
-    # Filter to a single demo
-    --demo op-ratio-1to1
+    # Future ep02 Analog
+    python courses/ableton-devices/tools/device_render/device_render.py \\
+        --course-root courses/ableton-devices --episode e02-analog \\
+        --device Analog --demos-key analog_demos
 
-    # Just list demos + their render status, then exit
-    --list
+    # Future ep05 Warp Modes (audio fx)
+    python courses/ableton-devices/tools/device_render/device_render.py \\
+        --course-root courses/ableton-devices --episode e05-warp-modes \\
+        --kind audio-fx --device "Warp" --demos-key warp_demos
 
-    # Wipe rendered WAVs to force re-render (does NOT touch song_clips/)
-    --clear
-
-    # Dry-run: print spec, don't write
-    --dry-run
+Convenience flags:
+    --demo <id>   filter to a single demo
+    --list        list demo render status, then exit
+    --clear       wipe rendered WAVs (force re-render)
+    --dry-run     print spec, don't write
 
 Output paths:
-    spec:       <build_root>/tmp/operator-render/<episode>/spec.json
-    events:     <build_root>/tmp/operator-render/<episode>/events.ndjson
+    spec:       <build_root>/tmp/device-render/<episode>/spec.json
+    events:     <build_root>/tmp/device-render/<episode>/events.ndjson
     rendered:   <build_root>/audio/clips/<episode>/<demo_id>.wav
-                (same dir as extract_clips.py output — build_episode reads either)
+                (same dir as extract_clips.py — build_episode reads either)
 """
 from __future__ import annotations
 
@@ -60,7 +69,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "shared" / "tools")
 from _course_lib import load_course, episodes_dir, lessons_dir, build_audio  # noqa: E402
 
 
-SPEC_VERSION = 1
+SPEC_VERSION = 2
+KIND_CHOICES = ("midi-instrument", "audio-fx")
 
 
 def find_episode_dir(cfg: dict, episode_id: str) -> Path:
@@ -69,11 +79,21 @@ def find_episode_dir(cfg: dict, episode_id: str) -> Path:
     return base / episode_id
 
 
-def build_spec(manifest: dict, episode_id: str, output_dir: Path, events_path: Path) -> dict:
-    demos = manifest.get("operator_demos") or []
+def build_spec(
+    manifest: dict,
+    episode_id: str,
+    device_class: str,
+    kind: str,
+    demos_key: str,
+    output_dir: Path,
+    events_path: Path,
+) -> dict:
+    demos = manifest.get(demos_key) or []
     return {
         "spec_version": SPEC_VERSION,
         "episode_id": episode_id,
+        "device_class": device_class,
+        "kind": kind,
         "output_dir": str(output_dir),
         "events_path": str(events_path),
         "demos": [
@@ -83,7 +103,7 @@ def build_spec(manifest: dict, episode_id: str, output_dir: Path, events_path: P
                 "duration_s": d.get("duration_s"),
                 "midi": d.get("midi"),
                 "automation": d.get("automation"),
-                "params": d.get("params"),  # may be None — JS treats as "needs manual setup"
+                "params": d.get("params"),
                 "notes": d.get("notes"),
             }
             for d in demos
@@ -110,13 +130,8 @@ def print_status(spec: dict, output_dir: Path) -> tuple[int, int]:
 
 
 def watch(spec: dict, output_dir: Path, events_path: Path) -> int:
-    """Block until all demos rendered, or Ctrl-C. Returns 0 if all done, 1 if interrupted."""
     interrupted = {"flag": False}
-
-    def on_sigint(_sig, _frame):
-        interrupted["flag"] = True
-
-    signal.signal(signal.SIGINT, on_sigint)
+    signal.signal(signal.SIGINT, lambda *_: interrupted.__setitem__("flag", True))
 
     pending = {d["id"] for d in spec["demos"]}
     pending -= {d["id"] for d in spec["demos"] if status_for_demo(d["id"], output_dir) == "rendered"}
@@ -125,7 +140,11 @@ def watch(spec: dict, output_dir: Path, events_path: Path) -> int:
         print("\nAll demos already rendered.")
         return 0
 
-    print(f"\nWaiting on {len(pending)} demo(s). Click RENDER in OperatorRender.amxd. Ctrl-C to exit.")
+    device_label = spec.get("device_class", "?")
+    kind = spec.get("kind", "midi-instrument")
+    amxd_name = "MidiInstrumentRender.amxd" if kind == "midi-instrument" else "AudioFxRender.amxd"
+    print(f"\nWaiting on {len(pending)} demo(s). Click RENDER in {amxd_name} (device={device_label}). Ctrl-C to exit.")
+
     events_path.parent.mkdir(parents=True, exist_ok=True)
     if not events_path.exists():
         events_path.touch()
@@ -136,7 +155,6 @@ def watch(spec: dict, output_dir: Path, events_path: Path) -> int:
     while pending and not interrupted["flag"]:
         time.sleep(0.5)
 
-        # Tail events.ndjson for structured progress
         try:
             with events_path.open("r") as f:
                 f.seek(last_offset)
@@ -153,29 +171,29 @@ def watch(spec: dict, output_dir: Path, events_path: Path) -> int:
             except json.JSONDecodeError:
                 print(f"[event/non-json] {line}")
                 continue
-            kind = evt.get("event")
+            kind_e = evt.get("event")
             did = evt.get("demo_id")
-            if kind == "render_done" and did:
+            if kind_e == "render_done" and did:
                 print(f"[event] render_done {did}")
                 pending.discard(did)
-            elif kind == "render_start" and did:
+            elif kind_e == "render_start" and did:
                 print(f"[event] render_start {did}")
-            elif kind == "error":
+            elif kind_e == "error":
                 print(f"[event] error: {evt.get('message', '?')}")
             else:
                 print(f"[event] {evt}")
 
-        # Polling fallback — if event file missing or M4L can't write events,
-        # still detect new WAVs. Once a demo's WAV exists, it's done.
         for did in list(pending):
             if (output_dir / f"{did}.wav").exists():
                 print(f"[poll] {did} appeared in output dir")
                 pending.discard(did)
 
-        # Periodic status dump every 30s
         now = time.time()
         if now - last_dump > 30:
-            print(f"[status] {len(spec['demos']) - len(pending)}/{len(spec['demos'])} done; pending: {sorted(pending)[:5]}{'…' if len(pending) > 5 else ''}")
+            done = len(spec['demos']) - len(pending)
+            sample = sorted(pending)[:5]
+            tail = "…" if len(pending) > 5 else ""
+            print(f"[status] {done}/{len(spec['demos'])} done; pending: {sample}{tail}")
             last_dump = now
 
     if interrupted["flag"]:
@@ -189,10 +207,18 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--course-root", required=True)
     ap.add_argument("--episode", "--lesson", dest="episode", required=True)
+    ap.add_argument("--device", required=True,
+                    help="device class (e.g. Operator, Analog, Wavetable). "
+                         "Lowercased to find param_maps/<class>.json.")
+    ap.add_argument("--kind", choices=KIND_CHOICES, default="midi-instrument",
+                    help="which M4L render device to target")
+    ap.add_argument("--demos-key", default="operator_demos",
+                    help="key in clip_manifest.yaml that holds the demo list "
+                         "(default: operator_demos)")
     ap.add_argument("--demo", help="filter to a single demo id")
-    ap.add_argument("--list", action="store_true", help="list demos + status, then exit")
-    ap.add_argument("--clear", action="store_true", help="delete rendered WAVs to force re-render")
-    ap.add_argument("--dry-run", action="store_true", help="print spec, don't write")
+    ap.add_argument("--list", action="store_true")
+    ap.add_argument("--clear", action="store_true")
+    ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
     cfg = load_course(args.course_root)
@@ -208,16 +234,31 @@ def main() -> int:
         return 2
 
     manifest = yaml.safe_load(manifest_path.read_text()) or {}
+    if args.demos_key not in manifest:
+        sys.stderr.write(
+            f"manifest has no '{args.demos_key}' key. Available top-level keys: "
+            f"{sorted(manifest.keys())}\n"
+        )
+        return 2
+
     output_dir = build_audio(cfg) / "clips" / args.episode
-    events_dir = cfg["_build_root"] / "tmp" / "operator-render" / args.episode
+    events_dir = cfg["_build_root"] / "tmp" / "device-render" / args.episode
     spec_path = events_dir / "spec.json"
     events_path = events_dir / "events.ndjson"
 
-    spec = build_spec(manifest, args.episode, output_dir, events_path)
+    spec = build_spec(
+        manifest,
+        episode_id=args.episode,
+        device_class=args.device,
+        kind=args.kind,
+        demos_key=args.demos_key,
+        output_dir=output_dir,
+        events_path=events_path,
+    )
     if args.demo:
         spec["demos"] = [d for d in spec["demos"] if d["id"] == args.demo]
         if not spec["demos"]:
-            sys.stderr.write(f"demo id {args.demo!r} not found in operator_demos\n")
+            sys.stderr.write(f"demo id {args.demo!r} not found in {args.demos_key}\n")
             return 2
 
     if args.clear:
@@ -231,7 +272,7 @@ def main() -> int:
         return 0
 
     if args.list:
-        print(f"Episode: {args.episode}")
+        print(f"Episode: {args.episode}  Device: {args.device}  Kind: {args.kind}")
         print(f"Output dir: {output_dir}")
         rendered, total = print_status(spec, output_dir)
         print(f"\n{rendered}/{total} demos rendered")
