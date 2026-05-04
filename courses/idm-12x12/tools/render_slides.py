@@ -27,13 +27,19 @@ try:
 except ImportError as e:
     sys.exit(f"missing dep: {e}. pip install pyyaml markdown")
 
-ROOT = Path(__file__).resolve().parent.parent
-LESSONS = ROOT / "lessons"
-BUILD = ROOT / "build" / "html"
-NARR = ROOT / "build" / "audio" / "narration"
-EPISODES = ROOT / "build" / "audio" / "episodes"
-SF = ROOT / "build" / "audio" / "stemforge-renders"
-REFS = ROOT / "references"
+# Locate shared/_course_lib.py — this script lives at <repo>/courses/<id>/tools/.
+sys.path.insert(
+    0, str(Path(__file__).resolve().parents[3] / "shared" / "tools")
+)
+from _course_lib import (  # noqa: E402
+    load_course,
+    lessons_dir,
+    references_dir,
+    build_html,
+    episodes_out,
+    narration_out,
+    stemforge_out,
+)
 
 
 def load_json(p: Path) -> dict:
@@ -459,7 +465,7 @@ def render_slide(slide: dict, lesson_dir: Path, lesson_id: str, songs: dict, bib
     als_html = ""
     if slide.get("live_set"):
         rel = slide["live_set"]
-        als_html = f'<div class="als"><a href="../../../lessons/{lesson_id}/{escape(rel)}">{escape(Path(rel).name)}</a></div>'
+        als_html = f'<div class="als"><a href="{LESSON_FILE_PREFIX}/{lesson_id}/{escape(rel)}">{escape(Path(rel).name)}</a></div>'
 
     deliv_html = ""
     if slide.get("deliverable"):
@@ -580,8 +586,8 @@ def render_index_html(lessons: list[tuple[str, dict]]) -> str:
   {''.join(rows)}
   <div class="aux">
     <a href="glossary.html">Glossary →</a>
-    <a href="../../references/bibliography.json">Bibliography</a>
-    <a href="../../references/songs.json">Songs registry</a>
+    <a href="{INDEX_REF_PREFIX}/bibliography.json">Bibliography</a>
+    <a href="{INDEX_REF_PREFIX}/songs.json">Songs registry</a>
   </div>
 </div>
 </body>
@@ -596,10 +602,36 @@ def ensure_symlink(link: Path, target: Path) -> None:
     link.symlink_to(target)
 
 
+# Module-level prefixes set by main(); the f-strings in render_slide / render_index_html
+# reference these. They turn the build_html depth + course_root location into
+# correct relative paths from each emitted HTML page.
+LESSON_FILE_PREFIX = "../../../lessons"
+INDEX_REF_PREFIX = "../../references"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--course-root", required=True)
     ap.add_argument("--lesson")
     args = ap.parse_args()
+
+    cfg = load_course(args.course_root)
+    LESSONS = lessons_dir(cfg)
+    BUILD = build_html(cfg)
+    EPISODES = episodes_out(cfg)
+    SF = stemforge_out(cfg)
+    REFS = references_dir(cfg)
+
+    # Compute relative prefixes for HTML hrefs.
+    repo_root = cfg["_repo_root"]
+    course_rel = cfg["_course_root"].relative_to(repo_root).as_posix()
+    # Per-lesson page lives at BUILD/<lesson>/index.html.
+    # Levels-up to repo root = parts(BUILD/<lesson> relative to repo_root).
+    lesson_html_dir_depth = len(BUILD.relative_to(repo_root).parts) + 1
+    index_html_dir_depth = len(BUILD.relative_to(repo_root).parts)
+    global LESSON_FILE_PREFIX, INDEX_REF_PREFIX
+    LESSON_FILE_PREFIX = ("../" * lesson_html_dir_depth) + course_rel + "/lessons"
+    INDEX_REF_PREFIX = ("../" * index_html_dir_depth) + course_rel + "/references"
 
     songs = load_json(REFS / "songs.json")
     bib = load_json(REFS / "bibliography.json")
@@ -619,21 +651,17 @@ def main() -> int:
         out_dir = BUILD / lesson_id
         out_dir.mkdir(parents=True, exist_ok=True)
 
-        # Symlink episode MP3 + chapter sidecar into deck dir
         mp3_src = EPISODES / f"{lesson_id}.mp3"
         if mp3_src.exists():
             ensure_symlink(out_dir / "episode.mp3", mp3_src)
-        # Symlink stemforge stems
         week = f"w{lesson.get('week', 0):02d}"
         sf_src = SF / week
         if sf_src.exists():
             ensure_symlink(out_dir / "stemforge", sf_src)
-        # Symlink lesson assets dir (for images/diagrams/etc)
         assets_src = ldir / "assets"
         if assets_src.exists():
             ensure_symlink(out_dir / "assets", assets_src)
 
-        # Load chapters
         chapters = []
         chap_path = EPISODES / f"{lesson_id}.chapters.json"
         if chap_path.exists():
@@ -643,7 +671,6 @@ def main() -> int:
         (out_dir / "index.html").write_text(html)
         print(f"[slides] {lesson_id}: {len(lesson.get('slides', []))} slides → {out_dir}/index.html")
 
-    # Course index
     all_pairs = []
     for ldir in sorted(LESSONS.iterdir()):
         if not ldir.is_dir(): continue

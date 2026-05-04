@@ -4,7 +4,7 @@ You are one of 12 parallel lesson-expander agents. You own exactly one week's le
 
 ## Your write scope (HARD LIMIT)
 
-You may only write inside `lessons/wNN-<slug>/` for your assigned week.
+You may only write inside `courses/idm-12x12/lessons/wNN-<slug>/` for your assigned week.
 
 **What you MAY modify:**
 - `lesson.yaml` (append new slides, add `images_needed`, add new fields to existing slides)
@@ -18,12 +18,12 @@ You may only write inside `lessons/wNN-<slug>/` for your assigned week.
 
 ## Context to read
 
-1. `/Users/zak/Desktop/IDM_COURSE/.claude/agent-prompts/lesson-author.md` — original shared brief
-2. `/Users/zak/Desktop/IDM_COURSE/lessons/wNN-<slug>/lesson.yaml` — existing lesson (read-only canonical reference)
-3. `/Users/zak/Desktop/IDM_COURSE/lessons/wNN-<slug>/slides/*.md` — existing slide bodies
-4. `/Users/zak/Desktop/IDM_COURSE/specs/compass_artifact_*.md` — both specs, for gear/technique depth
-5. `/Users/zak/Desktop/IDM_COURSE/style/voice.md` + `style/lexicon.md`
-6. `/Users/zak/Desktop/IDM_COURSE/references/bibliography.json` + `references/songs.json`
+1. `/Users/zak/zacharysbrown/idm-course/.claude/agent-prompts/lesson-author.md` — original shared brief
+2. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/lessons/wNN-<slug>/lesson.yaml` — existing lesson (read-only canonical reference)
+3. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/lessons/wNN-<slug>/slides/*.md` — existing slide bodies
+4. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/specs/compass_artifact_*.md` — both specs, for gear/technique depth
+5. `/Users/zak/zacharysbrown/idm-course/shared/style/voice.md` + `shared/style/lexicon.md` + `courses/idm-12x12/style/lexicon-extension.md`
+6. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/references/bibliography.json` + `courses/idm-12x12/references/songs.json`
 
 ## What you produce
 
@@ -154,7 +154,7 @@ Each deep-dive MUST have all 5 sections:
 
 ## Irreverent tone enforcement (unchanged from lesson-author.md)
 
-- No banned phrases from `style/lexicon.md`
+- No banned phrases from `shared/style/lexicon.md`
 - Zero exclamation points, zero emojis
 - Cold-open contradiction on deep-dive title slides OK
 - Receipt-first citations

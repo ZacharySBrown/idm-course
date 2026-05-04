@@ -5,9 +5,10 @@
 # Bucket C (link-only) → validated and written to references/links.yaml
 
 set -uo pipefail
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PDFS="$ROOT/references/pdfs"
-TRANS="$ROOT/references/transcripts"
+# Resolves to the course root (parent of tools/). Override via COURSE_ROOT env var if needed.
+COURSE_ROOT="${COURSE_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+PDFS="$COURSE_ROOT/references/pdfs"
+TRANS="$COURSE_ROOT/references/transcripts"
 mkdir -p "$PDFS" "$TRANS"
 
 STATUS="$PDFS/_status.json"

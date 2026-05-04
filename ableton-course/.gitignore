@@ -1,9 +1,0 @@
-build/
-*.wav
-*.mp3
-*.aiff
-__pycache__/
-.venv/
-*.pyc
-.env
-references/ableton-live-12/*.html

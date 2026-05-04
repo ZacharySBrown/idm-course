@@ -48,8 +48,17 @@ import sys
 import tempfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-SONGS = ROOT / "references" / "songs.json"
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "shared" / "tools"))
+from _course_lib import load_course, references_dir  # noqa: E402
+
+import argparse as _argparse_pre
+_ap = _argparse_pre.ArgumentParser()
+_ap.add_argument("--course-root", required=True)
+_args, _rest = _ap.parse_known_args()
+sys.argv = [sys.argv[0]] + _rest
+_cfg = load_course(_args.course_root)
+ROOT = _cfg["_course_root"]
+SONGS = references_dir(_cfg) / "songs.json"
 
 
 def extract_spotify_track_id(url: str) -> str | None:

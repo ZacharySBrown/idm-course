@@ -12,15 +12,23 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-SRC_MD = ROOT / "build" / "glossary.md"
-SRC_HTML = ROOT / "build" / "html" / "glossary.html"
-OUT_PDF = ROOT / "build" / "pdf" / "idm_glossary.pdf"
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "shared" / "tools"))
+from _course_lib import load_course, build_html  # noqa: E402
+
+_ap = argparse.ArgumentParser()
+_ap.add_argument("--course-root", required=True)
+_args, _rest = _ap.parse_known_args()
+sys.argv = [sys.argv[0]] + _rest
+_cfg = load_course(_args.course_root)
+SRC_MD = _cfg["_build_root"] / "glossary.md"
+SRC_HTML = build_html(_cfg) / "glossary.html"
+OUT_PDF = _cfg["_build_root"] / "pdf" / "idm_glossary.pdf"
 
 
 def try_pandoc() -> bool:

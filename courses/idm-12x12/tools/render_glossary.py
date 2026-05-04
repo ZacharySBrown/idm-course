@@ -10,14 +10,23 @@ Writes:
 """
 from __future__ import annotations
 
+import argparse
 import json
+import sys
 from html import escape
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-REFS = ROOT / "references"
-BUILD_HTML = ROOT / "build" / "html"
-BUILD = ROOT / "build"
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "shared" / "tools"))
+from _course_lib import load_course, references_dir, build_html  # noqa: E402
+
+_ap = argparse.ArgumentParser()
+_ap.add_argument("--course-root", required=True)
+_args, _rest = _ap.parse_known_args()
+sys.argv = [sys.argv[0]] + _rest
+_cfg = load_course(_args.course_root)
+REFS = references_dir(_cfg)
+BUILD_HTML = build_html(_cfg)
+BUILD = _cfg["_build_root"]
 
 CATEGORY_ORDER = [
     "dsp_primitive",

@@ -28,8 +28,18 @@ except ImportError:
     sys.stderr.write("pyyaml missing. pip install pyyaml\n")
     sys.exit(2)
 
-ROOT = Path(__file__).resolve().parent.parent
-RECIPES_PATH = ROOT / "stemforge-demo-material" / "recipes.yaml"
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "shared" / "tools"))
+from _course_lib import load_course  # noqa: E402
+
+import argparse as _argparse_pre
+_ap = _argparse_pre.ArgumentParser()
+_ap.add_argument("--course-root", required=True)
+_args, _rest = _ap.parse_known_args()
+sys.argv = [sys.argv[0]] + _rest
+_cfg = load_course(_args.course_root)
+COURSE_ROOT = _cfg["_course_root"]
+ROOT = _cfg["_repo_root"]  # repo root (recipe paths like build/... are repo-relative)
+RECIPES_PATH = COURSE_ROOT / "stemforge-demo-material" / "recipes.yaml"
 PROCESSED = Path.home() / "stemforge" / "processed"
 
 
@@ -146,7 +156,7 @@ def main() -> int:
         for s in r.get("skipped", []):
             print(f"    skip {s['name']}: {s['reason']}")
 
-    out_status = ROOT / "build" / "audio" / "stemforge-renders" / "_link_status.json"
+    out_status = _cfg["_build_root"] / "audio" / "stemforge-renders" / "_link_status.json"
     out_status.parent.mkdir(parents=True, exist_ok=True)
     out_status.write_text(json.dumps(results, indent=2))
 

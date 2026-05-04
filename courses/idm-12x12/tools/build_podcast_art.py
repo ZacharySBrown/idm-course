@@ -3,11 +3,22 @@
 Generate podcast cover art (1500×1500, JPG, Tape Op-coded) at repo root.
 Swap in custom art later by replacing /artwork.jpg and re-committing.
 """
+import argparse
+import sys
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "artwork.jpg"
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "shared" / "tools"))
+from _course_lib import load_course  # noqa: E402
+
+_ap = argparse.ArgumentParser()
+_ap.add_argument("--course-root", required=True)
+_args, _rest = _ap.parse_known_args()
+sys.argv = [sys.argv[0]] + _rest
+_cfg = load_course(_args.course_root)
+ROOT = _cfg["_repo_root"]
+_artwork_rel = ((_cfg.get("podcast") or {}).get("artwork_path", "artwork.jpg"))
+OUT = ROOT / _artwork_rel
 
 SIZE = 1500
 BG = (244, 240, 232)     # cream — matches deck CSS

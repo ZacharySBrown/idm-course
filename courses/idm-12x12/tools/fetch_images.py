@@ -35,9 +35,18 @@ try:
 except ImportError:
     sys.exit("pip install Pillow")
 
-ROOT = Path(__file__).resolve().parent.parent
-IMAGES_JSON = ROOT / "references" / "images.json"
-STATUS = ROOT / "build" / "images_fetch_status.json"
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "shared" / "tools"))
+from _course_lib import load_course, references_dir  # noqa: E402
+
+import argparse as _argparse_pre
+_ap = _argparse_pre.ArgumentParser()
+_ap.add_argument("--course-root", required=True)
+_args, _rest = _ap.parse_known_args()
+sys.argv = [sys.argv[0]] + _rest
+_cfg = load_course(_args.course_root)
+ROOT = _cfg["_course_root"]
+IMAGES_JSON = references_dir(_cfg) / "images.json"
+STATUS = _cfg["_build_root"] / "images_fetch_status.json"
 MAX_WIDTH = 1600
 JPEG_QUALITY = 85
 

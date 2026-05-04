@@ -1,9 +1,15 @@
+id: ableton-devices
 title: "Ableton Live Mastery"
 subtitle: "Devices, History, and Techniques for Serious Producers"
 format: walking-podcast
+content_kind: episode
+episode_dir: episodes
+build_subdir: ableton-devices  # outputs land at <repo_root>/build/ableton-devices/...
 target_duration_minutes: 40
 tts_model: gpt-4o-mini-tts
 tts_voice: onyx
+episode_artist: "Ableton Live Mastery (narrator)"
+
 episodes:
   - id: e01-operator
     title: "Operator: The FM Machine"

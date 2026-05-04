@@ -46,11 +46,14 @@ except ImportError:
     sys.stderr.write("mutagen missing. uv pip install mutagen\n")
     sys.exit(2)
 
-ROOT = Path(__file__).resolve().parent.parent
-LESSONS = ROOT / "lessons"
-NARR = ROOT / "build" / "audio" / "narration"
-SF_RENDERS = ROOT / "build" / "audio" / "stemforge-renders"
-OUT = ROOT / "build" / "audio" / "episodes"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _course_lib import (  # noqa: E402
+    load_course,
+    lessons_dir,
+    narration_out,
+    stemforge_out,
+    episodes_out,
+)
 
 
 def ffprobe_duration_ms(path: Path) -> int:
@@ -116,7 +119,15 @@ def write_chapters(mp3_path: Path, chapters: list[dict], sidecar: Path) -> None:
     audio.save()
 
 
-def build_one(lesson_dir: Path, include_stemforge: bool) -> dict:
+def build_one(
+    lesson_dir: Path,
+    include_stemforge: bool,
+    narr_root: Path,
+    out_dir: Path,
+    repo_root: Path,
+    show_artist: str,
+    show_album: str,
+) -> dict:
     lesson_yaml = lesson_dir / "lesson.yaml"
     if not lesson_yaml.exists():
         return {"lesson": lesson_dir.name, "status": "missing-lesson-yaml"}
@@ -125,7 +136,7 @@ def build_one(lesson_dir: Path, include_stemforge: bool) -> dict:
     lesson_id = lesson["id"]
     episode_cfg = lesson.get("episode", {})
 
-    narr_dir = NARR / lesson_id
+    narr_dir = narr_root / lesson_id
     if not narr_dir.exists():
         return {"lesson": lesson_id, "status": "no-narration — run render_voiceover.py first"}
 
@@ -169,21 +180,25 @@ def build_one(lesson_dir: Path, include_stemforge: bool) -> dict:
         })
         cursor += dur + 400  # matches 400ms inter-piece silence
 
-    out_mp3 = OUT / f"{lesson_id}.mp3"
-    sidecar = OUT / f"{lesson_id}.chapters.json"
+    out_mp3 = out_dir / f"{lesson_id}.mp3"
+    sidecar = out_dir / f"{lesson_id}.chapters.json"
 
     concat_wavs(
         pieces, out_mp3,
         title=episode_cfg.get("title", lesson.get("title", lesson_id)),
-        artist="IDM Course (Bernd)",
-        album="IDM Production — 12 Weeks, 12 Tracks",
+        artist=show_artist,
+        album=show_album,
     )
     write_chapters(out_mp3, chapters, sidecar)
 
+    try:
+        rel = str(out_mp3.relative_to(repo_root))
+    except ValueError:
+        rel = str(out_mp3)
     return {
         "lesson": lesson_id,
         "status": "ok",
-        "mp3": str(out_mp3.relative_to(ROOT)),
+        "mp3": rel,
         "chapters": len(chapters),
         "duration_ms": cursor,
     }
@@ -191,21 +206,44 @@ def build_one(lesson_dir: Path, include_stemforge: bool) -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--course-root", required=True)
     ap.add_argument("--lesson")
     ap.add_argument("--include-stemforge", action="store_true",
                     help="(reserved) inline AB renders as musical interludes")
     args = ap.parse_args()
 
-    targets = [LESSONS / args.lesson] if args.lesson else sorted(LESSONS.iterdir())
+    cfg = load_course(args.course_root)
+    items_root = lessons_dir(cfg)
+    narr_root = narration_out(cfg)
+    out_dir = episodes_out(cfg)
+    show_artist = cfg.get("episode_artist", f"{cfg.get('title', 'Course')} (narrator)")
+    show_album = cfg.get("title", "Course")
+
+    targets = (
+        [items_root / args.lesson]
+        if args.lesson
+        else sorted(items_root.iterdir())
+    )
     targets = [t for t in targets if t.is_dir()]
 
-    results = [build_one(t, args.include_stemforge) for t in targets]
+    results = [
+        build_one(
+            t,
+            args.include_stemforge,
+            narr_root=narr_root,
+            out_dir=out_dir,
+            repo_root=cfg["_repo_root"],
+            show_artist=show_artist,
+            show_album=show_album,
+        )
+        for t in targets
+    ]
     for r in results:
         print(f"[episode] {r['lesson']}: {r['status']}"
               + (f" — {r['mp3']} ({r['chapters']} chapters)" if r['status'] == 'ok' else ''))
 
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "_build_status.json").write_text(json.dumps(results, indent=2))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "_build_status.json").write_text(json.dumps(results, indent=2))
 
     ok = sum(1 for r in results if r["status"] == "ok")
     print(f"\nbuild_episode: {ok}/{len(results)} ok")

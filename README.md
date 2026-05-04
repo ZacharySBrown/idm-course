@@ -1,49 +1,85 @@
-# IDM Course — 12 Weeks, 12 Tracks
+# raindog-courses
 
-*Intelligent Dance Music production reverse-engineered from Aphex, Autechre, Four Tet, Squarepusher, Prefuse, Dilla, Premier, Kanye, and Death Grips. Built on Ableton Live 12 + stemforge.*
+A monorepo of music-production courses sharing a common build pipeline (TTS narration, stemforge stems, podcast feed assembly) and a single voice bible.
 
-**Status:** work in progress — multi-agent build underway.
+## Layout
 
----
+```
+.
+├── podcast.xml                 ← load-bearing — IDM podcast feed (Apple Podcasts)
+├── artwork.jpg                 ← load-bearing — IDM cover art
+├── build/                      ← generated; subscribers read from here
+│   ├── audio/episodes/*.mp3    ← IDM episode MP3s (URLs published in podcast.xml)
+│   ├── html/<lesson>/          ← IDM rendered decks
+│   └── ableton-devices/...     ← Ableton course outputs (separate subtree)
+├── courses/
+│   ├── idm-12x12/              ← IDM Production — 12 Weeks, 12 Tracks
+│   │   ├── course.yaml
+│   │   ├── lessons/            ← 12 lessons (source of truth)
+│   │   ├── references/         ← bibliography, glossary, songs, images
+│   │   ├── specs/              ← source briefs that seeded the course
+│   │   ├── stemforge-demo-material/recipes.yaml
+│   │   ├── style/              ← per-course extension overlays + teaser-calendar.yaml
+│   │   └── tools/              ← IDM-only tools (slides, glossary, art)
+│   └── ableton-devices/        ← Ableton Live Mastery (walking podcast)
+│       ├── course.yaml
+│       ├── episodes/
+│       ├── presets/
+│       ├── style/              ← per-course extension overlays
+│       └── tools/              ← Ableton-only tools (LOM/audio rendering)
+└── shared/
+    ├── style/                  ← base voice.md + lexicon.md (govern both courses)
+    └── tools/                  ← cross-course build pipeline
+        ├── _course_lib.py      ← path resolution helper
+        ├── render_voiceover.py
+        ├── stemforge_runner.py
+        ├── build_episode.py
+        ├── build_podcast_feed.py
+        └── validate.ts
+```
 
-## Philosophy
+Every shared tool takes `--course-root <path>`. Per-course tools live under `courses/<id>/tools/` and also take `--course-root` for consistency.
 
-Constraint + recombination beats sound-design rabbit holes. Completion > perfection. Ship 12 tracks in 12 weeks. Reverse-engineer artist methods rather than feature-tour the DAW.
+## Courses
 
-## Repo structure
+- **[IDM Production — 12 Weeks, 12 Tracks](courses/idm-12x12/)** — reverse-engineering electronic-music production from Aphex Twin, Autechre, Four Tet, Squarepusher, J Dilla, DJ Shadow, DJ Premier, Kanye, Madlib, Death Grips, and Burial. **Status:** shipping (12 episodes published).
+- **[Ableton Live Mastery](courses/ableton-devices/)** — device-by-device walking-podcast deep-dives (Operator, Analog, Wavetable, Meld, etc.). **Status:** scaffold only (e01-operator in progress).
 
-| Path | What's there |
-|---|---|
-| [specs/](specs/) | Two source briefs that seeded the course (read-only canon) |
-| [style/voice.md](style/voice.md) | Tone bible — every authoring agent reads this |
-| [style/lexicon.md](style/lexicon.md) | Banned phrases + approved slang (linter enforces) |
-| [style/teaser-calendar.yaml](style/teaser-calendar.yaml) | Six teasers scheduled across 12 weeks |
-| [course.yaml](course.yaml) | Master manifest — weeks, pillars, stemforge pipelines, teasers |
-| [lessons/](lessons/) | Single source of truth — one directory per lesson |
-| [references/bibliography.json](references/bibliography.json) | Canonical citation DB — cite only via `bib:*` IDs |
-| [stemforge-demo-material/recipes.yaml](stemforge-demo-material/recipes.yaml) | Per-lesson stemforge CLI invocations |
-| [tools/](tools/) | Build pipeline — see [tools/README.md](tools/README.md) |
-| [build/](build/) | Generated artifacts (git-ignored; reproducible from sources) |
+## Build pipeline (IDM, full)
 
-## The 12 weeks
+```bash
+# Wave 4 — Stem renders
+python shared/tools/stemforge_runner.py --course-root courses/idm-12x12
 
-1. **W1** — [Listen like an engineer, subtract like a producer](lessons/w01-listen-subtract/)
-2. **W2** — [The Subtraction method — finish by removing](lessons/w02-subtraction/)
-3. **W3** — [Simpler, Drum Rack, one-shots](lessons/w03-simpler-basics/)
-4. **W4** — [Warp modes as sound design](lessons/w04-warp-modes/) *· tarbox_road teaser*
-5. **W5** — [Aphex Pt.1 — Tuning drums to the track](lessons/w05-aphex-tuning/) *· fredonia_srt teaser · MVP exemplar*
-6. **W6** — [Four Tet — subliminal layering & preset discipline](lessons/w06-fourtet-layering/)
-7. **W7** — [Squarepusher — hardware hostility & Amen chopping](lessons/w07-squarepusher-chops/) *· tame_impala_boss teaser*
-8. **W8** — [Autechre — generative, not random](lessons/w08-autechre-feedback/) *· mgmt_kids_distortion teaser*
-9. **W9** — [Vocal chopping — Prefuse, Dilla, Kanye, Premier](lessons/w09-vocal-chopping/)
-10. **W10** — [Variation generation — the five mutations](lessons/w10-variation-generation/) *· zaireeka_4cd teaser*
-11. **W11** — [Beat switches, inverse drops, and the rub](lessons/w11-beat-switch/)
-12. **W12** — [Ship two tracks — mastering, metadata, delivery](lessons/w12-ship-two-tracks/) *· gottinger_alumni teaser*
+# Wave 6 — Voiceover (requires OPENAI_API_KEY)
+python shared/tools/render_voiceover.py --course-root courses/idm-12x12
 
-## How it builds
+# Wave 7 — Compile
+python shared/tools/build_episode.py --course-root courses/idm-12x12
+python courses/idm-12x12/tools/render_slides.py --course-root courses/idm-12x12
+python courses/idm-12x12/tools/render_glossary.py --course-root courses/idm-12x12
 
-See [tools/README.md](tools/README.md) for the Wave 4–8 build pipeline. The plan lives at `~/.claude/plans/read-the-specs-in-hazy-galaxy.md`.
+# Wave 8 — Feed
+python shared/tools/build_podcast_feed.py --course-root courses/idm-12x12
+```
 
-## References
+## Validation
 
-PDFs mirrored to `references/pdfs/` for offline (and reMarkable) reading. Paywalled and UGC sources live in [references/links.yaml](references/links.yaml) — link-only, no mirroring.
+```bash
+bun run shared/tools/validate.ts --course-root courses/idm-12x12 --all
+bun run shared/tools/validate.ts --course-root courses/ableton-devices --all
+```
+
+Loads banned phrases from [shared/style/lexicon.md](shared/style/lexicon.md) plus per-course extensions, checks bibliography citations, teaser calendar, exclamation/emoji policy, and script length.
+
+## Voice + lexicon
+
+The base voice bible is at [shared/style/voice.md](shared/style/voice.md). Each course can add overrides in `courses/<id>/style/voice-extension.md` (and `lexicon-extension.md`). The validator unions base + extension at lint time.
+
+## Subscribe to IDM podcast
+
+```
+https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/podcast.xml
+```
+
+(The repo name stays `idm-course` so this URL keeps resolving.)

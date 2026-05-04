@@ -3,28 +3,24 @@
 render_voiceover.py — render narration scripts (markdown) to WAV via OpenAI TTS.
 
 Reads:
-    lessons/*/script/*.md
+    <course_root>/lessons/*/script/*.md (or episodes/*/script/*.md depending on
+    course content_kind).
 
 Writes:
-    build/audio/narration/<lesson>/<script_name>.wav
-    build/audio/narration/.cache/<sha256>.wav     (content-addressed cache)
+    <build_root>/audio/narration/<id>/<script_name>.wav
+    <build_root>/audio/narration/.cache/<sha256>.wav
 
 Usage:
-    python tools/render_voiceover.py                  # all lessons
-    python tools/render_voiceover.py --lesson w05-aphex-tuning
-    python tools/render_voiceover.py --dry-run        # parse only, no API call
+    python shared/tools/render_voiceover.py --course-root courses/idm-12x12
+    python shared/tools/render_voiceover.py --course-root courses/idm-12x12 --lesson w05-aphex-tuning
+    python shared/tools/render_voiceover.py --course-root courses/idm-12x12 --dry-run
 
-Script markup (from style/voice.md):
-    [pause 600ms]    → rendered as ". " (tts-1-hd has no SSML; punctuation approximates)
-    *word*           → UPPER-CASED (tts-1-hd responds to caps as emphasis)
-    ~word~           → stripped (pitch-down not expressible)
+Script markup (from shared/style/voice.md):
+    [pause 600ms]    → rendered as ". "
+    *word*           → UPPER-CASED
+    ~word~           → stripped
     — (em-dash)      → preserved
-    <!-- comments --> → stripped
-    HTML tags         → stripped
-
-Provider defaults:
-    OpenAI gpt-4o-mini-tts (if key present; supports voice 'onyx', instructions via 'instructions' field)
-    Falls back to openai tts-1-hd if gpt-4o-mini-tts unavailable.
+    <!-- comments --> / HTML tags → stripped
 
 Requires:
     OPENAI_API_KEY in environment.
@@ -40,11 +36,8 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-LESSONS = ROOT / "lessons"
-OUT = ROOT / "build" / "audio" / "narration"
-CACHE = OUT / ".cache"
-STATUS_OUT = OUT / "_render_status.json"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _course_lib import load_course, lessons_dir, episodes_dir, narration_out  # noqa: E402
 
 VOICE_INSTRUCTION = (
     "Male, mid-30s, dry sardonic. Reads technical specs without awe. Pauses before "
@@ -116,15 +109,24 @@ def synthesize(text: str, out_path: Path, model: str, voice: str, dry_run: bool)
         return {"path": str(out_path), "status": "failed", "error": str(e)}
 
 
-def render_one(script_md: Path, lesson_id: str, model: str, voice: str, dry_run: bool) -> dict:
+def render_one(
+    script_md: Path,
+    item_id: str,
+    model: str,
+    voice: str,
+    dry_run: bool,
+    out_root: Path,
+    cache_dir: Path,
+    repo_root: Path,
+) -> dict:
     text = normalize(script_md.read_text())
     if not text.strip():
-        return {"path": str(script_md), "status": "empty", "lesson": lesson_id}
+        return {"path": str(script_md), "status": "empty", "id": item_id}
 
-    out_rel = Path(lesson_id) / (script_md.stem + ".wav")
-    out_abs = OUT / out_rel
+    out_rel = Path(item_id) / (script_md.stem + ".wav")
+    out_abs = out_root / out_rel
     cache_key = content_hash(text, model, voice)
-    cache_path = CACHE / f"{cache_key}.wav"
+    cache_path = cache_dir / f"{cache_key}.wav"
 
     if cache_path.exists():
         out_abs.parent.mkdir(parents=True, exist_ok=True)
@@ -143,40 +145,74 @@ def render_one(script_md: Path, lesson_id: str, model: str, voice: str, dry_run:
         except OSError:
             out_abs.write_bytes(cache_path.read_bytes())
         result["hash"] = cache_key[:12]
-    result["lesson"] = lesson_id
-    result["script"] = str(script_md.relative_to(ROOT))
+    result["id"] = item_id
+    try:
+        result["script"] = str(script_md.relative_to(repo_root))
+    except ValueError:
+        result["script"] = str(script_md)
     return result
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--lesson", help="e.g. w05-aphex-tuning")
+    ap.add_argument("--course-root", required=True)
+    ap.add_argument("--lesson", help="lesson|episode id, e.g. w05-aphex-tuning")
     ap.add_argument("--model", default="gpt-4o-mini-tts", help="OpenAI TTS model id")
-    ap.add_argument("--voice", default="onyx", help="OpenAI voice: onyx|alloy|echo|fable|ash|coral|sage|nova")
+    ap.add_argument(
+        "--voice",
+        default="onyx",
+        help="OpenAI voice: onyx|alloy|echo|fable|ash|coral|sage|nova",
+    )
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    CACHE.mkdir(parents=True, exist_ok=True)
+    cfg = load_course(args.course_root)
+    out_root = narration_out(cfg)
+    cache_dir = out_root / ".cache"
+    status_out = out_root / "_render_status.json"
+    cache_dir.mkdir(parents=True, exist_ok=True)
 
-    lesson_dirs = sorted(LESSONS.iterdir()) if not args.lesson else [LESSONS / args.lesson]
-    lesson_dirs = [d for d in lesson_dirs if d.is_dir()]
+    content_kind = cfg.get("content_kind", "lesson")
+    items_root = (
+        episodes_dir(cfg) if content_kind == "episode" else lessons_dir(cfg)
+    )
+
+    item_dirs = (
+        sorted(items_root.iterdir())
+        if not args.lesson
+        else [items_root / args.lesson]
+    )
+    item_dirs = [d for d in item_dirs if d.is_dir()]
 
     results = []
-    for ldir in lesson_dirs:
-        lesson_id = ldir.name
-        script_dir = ldir / "script"
+    for idir in item_dirs:
+        item_id = idir.name
+        script_dir = idir / "script"
         if not script_dir.exists():
             continue
         for script_md in sorted(script_dir.glob("*.md")):
-            r = render_one(script_md, lesson_id, args.model, args.voice, args.dry_run)
-            print(f"[tts] {lesson_id}/{script_md.name}: {r['status']}", flush=True)
+            r = render_one(
+                script_md,
+                item_id,
+                args.model,
+                args.voice,
+                args.dry_run,
+                out_root=out_root,
+                cache_dir=cache_dir,
+                repo_root=cfg["_repo_root"],
+            )
+            print(f"[tts] {item_id}/{script_md.name}: {r['status']}", flush=True)
             results.append(r)
 
-    STATUS_OUT.parent.mkdir(parents=True, exist_ok=True)
-    STATUS_OUT.write_text(json.dumps(results, indent=2))
+    status_out.parent.mkdir(parents=True, exist_ok=True)
+    status_out.write_text(json.dumps(results, indent=2))
 
-    ok = sum(1 for r in results if r["status"] in ("ok", "ok-fallback-tts1hd", "cache-hit", "dry-run"))
-    print(f"\nrender_voiceover: {ok}/{len(results)} ok — status: {STATUS_OUT}")
+    ok = sum(
+        1
+        for r in results
+        if r["status"] in ("ok", "ok-fallback-tts1hd", "cache-hit", "dry-run")
+    )
+    print(f"\nrender_voiceover: {ok}/{len(results)} ok — status: {status_out}")
     return 0 if ok == len(results) else 1
 
 

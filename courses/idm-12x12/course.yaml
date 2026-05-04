@@ -1,6 +1,33 @@
+id: idm-12x12
 title: "IDM Production — 12 Weeks, 12 Tracks"
 owner: zak@raindog.ai
 version: 0.1.0-mvp
+content_kind: lesson
+lesson_dir: lessons
+build_subdir: ""  # empty -> outputs land at <repo_root>/build/ (preserves published podcast feed URLs)
+episode_artist: "IDM Course (Bernd)"
+
+# Podcast feed metadata (consumed by shared/tools/build_podcast_feed.py)
+podcast:
+  feed_path: podcast.xml          # relative to <repo_root>; the load-bearing live URL
+  artwork_path: artwork.jpg       # relative to <repo_root>; load-bearing
+  repo_raw_base: "https://raw.githubusercontent.com/ZacharySBrown/idm-course/main"
+  repo_web: "https://github.com/ZacharySBrown/idm-course"
+  show_author: "Zak (raindog.ai)"
+  show_email: "zak@raindog.ai"
+  show_description: >-
+    A twelve-week course reverse-engineering electronic music production
+    from Aphex Twin, Autechre, Four Tet, Squarepusher, J Dilla, DJ Shadow,
+    DJ Premier, Kanye, Madlib, Death Grips, and Burial. Narrated by Bernd.
+    Constraint over options. Completion over polish. Ship twelve tracks in
+    twelve weeks.
+  itunes_categories:
+    - ["Music", null]
+    - ["Education", "Courses"]
+  copyright: "© 2026 Zak. Course content CC-BY-NC 4.0."
+  itunes_type: serial
+  enclosure_path_template: "build/audio/episodes/{lesson_id}.mp3"
+  deck_url_template: "{repo_web}/blob/main/build/html/{lesson_id}/index.html"
 philosophy: |
   Constraint + recombination beats sound-design rabbit holes.
   Completion > perfection. Ship 12 tracks in 12 weeks.

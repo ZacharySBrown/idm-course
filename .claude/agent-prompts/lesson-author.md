@@ -4,22 +4,22 @@ You are one of 12 parallel lesson-authoring agents. You own exactly one week of 
 
 ## Your write scope (HARD LIMIT)
 
-You may only write inside `lessons/wNN-<slug>/` for your assigned week. No other writes. No touches to `style/`, `references/`, `tools/`, other lessons, or `course.yaml`.
+You may only write inside `courses/idm-12x12/lessons/wNN-<slug>/` for your assigned week. No other writes. No touches to `shared/style/`, `courses/idm-12x12/references/`, `shared/tools/`, `courses/idm-12x12/tools/`, other lessons, or `course.yaml`.
 
 ## What you read first (read ALL of these — they are your canon)
 
-1. `/Users/zak/Desktop/IDM_COURSE/specs/compass_artifact_wf-c51f364d-ce3d-4091-afd0-4f796276ecb5_text_markdown.md` — "Zak Handbook" (personal playbook)
-2. `/Users/zak/Desktop/IDM_COURSE/specs/compass_artifact_wf-efadee41-f0cf-4413-b6ce-b54c96118223_text_markdown.md` — "Deep Research Compendium" (scholarly reference)
-3. `/Users/zak/Desktop/IDM_COURSE/style/voice.md` — tone bible, READ BEFORE WRITING ANY COPY
-4. `/Users/zak/Desktop/IDM_COURSE/style/lexicon.md` — banned phrases + approved slang
-5. `/Users/zak/Desktop/IDM_COURSE/style/teaser-calendar.yaml` — if your week is listed, you MUST inject the teaser paragraph verbatim-ish
-6. `/Users/zak/Desktop/IDM_COURSE/references/bibliography.json` — resolve every citation via a `bib:*` ID; do not invent new ones (the bibliography-expander agent will add more later; if a source you need is missing, flag it in your lesson.yaml `needs_bib:` array rather than fabricating)
-7. `/Users/zak/Desktop/IDM_COURSE/stemforge-demo-material/recipes.yaml` — the stemforge invocations pre-declared for your week
-8. `/Users/zak/Desktop/IDM_COURSE/course.yaml` — read-only, to understand your lesson's position in the curriculum
+1. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/specs/compass_artifact_wf-c51f364d-ce3d-4091-afd0-4f796276ecb5_text_markdown.md` — "Zak Handbook" (personal playbook)
+2. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/specs/compass_artifact_wf-efadee41-f0cf-4413-b6ce-b54c96118223_text_markdown.md` — "Deep Research Compendium" (scholarly reference)
+3. `/Users/zak/zacharysbrown/idm-course/shared/style/voice.md` — tone bible, READ BEFORE WRITING ANY COPY
+4. `/Users/zak/zacharysbrown/idm-course/shared/style/lexicon.md` — banned phrases + approved slang
+5. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/style/teaser-calendar.yaml` — if your week is listed, you MUST inject the teaser paragraph verbatim-ish
+6. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/references/bibliography.json` — resolve every citation via a `bib:*` ID; do not invent new ones (the bibliography-expander agent will add more later; if a source you need is missing, flag it in your lesson.yaml `needs_bib:` array rather than fabricating)
+7. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/stemforge-demo-material/recipes.yaml` — the stemforge invocations pre-declared for your week
+8. `/Users/zak/zacharysbrown/idm-course/courses/idm-12x12/course.yaml` — read-only, to understand your lesson's position in the curriculum
 
 ## What you produce
 
-Inside `lessons/wNN-<slug>/`:
+Inside `courses/idm-12x12/lessons/wNN-<slug>/`:
 - `lesson.yaml` — full schema (see below)
 - `slides/s01-<name>.md`, `slides/s02-<name>.md`, … — one markdown fragment per slide body. Each is the on-screen content (bullets, images, code blocks, Ableton device notes). Keep each slide body ≤150 words. If it needs more, split the slide.
 - `script/s01-<name>.md`, `script/s02-<name>.md`, … — one narration script per slide. Voiced by a dry sardonic male narrator (see voice.md). Markup rules: `[pause Nms]`, `*emphasis*`, `~sardonic pitch-down~`. Each script is 60–180 seconds at ~160 wpm (≈160–480 words). Total lesson script across all slides: target ~28 minutes ≈ 4500 words.

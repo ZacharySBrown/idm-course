@@ -2,6 +2,8 @@
 build/audio/narration/
 build/audio/stemforge-renders/
 build/glossary.md
+build/ableton-devices/audio/narration/
+build/ableton-devices/audio/stemforge-renders/
 
 # Local + Python noise
 node_modules/
@@ -11,20 +13,23 @@ __pycache__/
 .DS_Store
 
 # PDFs fetched from external sources (licensed content — cite, don't mirror)
-references/pdfs/*.pdf
-references/pdfs/*.html
-references/pdfs/max_for_live_readmes/
-references/transcripts/*.md
-!references/transcripts/README.md
+courses/*/references/pdfs/*.pdf
+courses/*/references/pdfs/*.html
+courses/*/references/pdfs/max_for_live_readmes/
+courses/*/references/transcripts/*.md
+!courses/*/references/transcripts/README.md
 
 # Local screenshot inbox
 _screenshots-inbox/
 
 # Committed to repo:
-#   lessons/                     — all source content + slide bodies
-#   references/                  — glossary.json, bibliography.json, songs.json, images.json
-#   build/audio/episodes/        — 12 MP3 podcast episodes (~434 MB)
-#   build/html/                  — 12 rendered HTML decks + index + glossary
-#   build/pdf/idm_glossary.pdf   — reMarkable-ready glossary
-#   build/diagram_sanity.*       — QA reports
+#   courses/<id>/lessons|episodes/   — all source content
+#   courses/<id>/references/         — glossary.json, bibliography.json, songs.json, images.json
+#   shared/style/                    — base voice + lexicon
+#   shared/tools/                    — cross-course build pipeline
+#   build/audio/episodes/            — 12 IDM MP3 podcast episodes (~434 MB)
+#   build/html/                      — 12 rendered HTML decks + index + glossary
+#   build/pdf/idm_glossary.pdf       — reMarkable-ready glossary
+#   build/diagram_sanity.*           — QA reports
 #   build/images_fetch_status.json
+#   podcast.xml + artwork.jpg        — load-bearing published podcast feed

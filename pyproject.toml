@@ -1,16 +1,27 @@
 [project]
-name = "idm-course"
-version = "0.1.0"
-description = "IDM production course — interactive slides + walking-podcast audio"
+name = "raindog-courses"
+version = "0.2.0"
+description = "Multi-course monorepo: IDM production + Ableton device deep-dives. Shared TTS/stemforge/podcast tooling under shared/, per-course content under courses/."
 requires-python = ">=3.11"
 dependencies = [
+    # Shared build pipeline
     "pyyaml>=6.0",
     "openai>=1.50",
     "mutagen>=1.47",
     "librosa>=0.10",
     "matplotlib>=3.8",
     "numpy>=1.26",
+    "soundfile",
+    "ffmpeg-python",
+    "Pillow",
+    "markdown",
+    # Ableton course tools (research/scraping)
+    "httpx",
+    "beautifulsoup4",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
 
 [tool.uv]
 package = false

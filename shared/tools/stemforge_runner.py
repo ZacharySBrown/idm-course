@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 """
-stemforge_runner.py — walks stemforge-demo-material/recipes.yaml and invokes
-the stemforge CLI for each recipe, writing outputs to the declared paths.
+stemforge_runner.py — walks <course_root>/stemforge-demo-material/recipes.yaml
+and invokes the stemforge CLI for each recipe, writing outputs to the declared
+paths (resolved against the repo root).
 
 Usage:
-    python tools/stemforge_runner.py                  # run all recipes
-    python tools/stemforge_runner.py --week 5         # run only week 5
-    python tools/stemforge_runner.py --recipe w05-express-tuned-ab
-    python tools/stemforge_runner.py --dry-run        # print commands only
-    python tools/stemforge_runner.py --skip-existing  # default: skip if dry+wet exist
+    python shared/tools/stemforge_runner.py --course-root courses/idm-12x12
+    python shared/tools/stemforge_runner.py --course-root courses/idm-12x12 --week 5
+    python shared/tools/stemforge_runner.py --course-root courses/idm-12x12 --recipe w05-express-tuned-ab
+    python shared/tools/stemforge_runner.py --course-root courses/idm-12x12 --dry-run
+    python shared/tools/stemforge_runner.py --course-root courses/idm-12x12 --no-skip-existing
 
 Requires: stemforge CLI on PATH (source: ~/zacharysbrown/stemforge).
 
-Writes:
+Writes (paths declared in recipes.yaml are repo-root-relative):
     build/audio/stemforge-renders/<week>/<...>.wav
-    build/audio/stemforge-renders/_runner_status.json
+    <build_root>/audio/stemforge-renders/_runner_status.json
 """
 from __future__ import annotations
 
@@ -35,10 +36,8 @@ except ImportError:
     )
     sys.exit(2)
 
-
-ROOT = Path(__file__).resolve().parent.parent
-RECIPES = ROOT / "stemforge-demo-material" / "recipes.yaml"
-STATUS_OUT = ROOT / "build" / "audio" / "stemforge-renders" / "_runner_status.json"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _course_lib import load_course, stemforge_out  # noqa: E402
 
 
 def expand(value: str, ctx: dict[str, str]) -> str:
@@ -47,18 +46,26 @@ def expand(value: str, ctx: dict[str, str]) -> str:
     return value
 
 
-def run_one(recipe: dict, ctx: dict[str, str], dry_run: bool, skip_existing: bool) -> dict:
+def run_one(
+    recipe: dict,
+    ctx: dict[str, str],
+    repo_root: Path,
+    dry_run: bool,
+    skip_existing: bool,
+) -> dict:
     rid = recipe["recipe_id"]
     cmd_tpl = recipe["cmd"]
     input_path = expand(recipe["input"], ctx)
     cmd_str = cmd_tpl.replace("{input}", shlex.quote(input_path))
-    # Prefer stemforge's own venv (has torch+demucs) over system pyenv install.
-    venv_bin = os.environ.get("STEMFORGE_BIN",
-                              "/Users/zak/zacharysbrown/stemforge/.venv/bin/stemforge")
+    venv_bin = os.environ.get(
+        "STEMFORGE_BIN", "/Users/zak/zacharysbrown/stemforge/.venv/bin/stemforge"
+    )
     if os.path.exists(venv_bin) and cmd_str.startswith("stemforge "):
         cmd_str = shlex.quote(venv_bin) + cmd_str[len("stemforge"):]
 
-    renders = {k: ROOT / expand(v, ctx) for k, v in recipe.get("renders", {}).items()}
+    renders = {
+        k: repo_root / expand(v, ctx) for k, v in recipe.get("renders", {}).items()
+    }
 
     if skip_existing and renders and all(p.exists() for p in renders.values()):
         return {"recipe_id": rid, "status": "skipped-existing", "cmd": cmd_str}
@@ -75,7 +82,7 @@ def run_one(recipe: dict, ctx: dict[str, str], dry_run: bool, skip_existing: boo
         proc = subprocess.run(
             cmd_str,
             shell=True,
-            cwd=str(ROOT),
+            cwd=str(repo_root),
             check=False,
             capture_output=True,
             text=True,
@@ -95,7 +102,6 @@ def run_one(recipe: dict, ctx: dict[str, str], dry_run: bool, skip_existing: boo
             "stderr_tail": proc.stderr.strip().splitlines()[-20:],
         }
 
-    # Verify declared outputs exist.
     missing = [str(p) for p in renders.values() if not p.exists()]
     if missing:
         return {
@@ -112,16 +118,25 @@ def run_one(recipe: dict, ctx: dict[str, str], dry_run: bool, skip_existing: boo
 
 def main() -> int:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--course-root", required=True)
     ap.add_argument("--week", type=int)
     ap.add_argument("--recipe")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--no-skip-existing", action="store_true")
     args = ap.parse_args()
 
-    with RECIPES.open() as f:
+    cfg = load_course(args.course_root)
+    recipes_path = cfg["_course_root"] / "stemforge-demo-material" / "recipes.yaml"
+    status_out = stemforge_out(cfg) / "_runner_status.json"
+
+    with recipes_path.open() as f:
         doc = yaml.safe_load(f)
 
-    ctx = {"stemforge_root": doc.get("stemforge_root", "/Users/zak/zacharysbrown/stemforge")}
+    ctx = {
+        "stemforge_root": doc.get(
+            "stemforge_root", "/Users/zak/zacharysbrown/stemforge"
+        )
+    }
 
     recipes = doc.get("recipes", [])
     if args.recipe:
@@ -137,14 +152,20 @@ def main() -> int:
     results = []
     for r in recipes:
         results.append(
-            run_one(r, ctx, dry_run=args.dry_run, skip_existing=not args.no_skip_existing)
+            run_one(
+                r,
+                ctx,
+                repo_root=cfg["_repo_root"],
+                dry_run=args.dry_run,
+                skip_existing=not args.no_skip_existing,
+            )
         )
 
-    STATUS_OUT.parent.mkdir(parents=True, exist_ok=True)
-    STATUS_OUT.write_text(json.dumps(results, indent=2))
+    status_out.parent.mkdir(parents=True, exist_ok=True)
+    status_out.write_text(json.dumps(results, indent=2))
 
     ok = sum(1 for r in results if r["status"] in ("ok", "skipped-existing", "dry-run"))
-    print(f"\nstemforge_runner: {ok}/{len(results)} ok — status: {STATUS_OUT}")
+    print(f"\nstemforge_runner: {ok}/{len(results)} ok — status: {status_out}")
     return 0 if ok == len(results) else 1
 
 
