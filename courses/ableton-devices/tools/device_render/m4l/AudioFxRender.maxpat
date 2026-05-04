@@ -147,6 +147,37 @@
 					"patching_rect" : [ 320.0, 420.0, 140.0, 22.0 ],
 					"text" : "print fx.error"
 				}
+			},
+			{
+				"box" : 				{
+					"id" : "obj-pi",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 2,
+					"outlettype" : [ "signal", "signal" ],
+					"patching_rect" : [ 540.0, 100.0, 60.0, 22.0 ],
+					"text" : "plugin~"
+				}
+			},
+			{
+				"box" : 				{
+					"id" : "obj-po",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 0,
+					"patching_rect" : [ 540.0, 150.0, 80.0, 22.0 ],
+					"text" : "plugout~ 1 2"
+				}
+			},
+			{
+				"box" : 				{
+					"id" : "obj-pt",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 630.0, 125.0, 130.0, 22.0 ],
+					"text" : "← audio passthrough"
+				}
 			}
 		],
 		"lines" : [
@@ -190,6 +221,18 @@
 				"patchline" : 				{
 					"destination" : [ "obj-13", 0 ],
 					"source" : [ "obj-10", 2 ]
+				}
+			},
+			{
+				"patchline" : 				{
+					"destination" : [ "obj-po", 0 ],
+					"source" : [ "obj-pi", 0 ]
+				}
+			},
+			{
+				"patchline" : 				{
+					"destination" : [ "obj-po", 1 ],
+					"source" : [ "obj-pi", 1 ]
 				}
 			}
 		],
