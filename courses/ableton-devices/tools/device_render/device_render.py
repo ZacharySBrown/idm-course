@@ -111,8 +111,16 @@ def build_spec(
     }
 
 
+def find_rendered(demo_id: str, output_dir: Path) -> Path | None:
+    for ext in (".wav", ".aif", ".aiff"):
+        p = output_dir / f"{demo_id}{ext}"
+        if p.exists():
+            return p
+    return None
+
+
 def status_for_demo(demo_id: str, output_dir: Path) -> str:
-    return "rendered" if (output_dir / f"{demo_id}.wav").exists() else "pending"
+    return "rendered" if find_rendered(demo_id, output_dir) else "pending"
 
 
 def print_status(spec: dict, output_dir: Path) -> tuple[int, int]:
@@ -122,8 +130,8 @@ def print_status(spec: dict, output_dir: Path) -> tuple[int, int]:
         marker = "✓" if s == "rendered" else " "
         size = ""
         if s == "rendered":
-            wav = output_dir / f"{d['id']}.wav"
-            size = f" ({wav.stat().st_size // 1024}KB)"
+            wav = find_rendered(d["id"], output_dir)
+            size = f" ({wav.stat().st_size // 1024}KB {wav.suffix})" if wav else ""
             rendered += 1
         print(f"  [{marker}] {d['id']}{size}")
     return rendered, len(spec["demos"])
@@ -184,7 +192,7 @@ def watch(spec: dict, output_dir: Path, events_path: Path) -> int:
                 print(f"[event] {evt}")
 
         for did in list(pending):
-            if (output_dir / f"{did}.wav").exists():
+            if find_rendered(did, output_dir):
                 print(f"[poll] {did} appeared in output dir")
                 pending.discard(did)
 
@@ -264,11 +272,12 @@ def main() -> int:
     if args.clear:
         n = 0
         for d in spec["demos"]:
-            p = output_dir / f"{d['id']}.wav"
-            if p.exists():
-                p.unlink()
-                n += 1
-        print(f"Cleared {n} rendered WAV(s) under {output_dir}")
+            for ext in (".wav", ".aif", ".aiff"):
+                p = output_dir / f"{d['id']}{ext}"
+                if p.exists():
+                    p.unlink()
+                    n += 1
+        print(f"Cleared {n} rendered file(s) under {output_dir}")
         return 0
 
     if args.list:

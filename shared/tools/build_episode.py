@@ -171,9 +171,14 @@ def build_one(
             if clips_dir is None:
                 missing_demos.append(f"{slide['id']}:{demo_id} (no clips_root)")
                 continue
-            demo_wav = clips_dir / f"{demo_id}.wav"
-            if demo_wav.exists():
-                block_pieces.append(demo_wav)
+            demo_path = None
+            for ext in (".wav", ".aif", ".aiff"):
+                cand = clips_dir / f"{demo_id}{ext}"
+                if cand.exists():
+                    demo_path = cand
+                    break
+            if demo_path:
+                block_pieces.append(demo_path)
             else:
                 missing_demos.append(f"{slide['id']}:{demo_id}")
         blocks.append((slide.get("heading", slide["id"]), block_pieces))

@@ -56,6 +56,7 @@ var paramMap = null;          // loaded from param_maps/<device_class>.json
 var renderQueue = [];
 var currentDemo = null;
 var currentRender = null;     // { audioSlotIdx, durationS, startedAt }
+var flushTask = null;         // module-level so pollFlush can cancel itself
 
 function status(msg) {
     outlet(0, "status", String(msg));
@@ -262,19 +263,24 @@ function captureRecorded() {
     currentRender.src = src;
     currentRender.flushStartedAt = Date.now();
     currentRender.lastSize = -1;
-    var pollT = new Task(pollFlush);
-    pollT.interval = 250;
-    pollT.repeat();
+    if (flushTask) { try { flushTask.cancel(); } catch (e) {} }
+    flushTask = new Task(pollFlush);
+    flushTask.interval = 250;
+    flushTask.repeat();
+}
+
+function stopFlushTask() {
+    if (flushTask) {
+        try { flushTask.cancel(); } catch (e) {}
+        flushTask = null;
+    }
 }
 
 function pollFlush() {
-    if (!currentRender || !currentDemo) { this.cancel(); return; }
+    if (!currentRender || !currentDemo) { stopFlushTask(); return; }
     var did = currentDemo.id;
     var src = currentRender.src;
 
-    // Check the recording state of the clip — if Live still claims it's
-    // recording, wait. (Stopping via record_mode=0 doesn't always finalize
-    // immediately.)
     var slotPath = "live_set tracks " + AUDIO_TRACK_IDX + " clip_slots " + currentRender.audioSlotIdx;
     var clip = new LiveAPI(slotPath + " clip");
     var isRec = 0;
@@ -284,15 +290,14 @@ function pollFlush() {
     var elapsed = (Date.now() - currentRender.flushStartedAt) / 1000;
 
     if (isRec === 0 && size >= MIN_VALID_BYTES && size === currentRender.lastSize) {
-        // Recording stopped AND file size has stabilized between two polls.
-        this.cancel();
+        stopFlushTask();
         finalizeCopy(src, did);
         return;
     }
     currentRender.lastSize = size;
 
     if (elapsed > FLUSH_TIMEOUT_S) {
-        this.cancel();
+        stopFlushTask();
         status("flush timeout after " + elapsed + "s (size=" + size + ", is_recording=" + isRec + ")");
         emitEvent({ event: "error", demo_id: did, message: "flush timeout (size=" + size + ")" });
         cleanupAndNext();
@@ -300,9 +305,14 @@ function pollFlush() {
 }
 
 function finalizeCopy(src, did) {
-    var dest = spec.output_dir + "/" + did + ".wav";
+    // Match destination extension to source — Live records as .aif by default
+    // (configurable via Live preferences). Both formats are handled by ffmpeg
+    // downstream in build_episode.
+    var m = String(src).match(/\.(aif|aiff|wav)$/i);
+    var ext = m ? m[0].toLowerCase() : ".wav";
+    var dest = spec.output_dir + "/" + did + ext;
     var size = fileSize(src);
-    status("finalizing: " + size + " bytes from " + src);
+    status("finalizing: " + size + " bytes from " + src + " → " + dest);
     if (copyFile(src, dest)) {
         status("wrote " + dest);
         emitEvent({ event: "render_done", demo_id: did, path: dest, bytes: size });
