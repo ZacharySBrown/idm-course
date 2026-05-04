@@ -241,11 +241,11 @@ function stopResamplingRecord() {
     var audioPath = "live_set tracks " + AUDIO_TRACK_IDX;
     var midiPath  = "live_set tracks " + MIDI_TRACK_IDX;
 
-    // Stop global record + both clips
+    // Stop global record + both clips. Leave the audio track ARMED so the
+    // next demo in the batch can fire into it without re-arming.
     new LiveAPI("live_set").set("record_mode", 0);
     try { new LiveAPI(midiPath  + " clip_slots 0").call("stop"); } catch (e) {}
     try { new LiveAPI(audioPath + " clip_slots " + currentRender.audioSlotIdx).call("stop"); } catch (e) {}
-    new LiveAPI(audioPath).set("arm", 0);
 
     var captureT = new Task(captureRecorded);
     captureT.schedule(STOP_SETTLE_MS);
