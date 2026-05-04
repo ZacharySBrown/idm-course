@@ -389,15 +389,17 @@ function ensureMidiClip(demo) {
         slot.call("delete_clip");
     }
     var midi = demo.midi || { note: "C3", length_s: 4 };
-    var len_s = (midi.length_s || demo.duration_s || 4) + TAIL_BUFFER_S;
-    var len_beats = secondsToBeats(len_s);
-    slot.call("create_clip", len_beats);
+    var note_len_s = midi.length_s || demo.duration_s || 4;
+    var clip_len_s = note_len_s + TAIL_BUFFER_S;
+    slot.call("create_clip", secondsToBeats(clip_len_s));
     var clip = new LiveAPI(trackPath + " clip_slots 0 clip");
+    // Disable looping so the note plays exactly once. Without this Live re-fires
+    // the note when the clip loops back to start mid-recording.
+    try { clip.set("looping", 0); } catch (e) {}
     var pitch = noteNameToMidi(midi.note || "C3");
-    var dur_beats = secondsToBeats(midi.length_s || (len_s - TAIL_BUFFER_S));
     var vel = midi.vel || 100;
     clip.call("add_new_notes", JSON.stringify({
-        notes: [{ pitch: pitch, start_time: 0, duration: dur_beats, velocity: vel, mute: 0 }]
+        notes: [{ pitch: pitch, start_time: 0, duration: secondsToBeats(note_len_s), velocity: vel, mute: 0 }]
     }));
 }
 
