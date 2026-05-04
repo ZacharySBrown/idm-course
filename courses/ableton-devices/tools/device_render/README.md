@@ -17,11 +17,18 @@ device_render.py    ←→    spec.json    ←→    MidiInstrumentRender.amxd
   output dir + an NDJSON event log. No subprocess, no socket — just files.
 - **M4L devices**:
   - `MidiInstrumentRender.amxd` — for any MIDI instrument (Operator, Analog, …).
-    Drops a MIDI clip, freezes the track, copies the WAV.
+    Drops a MIDI clip, fires playback, captures via a Resampling audio track.
   - `AudioFxRender.amxd` — for any audio FX chain (warp modes, spectral, racks).
-    Triggers a clip in slot 0, freezes, copies.
+    Same Resampling-capture pattern, no MIDI clip generation.
 - **`LomProbe.amxd`** dumps any device's parameter table to
   `param_maps/<class>.json`. Run once per device kind across the course.
+
+**Why Resampling instead of `track.freeze()`**: Live's LOM does not expose
+freeze/unfreeze for any object — confirmed across Live 11/12 docs and the
+Cycling74 forum. The pipeline routes the master output through a
+Resampling-input audio track, fires both the MIDI source clip and the audio
+record-into-slot simultaneously, then reads `clip.file_path` once recording
+stops. End result is identical to a freeze + copy.
 
 The engine in each render device is identical except for the trigger step —
 both share the same `loadParamMap`, `applyParams`, freeze loop, and copy code.
@@ -138,25 +145,42 @@ descriptions. Two paths forward:
    into `build/ableton-devices/audio/clips/<episode>/<demo_id>.wav`. The
    Python CLI's poll loop sees the file appear and marks it done.
 
+## Required template `.als` layout
+
+Save a Live set with this exact structure:
+
+```
+Track 0  (MIDI):
+    Devices: [0] MidiInstrumentRender.amxd
+             [1] target instrument (Operator, Analog, …)
+Track 1  (AUDIO):
+    Input Type: "Resampling"
+    Monitor:    "Off"
+    Arm:         on
+```
+
+Save somewhere stable (e.g. `~/Ableton/templates/midi-render.als`). The set
+must be saved before recording — Live writes recorded clips relative to the
+set's directory.
+
 ## Known gotchas
 
-- **`freeze_state` LOM property name is unverified.** Live's LOM exposes track
-  freeze status, but third-party docs disagree on the property name across
-  Live versions (`freeze_state`, `is_frozen`, `freezing`). Verify with a
-  message-box test in your Live version and adjust `pollFreeze()` if needed.
+- **Tail buffer.** Long envelope D/R extends past note-off. The render JS adds
+  `TAIL_BUFFER_S = 0.5s` to the MIDI clip length so the recording captures the
+  release. Bump if you hear cut-offs.
 
-- **Frozen WAV tail buffer.** Long envelope D/R extends past note-off. Both
-  render JS files add `TAIL_BUFFER_S = 0.5s` to the MIDI clip length to
-  capture release. Bump if you hear cut-offs.
+- **Recorded clips and disk space.** Each recording writes to
+  `<set_dir>/Samples/Recorded/<timestamp>.wav`. The render JS copies it to
+  the output dir and then deletes the clip slot, but Live keeps the source
+  WAV until the set is saved. After a render session, save the template
+  to garbage-collect, or periodically purge `Samples/Recorded/`.
 
-- **Freeze dir requires saved `.als`.** `track.freeze()` writes WAVs to
-  `<set_dir>/Samples/Processed/Freeze/`. An unsaved set has no `set_dir` —
-  save the template `.als` somewhere stable before rendering.
+- **Master FX.** Resampling captures the master output, including any FX on
+  the Master track. Keep Master clean while rendering, or you'll bake them in.
 
-- **Track freeze includes the entire device chain before the frozen point**,
-  not just the target device. The render M4L device is at index 0, the target
-  at index 1 — both are frozen as a unit. The render M4L is pass-through, so
-  this is fine.
+- **Quantization.** Clips fired from session view are quantized to the next
+  bar by default. Set `Song.clip_trigger_quantization = "None"` if you need
+  immediate firing for tight per-demo timing.
 
 ## Lifting to stemforge later
 

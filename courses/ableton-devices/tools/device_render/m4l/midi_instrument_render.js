@@ -4,14 +4,21 @@
 // works for any Live MIDI instrument (Operator, Analog, Wavetable, Meld, Drum
 // Rack/Simpler, Granulator). Reads a spec.json produced by device_render.py,
 // applies LOM-set parameters per demo onto the instrument, drops a MIDI clip,
-// runs the track through `track.freeze()`, then copies the frozen WAV to the
-// spec's output_dir under <demo_id>.wav. Emits one NDJSON line per state
-// transition into spec.events_path so the Python CLI can tail.
+// records via a Resampling audio track, then copies the resulting WAV.
 //
-// Track layout assumed:
-//     [0] MidiInstrumentRender.amxd
-//     [1] target instrument
-// Edit TARGET_DEV_IDX if your layout differs.
+// Why no track.freeze(): Live's LOM does not expose freeze/unfreeze. Instead
+// we use Live's standard Session-view recording into an armed audio track
+// whose input is "Resampling" — captures the master output exactly like
+// freeze would, fully automatable via LOM.
+//
+// Track layout required (the user builds a `.als` template like this):
+//     [0] MIDI track:
+//             devices: [MidiInstrumentRender.amxd, target instrument]
+//     [1] AUDIO track:
+//             Input Type:    "Resampling"
+//             Monitor:       "Off"
+//             Arm:            on
+// Edit TRACK_INDICES below if your layout differs.
 //
 // The script loads param_maps/<spec.device_class>.json automatically so it
 // can translate friendly param names ("Algorithm", "OSC1 Wave") into LiveAPI
@@ -32,10 +39,12 @@
 inlets  = 1;
 outlets = 3;
 
-var TARGET_DEV_IDX   = 1;     // Target instrument is at device index 1 (0 = this M4L)
-var FREEZE_POLL_MS   = 250;   // poll interval for freeze completion
-var FREEZE_TIMEOUT_S = 60;    // give up after this many seconds
-var TAIL_BUFFER_S    = 0.5;   // extra silence at end of MIDI clip for release
+var MIDI_TRACK_IDX   = 0;     // MIDI track with [this M4L, target instrument]
+var AUDIO_TRACK_IDX  = 1;     // Audio track with Resampling input
+var TARGET_DEV_IDX   = 1;     // Target instrument index on the MIDI track
+var POLL_MS          = 100;
+var TAIL_BUFFER_S    = 0.5;   // extra time to capture release tail
+var STOP_SETTLE_MS   = 800;   // wait after stop before reading file_path
 
 var REPO_ROOT     = "/Users/zak/zacharysbrown/idm-course";
 var PARAM_MAP_DIR = "/courses/ableton-devices/tools/device_render/param_maps";
@@ -44,8 +53,7 @@ var spec = null;              // parsed spec.json
 var paramMap = null;          // loaded from param_maps/<device_class>.json
 var renderQueue = [];
 var currentDemo = null;
-var freezeStartedAt = 0;
-var preFreezeFiles = null;
+var currentRender = null;     // { audioSlotIdx, durationS, startedAt }
 
 function status(msg) {
     outlet(0, "status", String(msg));
@@ -156,13 +164,7 @@ function nextRender() {
     try {
         applyParams(demo.params);
         ensureMidiClip(demo);
-        snapshotFreezeDir();
-        var track = new LiveAPI("this_device canonical_parent");
-        track.call("freeze");
-        freezeStartedAt = Date.now();
-        var t = new Task(pollFreeze);
-        t.interval = FREEZE_POLL_MS;
-        t.repeat();
+        startResamplingRecord(demo);
     } catch (e) {
         status("render failed: " + e);
         emitEvent({ event: "error", demo_id: did, message: String(e) });
@@ -171,56 +173,114 @@ function nextRender() {
     }
 }
 
-function pollFreeze() {
-    var track = new LiveAPI("this_device canonical_parent");
-    var frozen = parseInt(track.get("freeze_state"));
-    var elapsed = (Date.now() - freezeStartedAt) / 1000;
-
-    if (frozen === 2) {
-        this.cancel();
-        completeFreeze();
-    } else if (elapsed > FREEZE_TIMEOUT_S) {
-        this.cancel();
-        var did = currentDemo ? currentDemo.id : "?";
-        status("freeze timed out for " + did);
-        emitEvent({ event: "error", demo_id: did, message: "freeze timeout" });
-        currentDemo = null;
-        nextRender();
+function startResamplingRecord(demo) {
+    var audioPath = "live_set tracks " + AUDIO_TRACK_IDX;
+    var audio = new LiveAPI(audioPath);
+    if (!audio || audio.id === "0") {
+        throw new Error("audio render track at index " + AUDIO_TRACK_IDX + " not found");
     }
+
+    // Find first empty audio clip slot
+    var slotCount = parseInt(audio.getcount("clip_slots"));
+    var slotIdx = -1;
+    for (var i = 0; i < slotCount; i++) {
+        var s = new LiveAPI(audioPath + " clip_slots " + i);
+        if (parseInt(s.get("has_clip")) === 0) { slotIdx = i; break; }
+    }
+    if (slotIdx < 0) throw new Error("no empty audio clip slot on track " + AUDIO_TRACK_IDX);
+
+    audio.set("arm", 1);
+
+    // Disable session clip-trigger quantization so both clips fire instantly,
+    // not on the next bar boundary. (We restore on cleanup.)
+    var song = new LiveAPI("live_set");
+    try { song.set("clip_trigger_quantization", 0); } catch (e) {}  // 0 = "None"
+
+    var midi = demo.midi || {};
+    var len_s = (midi.length_s || demo.duration_s || 4) + TAIL_BUFFER_S;
+
+    currentRender = {
+        audioSlotIdx: slotIdx,
+        durationS: len_s,
+        startedAt: Date.now()
+    };
+
+    // Fire both clips simultaneously. The audio slot fires into record because
+    // (a) the track is armed and (b) we set Song.record_mode = 1.
+    var song = new LiveAPI("live_set");
+    song.set("record_mode", 1);
+    new LiveAPI("live_set tracks " + MIDI_TRACK_IDX + " clip_slots 0").call("fire");
+    new LiveAPI(audioPath + " clip_slots " + slotIdx).call("fire");
+
+    // Schedule stop after duration. Task.schedule takes ms.
+    var stopT = new Task(stopResamplingRecord);
+    stopT.schedule(len_s * 1000);
 }
 
-function completeFreeze() {
-    if (!currentDemo) return;
-    var did = currentDemo.id;
-    var track = new LiveAPI("this_device canonical_parent");
+function stopResamplingRecord() {
+    if (!currentRender) return;
+    var audioPath = "live_set tracks " + AUDIO_TRACK_IDX;
+    var midiPath  = "live_set tracks " + MIDI_TRACK_IDX;
 
-    var newWav = findNewFreezeWav();
-    if (!newWav) {
-        status("freeze complete but no new WAV found");
-        emitEvent({ event: "error", demo_id: did, message: "no freeze wav found" });
-        try { track.call("unfreeze"); } catch (e) {}
-        currentDemo = null;
-        nextRender();
+    // Stop global record + both clips
+    new LiveAPI("live_set").set("record_mode", 0);
+    try { new LiveAPI(midiPath  + " clip_slots 0").call("stop"); } catch (e) {}
+    try { new LiveAPI(audioPath + " clip_slots " + currentRender.audioSlotIdx).call("stop"); } catch (e) {}
+    new LiveAPI(audioPath).set("arm", 0);
+
+    var captureT = new Task(captureRecorded);
+    captureT.schedule(STOP_SETTLE_MS);
+}
+
+function captureRecorded() {
+    if (!currentRender || !currentDemo) return;
+    var did = currentDemo.id;
+    var slotPath = "live_set tracks " + AUDIO_TRACK_IDX + " clip_slots " + currentRender.audioSlotIdx;
+    var slot = new LiveAPI(slotPath);
+
+    if (parseInt(slot.get("has_clip")) !== 1) {
+        status("no clip recorded into slot " + currentRender.audioSlotIdx);
+        emitEvent({ event: "error", demo_id: did, message: "no recorded clip" });
+        cleanupAndNext();
+        return;
+    }
+
+    var clip = new LiveAPI(slotPath + " clip");
+    var src = stringVal(clip.get("file_path"));
+    if (!src || src === "0" || src === "") {
+        status("recorded clip has no file_path");
+        emitEvent({ event: "error", demo_id: did, message: "no file_path" });
+        cleanupAndNext();
         return;
     }
 
     var dest = spec.output_dir + "/" + did + ".wav";
-    if (copyFile(newWav, dest)) {
+    if (copyFile(src, dest)) {
         status("wrote " + dest);
         emitEvent({ event: "render_done", demo_id: did, path: dest });
     } else {
-        status("copy failed: " + newWav + " → " + dest);
+        status("copy failed: " + src + " → " + dest);
         emitEvent({ event: "error", demo_id: did, message: "copy failed" });
     }
 
-    try { track.call("unfreeze"); } catch (e) {}
+    cleanupAndNext();
+}
+
+function cleanupAndNext() {
+    var audioPath = "live_set tracks " + AUDIO_TRACK_IDX;
+    var midiPath  = "live_set tracks " + MIDI_TRACK_IDX;
+    if (currentRender) {
+        try { new LiveAPI(audioPath + " clip_slots " + currentRender.audioSlotIdx).call("delete_clip"); } catch (e) {}
+    }
+    try { new LiveAPI(midiPath + " clip_slots 0").call("delete_clip"); } catch (e) {}
+    currentRender = null;
     currentDemo = null;
     var t = new Task(nextRender);
     t.schedule(500);
 }
 
 function applyParams(params) {
-    var devPath = "this_device canonical_parent devices " + TARGET_DEV_IDX;
+    var devPath = "live_set tracks " + MIDI_TRACK_IDX + " devices " + TARGET_DEV_IDX;
     var device = new LiveAPI(devPath);
     if (!device || device.id === "0") {
         throw new Error("target device not at index " + TARGET_DEV_IDX);
@@ -252,15 +312,17 @@ function lookupParamIndex(name) {
 }
 
 function enumValueIndex(p, label) {
-    var n = parseInt(p.getcount("value_items"));
-    for (var i = 0; i < n; i++) {
-        if (String(p.get("value_items " + i)) === label) return i;
+    // value_items returns the full list — indexed access doesn't work.
+    var v = p.get("value_items");
+    if (!v || typeof v !== "object" || !v.length) return null;
+    for (var i = 0; i < v.length; i++) {
+        if (String(v[i]) === label) return i;
     }
     return null;
 }
 
 function ensureMidiClip(demo) {
-    var trackPath = "this_device canonical_parent";
+    var trackPath = "live_set tracks " + MIDI_TRACK_IDX;
     var slot = new LiveAPI(trackPath + " clip_slots 0");
     if (parseInt(slot.get("has_clip")) === 1) {
         slot.call("delete_clip");
@@ -288,46 +350,6 @@ function noteNameToMidi(name) {
     var m = String(name).match(/^([A-G][b#]?)(-?\d+)$/);
     if (!m) return 60;
     return (parseInt(m[2]) + 2) * 12 + map[m[1]];  // Live convention: C3 = 60
-}
-
-function snapshotFreezeDir() { preFreezeFiles = listDir(freezeDir()); }
-
-function findNewFreezeWav() {
-    var now = listDir(freezeDir());
-    var pre = preFreezeFiles || [];
-    for (var i = 0; i < now.length; i++) {
-        if (pre.indexOf(now[i]) === -1 && /\.wav$/i.test(now[i])) {
-            return freezeDir() + "/" + now[i];
-        }
-    }
-    var newest = null, newestT = 0;
-    for (var j = 0; j < now.length; j++) {
-        if (!/\.wav$/i.test(now[j])) continue;
-        var p = freezeDir() + "/" + now[j];
-        var f = new File(toMaxPath(p), "read");
-        if (!f.isopen) continue;
-        var t = f.modified || 0;
-        f.close();
-        if (t > newestT) { newestT = t; newest = p; }
-    }
-    return newest;
-}
-
-function freezeDir() {
-    var setPath = stringVal(new LiveAPI("live_set").get("file_path"));
-    var setDir = setPath.replace(/\/[^/]+$/, "");
-    return setDir + "/Samples/Processed/Freeze";
-}
-
-function listDir(posixPath) {
-    var folder = new Folder(toMaxPath(posixPath));
-    var names = [];
-    while (!folder.end) {
-        if (folder.filename) names.push(folder.filename);
-        folder.next();
-    }
-    folder.close();
-    return names;
 }
 
 function copyFile(srcPosix, dstPosix) {

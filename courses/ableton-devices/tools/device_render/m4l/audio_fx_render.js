@@ -158,9 +158,11 @@ function nextRender() {
 
 function pollFreeze() {
     var track = new LiveAPI("this_device canonical_parent");
-    var frozen = parseInt(track.get("freeze_state"));
     var elapsed = (Date.now() - freezeStartedAt) / 1000;
-    if (frozen === 2) { this.cancel(); completeFreeze(); }
+    var frozen = 0;
+    try { frozen = parseInt(track.get("is_frozen")); } catch (e) { /* ignore */ }
+    var newWav = findNewFreezeWav();
+    if (frozen === 1 && newWav) { this.cancel(); completeFreeze(newWav); }
     else if (elapsed > FREEZE_TIMEOUT_S) {
         this.cancel();
         emitEvent({ event: "error", demo_id: currentDemo ? currentDemo.id : "?", message: "freeze timeout" });
@@ -169,11 +171,11 @@ function pollFreeze() {
     }
 }
 
-function completeFreeze() {
+function completeFreeze(newWav) {
     if (!currentDemo) return;
     var did = currentDemo.id;
     var track = new LiveAPI("this_device canonical_parent");
-    var newWav = findNewFreezeWav();
+    if (!newWav) newWav = findNewFreezeWav();
     if (!newWav) {
         emitEvent({ event: "error", demo_id: did, message: "no freeze wav found" });
         try { track.call("unfreeze"); } catch (e) {}
@@ -221,9 +223,10 @@ function lookupParamIndex(name) {
 }
 
 function enumValueIndex(p, label) {
-    var n = parseInt(p.getcount("value_items"));
-    for (var i = 0; i < n; i++) {
-        if (String(p.get("value_items " + i)) === label) return i;
+    var v = p.get("value_items");
+    if (!v || typeof v !== "object" || !v.length) return null;
+    for (var i = 0; i < v.length; i++) {
+        if (String(v[i]) === label) return i;
     }
     return null;
 }
