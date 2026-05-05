@@ -47,6 +47,8 @@ var TAIL_BUFFER_S    = 0.5;   // extra time to capture release tail
 var STOP_SETTLE_MS   = 1500;  // initial wait after stop before polling
 var FLUSH_TIMEOUT_S  = 10;    // max time to wait for Live to flush WAV
 var MIN_VALID_BYTES  = 1024;  // a real captured WAV must be larger than this
+var INTER_DEMO_MS    = 1500;  // delay between cleanup of one demo and start of next
+var MAX_RETRIES      = 2;     // auto-retry a demo after a transient "no clip recorded"
 
 var REPO_ROOT     = "/Users/zak/zacharysbrown/idm-course";
 var PARAM_MAP_DIR = "/courses/ableton-devices/tools/device_render/param_maps";
@@ -154,8 +156,10 @@ function nextRender() {
     if (!demo) { status("demo missing: " + did); nextRender(); return; }
 
     currentDemo = demo;
-    status("rendering " + did);
-    emitEvent({ event: "render_start", demo_id: did });
+    if (demo._retry === undefined) demo._retry = 0;
+    var retryNote = demo._retry > 0 ? " (retry " + demo._retry + "/" + MAX_RETRIES + ")" : "";
+    status("rendering " + did + retryNote);
+    emitEvent({ event: "render_start", demo_id: did, retry: demo._retry });
 
     if (!demo.params) {
         status("demo " + did + " has no params block — skipping (manual render needed)");
@@ -323,7 +327,14 @@ function captureRecorded() {
 
     if (parseInt(slot.get("has_clip")) !== 1) {
         status("no clip recorded into slot " + currentRender.audioSlotIdx);
-        emitEvent({ event: "error", demo_id: did, message: "no recorded clip" });
+        // Transient — retry up to MAX_RETRIES before giving up.
+        if (currentDemo && currentDemo._retry < MAX_RETRIES) {
+            currentDemo._retry++;
+            status("re-queueing " + currentDemo.id + " for retry " + currentDemo._retry + "/" + MAX_RETRIES);
+            renderQueue.unshift(currentDemo.id);
+        } else {
+            emitEvent({ event: "error", demo_id: did, message: "no recorded clip after " + MAX_RETRIES + " retries" });
+        }
         cleanupAndNext();
         return;
     }
@@ -418,7 +429,7 @@ function cleanupAndNext() {
     currentRender = null;
     currentDemo = null;
     var t = new Task(nextRender);
-    t.schedule(500);
+    t.schedule(INTER_DEMO_MS);
 }
 
 function applyParams(params) {
