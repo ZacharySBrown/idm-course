@@ -10,8 +10,8 @@
     <description>A device-by-device walking-podcast deep-dive into Ableton Live&#x27;s instruments, effects, and Max for Live. Each episode pairs a device&#x27;s history and synthesis theory with patch-walkthroughs and IDM-style production techniques. Hosted by a sardonic studio rat who reads Tape Op and refuses to use the word &quot;journey.&quot;</description>
     <language>en-us</language>
     <copyright>© 2026 Zak. Course content CC-BY-NC 4.0.</copyright>
-    <lastBuildDate>Mon, 04 May 2026 16:02:38 +0000</lastBuildDate>
-    <pubDate>Wed, 22 Apr 2026 16:02:38 +0000</pubDate>
+    <lastBuildDate>Tue, 05 May 2026 02:39:21 +0000</lastBuildDate>
+    <pubDate>Thu, 23 Apr 2026 02:39:21 +0000</pubDate>
     <image>
       <url>https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/artwork-ableton.jpg</url>
       <title>Ableton Live Mastery</title>
@@ -28,6 +28,23 @@
     <itunes:category text="Education"><itunes:category text="Courses" /></itunes:category>
     <itunes:explicit>false</itunes:explicit>
     <itunes:type>serial</itunes:type>
+    <item>
+      <title>W1 — Operator: The FM Machine</title>
+      <description>Week 1 of 12. Operator: The FM Machine.
 
+Pillars: .
+
+Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/ableton-devices/html/e01-operator/index.html</description>
+      <pubDate>Thu, 23 Apr 2026 02:39:21 +0000</pubDate>
+      <guid isPermaLink="false">idm-course-e01-operator</guid>
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/ableton-devices/audio/episodes/e01-operator.mp3" length="59377232" type="audio/mpeg" />
+      <itunes:author>Zak (raindog.ai)</itunes:author>
+      <itunes:duration>41:11</itunes:duration>
+      <itunes:episode>1</itunes:episode>
+      <itunes:season>1</itunes:season>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:summary>Operator: The FM Machine</itunes:summary>
+    </item>
   </channel>
 </rss>
