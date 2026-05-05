@@ -57,6 +57,7 @@ var renderQueue = [];
 var currentDemo = null;
 var currentRender = null;     // { audioSlotIdx, durationS, startedAt }
 var flushTask = null;         // module-level so pollFlush can cancel itself
+var automationTasks = [];     // pending per-demo automation Tasks
 
 function status(msg) {
     outlet(0, "status", String(msg));
@@ -220,6 +221,9 @@ function startResamplingRecord(demo) {
     new LiveAPI("live_set tracks " + MIDI_TRACK_IDX + " clip_slots 0").call("fire");
     new LiveAPI(audioPath + " clip_slots " + slotIdx).call("fire");
 
+    // Schedule per-demo automation (LOM param updates during the recording).
+    scheduleAutomation(demo.automation);
+
     // Sanity check 300ms after fire — confirm recording actually started.
     var sanityT = new Task(function() {
         var slot = new LiveAPI(audioPath + " clip_slots " + slotIdx);
@@ -234,6 +238,66 @@ function startResamplingRecord(demo) {
 
     var stopT = new Task(stopResamplingRecord);
     stopT.schedule(len_s * 1000);
+}
+
+function scheduleAutomation(automation) {
+    cancelAutomation();
+    if (!automation) return;
+    var devPath = "live_set tracks " + MIDI_TRACK_IDX + " devices " + TARGET_DEV_IDX;
+    for (var paramName in automation) {
+        if (!automation.hasOwnProperty(paramName)) continue;
+        var idx = lookupParamIndex(paramName);
+        if (idx === null) {
+            status("automation: unknown param '" + paramName + "' (skipped)");
+            continue;
+        }
+        var auto = automation[paramName];
+        scheduleParamAutomation(devPath, idx, paramName, auto);
+    }
+}
+
+function scheduleParamAutomation(devPath, paramIdx, paramName, auto) {
+    var paramPath = devPath + " parameters " + paramIdx;
+    if (auto.steps && auto.step_s !== undefined) {
+        // Discrete steps: e.g. {steps: [0, 40, 60, 70], step_s: 1.5}
+        for (var i = 0; i < auto.steps.length; i++) {
+            (function(stepIdx, value) {
+                var t = new Task(function() {
+                    try { new LiveAPI(paramPath).set("value", value); }
+                    catch (e) { status("automation set failed: " + e); }
+                });
+                t.schedule(stepIdx * auto.step_s * 1000);
+                automationTasks.push(t);
+            })(i, auto.steps[i]);
+        }
+        status("automation: " + paramName + " stepped " + auto.steps.length + "x every " + auto.step_s + "s");
+    } else if (auto.from !== undefined && auto.to !== undefined && auto.ramp_s !== undefined) {
+        // Continuous ramp: e.g. {from: 0, to: 100, ramp_s: 8}
+        var hz = auto.rate_hz || 30;
+        var totalSteps = Math.max(2, Math.round(auto.ramp_s * hz));
+        var dt = (auto.ramp_s * 1000) / totalSteps;
+        for (var j = 0; j <= totalSteps; j++) {
+            (function(stepIdx) {
+                var v = auto.from + (auto.to - auto.from) * (stepIdx / totalSteps);
+                var t = new Task(function() {
+                    try { new LiveAPI(paramPath).set("value", v); }
+                    catch (e) { status("automation set failed: " + e); }
+                });
+                t.schedule(stepIdx * dt);
+                automationTasks.push(t);
+            })(j);
+        }
+        status("automation: " + paramName + " ramp " + auto.from + "→" + auto.to + " over " + auto.ramp_s + "s");
+    } else {
+        status("automation: '" + paramName + "' has unrecognized shape");
+    }
+}
+
+function cancelAutomation() {
+    for (var i = 0; i < automationTasks.length; i++) {
+        try { automationTasks[i].cancel(); } catch (e) {}
+    }
+    automationTasks = [];
 }
 
 function stopResamplingRecord() {
@@ -344,6 +408,7 @@ function fileSize(posixPath) {
 }
 
 function cleanupAndNext() {
+    cancelAutomation();
     var audioPath = "live_set tracks " + AUDIO_TRACK_IDX;
     var midiPath  = "live_set tracks " + MIDI_TRACK_IDX;
     if (currentRender) {
@@ -405,18 +470,39 @@ function ensureMidiClip(demo) {
         slot.call("delete_clip");
     }
     var midi = demo.midi || { note: "C3", length_s: 4 };
-    var note_len_s = midi.length_s || demo.duration_s || 4;
-    var clip_len_s = note_len_s + TAIL_BUFFER_S;
-    slot.call("create_clip", secondsToBeats(clip_len_s));
+    // Resolve the clip length: explicit `length_s`, else demo.duration_s, else 4.
+    var clip_audio_s = midi.length_s || demo.duration_s || 4;
+    var clip_total_s = clip_audio_s + TAIL_BUFFER_S;
+    slot.call("create_clip", secondsToBeats(clip_total_s));
     var clip = new LiveAPI(trackPath + " clip_slots 0 clip");
-    // Disable looping so the note plays exactly once. Without this Live re-fires
-    // the note when the clip loops back to start mid-recording.
     try { clip.set("looping", 0); } catch (e) {}
-    var pitch = noteNameToMidi(midi.note || "C3");
-    var vel = midi.vel || 100;
-    clip.call("add_new_notes", JSON.stringify({
-        notes: [{ pitch: pitch, start_time: 0, duration: secondsToBeats(note_len_s), velocity: vel, mute: 0 }]
-    }));
+
+    // Build the notes list. Three input shapes (in priority order):
+    //   1. midi.notes: [{ pitch|note, start_time?|t?, duration|dur_s?, velocity|vel?, mute? }, ...]
+    //      — explicit, multi-note. Times in seconds (we convert).
+    //   2. midi.note: "C3" (single note from t=0 for clip_audio_s)
+    //   3. fallback: C3 from t=0 for clip_audio_s
+    var notesIn = midi.notes;
+    if (!notesIn) {
+        notesIn = [{ note: midi.note || "C3", t: 0, dur_s: clip_audio_s, vel: midi.vel || 100 }];
+    }
+    var notesOut = [];
+    for (var i = 0; i < notesIn.length; i++) {
+        var n = notesIn[i];
+        var pitch = (typeof n.pitch === "number") ? n.pitch : noteNameToMidi(n.note || "C3");
+        var t_s = (n.t !== undefined) ? n.t : (n.start_time !== undefined ? n.start_time : 0);
+        var dur_s = (n.dur_s !== undefined) ? n.dur_s : (n.duration !== undefined ? n.duration : (clip_audio_s - t_s));
+        if (dur_s <= 0) dur_s = 0.05;
+        var vel = (n.vel !== undefined) ? n.vel : (n.velocity !== undefined ? n.velocity : 100);
+        notesOut.push({
+            pitch: pitch,
+            start_time: secondsToBeats(t_s),
+            duration: secondsToBeats(dur_s),
+            velocity: vel,
+            mute: n.mute || 0
+        });
+    }
+    clip.call("add_new_notes", JSON.stringify({ notes: notesOut }));
 }
 
 function secondsToBeats(s) {

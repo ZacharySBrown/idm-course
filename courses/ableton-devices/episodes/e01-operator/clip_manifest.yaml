@@ -80,11 +80,27 @@ song_clips:
 # (the render JS doesn't reset Operator between demos).
 operator_demos:
   - id: op-mod-index-sweep
-    description: "Single carrier (sine) + single modulator (sine) at 1:1. Ramp modulator Level from 0 to 100 over 8 seconds. Hold C3 throughout."
+    description: "Single carrier (sine) + single modulator (sine) at 1:1. Ramp modulator Level from 0 to 1.0 over 8 seconds. Hold C3 throughout."
     duration_s: 9
     midi: { note: "C3", length_s: 8.5 }
-    automation: { OscB_Level: { from: 0, to: 100, ramp_s: 8 } }
-    # No params: — render manually (LOM automation across freeze isn't wired).
+    params:
+      "Algorithm": "Alg. 1"
+      "Osc-A On": "On"
+      "Osc-A Wave": "Sine"
+      "A Coarse": 1
+      "A Fine": 0
+      "Osc-A Level": 1.0
+      "Osc-A Feedb": 0
+      "Osc-B On": "On"
+      "Osc-B Wave": "Sine"
+      "B Coarse": 1
+      "B Fine": 0
+      "Osc-B Level": 0.0       # ramped via automation below
+      "Osc-B Feedb": 0
+      "Osc-C On": "Off"
+      "Osc-D On": "Off"
+    automation:
+      "Osc-B Level": { from: 0.0, to: 1.0, ramp_s: 8.0, rate_hz: 30 }
 
   - id: op-ratio-1to1
     description: "Algorithm 1, A and B sine. Coarse 1:1. Modulator Level 80. Hold C3 5s."
@@ -192,11 +208,22 @@ operator_demos:
       "Osc-D On": "Off"
 
   - id: op-feedback-bifurcation
-    description: "Single operator A, sine, full sustain. Discrete steps: Feedback=0 (1.5s), Feedback=4 (1.5s), Feedback=6 (1.5s), Feedback=7 (1.5s). Hold C3 throughout."
+    description: "Single operator A, sine, full sustain. Discrete feedback steps every 1.5s: 0 → 40 → 60 → 70 (LOM scale 0-100)."
     duration_s: 6.5
     midi: { note: "C3", length_s: 6.5 }
-    automation: { OscA_Feedback: { steps: [0, 40, 60, 70], step_s: 1.5 } }
-    # No params: — render manually (stepped automation isn't wired).
+    params:
+      "Algorithm": "Alg. 1"
+      "Osc-A On": "On"
+      "Osc-A Wave": "Sine"
+      "A Coarse": 1
+      "A Fine": 0
+      "Osc-A Level": 1.0
+      "Osc-A Feedb": 0          # ramped via automation
+      "Osc-B On": "Off"
+      "Osc-C On": "Off"
+      "Osc-D On": "Off"
+    automation:
+      "Osc-A Feedb": { steps: [0, 40, 60, 70], step_s: 1.5 }
 
   - id: op-poly-bell-step1
     description: "Default Operator. Algorithm 1. All operators set to Sine. Hold C3 3s — pure unmodulated sine."
@@ -224,7 +251,7 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.25       # ≈ -12 dB
+      "Osc-A Level": 0.75       # high-end of UI; envelope shapes it down
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
       "Ae Decay": 0.40
@@ -244,7 +271,7 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.25
+      "Osc-A Level": 0.75
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
       "Ae Decay": 0.40
@@ -277,7 +304,7 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.25
+      "Osc-A Level": 0.75
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
       "Ae Decay": 0.40
@@ -315,7 +342,7 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.25
+      "Osc-A Level": 0.75
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
       "Ae Decay": 0.40
@@ -353,7 +380,7 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.25
+      "Osc-A Level": 0.75
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
       "Ae Decay": 0.40
@@ -389,22 +416,175 @@ operator_demos:
       "Filter Drive": 3
 
   - id: op-poly-bell-step7
-    description: "Step 6 + velocity routing: Time<Vel on B at +30, Level<Vel at +50. Two notes: soft (vel 30) then hard (vel 110), 1.5s gap each."
+    description: "Step 6 + velocity routing: Osc-B Lev < Vel = +50 (LOM scale). Two notes: soft (vel 30) at t=0, hard (vel 110) at t=3."
     duration_s: 6
-    midi: { notes: [{ note: "C3", vel: 30, t: 0 }, { note: "C3", vel: 110, t: 3 }], length_s: 5.5 }
+    midi:
+      notes:
+        - { note: "C3", vel: 30,  t: 0 }
+        - { note: "C3", vel: 110, t: 3 }
+      length_s: 5.5
+    params:
+      "Algorithm": "Alg. 1"
+      "Osc-A On": "On"
+      "Osc-A Wave": "Sine"
+      "A Coarse": 1
+      "A Fine": 0
+      "Osc-A Level": 0.75
+      "Osc-A Feedb": 0
+      "Ae Attack": 0.01
+      "Ae Decay": 0.40
+      "Ae Sustain": 0.0
+      "Ae Release": 0.30
+      "Osc-B On": "On"
+      "Osc-B Wave": "Sine"
+      "B Coarse": 1
+      "B Fine": 414
+      "Osc-B Level": 0.8
+      "Osc-B Lev < Vel": 50          # velocity → modulator level
+      "Osc-B Feedb": 0
+      "Be Attack": 0.01
+      "Be Decay": 0.15
+      "Be Sustain": 0.0
+      "Be Release": 0.10
+      "Osc-C On": "On"
+      "Osc-C Wave": "Sine"
+      "C Coarse": 7
+      "C Fine": 0
+      "Osc-C Level": 0.5
+      "Osc-C Feedb": 30
+      "Ce Attack": 0.01
+      "Ce Decay": 0.08
+      "Ce Sustain": 0.0
+      "Ce Release": 0.08
+      "Osc-D On": "Off"
+      "Spread": 12
+      "Filter On": "On"
+      "Filter Type": "Lowpass"
+      "Filter Slope": "24 dB"
+      "Filter Circuit - LP/HP": "OSR"
+      "Filter Freq": 0.85
+      "Filter Drive": 3
 
   - id: op-poly-bell-final
     description: "Final saved 'Polynomial-Bell' patch. Demonstration arpeggio: C3-Eb3-G3-C4 sixteenth notes for 4 bars at 100 BPM."
     duration_s: 10
+    # midi.pattern is expanded to explicit notes by device_render.py.
     midi: { pattern: "C3-Eb3-G3-C4 16ths, 4 bars, 100 BPM", length_s: 9.6 }
+    params:
+      "Algorithm": "Alg. 1"
+      "Osc-A On": "On"
+      "Osc-A Wave": "Sine"
+      "A Coarse": 1
+      "A Fine": 0
+      "Osc-A Level": 0.75
+      "Osc-A Feedb": 0
+      "Ae Attack": 0.01
+      "Ae Decay": 0.40
+      "Ae Sustain": 0.0
+      "Ae Release": 0.30
+      "Osc-B On": "On"
+      "Osc-B Wave": "Sine"
+      "B Coarse": 1
+      "B Fine": 414
+      "Osc-B Level": 0.8
+      "Osc-B Feedb": 0
+      "Be Attack": 0.01
+      "Be Decay": 0.15
+      "Be Sustain": 0.0
+      "Be Release": 0.10
+      "Osc-C On": "On"
+      "Osc-C Wave": "Sine"
+      "C Coarse": 7
+      "C Fine": 0
+      "Osc-C Level": 0.5
+      "Osc-C Feedb": 30
+      "Ce Attack": 0.01
+      "Ce Decay": 0.08
+      "Ce Sustain": 0.0
+      "Ce Release": 0.08
+      "Osc-D On": "Off"
+      "Spread": 12
+      "Filter On": "On"
+      "Filter Type": "Lowpass"
+      "Filter Slope": "24 dB"
+      "Filter Circuit - LP/HP": "OSR"
+      "Filter Freq": 0.85
+      "Filter Drive": 3
 
   - id: op-rhythmic-single
-    description: "Algorithm 1, A & B sine. B envelope set to Beat 1/16, peak decay 30ms. A: Trigger envelope, decay 200ms. B Coarse=11. Hold C3 4 bars at 100 BPM."
+    description: "Algorithm 1, A=Trigger envelope (decay 200ms), B=Beat envelope at 1/16 (Be Retrig=2), B Coarse=11. Hold C3 4 bars at 100 BPM."
     duration_s: 10
     midi: { note: "C3", length_s: 9.6 }
+    # NOTE: Be Retrig is range 0-14 (continuous in LOM, enum in UI). The
+    # mapping isn't explicitly enumerated; 2 is a first guess for "1/16".
+    # If audition shows wrong rate, scan integers: 0=1/32?, 1=1/32T?, 2=1/16,
+    # 3=1/16T, 4=1/8, etc. (verify in Live UI).
+    params:
+      "Algorithm": "Alg. 1"
+      "Osc-A On": "On"
+      "Osc-A Wave": "Sine"
+      "A Coarse": 1
+      "A Fine": 0
+      "Osc-A Level": 0.8
+      "Osc-A Feedb": 0
+      "Ae Mode": "Trigger"
+      "Ae Attack": 0.01
+      "Ae Decay": 0.20
+      "Ae Sustain": 0.0
+      "Ae Release": 0.05
+      "Osc-B On": "On"
+      "Osc-B Wave": "Sine"
+      "B Coarse": 11
+      "B Fine": 0
+      "Osc-B Level": 0.7
+      "Osc-B Feedb": 0
+      "Be Mode": "Beat"
+      "Be Retrig": 2                 # ≈ 1/16 (verify by audition)
+      "Be Attack": 0.0
+      "Be Decay": 0.03               # peak decay ~30ms
+      "Be Sustain": 0.0
+      "Be Release": 0.0
+      "Osc-C On": "Off"
+      "Osc-D On": "Off"
+
+  - id: op-rhythmic-instance2
+    description: "Second Operator instance for the layered polyrhythm: same as op-rhythmic-single but B Coarse=13, Be Retrig=4 (≈ 1/8 dotted)."
+    duration_s: 10
+    midi: { note: "C3", length_s: 9.6 }
+    # NOTE: Be Retrig=4 is a first guess for "1/8 dotted".
+    params:
+      "Algorithm": "Alg. 1"
+      "Osc-A On": "On"
+      "Osc-A Wave": "Sine"
+      "A Coarse": 1
+      "A Fine": 0
+      "Osc-A Level": 0.8
+      "Osc-A Feedb": 0
+      "Ae Mode": "Trigger"
+      "Ae Attack": 0.01
+      "Ae Decay": 0.20
+      "Ae Sustain": 0.0
+      "Ae Release": 0.05
+      "Osc-B On": "On"
+      "Osc-B Wave": "Sine"
+      "B Coarse": 13
+      "B Fine": 0
+      "Osc-B Level": 0.7
+      "Osc-B Feedb": 0
+      "Be Mode": "Beat"
+      "Be Retrig": 4                 # ≈ 1/8 dotted (verify)
+      "Be Attack": 0.0
+      "Be Decay": 0.03
+      "Be Sustain": 0.0
+      "Be Release": 0.0
+      "Osc-C On": "Off"
+      "Osc-D On": "Off"
 
   - id: op-rhythmic-layered
-    description: "Two Operator instances: instance 1 = op-rhythmic-single, instance 2 = same but B Coarse=13, Beat 1/8 dotted. Hold C3 on both for 4 bars at 100 BPM. Polyrhythm emerges."
+    description: "Polyrhythm: op-rhythmic-single (1/16 @ B Coarse=11) summed with op-rhythmic-instance2 (1/8 dotted @ B Coarse=13)."
     duration_s: 10
-    midi: { note: "C3", length_s: 9.6 }
-    notes: "Render each instance separately and sum, OR render as a single track with both Operator devices. Implementation choice for the operator-render tool."
+    # mix_from is post-processed by device_render.py via ffmpeg amix once both
+    # source demos exist. No M4L render is fired for this demo.
+    mix_from:
+      - op-rhythmic-single
+      - op-rhythmic-instance2
