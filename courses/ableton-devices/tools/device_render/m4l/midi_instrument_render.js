@@ -60,6 +60,9 @@ var currentDemo = null;
 var currentRender = null;     // { audioSlotIdx, durationS, startedAt }
 var flushTask = null;         // module-level so pollFlush can cancel itself
 var automationTasks = [];     // pending per-demo automation Tasks
+var sanityTask = null;        // post-fire 300ms diagnostic
+var fireTask = null;          // delayed clip fire after record_mode set
+var stopTask = null;          // scheduled stopResamplingRecord
 
 function status(msg) {
     outlet(0, "status", String(msg));
@@ -221,27 +224,54 @@ function startResamplingRecord(demo) {
     };
 
     song.set("record_mode", 1);
-    status("record_mode set; firing clips");
-    new LiveAPI("live_set tracks " + MIDI_TRACK_IDX + " clip_slots 0").call("fire");
-    new LiveAPI(audioPath + " clip_slots " + slotIdx).call("fire");
+    status("record_mode set; will fire after settle");
 
-    // Schedule per-demo automation (LOM param updates during the recording).
-    scheduleAutomation(demo.automation);
-
-    // Sanity check 300ms after fire — confirm recording actually started.
-    var sanityT = new Task(function() {
-        var slot = new LiveAPI(audioPath + " clip_slots " + slotIdx);
-        var hasC = parseInt(slot.get("has_clip"));
-        var rec = "?";
-        if (hasC === 1) {
-            try { rec = String(new LiveAPI(audioPath + " clip_slots " + slotIdx + " clip").get("is_recording")); } catch (e) {}
-        }
-        status("300ms after fire: slot " + slotIdx + " has_clip=" + hasC + " is_recording=" + rec);
+    // Brief delay so Live commits record_mode=1 before fires register.
+    if (fireTask) { try { fireTask.cancel(); } catch (e) {} }
+    fireTask = new Task(function() {
+        new LiveAPI("live_set tracks " + MIDI_TRACK_IDX + " clip_slots 0").call("fire");
+        new LiveAPI(audioPath + " clip_slots " + slotIdx).call("fire");
+        scheduleAutomation(demo.automation);
+        // Sanity check 350ms after the fire actually happened.
+        if (sanityTask) { try { sanityTask.cancel(); } catch (e) {} }
+        sanityTask = new Task(function() { fireSanityCheck(audioPath, slotIdx); });
+        sanityTask.schedule(350);
     });
-    sanityT.schedule(300);
+    fireTask.schedule(150);
 
-    var stopT = new Task(stopResamplingRecord);
-    stopT.schedule(len_s * 1000);
+    if (stopTask) { try { stopTask.cancel(); } catch (e) {} }
+    stopTask = new Task(stopResamplingRecord);
+    stopTask.schedule(150 + len_s * 1000);
+}
+
+function fireSanityCheck(audioPath, slotIdx) {
+    var slot = new LiveAPI(audioPath + " clip_slots " + slotIdx);
+    var hasC = parseInt(slot.get("has_clip"));
+    var rec = "?";
+    if (hasC === 1) {
+        try { rec = String(new LiveAPI(audioPath + " clip_slots " + slotIdx + " clip").get("is_recording")); } catch (e) {}
+    }
+    status("post-fire: slot " + slotIdx + " has_clip=" + hasC + " is_recording=" + rec);
+
+    if (hasC === 0) {
+        // Recording did not start. Don't wait for the full demo duration —
+        // abort immediately and let the retry path run.
+        status("recording never started; aborting demo to retry");
+        if (stopTask) { try { stopTask.cancel(); } catch (e) {} stopTask = null; }
+        cancelAutomation();
+        try { new LiveAPI("live_set").set("record_mode", 0); } catch (e) {}
+        try { new LiveAPI("live_set tracks " + MIDI_TRACK_IDX + " clip_slots 0").call("stop"); } catch (e) {}
+        try { new LiveAPI(audioPath + " clip_slots " + slotIdx).call("stop"); } catch (e) {}
+        if (currentDemo && currentDemo._retry < MAX_RETRIES) {
+            currentDemo._retry++;
+            status("re-queueing " + currentDemo.id + " for retry " + currentDemo._retry + "/" + MAX_RETRIES);
+            renderQueue.unshift(currentDemo.id);
+        } else {
+            var did = currentDemo ? currentDemo.id : "?";
+            emitEvent({ event: "error", demo_id: did, message: "recording never started after " + MAX_RETRIES + " retries" });
+        }
+        cleanupAndNext();
+    }
 }
 
 function scheduleAutomation(automation) {
@@ -420,6 +450,10 @@ function fileSize(posixPath) {
 
 function cleanupAndNext() {
     cancelAutomation();
+    if (fireTask)   { try { fireTask.cancel();   } catch (e) {} fireTask = null; }
+    if (stopTask)   { try { stopTask.cancel();   } catch (e) {} stopTask = null; }
+    if (sanityTask) { try { sanityTask.cancel(); } catch (e) {} sanityTask = null; }
+    if (flushTask)  { try { flushTask.cancel();  } catch (e) {} flushTask = null; }
     var audioPath = "live_set tracks " + AUDIO_TRACK_IDX;
     var midiPath  = "live_set tracks " + MIDI_TRACK_IDX;
     if (currentRender) {
