@@ -41,6 +41,37 @@ references:
   - bib:gearnews_dx100_detroit
   - bib:caesura_autechre_elseq
 
+# Background-music transitions inserted after specific slides. Each entry's
+# clip_id resolves to an entry in clip_manifest.yaml (under song_clips). The
+# clip is extracted by extract_clips.py and spliced into the same chapter as
+# the slide it follows. Mastering applies the "transition" loudness target
+# (default -26 LUFS) so it sits well under narration.
+# Set `enabled: false` (or remove the block) to skip transitions entirely.
+transitions:
+  enabled: true
+  insertions:
+    - after_slide: 02g-tx81z-underground         # end of section 2 → into 3
+      clip_id: trans-syro-warm
+    - after_slide: 03f-4op-vs-6op                # end of section 3 → into 4
+      clip_id: trans-bike-pulse
+    - after_slide: 04g-comparison                # end of section 4 → into 5
+      clip_id: trans-ending-ascent
+    - after_slide: 05h-save                      # end of section 5 → into 6
+      clip_id: trans-beep-street
+    - after_slide: 06d-wet-dry                   # before listener exercise
+      clip_id: trans-black-refraction
+
+# Per-episode mastering overrides. Inherits from defaults in build_episode.py,
+# then from course.yaml's mastering block (if present), then this. All keys
+# are optional — only override what you want to change.
+# mastering:
+#   per_piece_normalize:
+#     targets:
+#       transition: -28        # quieter background music
+#   master_chain:
+#     compressor:
+#       ratio: 2.5             # tighter dynamics
+
 # Episode runs as a sequence of slides (chunks); shared/tools/build_episode.py concatenates
 # narration WAVs in this order, splicing demo clips after each slide's narration.
 # Each demo id resolves via clip_manifest.yaml to either a song-clip or operator-render WAV.

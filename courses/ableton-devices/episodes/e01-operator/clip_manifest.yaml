@@ -59,6 +59,55 @@ song_clips:
     normalize_lufs: -16
     notes: "Second Stria excerpt — drop after the 1:φ ratio explanation in 03c-ratios."
 
+  # ── Transition cues (background music between sections) ─────────────────
+  # Long fades, lower normalization target. Referenced by id from
+  # `episode.yaml > transitions.insertions[].clip_id`. extract_clips.py cuts
+  # them just like song clips.
+  - id: trans-syro-warm
+    source: "02_xtal.wav"
+    start: "0:30"
+    end: "0:42"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "End of section 2 (history) → start of section 3 (synthesis). Warm Aphex pad."
+
+  - id: trans-bike-pulse
+    source: "03_bike.wav"
+    start: "0:30"
+    end: "0:42"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "End of section 3 (synthesis) → start of section 4 (Ableton deep dive). Pulsing intro."
+
+  - id: trans-ending-ascent
+    source: "04_an-ending-ascent.wav"
+    start: "1:00"
+    end: "1:14"
+    fade_in_ms: 3000
+    fade_out_ms: 4000
+    normalize_lufs: -22
+    notes: "End of section 4 (deep dive) → start of section 5 (patch walkthrough). Ambient pad."
+
+  - id: trans-beep-street
+    source: "05_beep-street.wav"
+    start: "0:20"
+    end: "0:32"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "End of section 5 (patch walkthrough) → start of section 6 (IDM application). Squelchy bass."
+
+  - id: trans-black-refraction
+    source: "10_black-refraction.wav"
+    start: "0:30"
+    end: "0:45"
+    fade_in_ms: 3000
+    fade_out_ms: 4500
+    normalize_lufs: -22
+    notes: "End of episode pad before the listener-exercise outro."
+
 # Operator patch demos — rendered via the operator-render M4L pipeline (see
 # courses/ableton-devices/tools/operator_render/README.md once built).
 # Each entry declares the patch parameters + MIDI clip + render settings.
@@ -82,7 +131,7 @@ operator_demos:
   - id: op-mod-index-sweep
     description: "Single carrier (sine) + single modulator (sine) at 1:1. Ramp modulator Level from 0 to 1.0 over 8 seconds. Hold C3 throughout."
     duration_s: 9
-    midi: { note: "C3", length_s: 8.5 }
+    midi: {note: "C3", length_s: 8.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -91,21 +140,31 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 1.0
       "Osc-A Feedb": 0
+      "Ae Mode": "None"
+      "Ae Attack": 0.0
+      "Ae Decay": 1.0
+      "Ae Sustain": 1.0
+      "Ae Release": 0.30
       "Osc-B On": "On"
       "Osc-B Wave": "Sine"
       "B Coarse": 1
       "B Fine": 0
       "Osc-B Level": 0.0       # ramped via automation below
       "Osc-B Feedb": 0
+      "Be Mode": "None"
+      "Be Attack": 0.0
+      "Be Decay": 1.0
+      "Be Sustain": 1.0
+      "Be Release": 0.30
       "Osc-C On": "Off"
       "Osc-D On": "Off"
     automation:
-      "Osc-B Level": { from: 0.0, to: 1.0, ramp_s: 8.0, rate_hz: 30 }
+      "Osc-B Level": {from: 0.0, to: 1.0, ramp_s: 8.0, rate_hz: 30}
 
   - id: op-ratio-1to1
     description: "Algorithm 1, A and B sine. Coarse 1:1. Modulator Level 80. Hold C3 5s."
     duration_s: 5
-    midi: { note: "C3", length_s: 4.5 }
+    midi: {note: "C3", length_s: 4.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -114,19 +173,28 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 1.0
       "Osc-A Feedb": 0
+      "Ae Mode": "None"
+      "Ae Attack": 0.0
+      "Ae Decay": 1.0
+      "Ae Sustain": 1.0
+      "Ae Release": 0.3
       "Osc-B On": "On"
       "Osc-B Wave": "Sine"
       "B Coarse": 1
       "B Fine": 0
       "Osc-B Level": 0.8
       "Osc-B Feedb": 0
+      "Be Mode": "None"
+      "Be Attack": 0.0
+      "Be Decay": 1.0
+      "Be Sustain": 1.0
+      "Be Release": 0.3
       "Osc-C On": "Off"
       "Osc-D On": "Off"
-
   - id: op-ratio-1to2
     description: "Same as 1to1 but B Coarse=2. Hollow-clarinet odd-harmonic spectrum."
     duration_s: 5
-    midi: { note: "C3", length_s: 4.5 }
+    midi: {note: "C3", length_s: 4.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -135,19 +203,28 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 1.0
       "Osc-A Feedb": 0
+      "Ae Mode": "None"
+      "Ae Attack": 0.0
+      "Ae Decay": 1.0
+      "Ae Sustain": 1.0
+      "Ae Release": 0.3
       "Osc-B On": "On"
       "Osc-B Wave": "Sine"
       "B Coarse": 2
       "B Fine": 0
       "Osc-B Level": 0.8
       "Osc-B Feedb": 0
+      "Be Mode": "None"
+      "Be Attack": 0.0
+      "Be Decay": 1.0
+      "Be Sustain": 1.0
+      "Be Release": 0.3
       "Osc-C On": "Off"
       "Osc-D On": "Off"
-
   - id: op-ratio-1to3
     description: "B Coarse=3. Hollow spectrum, missing every third partial."
     duration_s: 5
-    midi: { note: "C3", length_s: 4.5 }
+    midi: {note: "C3", length_s: 4.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -156,19 +233,28 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 1.0
       "Osc-A Feedb": 0
+      "Ae Mode": "None"
+      "Ae Attack": 0.0
+      "Ae Decay": 1.0
+      "Ae Sustain": 1.0
+      "Ae Release": 0.3
       "Osc-B On": "On"
       "Osc-B Wave": "Sine"
       "B Coarse": 3
       "B Fine": 0
       "Osc-B Level": 0.8
       "Osc-B Feedb": 0
+      "Be Mode": "None"
+      "Be Attack": 0.0
+      "Be Decay": 1.0
+      "Be Sustain": 1.0
+      "Be Release": 0.3
       "Osc-C On": "Off"
       "Osc-D On": "Off"
-
   - id: op-ratio-1-sqrt2
     description: "B Coarse=1, Fine=414 (approximates √2 offset). Bell/gong inharmonic."
     duration_s: 5
-    midi: { note: "C3", length_s: 4.5 }
+    midi: {note: "C3", length_s: 4.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -177,19 +263,28 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 1.0
       "Osc-A Feedb": 0
+      "Ae Mode": "None"
+      "Ae Attack": 0.0
+      "Ae Decay": 1.0
+      "Ae Sustain": 1.0
+      "Ae Release": 0.3
       "Osc-B On": "On"
       "Osc-B Wave": "Sine"
       "B Coarse": 1
       "B Fine": 414
       "Osc-B Level": 0.8
       "Osc-B Feedb": 0
+      "Be Mode": "None"
+      "Be Attack": 0.0
+      "Be Decay": 1.0
+      "Be Sustain": 1.0
+      "Be Release": 0.3
       "Osc-C On": "Off"
       "Osc-D On": "Off"
-
   - id: op-ratio-1-phi
     description: "B Coarse=1, Fine=618 (approximates φ ≈ 1.618). Stria-cloud inharmonic."
     duration_s: 5
-    midi: { note: "C3", length_s: 4.5 }
+    midi: {note: "C3", length_s: 4.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -198,37 +293,28 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 1.0
       "Osc-A Feedb": 0
+      "Ae Mode": "None"
+      "Ae Attack": 0.0
+      "Ae Decay": 1.0
+      "Ae Sustain": 1.0
+      "Ae Release": 0.3
       "Osc-B On": "On"
       "Osc-B Wave": "Sine"
       "B Coarse": 1
       "B Fine": 618
       "Osc-B Level": 0.8
       "Osc-B Feedb": 0
+      "Be Mode": "None"
+      "Be Attack": 0.0
+      "Be Decay": 1.0
+      "Be Sustain": 1.0
+      "Be Release": 0.3
       "Osc-C On": "Off"
       "Osc-D On": "Off"
-
   - id: op-feedback-bifurcation
     description: "Single operator A, sine, full sustain. Discrete feedback steps every 1.5s: 0 → 40 → 60 → 70 (LOM scale 0-100)."
     duration_s: 6.5
-    midi: { note: "C3", length_s: 6.5 }
-    params:
-      "Algorithm": "Alg. 1"
-      "Osc-A On": "On"
-      "Osc-A Wave": "Sine"
-      "A Coarse": 1
-      "A Fine": 0
-      "Osc-A Level": 1.0
-      "Osc-A Feedb": 0          # ramped via automation
-      "Osc-B On": "Off"
-      "Osc-C On": "Off"
-      "Osc-D On": "Off"
-    automation:
-      "Osc-A Feedb": { steps: [0, 40, 60, 70], step_s: 1.5 }
-
-  - id: op-poly-bell-step1
-    description: "Default Operator. Algorithm 1. All operators set to Sine. Hold C3 3s — pure unmodulated sine."
-    duration_s: 3.5
-    midi: { note: "C3", length_s: 3 }
+    midi: {note: "C3", length_s: 6.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -237,14 +323,41 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 1.0
       "Osc-A Feedb": 0
+      "Ae Mode": "None"
+      "Ae Attack": 0.0
+      "Ae Decay": 1.0
+      "Ae Sustain": 1.0
+      "Ae Release": 0.3
       "Osc-B On": "Off"
       "Osc-C On": "Off"
       "Osc-D On": "Off"
+    automation:
+      "Osc-A Feedb": {steps: [0, 40, 60, 70], step_s: 1.5}
 
+  - id: op-poly-bell-step1
+    description: "Default Operator. Algorithm 1. All operators set to Sine. Hold C3 3s — pure unmodulated sine."
+    duration_s: 3.5
+    midi: {note: "C3", length_s: 3}
+    params:
+      "Algorithm": "Alg. 1"
+      "Osc-A On": "On"
+      "Osc-A Wave": "Sine"
+      "A Coarse": 1
+      "A Fine": 0
+      "Osc-A Level": 1.0
+      "Osc-A Feedb": 0
+      "Ae Mode": "None"
+      "Ae Attack": 0.0
+      "Ae Decay": 1.0
+      "Ae Sustain": 1.0
+      "Ae Release": 0.3
+      "Osc-B On": "Off"
+      "Osc-C On": "Off"
+      "Osc-D On": "Off"
   - id: op-poly-bell-step2
     description: "Step 1 + carrier (A) ADSR shape: A=1ms, D=400ms, S=-inf, R=200ms. Coarse 1, Fine 0, Level -12dB. Pure sine pluck."
     duration_s: 3
-    midi: { note: "C3", length_s: 2.5 }
+    midi: {note: "C3", length_s: 2.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -264,7 +377,7 @@ operator_demos:
   - id: op-poly-bell-step3
     description: "Step 2 + modulator B: Coarse 1, Fine 414 (≈√2), Level 80%. Envelope A=1ms D=120ms S=-inf R=80ms. Bell-like inharmonic ringing emerges."
     duration_s: 3
-    midi: { note: "C3", length_s: 2.5 }
+    midi: {note: "C3", length_s: 2.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -293,7 +406,7 @@ operator_demos:
   - id: op-poly-bell-step4
     description: "Step 3 + modulator C feeding B: Coarse 7, Level 50%, envelope similar but D=60ms. High-frequency shimmer adds."
     duration_s: 3
-    midi: { note: "C3", length_s: 2.5 }
+    midi: {note: "C3", length_s: 2.5}
     # NOTE: "C feeds B" needs an algorithm topology with C → B. Alg. 1 may be
     # A-only-carrier (B,C,D modulate A). If audition shows C is hitting A
     # instead of B, switch Algorithm to a topology with the C→B path
@@ -335,7 +448,7 @@ operator_demos:
   - id: op-poly-bell-step5
     description: "Step 4 + Feedback on C at 30%. Gritty edge appears in attack."
     duration_s: 3
-    midi: { note: "C3", length_s: 2.5 }
+    midi: {note: "C3", length_s: 2.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -373,7 +486,7 @@ operator_demos:
   - id: op-poly-bell-step6
     description: "Step 5 + Spread 12% + Filter LP24 OSR at 8kHz, Drive +3dB. Stereo width and analog warmth."
     duration_s: 3
-    midi: { note: "C3", length_s: 2.5 }
+    midi: {note: "C3", length_s: 2.5}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -420,8 +533,8 @@ operator_demos:
     duration_s: 6
     midi:
       notes:
-        - { note: "C3", vel: 30,  t: 0 }
-        - { note: "C3", vel: 110, t: 3 }
+        - {note: "C3", vel: 30, t: 0}
+        - {note: "C3", vel: 110, t: 3}
       length_s: 5.5
     params:
       "Algorithm": "Alg. 1"
@@ -469,7 +582,7 @@ operator_demos:
     description: "Final saved 'Polynomial-Bell' patch. Demonstration arpeggio: C3-Eb3-G3-C4 sixteenth notes for 4 bars at 100 BPM."
     duration_s: 10
     # midi.pattern is expanded to explicit notes by device_render.py.
-    midi: { pattern: "C3-Eb3-G3-C4 16ths, 4 bars, 100 BPM", length_s: 9.6 }
+    midi: {pattern: "C3-Eb3-G3-C4 16ths, 4 bars, 100 BPM", length_s: 9.6}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -514,7 +627,7 @@ operator_demos:
   - id: op-rhythmic-single
     description: "Algorithm 1, A=Trigger envelope (decay 200ms), B=Beat envelope at 1/16 (Be Retrig=2), B Coarse=11. Hold C3 4 bars at 100 BPM."
     duration_s: 10
-    midi: { note: "C3", length_s: 9.6 }
+    midi: {note: "C3", length_s: 9.6}
     # NOTE: Be Retrig is range 0-14 (continuous in LOM, enum in UI). The
     # mapping isn't explicitly enumerated; 2 is a first guess for "1/16".
     # If audition shows wrong rate, scan integers: 0=1/32?, 1=1/32T?, 2=1/16,
@@ -550,7 +663,7 @@ operator_demos:
   - id: op-rhythmic-instance2
     description: "Second Operator instance for the layered polyrhythm: same as op-rhythmic-single but B Coarse=13, Be Retrig=4 (≈ 1/8 dotted)."
     duration_s: 10
-    midi: { note: "C3", length_s: 9.6 }
+    midi: {note: "C3", length_s: 9.6}
     # NOTE: Be Retrig=4 is a first guess for "1/8 dotted".
     params:
       "Algorithm": "Alg. 1"
