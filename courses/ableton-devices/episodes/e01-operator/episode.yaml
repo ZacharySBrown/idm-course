@@ -61,6 +61,32 @@ transitions:
     - after_slide: 06d-wet-dry                   # before listener exercise
       clip_id: trans-black-refraction
 
+# Background music beds — sidechain-ducked under narration. Each insertion
+# defines a clip_id (resolves to clip_manifest.yaml song_clips entry) and a
+# slide range over which the bed plays. The bed loops if shorter than the
+# range. duck_db controls how much the bed drops while voice is active.
+# Set `enabled: false` (or remove) to skip beds entirely.
+beds:
+  enabled: true
+  duck_db: -14
+  insertions:
+    - clip_id: bed-stria-drift
+      start_at_slide: 02a-vibrato-accident
+      end_at_slide: 02d-yamaha-license
+      gain_db: -3
+    - clip_id: bed-xtal-pad
+      start_at_slide: 03a-equation
+      end_at_slide: 03f-4op-vs-6op
+      gain_db: -2
+    - clip_id: bed-ascent-pad
+      start_at_slide: 04a-origin
+      end_at_slide: 04g-comparison
+      gain_db: -3
+    - clip_id: bed-black-refraction-amb
+      start_at_slide: 06c-math-connect
+      end_at_slide: 06e-exercise
+      gain_db: -3
+
 # Per-episode mastering overrides. Inherits from defaults in build_episode.py,
 # then from course.yaml's mastering block (if present), then this. All keys
 # are optional — only override what you want to change.

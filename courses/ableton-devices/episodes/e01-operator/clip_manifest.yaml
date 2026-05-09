@@ -17,11 +17,11 @@ song_clips:
   - id: polynomial-c-cold-open
     source: "01_polynomial-c.wav"
     start: "0:00"
-    end: "0:08"
+    end: "0:14"
     fade_in_ms: 0
-    fade_out_ms: 800
-    normalize_lufs: -16
-    notes: "Solo plucky arpeggio, dry, unaccompanied. Fade under as narration enters."
+    fade_out_ms: 2200
+    normalize_lufs: -14          # song role: leave louder, master chain handles the rest
+    notes: "Solo plucky arpeggio, dry, unaccompanied. Long natural tail before fade."
 
   - id: stria-excerpt-1
     source: "09_stria.wav"
@@ -107,6 +107,46 @@ song_clips:
     fade_out_ms: 4500
     normalize_lufs: -22
     notes: "End of episode pad before the listener-exercise outro."
+
+  # ── Background beds (sidechain-ducked under narration) ──────────────────
+  # Long, slow, atmospheric. Loop-friendly. Picked to color a section
+  # without drawing the ear away from the voice. Normalized quiet (-26 LUFS)
+  # so even before the duck, they sit far below narration.
+  - id: bed-stria-drift
+    source: "09_stria.wav"
+    start: "5:00"
+    end: "5:40"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    notes: "Section 2 (history) bed — Stria's slow inharmonic cloud, fits the era."
+
+  - id: bed-xtal-pad
+    source: "02_xtal.wav"
+    start: "0:50"
+    end: "1:30"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    notes: "Section 3 (synthesis deep-dive) bed — Aphex pad, warm but moving."
+
+  - id: bed-ascent-pad
+    source: "04_an-ending-ascent.wav"
+    start: "1:30"
+    end: "2:30"
+    fade_in_ms: 4000
+    fade_out_ms: 5000
+    normalize_lufs: -26
+    notes: "Section 4 (Ableton deep-dive) bed — Eno's slowest sustained chord."
+
+  - id: bed-black-refraction-amb
+    source: "10_black-refraction.wav"
+    start: "1:00"
+    end: "2:00"
+    fade_in_ms: 4000
+    fade_out_ms: 5000
+    normalize_lufs: -26
+    notes: "Section 6 (IDM application + outro) bed — late Autechre stillness."
 
 # Operator patch demos — rendered via the operator-render M4L pipeline (see
 # courses/ableton-devices/tools/operator_render/README.md once built).

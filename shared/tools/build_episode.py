@@ -76,8 +76,11 @@ DEFAULT_MASTERING = {
         "enabled": True,
         "targets": {
             "narration":  -18,
-            "music":      -22,   # operator demos + song clips
+            "demo":       -22,   # rendered operator demos (controlled tones)
+            "song":       -16,   # extracted song clips — keep their natural punch
+            "music":      -22,   # legacy/fallback
             "transition": -26,   # background-music transitions, ducked under
+            "bed":        -28,   # ambient bed under narration (sidechain-ducked)
         },
         "true_peak_db": -1.5,
         "lra": 11,
@@ -157,6 +160,96 @@ def build_master_filter(mastering: dict) -> str:
     return ",".join(parts)
 
 
+def build_bed_track(
+    bed_insertions: list[dict],
+    block_starts: list[int],
+    block_ends: list[int],
+    block_slides: list[str],
+    total_ms: int,
+    clips_dir: Path | None,
+    out_path: Path,
+) -> None:
+    """Generate a single 44.1kHz/16-bit stereo WAV of length total_ms with each
+    bed clip placed at the right time offset and faded in/out. Returns nothing
+    on disk if no insertions resolve."""
+    if not bed_insertions or clips_dir is None:
+        return
+
+    slide_to_block = {sid: i for i, sid in enumerate(block_slides)}
+
+    inputs: list[Path] = []
+    delays: list[int] = []   # ms offset into the final track
+    fade_ins: list[float] = []
+    fade_outs: list[float] = []
+    durations_s: list[float] = []
+    gains_db: list[float] = []
+
+    for ins in bed_insertions:
+        cid = ins.get("clip_id")
+        if not cid:
+            continue
+        # Resolve clip
+        src = None
+        for ext in (".wav", ".aif", ".aiff"):
+            cand = clips_dir / f"{cid}{ext}"
+            if cand.exists():
+                src = cand
+                break
+        if not src:
+            continue
+        sb = slide_to_block.get(ins.get("start_at_slide"))
+        eb = slide_to_block.get(ins.get("end_at_slide", ins.get("start_at_slide")))
+        if sb is None or eb is None:
+            continue
+        delay_ms = block_starts[sb]
+        end_ms = block_ends[eb]
+        dur_ms = max(0, end_ms - delay_ms)
+        if dur_ms < 500:
+            continue
+        inputs.append(src)
+        delays.append(delay_ms)
+        fade_ins.append(ins.get("fade_in_ms", 2500) / 1000)
+        fade_outs.append(ins.get("fade_out_ms", 2500) / 1000)
+        durations_s.append(dur_ms / 1000)
+        gains_db.append(ins.get("gain_db", 0))
+
+    if not inputs:
+        return
+
+    # ffmpeg filter graph: each input gets adelay + afade(in/out) + atrim, then amix.
+    args = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error"]
+    for src in inputs:
+        args += ["-stream_loop", "-1", "-i", str(src)]
+    parts = []
+    for i in range(len(inputs)):
+        d = delays[i]
+        dur = durations_s[i]
+        fin = fade_ins[i]
+        fout = fade_outs[i]
+        gdb = gains_db[i]
+        # Loop the bed via -stream_loop, then trim to dur, then fade in/out, then delay, then volume.
+        parts.append(
+            f"[{i}:a]atrim=duration={dur},asetpts=PTS-STARTPTS,"
+            f"afade=t=in:st=0:d={fin},"
+            f"afade=t=out:st={max(0, dur - fout)}:d={fout},"
+            f"adelay={d}|{d},volume={gdb}dB[b{i}]"
+        )
+    if len(inputs) == 1:
+        parts.append(f"[b0]apad=whole_dur={total_ms / 1000}[bedout]")
+    else:
+        labels = "".join(f"[b{i}]" for i in range(len(inputs)))
+        parts.append(f"{labels}amix=inputs={len(inputs)}:normalize=0:dropout_transition=2,apad=whole_dur={total_ms / 1000}[bedout]")
+    filter_complex = ";".join(parts)
+    args += [
+        "-filter_complex", filter_complex,
+        "-map", "[bedout]",
+        "-ar", "44100", "-ac", "2", "-c:a", "pcm_s16le",
+        "-t", f"{total_ms / 1000}",
+        str(out_path),
+    ]
+    subprocess.run(args, check=True)
+
+
 def concat_wavs(
     pieces: list[tuple[Path, str]],   # (path, role) tuples
     out_mp3: Path,
@@ -164,10 +257,13 @@ def concat_wavs(
     artist: str,
     album: str,
     mastering: dict,
+    bed_track: Path | None = None,
+    bed_duck_db: float = -14,
 ) -> None:
     """Concat pieces with 400ms silences, applying optional per-piece normalization
     and a final mastering chain. `pieces` is a list of (path, role) where role
-    keys into mastering.per_piece_normalize.targets."""
+    keys into mastering.per_piece_normalize.targets. If `bed_track` is given,
+    the bed is sidechain-ducked under the narration concat by `bed_duck_db`."""
     with tempfile.TemporaryDirectory() as td:
         td_p = Path(td)
         silence = td_p / "silence_400ms.wav"
@@ -202,17 +298,52 @@ def concat_wavs(
 
         out_mp3.parent.mkdir(parents=True, exist_ok=True)
         master_filter = build_master_filter(mastering)
-        subprocess.run(
-            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-             "-f", "concat", "-safe", "0", "-i", str(concat_list),
-             "-af", master_filter,
-             "-c:a", "libmp3lame", "-b:a", "192k",
-             "-metadata", f"title={title}",
-             "-metadata", f"artist={artist}",
-             "-metadata", f"album={album}",
-             str(out_mp3)],
-            check=True,
-        )
+
+        if bed_track and bed_track.exists():
+            # Concat narration first, then mix with sidechain-ducked bed.
+            narr_concat = td_p / "narration_concat.wav"
+            subprocess.run(
+                ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                 "-f", "concat", "-safe", "0", "-i", str(concat_list),
+                 "-c:a", "pcm_s16le", str(narr_concat)],
+                check=True,
+            )
+            # Filter graph:
+            #   [bed][narr]sidechaincompress  → bed ducked when narration is loud
+            #   [narr][bed_ducked]amix         → mixed two-stream output
+            #   then master chain
+            duck_filter = (
+                f"[1:a]volume=0dB[bed_pre];"
+                f"[bed_pre][0:a]sidechaincompress="
+                f"threshold=0.04:ratio=8:attack=20:release=300:makeup=1:level_sc=1[bed_ducked];"
+                f"[0:a][bed_ducked]amix=inputs=2:normalize=0:weights=1 0.55[mixed];"
+                f"[mixed]{master_filter}[out]"
+            )
+            subprocess.run(
+                ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                 "-i", str(narr_concat),
+                 "-i", str(bed_track),
+                 "-filter_complex", duck_filter,
+                 "-map", "[out]",
+                 "-c:a", "libmp3lame", "-b:a", "192k",
+                 "-metadata", f"title={title}",
+                 "-metadata", f"artist={artist}",
+                 "-metadata", f"album={album}",
+                 str(out_mp3)],
+                check=True,
+            )
+        else:
+            subprocess.run(
+                ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                 "-f", "concat", "-safe", "0", "-i", str(concat_list),
+                 "-af", master_filter,
+                 "-c:a", "libmp3lame", "-b:a", "192k",
+                 "-metadata", f"title={title}",
+                 "-metadata", f"artist={artist}",
+                 "-metadata", f"album={album}",
+                 str(out_mp3)],
+                check=True,
+            )
 
 
 def write_chapters(mp3_path: Path, chapters: list[dict], sidecar: Path) -> None:
@@ -298,27 +429,68 @@ def build_one(
     if intro.exists():
         blocks.append(("Intro", [(intro, "narration")]))
 
+    def _resolve_clip(demo_id: str) -> Path | None:
+        if clips_dir is None:
+            return None
+        for ext in (".wav", ".aif", ".aiff"):
+            cand = clips_dir / f"{demo_id}{ext}"
+            if cand.exists():
+                return cand
+        return None
+
+    def _clip_role(demo_id: str) -> str:
+        # "op-..." = generated operator demo (tighter -22 LUFS target);
+        # everything else = extracted song clip (looser -16 LUFS target)
+        return "demo" if demo_id.startswith("op-") else "song"
+
     for slide in lesson.get("slides", []):
         script_rel = slide.get("script_md")
         if not script_rel:
             continue
-        wav_name = Path(script_rel).stem + ".wav"
-        wav_path = narr_dir / wav_name
-        if not wav_path.exists():
-            continue
-        block_pieces: list[tuple[Path, str]] = [(wav_path, "narration")]
-        for demo_id in slide.get("demos", []) or []:
-            if clips_dir is None:
-                missing_demos.append(f"{slide['id']}:{demo_id} (no clips_root)")
+        stem = Path(script_rel).stem
+
+        # Cue-aware path: if render_voiceover produced a <stem>.cues.json sidecar,
+        # the script had [cue: id] markers. Interleave chunk WAVs with demos.
+        sidecar_path = narr_dir / f"{stem}.cues.json"
+        block_pieces: list[tuple[Path, str]] = []
+        used_cues: set[str] = set()
+
+        if sidecar_path.exists():
+            try:
+                sidecar = json.loads(sidecar_path.read_text())
+            except json.JSONDecodeError:
+                sidecar = None
+            if sidecar:
+                for chunk in sidecar.get("chunks", []):
+                    chunk_wav = narr_dir / chunk["wav"]
+                    if not chunk_wav.exists():
+                        continue
+                    block_pieces.append((chunk_wav, "narration"))
+                    cue_id = chunk.get("cue_after")
+                    if not cue_id:
+                        continue
+                    cue_path = _resolve_clip(cue_id)
+                    if cue_path:
+                        block_pieces.append((cue_path, _clip_role(cue_id)))
+                        used_cues.add(cue_id)
+                    else:
+                        missing_demos.append(f"{slide['id']}:cue:{cue_id}")
+
+        # Fallback / no-cue path: single full-script WAV.
+        if not block_pieces:
+            wav_path = narr_dir / f"{stem}.wav"
+            if not wav_path.exists():
                 continue
-            demo_path = None
-            for ext in (".wav", ".aif", ".aiff"):
-                cand = clips_dir / f"{demo_id}{ext}"
-                if cand.exists():
-                    demo_path = cand
-                    break
+            block_pieces.append((wav_path, "narration"))
+
+        # Any demo IDs declared on the slide but NOT consumed as cues are
+        # appended at the end of the block (legacy behavior).
+        for demo_id in slide.get("demos", []) or []:
+            if demo_id in used_cues:
+                continue
+            demo_path = _resolve_clip(demo_id)
             if demo_path:
-                block_pieces.append((demo_path, "music"))
+                block_pieces.append((demo_path, _clip_role(demo_id)))
             else:
                 missing_demos.append(f"{slide['id']}:{demo_id}")
         # Transition clip after this slide (in the same chapter, so listeners
@@ -343,6 +515,21 @@ def build_one(
     pieces: list[tuple[Path, str]] = [p for _, parts in blocks for p in parts]
     if not pieces:
         return {"lesson": lesson_id, "status": "no-narration-wavs"}
+
+    # Track slide_id parallel to blocks for bed-layer time anchoring
+    block_slides: list[str] = []
+    if intro.exists():
+        block_slides.append("_intro_")
+    for slide in lesson.get("slides", []):
+        script_rel = slide.get("script_md")
+        if not script_rel:
+            continue
+        stem = Path(script_rel).stem
+        # Only count slides that produced a block
+        if (narr_dir / f"{stem}.cues.json").exists() or (narr_dir / f"{stem}.wav").exists():
+            block_slides.append(slide["id"])
+    if outro.exists():
+        block_slides.append("_outro_")
 
     # Per-piece durations + start cursors, accounting for 400ms inter-piece silence.
     durations = [ffprobe_duration_ms(p) for p, _ in pieces]
@@ -374,14 +561,64 @@ def build_one(
     out_mp3 = out_dir / f"{lesson_id}.mp3"
     sidecar = out_dir / f"{lesson_id}.chapters.json"
 
+    # Compute block start/end times for bed anchoring (block N spans
+    # piece_starts[first_piece] → piece_starts[last_piece] + durations[last_piece])
+    block_starts: list[int] = []
+    block_ends: list[int] = []
+    pi = 0
+    for _, parts in blocks:
+        n = len(parts)
+        block_starts.append(piece_starts[pi])
+        last = pi + n - 1
+        block_ends.append(piece_starts[last] + durations[last])
+        pi += n
+
+    # Optional bed layer: schema in episode.yaml
+    #   beds:
+    #     enabled: true
+    #     duck_db: -14
+    #     insertions:
+    #       - clip_id: bed-warm-pad
+    #         start_at_slide: 02a-vibrato-accident
+    #         end_at_slide: 02d-yamaha-license
+    #         gain_db: -2
+    #         fade_in_ms: 3000
+    #         fade_out_ms: 3000
+    bed_track_path: Path | None = None
+    beds_cfg = lesson.get("beds") or {}
+    if beds_cfg.get("enabled") and clips_dir is not None:
+        bed_track_path = out_dir / f"{lesson_id}.bed.wav"
+        try:
+            build_bed_track(
+                bed_insertions=beds_cfg.get("insertions") or [],
+                block_starts=block_starts,
+                block_ends=block_ends,
+                block_slides=block_slides,
+                total_ms=total_ms,
+                clips_dir=clips_dir,
+                out_path=bed_track_path,
+            )
+            if not bed_track_path.exists():
+                bed_track_path = None
+        except Exception as e:
+            print(f"[bed] track generation failed: {e}; assembling without bed")
+            bed_track_path = None
+
     concat_wavs(
         pieces, out_mp3,
         title=episode_cfg.get("title", lesson.get("title", lesson_id)),
         artist=show_artist,
         album=show_album,
         mastering=mastering,
+        bed_track=bed_track_path,
+        bed_duck_db=beds_cfg.get("duck_db", -14),
     )
     write_chapters(out_mp3, chapters, sidecar)
+
+    # Clean up the multi-hundred-MB intermediate bed track.
+    if bed_track_path and bed_track_path.exists():
+        try: bed_track_path.unlink()
+        except OSError: pass
 
     try:
         rel = str(out_mp3.relative_to(repo_root))

@@ -1,21 +1,15 @@
-Chowning's manuscript was rejected by several journals before the *Journal of the Audio Engineering Society* finally accepted it in nineteen seventy-three. His compositions traced FM's musical maturation in real time.
+Chowning's manuscript bounced around for years before the Audio Engineering Society finally accepted it in nineteen seventy-three. Meanwhile he was writing music with the technique. The compositions are the proof.
 
 [pause 400ms]
 
-*Sabelithe*, nineteen seventy-one, opens like a percussion étude and gradually morphs through brass-like FM tones, demonstrating that one algorithm could traverse a trumpet-to-drum continuum. *Turenas*, nineteen seventy-two, was quadraphonic, all-FM, and the first electronic piece to convince listeners that point sources were flying through three-hundred-and-sixty-degree space — Chowning fused his Doppler localization algorithm with FM's internal dynamism.
+The high point — *Stria*, nineteen seventy-seven. He threw out equal temperament. Every frequency, every duration, every formal proportion in the piece was based on the golden ratio. One point six one eight. The result: glassy inharmonic spectra that drift slowly into reverberant clouds. Crystal struck in slow motion.
 
 [pause 400ms]
 
-*Stria*, commissioned by IRCAM in nineteen seventy-seven, abandoned equal temperament entirely. All frequency components, all temporal divisions, all formal proportions — based on powers of the golden ratio. Phi, one-point-six-one-eight. The result is crystalline inharmonic spectra that decay slowly into glassy reverberations.
+[cue: stria-excerpt-1]
 
-[pause 600ms]
-
-Listen for fifteen seconds.
-
-[pause 800ms]
-
-That is FM at irrational ratios, decades before anyone had a digital reverb. *Phoné*, nineteen eighty-one, used a custom FM configuration to model the singing voice — both the periodic glottal source and the resonant formants — anticipating CHANT-style vocal synthesis by years.
+That is FM at irrational ratios — bell-like spectra without a bell. Decades before anyone had a digital reverb, Chowning was generating *Stria* on a mainframe.
 
 [pause 400ms]
 
-Stanford, ironically, denied Chowning tenure in the traditional music department. The same year he founded CCRMA — the Center for Computer Research in Music and Acoustics — on the FM royalties that the music department had refused to consider serious work.
+Stanford, ironically, denied Chowning tenure in their music department. The same year, he founded CCRMA — the Center for Computer Research in Music and Acoustics — funded by the FM royalties his department had refused to consider serious work.

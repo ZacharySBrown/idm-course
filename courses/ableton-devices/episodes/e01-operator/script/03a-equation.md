@@ -1,17 +1,13 @@
-Take a sine wave. Use a second sine wave to modulate the first one's frequency. Crank the second wave into the audio range. The result is — mathematically — a comb of new frequencies above and below the carrier, spaced by the modulator frequency, with amplitudes set by Bessel functions of the modulation index.
-
-[pause 1000ms]
-
-If you didn't follow that, the next eight minutes are for you.
-
-[pause 600ms]
-
-The equation Chowning wrote in nineteen-sixty-seven looks like this. Y of t equals A times sine of two-pi-f-c-t plus I times sine of two-pi-f-m-t.
+Here's the recipe. Take a clean sine wave. That's your *carrier*. Now take a second sine wave, and use it to nudge the carrier's pitch up and down — slowly, like a vibrato. That's your *modulator*. Now turn up the modulator's speed. Past sixty oscillations a second. Past a hundred. Past a thousand.
 
 [pause 400ms]
 
-A is amplitude. F-c is the carrier frequency. F-m is the modulator frequency. I is the modulation index — the depth. That's it. One amplitude, two frequencies, one depth. Four numbers. From those four numbers you can synthesize a marimba, a bell, a clarinet, a chainsaw, the metallic clang on a Squarepusher record, and the swelling pad behind every nineteen-eighties NASA documentary.
+What started as vibrato turns into something else. The carrier doesn't sound like one tone wobbling anymore. It sounds like a *cluster* — a group of new tones, fanning out symmetrically above and below the original, all locked to the modulator's rhythm. Push the modulator's volume up: more tones appear, brighter and brighter. Pull it down: they retreat back into the carrier.
+
+[pause 600ms]
+
+Three knobs. Carrier pitch. Modulator pitch. Modulator volume. From those three you can synthesize a marimba, a bell, a clarinet, a chainsaw, the metallic clang on a Squarepusher record, and the swelling pad behind every nineteen-eighties NASA documentary.
 
 [pause 500ms]
 
-Pedantically, this is *phase* modulation, not frequency modulation. The DX7 and Operator both implement phase modulation internally because it avoids an integrator and stays DC-stable. PM and FM by a sinusoid are equivalent up to a ninety-degree phase offset. Robert Henke, who built Operator, will say this directly on his website: phase modulation, not frequency modulation, very similar sonic results, significantly easier to calculate. If you read FM marketing copy, what is doing the work is PM.
+Pedantic note for engineers in the audience — what we're describing is technically called *phase modulation*, not frequency modulation. The DX7 implements phase modulation internally because it's stabler in software. Sonically, the two are nearly identical. Robert Henke, who built Operator, will tell you this directly on his website. If you read FM marketing copy, what's actually doing the work is PM.

@@ -1,21 +1,13 @@
-To get the spectrum, you expand the sine-of-a-sine using an identity called Jacobi-Anger. The result is that the FM signal becomes a sum over integers, n, of Bessel functions of the first kind — J-sub-n of I — placed at sideband frequencies f-c plus n times f-m.
+There's a piece of math that describes exactly which new tones appear, and how loud each one gets, as you turn the modulator up. It's called a Bessel function — the same special function that shows up in physics when a wave bounces inside a drumhead. Same equation. Different physics. Same shape.
 
 [pause 500ms]
 
-Yes. *Those* Bessel functions. The same ones from your electromagnetism class. The same J-sub-n that shows up in cylindrical waveguides — because phase-modulating a sinusoid is mathematically the same problem as a wave bouncing inside a drumhead. Same equation. Different physics. Same special function.
+You don't need to know the formula. You need to know the *shape*. The shape says: turn the modulator up a little, and a few new tones appear close to the carrier. Turn it up more, the tones spread further out, and earlier tones get louder. Past a certain point, the original carrier itself disappears entirely — only the new tones remain. That's a real moment, and it has a name in synthesis: the carrier null. It's how the classic DX bell trick works.
 
 [pause 600ms]
 
-A few useful Bessel facts. J-sub-n falls off rapidly once n exceeds the modulation index — so high I means more sidebands, low I means fewer. *Carson's rule*, from nineteen-twenty-two: the significant sidebands extend to roughly I plus one each side, total bandwidth approximately two times I plus one times f-m. That captures more than ninety-eight percent of signal power for I between one and five.
+Listen for it. Starting with no modulation at all, then ramping the modulator's volume up over eight seconds. Pay attention to how partials *appear*. Like watching a spectrum bloom outward.
 
-[pause 400ms]
+[cue: op-mod-index-sweep]
 
-And J-zero — the carrier amplitude — has its first zero at I equals two-point-four-zero-four-eight. At that exact modulation index, the carrier line vanishes entirely. Only the sidebands remain. That's the signature DX-bell trick.
-
-[pause 600ms]
-
-Now listen. We're going to take a single Operator with one modulator at a one-to-one ratio, and ramp the modulator level — that is, the modulation index — from zero up to about five over eight seconds. Listen as new partials emerge in real time.
-
-[pause 800ms]
-
-What you just heard, in animation, is a Bessel function spectrum opening up. The brightness control on every FM patch you'll ever use is exactly that.
+That bloom — that's a Bessel function spectrum opening up. The brightness control on every FM patch you'll ever use is exactly that gesture.
