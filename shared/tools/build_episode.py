@@ -543,7 +543,12 @@ def build_one(
     total_ms = cursor
 
     # Chapter spans first piece's start → last piece's end within each block.
+    # Also emit a cuemap: the EXACT ms span of every spliced demo/song/transition
+    # piece in the final mp3 (role != narration). Clip files are named <id>.wav,
+    # so the piece path stem is the cue id. This lets the alignment tool measure
+    # and play demos precisely instead of guessing from chapter timings.
     chapters = []
+    cuemap = []
     piece_idx = 0
     for bidx, (title, parts) in enumerate(blocks):
         n = len(parts)
@@ -556,6 +561,17 @@ def build_one(
             "start_ms": start_ms,
             "end_ms": end_ms,
         })
+        for k, (ppath, prole) in enumerate(parts):
+            if prole == "narration":
+                continue
+            gi = piece_idx + k
+            cuemap.append({
+                "heading": title,
+                "cue_id": Path(ppath).stem,
+                "role": prole,
+                "demo_start_ms": piece_starts[gi],
+                "demo_end_ms": piece_starts[gi] + durations[gi],
+            })
         piece_idx += n
 
     out_mp3 = out_dir / f"{lesson_id}.mp3"
@@ -614,6 +630,7 @@ def build_one(
         bed_duck_db=beds_cfg.get("duck_db", -14),
     )
     write_chapters(out_mp3, chapters, sidecar)
+    (out_dir / f"{lesson_id}.cuemap.json").write_text(json.dumps(cuemap, indent=2))
 
     # Clean up the multi-hundred-MB intermediate bed track.
     if bed_track_path and bed_track_path.exists():

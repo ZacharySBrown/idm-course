@@ -33,3 +33,11 @@ Fifteen seconds of what Chowning did with that last ratio in nineteen-seventy-se
 [cue: stria-excerpt-2]
 
 Same equation as the marimba. Same equation as the clarinet. Same equation as the brass. The only thing that changed was a single ratio.
+
+[pause 500ms]
+
+You can hear that inharmonic-bell character in the wild on Aphex Twin's *Xtal* — *Selected Ambient Works*, nineteen-ninety-two. The crystalline lead that enters around thirty seconds. Listen to how each note's tail rings metallic and detuned, hanging longer than a clean sine would.
+
+[cue: xtal-bell]
+
+One caveat, because the receipts matter. The pad underneath that bell is not FM at all — Reverb Machine's twenty-twenty-two teardown traced it to a nineteen-eighty-six library record, a sampled Rhodes-and-voice through a Quadraverb. So *Xtal* teaches two things at once: real inharmonic FM in the lead, and a sampled pad doing the work everyone assumes is synthesis.

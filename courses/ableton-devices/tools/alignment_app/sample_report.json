@@ -1,0 +1,123 @@
+{
+  "episode_id": "e01-operator",
+  "episode_title": "Operator: The FM Machine",
+  "generated_at": "2026-06-27T12:00:00Z",
+  "generated_note": "before = shipped e01-operator.before.mp3 snapshot; after = rebuilt mp3 in-context if present, else bare clip",
+  "before_mp3": "../../../../build/ableton-devices/audio/episodes/e01-operator.before.mp3",
+  "after_mp3": "../../../../build/ableton-devices/audio/episodes/e01-operator.after.mp3",
+  "lead_in_ms": 3500,
+  "lead_out_ms": 3500,
+  "duration_ms": 2267107,
+  "slots": [
+    {
+      "index": 0,
+      "section": "Section 5 — Patch Walkthrough",
+      "slide_id": "05a-algo1",
+      "heading": "Step 1: Algorithm 1, all sines",
+      "cue_id": "op-poly-bell-step1",
+      "kind": "operator-demo",
+      "narration_before": "Operator hands you eleven algorithms, but every one of them starts in the same place: a single sine. Set every operator's wave to Sine, leave only operator A audible, and play a chord. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1659600, "end_ms": 1671100, "demo_start_ms": 1663100, "demo_end_ms": 1667600, "mean_db": -54.5, "peak_db": -38.0, "status": "silent", "measured_from_ms": 1663100 },
+      "after":  { "available": true, "source": "mp3", "in_context": true, "start_ms": 1659600, "end_ms": 1671100, "demo_start_ms": 1663100, "demo_end_ms": 1667600, "clip_path": "clips/op-poly-bell-step1.wav", "mean_db": -18.0, "peak_db": -3.0, "status": "ok" }
+    },
+    {
+      "index": 1,
+      "section": "Section 5 — Patch Walkthrough",
+      "slide_id": "05b-algo1-fm",
+      "heading": "Step 2: Bring in operator B as a modulator",
+      "cue_id": "op-poly-bell-step2",
+      "kind": "operator-demo",
+      "narration_before": "Now route operator B into A and crank B's level. You are no longer hearing a sine — you are hearing sidebands. The same chord, transformed. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1685700, "end_ms": 1698200, "demo_start_ms": 1689200, "demo_end_ms": 1694700, "mean_db": -19.2, "peak_db": -4.5, "status": "ok", "measured_from_ms": 1689200 },
+      "after":  { "available": true, "source": "wav", "in_context": false, "path": "clips/op-poly-bell-step2.wav", "mean_db": -17.4, "peak_db": -2.8, "status": "ok" }
+    },
+    {
+      "index": 2,
+      "section": "Section 5 — Patch Walkthrough",
+      "slide_id": "05c-ratio",
+      "heading": "Step 3: Detune the ratio to 2.01",
+      "cue_id": "op-poly-bell-step3",
+      "kind": "operator-demo",
+      "narration_before": "Push the modulator's coarse ratio to two and add a hair of fine tune — two point oh one. The bell stops being clean and starts to shimmer. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1708950, "end_ms": 1721500, "demo_start_ms": 1712450, "demo_end_ms": 1718000, "mean_db": -48.1, "peak_db": -41.0, "status": "quiet", "measured_from_ms": 1712450 },
+      "after":  { "available": true, "source": "mp3", "in_context": true, "start_ms": 1708950, "end_ms": 1721500, "demo_start_ms": 1712450, "demo_end_ms": 1718000, "clip_path": "clips/op-poly-bell-step3.wav", "mean_db": -16.9, "peak_db": -2.1, "status": "ok" }
+    },
+    {
+      "index": 3,
+      "section": "Section 5 — Patch Walkthrough",
+      "slide_id": "05d-env",
+      "heading": "Step 4: Fast decay on the modulator envelope",
+      "cue_id": "op-poly-bell-step4",
+      "kind": "operator-demo",
+      "narration_before": "A real bell is bright at the attack and dull as it rings out. Give operator B a fast-decaying envelope so the brightness collapses. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1737400, "end_ms": 1749900, "demo_start_ms": 1740900, "demo_end_ms": 1746400, "mean_db": -20.0, "peak_db": -5.2, "status": "ok", "measured_from_ms": 1740900 },
+      "after":  { "available": false, "source": "wav", "status": "missing", "mean_db": null, "peak_db": null }
+    },
+    {
+      "index": 4,
+      "section": "Section 5 — Patch Walkthrough",
+      "slide_id": "05e-final",
+      "heading": "Step 5: The finished bell patch",
+      "cue_id": "op-poly-bell-final",
+      "kind": "operator-demo",
+      "narration_before": "Put it together: detuned modulator, fast brightness decay, a touch of feedback on B. This is the patch. Play the chord one more time. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1767800, "end_ms": 1782300, "demo_start_ms": 1771300, "demo_end_ms": 1778800, "mean_db": -55.9, "peak_db": -47.0, "status": "silent", "measured_from_ms": 1771300 },
+      "after":  { "available": true, "source": "wav", "in_context": false, "path": "clips/op-poly-bell-final.wav", "mean_db": -15.8, "peak_db": -1.4, "status": "ok" }
+    },
+    {
+      "index": 5,
+      "section": "Section 6 — Bass & Texture",
+      "slide_id": "06a-fmbass",
+      "heading": "FM bass: hard ratio stack",
+      "cue_id": "op-fmbass-growl",
+      "kind": "operator-demo",
+      "narration_before": "Drop the algorithm to a stack and tune the modulator an octave up. Add feedback until it growls. This is where FM bass lives. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1816600, "end_ms": 1829100, "demo_start_ms": 1820100, "demo_end_ms": 1825600, "mean_db": -18.6, "peak_db": -2.9, "status": "ok", "measured_from_ms": 1820100 },
+      "after":  { "available": true, "source": "mp3", "in_context": true, "start_ms": 1816600, "end_ms": 1829100, "demo_start_ms": 1820100, "demo_end_ms": 1825600, "clip_path": "clips/op-fmbass-growl.wav", "mean_db": -17.1, "peak_db": -2.4, "status": "ok" }
+    },
+    {
+      "index": 6,
+      "section": "Section 6 — Bass & Texture",
+      "slide_id": "06b-pad",
+      "heading": "Detuned FM pad",
+      "cue_id": "op-pad-wide",
+      "kind": "operator-demo",
+      "narration_before": "Soften every envelope, spread the voices, and let two carriers beat against each other. The same engine that made a bell now makes a slow, wide pad. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1855200, "end_ms": 1869700, "demo_start_ms": 1858700, "demo_end_ms": 1866200, "mean_db": -52.3, "peak_db": -44.5, "status": "silent", "measured_from_ms": 1858700 },
+      "after":  { "available": true, "source": "wav", "in_context": false, "path": "clips/op-pad-wide.wav", "mean_db": -19.5, "peak_db": -4.0, "status": "ok" }
+    },
+    {
+      "index": 7,
+      "section": "Section 6 — Bass & Texture",
+      "slide_id": "06c-noise",
+      "heading": "Noise operator percussion",
+      "cue_id": "op-noise-hat",
+      "kind": "operator-demo",
+      "narration_before": "Operator's last operator can become noise. Filter it, gate it with a snappy envelope, and you have a hi-hat from the same instrument. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1897500, "end_ms": 1908000, "demo_start_ms": 1901000, "demo_end_ms": 1904500, "mean_db": -21.7, "peak_db": -6.0, "status": "ok", "measured_from_ms": 1901000 },
+      "after":  { "available": true, "source": "wav", "in_context": false, "path": "clips/op-noise-hat.wav", "mean_db": -20.8, "peak_db": -5.1, "status": "ok" }
+    },
+    {
+      "index": 8,
+      "section": "Section 7 — In Context",
+      "slide_id": "07a-loop",
+      "heading": "Full loop with all three patches",
+      "cue_id": "song-fm-loop",
+      "kind": "song-clip",
+      "narration_before": "Here is everything at once — the bell, the FM bass, and the noise hat — sequenced into eight bars. One synth, a whole arrangement. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1951900, "end_ms": 1970900, "demo_start_ms": 1955400, "demo_end_ms": 1967400, "mean_db": -14.9, "peak_db": -1.1, "status": "ok", "measured_from_ms": 1955400 },
+      "after":  { "available": true, "source": "mp3", "in_context": true, "start_ms": 1951900, "end_ms": 1970900, "demo_start_ms": 1955400, "demo_end_ms": 1967400, "clip_path": "clips/song-fm-loop.wav", "mean_db": -14.2, "peak_db": -0.8, "status": "ok" }
+    },
+    {
+      "index": 9,
+      "section": "Section 7 — In Context",
+      "slide_id": "07b-mix",
+      "heading": "The same loop, mixed and bussed",
+      "cue_id": "song-fm-loop-mixed",
+      "kind": "song-clip",
+      "narration_before": "Now glue it: a bus compressor, a touch of reverb send, and a high shelf. The difference between a patch and a record is the mix. Listen.",
+      "before": { "available": true, "source": "mp3", "in_context": true, "start_ms": 1977500, "end_ms": 1996500, "demo_start_ms": 1981000, "demo_end_ms": 1993000, "mean_db": -57.0, "peak_db": -49.0, "status": "silent", "measured_from_ms": 1981000 },
+      "after":  { "available": false, "source": "wav", "status": "missing", "mean_db": null, "peak_db": null }
+    }
+  ]
+}

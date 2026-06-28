@@ -15,3 +15,11 @@ The first preset on the cartridge was *E.PIANO 1*. Designed by Yamaha's house te
 [cue: greatest-love-epiano]
 
 That sound is on Whitney Houston's *Greatest Love of All*. Phil Collins. Tina Turner. The *Twin Peaks* theme. By nineteen-eighty-six, the DX7 was on roughly forty percent of US Billboard Hot 100 number-ones. Six operators. Fifty thousand transistors. The whole sound of a decade.
+
+[pause 500ms]
+
+E.PIANO 1 was the ballad. The other inescapable preset was the bass. ROM cartridge 1A, patch fifteen — *BASS 1*. A single carrier, one modulator at a one-to-one ratio, a sharp modulator envelope. That is the whole patch. You have heard it under a-ha's *Take On Me* — nineteen-eighty-five — before the chords arrive, just LinnDrum and that bass.
+
+[cue: take-on-me-bass]
+
+Two operators and an envelope, unmodified, under a startling share of nineteen-eighties pop low end. Not a sample. Not a Minimoog.

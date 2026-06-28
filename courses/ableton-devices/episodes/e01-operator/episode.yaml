@@ -125,7 +125,7 @@ slides:
   - id: 02e-dx7-lands
     heading: "The DX7 Defines Pop"
     script_md: script/02e-dx7-lands.md
-    demos: [greatest-love-epiano]
+    demos: [greatest-love-epiano, take-on-me-bass]
   - id: 02f-backlash
     heading: "The Backlash"
     script_md: script/02f-backlash.md
@@ -152,6 +152,7 @@ slides:
       - op-ratio-1-sqrt2
       - op-ratio-1-phi
       - stria-excerpt-2
+      - xtal-bell
   - id: 03d-mod-index
     heading: "Modulation Index Equals Brightness"
     script_md: script/03d-mod-index.md
@@ -176,6 +177,7 @@ slides:
   - id: 04d-envelopes
     heading: "Envelopes and the Five Loop Modes"
     script_md: script/04d-envelopes.md
+    demos: [an-ending-pad]
   - id: 04e-lfo
     heading: "LFO as Fifth Operator"
     script_md: script/04e-lfo.md
@@ -214,7 +216,7 @@ slides:
   - id: 05g-velocity
     heading: "Step 7: Velocity Routing"
     script_md: script/05g-velocity.md
-    demos: [op-poly-bell-step7]
+    demos: [op-poly-bell-step7, beep-street-velocity]
   - id: 05h-save
     heading: "Step 8: Save the Patch"
     script_md: script/05h-save.md
@@ -224,7 +226,7 @@ slides:
   - id: 06a-rhythmic-fm
     heading: "Rhythmic FM via Loop Modes"
     script_md: script/06a-rhythmic-fm.md
-    demos: [op-rhythmic-single]
+    demos: [op-rhythmic-single, bike-fm-perc]
   - id: 06b-layer
     heading: "Layered Polyrhythm"
     script_md: script/06b-layer.md
@@ -232,6 +234,7 @@ slides:
   - id: 06c-math-connect
     heading: "Connecting Back to the Math"
     script_md: script/06c-math-connect.md
+    demos: [black-refraction-fm]
   - id: 06d-wet-dry
     heading: "Wet/Dry, Squarepusher-Style"
     script_md: script/06d-wet-dry.md

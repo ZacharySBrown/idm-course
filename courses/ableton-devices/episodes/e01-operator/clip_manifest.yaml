@@ -59,6 +59,64 @@ song_clips:
     normalize_lufs: -16
     notes: "Second Stria excerpt — drop after the 1:φ ratio explanation in 03c-ratios."
 
+  # ── Added foreground catalog examples (cued "listen to this in a real
+  #    track" moments — distinct excerpts from the bed/transition regions).
+  #    Timestamps from specs/ableton_course_ep1_research.md §4. Adjust start/end
+  #    by ear if your rip differs; extract_clips.py re-cuts on edit.
+  - id: take-on-me-bass
+    source: "06_take-on-me.wav"
+    start: "0:00"
+    end: "0:12"
+    fade_in_ms: 120
+    fade_out_ms: 500
+    normalize_lufs: -16
+    notes: "a-ha — DX7 ROM 1A-15 'BASS 1' before the chords enter. LinnDrum + bass only."
+
+  - id: xtal-bell
+    source: "02_xtal.wav"
+    start: "0:30"
+    end: "0:40"
+    fade_in_ms: 150
+    fade_out_ms: 700
+    normalize_lufs: -16
+    notes: "Aphex Twin — bell lead ENTERS at 0:30 over an existing groove. NOTE: Xtal has a beat throughout (no isolated-bell section exists in this track). If it still reads as 'a beat,' drop this example or swap a cleaner bell source."
+
+  - id: an-ending-pad
+    source: "04_an-ending-ascent.wav"
+    start: "0:00"
+    end: "0:16"
+    fade_in_ms: 0
+    fade_out_ms: 2500
+    normalize_lufs: -16
+    notes: "Eno — DX7 'Glide' anti-pluck pad, multi-second attack, no transient. Long natural tail."
+
+  - id: beep-street-velocity
+    source: "05_beep-street.wav"
+    start: "0:22"
+    end: "0:36"
+    fade_in_ms: 200
+    fade_out_ms: 700
+    normalize_lufs: -16
+    notes: "Squarepusher — TX81Z lead before drums; loud notes break into metallic edge (velocity→mod level)."
+
+  - id: bike-fm-perc
+    source: "03_bike.wav"
+    start: "0:04"
+    end: "0:18"
+    fade_in_ms: 200
+    fade_out_ms: 600
+    normalize_lufs: -16
+    notes: "Autechre — metallic FM percussion clicks in the opening 30s of Incunabula's 'Bike'."
+
+  - id: black-refraction-fm
+    source: "10_black-refraction.wav"
+    start: "1:30"
+    end: "1:48"
+    fade_in_ms: 1500
+    fade_out_ms: 2200
+    normalize_lufs: -16
+    notes: "Tim Hecker — modern FM ambient: stacked Operator instances, irrational ratios, LFO-drifted index. Distinct from the outro bed (1:00–2:00)."
+
   # ── Transition cues (background music between sections) ─────────────────
   # Long fades, lower normalization target. Referenced by id from
   # `episode.yaml > transitions.insertions[].clip_id`. extract_clips.py cuts
@@ -680,22 +738,22 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 0.8
       "Osc-A Feedb": 0
-      "Ae Mode": "Trigger"
-      "Ae Attack": 0.01
-      "Ae Decay": 0.20
+      "Ae Mode": "Beat"             # carrier AMPLITUDE pulses on the grid → metallic rhythmic hits
+      "Ae Retrig": 2                # ≈ 1/16 (calibrated by audition)
+      "Ae Attack": 0.0
+      "Ae Decay": 0.12
       "Ae Sustain": 0.0
-      "Ae Release": 0.05
+      "Ae Release": 0.0
       "Osc-B On": "On"
       "Osc-B Wave": "Sine"
       "B Coarse": 11
       "B Fine": 0
       "Osc-B Level": 0.7
       "Osc-B Feedb": 0
-      "Be Mode": "Beat"
-      "Be Retrig": 2                 # ≈ 1/16 (verify by audition)
+      "Be Mode": "None"             # B modulates continuously → metallic timbre under each hit
       "Be Attack": 0.0
-      "Be Decay": 0.03               # peak decay ~30ms
-      "Be Sustain": 0.0
+      "Be Decay": 1.0
+      "Be Sustain": 1.0
       "Be Release": 0.0
       "Osc-C On": "Off"
       "Osc-D On": "Off"
@@ -713,22 +771,22 @@ operator_demos:
       "A Fine": 0
       "Osc-A Level": 0.8
       "Osc-A Feedb": 0
-      "Ae Mode": "Trigger"
-      "Ae Attack": 0.01
-      "Ae Decay": 0.20
+      "Ae Mode": "Beat"             # different rate + ratio → the second polyrhythm layer
+      "Ae Retrig": 4                # ≈ 1/8 (distinct from instance-1's 1/16)
+      "Ae Attack": 0.0
+      "Ae Decay": 0.18
       "Ae Sustain": 0.0
-      "Ae Release": 0.05
+      "Ae Release": 0.0
       "Osc-B On": "On"
       "Osc-B Wave": "Sine"
       "B Coarse": 13
       "B Fine": 0
       "Osc-B Level": 0.7
       "Osc-B Feedb": 0
-      "Be Mode": "Beat"
-      "Be Retrig": 4                 # ≈ 1/8 dotted (verify)
+      "Be Mode": "None"
       "Be Attack": 0.0
-      "Be Decay": 0.03
-      "Be Sustain": 0.0
+      "Be Decay": 1.0
+      "Be Sustain": 1.0
       "Be Release": 0.0
       "Osc-C On": "Off"
       "Osc-D On": "Off"

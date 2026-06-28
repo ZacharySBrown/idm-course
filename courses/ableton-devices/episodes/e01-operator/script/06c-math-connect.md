@@ -11,3 +11,11 @@ This is exactly the territory of struck metal — gongs, plates, anvils. Real-wo
 [pause 500ms]
 
 Which is why FM became the defining synthesis method for IDM percussion. The instrument was already producing the texture electronic-music producers had to fake on every other architecture.
+
+[pause 500ms]
+
+And it did not stop in the nineties. Tim Hecker's *Black Refraction*, from *Ravedeath, 1972* — that is the year in the title, the record is twenty-eleven — is FM ambient built the modern way. Stack several Operator instances at irrational ratios, stretch the envelopes to several seconds, and let slow LFOs drag the modulator levels around so the harmonic content never sits still.
+
+[cue: black-refraction-fm]
+
+That is *An Ending (Ascent)* thirty years on, darker, with the reverb pushed past the point of decency. Same Bessel mathematics. Same six-operator logic Chowning scratched out at Stanford in nineteen-sixty-seven. The decisions moved; the equation did not.

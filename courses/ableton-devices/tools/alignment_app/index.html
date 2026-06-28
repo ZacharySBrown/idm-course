@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alignment Spot-Check</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header id="topbar">
+    <div class="brand">
+      <div class="brand-mark">ALIGN</div>
+      <div class="brand-titles">
+        <div class="ep-title" id="epTitle">&mdash;</div>
+        <div class="ep-meta">
+          <span id="epId" class="mono">&mdash;</span>
+          <span class="sep">&middot;</span>
+          <span>generated</span>
+          <span id="epGenerated" class="mono">&mdash;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend" id="legend">
+      <span class="legend-item"><i class="dot st-ok"></i>ok</span>
+      <span class="legend-item"><i class="dot st-quiet"></i>quiet</span>
+      <span class="legend-item"><i class="dot st-silent"></i>silent</span>
+      <span class="legend-item"><i class="dot st-missing"></i>missing</span>
+    </div>
+
+    <div class="toolbar">
+      <label class="toggle">
+        <input type="checkbox" id="problemsOnly" />
+        <span>problem slots only</span>
+      </label>
+      <div class="transport" id="transport">
+        <span class="transport-label">STOPPED</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="summary" class="summary"></section>
+
+  <main id="list" class="list" tabindex="0"></main>
+
+  <footer id="statusbar" class="statusbar">
+    <span id="reportSource" class="mono">loading&hellip;</span>
+    <span class="hint mono">J/K move &middot; B before &middot; A after &middot; Space stop &middot; Enter expand</span>
+  </footer>
+
+  <!-- shared episode players for mp3 segments: before_mp3 and after_mp3 -->
+  <audio id="beforeAudio" preload="none"></audio>
+  <audio id="afterAudio" preload="none"></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -39,3 +39,9 @@ songs/
 #   build/diagram_sanity.*           — QA reports
 #   build/images_fetch_status.json
 #   podcast.xml + artwork.jpg        — load-bearing published podcast feed
+
+# QA: pre-fix episode snapshot (large, transient)
+build/ableton-devices/audio/episodes/*.before.mp3
+# Local Ableton render set + captured recordings (not source)
+/operator-template Project/
+**/Samples/Recorded/
