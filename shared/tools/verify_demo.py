@@ -64,13 +64,19 @@ def _active(x: np.ndarray, sr: int, thr_db: float = -45.0) -> np.ndarray:
 def centroid_trend(x, sr) -> dict:
     c = librosa.feature.spectral_centroid(y=x, sr=sr)[0]
     if len(c) < 4:
-        return {"start": float(c.mean()), "end": float(c.mean()), "ratio": 1.0, "monotonic_frac": 0.0}
+        m = float(c.mean())
+        return {"start": m, "end": m, "ratio": 1.0, "trend": 0.0, "monotonic_frac": 0.0}
     n = max(1, len(c) // 5)
     start = float(np.median(c[:n])); end = float(np.median(c[-n:]))
-    # fraction of frames where centroid is non-decreasing (smoothed)
-    cs = np.convolve(c, np.ones(5) / 5, mode="valid")
+    # trend = Pearson correlation of centroid with time. Robust to the sideband
+    # fluctuation in an FM sweep (which breaks naive frame-to-frame monotonicity)
+    # while still distinguishing a real upward sweep from a flat tone.
+    t = np.arange(len(c), dtype=float)
+    cs = np.convolve(c, np.ones(5) / 5, mode="same")
+    trend = float(np.corrcoef(t, cs)[0, 1]) if np.std(cs) > 1e-9 else 0.0
     mono = float(np.mean(np.diff(cs) >= -1e-6))
-    return {"start": start, "end": end, "ratio": end / max(start, 1e-9), "monotonic_frac": mono}
+    return {"start": start, "end": end, "ratio": end / max(start, 1e-9),
+            "trend": round(trend, 3), "monotonic_frac": round(mono, 3)}
 
 
 def rms_flatness(x, sr) -> float:
@@ -141,9 +147,9 @@ def check(kind: str, clip: str, b: str | None = None, **kw):
 
     if kind == "index-sweep":
         ct = centroid_trend(seg, sr); fl = rms_flatness(seg, sr)
-        ok = ct["ratio"] >= 1.3 and ct["monotonic_frac"] >= 0.6 and fl >= 0.5
+        ok = ct["ratio"] >= 1.3 and ct["trend"] >= 0.5 and fl >= 0.5
         return ok, {"centroid": ct, "rms_flatness": round(fl, 3),
-                    "why": "centroid must rise ≥1.3x monotonically while loudness stays flat"}
+                    "why": "centroid must rise ≥1.3x with positive time-trend while loudness stays flat"}
 
     if kind in ("harmonic", "inharmonic"):
         h = harmonic_comb_score(seg, sr)
@@ -157,8 +163,8 @@ def check(kind: str, clip: str, b: str | None = None, **kw):
 
     if kind == "feedback-sweep":
         ct = centroid_trend(seg, sr)
-        ok = ct["ratio"] >= 1.4 and ct["monotonic_frac"] >= 0.55
-        return ok, {"centroid": ct, "why": "spectral centroid must grow across the clip"}
+        ok = ct["ratio"] >= 1.4 and ct["trend"] >= 0.5
+        return ok, {"centroid": ct, "why": "spectral centroid must grow with positive time-trend"}
 
     if kind == "rhythmic":
         o = onset_rate(seg, sr)

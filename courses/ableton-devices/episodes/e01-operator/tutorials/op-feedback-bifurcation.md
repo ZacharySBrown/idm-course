@@ -1,9 +1,10 @@
 # Patch tutorial — `op-feedback-bifurcation`
 
-**Preset:** `presets/op-feedback-bifurcation.adv`  ·  **Concept:** _(add concept)_
+**Preset:** `presets/op-feedback-bifurcation.adv`  ·  **Concept:** Feedback → progressive harmonic complexity
 
-> Single operator A, sine, full sustain. Discrete feedback steps every 1.5s: 0 → 40 → 60 → 70 (LOM scale 0-100).
-
+> Single operator A, sine, full sustain. Feedback should sweep 0→high.
+>
+> **You should hear:** A pure sine roughening into a saw-like buzz as self-feedback increases.
 
 Build from a **freshly loaded Operator** (init). One parameter per step;
 the right column is your self-check.

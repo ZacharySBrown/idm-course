@@ -45,3 +45,6 @@ build/ableton-devices/audio/episodes/*.before.mp3
 # Local Ableton render set + captured recordings (not source)
 /operator-template Project/
 **/Samples/Recorded/
+
+# intermediate bed track (build_episode deletes it post-build; large)
+*.bed.wav

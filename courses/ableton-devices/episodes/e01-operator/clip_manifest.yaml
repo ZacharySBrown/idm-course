@@ -227,9 +227,14 @@ song_clips:
 # (the render JS doesn't reset Operator between demos).
 operator_demos:
   - id: op-mod-index-sweep
-    description: "Single carrier (sine) + single modulator (sine) at 1:1. Ramp modulator Level from 0 to 1.0 over 8 seconds. Hold C3 throughout."
-    duration_s: 9
-    midi: {note: "C3", length_s: 8.5}
+    concept: "Modulation index → brightness"
+    what_you_hear: "One held pitch, constant in pitch and loudness, opening from a pure sine into a bright brass-like buzz as the modulator fades in."
+    description: "Carrier (sine) + modulator (sine) at 1:1. The modulator's own envelope has a LONG attack, so the modulation index — and thus brightness — sweeps up over the held note. Deterministic (no live param automation)."
+    structure: sweep
+    isolates: "Be Attack (modulator fade-in = index sweep)"
+    duration_s: 4.2          # just the sweep — modulator reaches full ~3.2s, no static tail
+    midi: {note: "C3", length_s: 3.9}
+    verification: {check: index-sweep}
     params:
       "Algorithm": "Alg. 1"
       "Osc-A On": "On"
@@ -247,17 +252,15 @@ operator_demos:
       "Osc-B Wave": "Sine"
       "B Coarse": 1
       "B Fine": 0
-      "Osc-B Level": 0.0       # ramped via automation below
+      "Osc-B Level": 0.95      # modulator depth; its ENVELOPE sweeps the index in
       "Osc-B Feedb": 0
       "Be Mode": "None"
-      "Be Attack": 0.0
+      "Be Attack": 0.85        # LONG fade-in → modulation index ramps 0→max over the note
       "Be Decay": 1.0
       "Be Sustain": 1.0
       "Be Release": 0.30
       "Osc-C On": "Off"
       "Osc-D On": "Off"
-    automation:
-      "Osc-B Level": {from: 0.0, to: 1.0, ramp_s: 8.0, rate_hz: 30}
 
   - id: op-ratio-1to1
     description: "Algorithm 1, A and B sine. Coarse 1:1. Modulator Level 80. Hold C3 5s."
@@ -410,7 +413,18 @@ operator_demos:
       "Osc-C On": "Off"
       "Osc-D On": "Off"
   - id: op-feedback-bifurcation
-    description: "Single operator A, sine, full sustain. Discrete feedback steps every 1.5s: 0 → 40 → 60 → 70 (LOM scale 0-100)."
+    concept: "Feedback → progressive harmonic complexity"
+    what_you_hear: "A pure sine roughening into a saw-like buzz as self-feedback increases."
+    description: "Single operator A, sine, full sustain. Feedback should sweep 0→high."
+    structure: sweep
+    verification: {check: feedback-sweep}
+    # KNOWN ISSUE (Gate 7 FAIL, flagged 2026-06-28): setting Osc-A Feedb (index 26,
+    # 0-100) over AbletonOSC does NOT engage feedback — static Feedb=80 yields
+    # centroid 360Hz vs 264Hz pure sine (no real brightening). Carrier-feedback in
+    # Alg. 1 may behave differently than expected, or the param needs a modulator
+    # routing. RE-CUT TODO (Ableton Expert): resolve the feedback param mapping —
+    # likely render as a discrete LADDER of static-feedback clips on a MODULATOR
+    # operator (concat), since envelopes can't sweep feedback.
     duration_s: 6.5
     midi: {note: "C3", length_s: 6.5}
     params:

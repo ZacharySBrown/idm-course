@@ -1,9 +1,10 @@
 # Patch tutorial — `op-mod-index-sweep`
 
-**Preset:** `presets/op-mod-index-sweep.adv`  ·  **Concept:** _(add concept)_
+**Preset:** `presets/op-mod-index-sweep.adv`  ·  **Concept:** Modulation index → brightness
 
-> Single carrier (sine) + single modulator (sine) at 1:1. Ramp modulator Level from 0 to 1.0 over 8 seconds. Hold C3 throughout.
-
+> Carrier (sine) + modulator (sine) at 1:1. The modulator's own envelope has a LONG attack, so the modulation index — and thus brightness — sweeps up over the held note. Deterministic (no live param automation).
+>
+> **You should hear:** One held pitch, constant in pitch and loudness, opening from a pure sine into a bright brass-like buzz as the modulator fades in.
 
 Build from a **freshly loaded Operator** (init). One parameter per step;
 the right column is your self-check.
@@ -27,10 +28,10 @@ the right column is your self-check.
 | 14 | Osc B | Wave | Sine |  |
 | 15 | Osc B | Coarse | 1 |  |
 | 16 | Osc B | Fine | 0 |  |
-| 17 | Osc B | Level | 0  *(0–1 ≈ 0%)* |  |
+| 17 | Osc B | Level | 0.95  *(0–1 ≈ 95%)* |  |
 | 18 | Osc B | Feedback | 0 |  |
 | 19 | Osc B | Env Mode | None |  |
-| 20 | Osc B | Env Attack | 0  *(norm 0–1; set by ear)* |  |
+| 20 | Osc B | Env Attack | 0.85  *(norm 0–1; set by ear)* |  |
 | 21 | Osc B | Env Decay | 1  *(norm 0–1; set by ear)* |  |
 | 22 | Osc B | Env Sustain | 1  *(norm 0–1; set by ear)* |  |
 | 23 | Osc B | Env Release | 0.3  *(norm 0–1; set by ear)* |  |
