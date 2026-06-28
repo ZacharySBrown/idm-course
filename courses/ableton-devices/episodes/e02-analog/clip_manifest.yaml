@@ -1,0 +1,989 @@
+# clip_manifest — every audio asset spliced into e02-analog.mp3.
+#
+# Two families:
+#   song_clips   — extracted from acquired tracks via shared/tools/extract_clips.py
+#   device_demos — rendered by the analog-render tool (AbletonOSC / M4L freeze
+#                  pipeline; `an-` prefix). Mirrors e01's operator_demos family
+#                  but the device is Ableton Analog (subtractive, AAS).
+#
+# Each entry's `id` matches a slide's `demos:` reference in episode.yaml.
+# Output paths: <build_root>/audio/clips/<episode>/<id>.wav
+#                = build/ableton-devices/audio/clips/e02-analog/<id>.wav
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# REQUIRED SOURCE WAVs — the user must acquire these and drop them in
+#   songs/ableton-ep02/  (git-ignored; copyrighted — cite, don't commit)
+# ─────────────────────────────────────────────────────────────────────────────
+#   01_acid-tracks.wav      Phuture — "Acid Tracks" (1987, Trax)         [TB-303]
+#   02_flash-light.wav      Parliament — "Flash Light" (1978)            [Minimoog]
+#   03_digeridoo.wav        Aphex Twin — "Digeridoo" (1992, R&S)         [self-osc analog]
+#   04_tri-repetae.wav      Autechre — Tri Repetae-era track (1995)      [MS-20/MC-202]
+#   05_i-feel-love.wav      Donna Summer — "I Feel Love" (1977)          [Moog Modular] (bed/transition only)
+#   06_can-you-feel-it.wav  Mr. Fingers — "Can You Feel It" (1986)       [Juno-60]    (bed/transition only)
+#
+# Acquire as 44.1k/16-or-24-bit stereo WAV. Filenames above are the `source:`
+# values below; rename your rips to match (or edit `source:` per entry).
+# Timestamps are from specs/ableton_course_ep2_analog_research.md §4; re-cut by
+# ear if your rip differs — extract_clips.py re-slices on edit.
+
+# Where the user drops acquired song WAVs. Override per entry if needed.
+song_source_dir: songs/ableton-ep02
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SONG CLIPS — acquired-track excerpts (foreground cues, transitions, beds)
+# ═══════════════════════════════════════════════════════════════════════════════
+song_clips:
+
+  # ── Foreground cues (referenced by id from episode.yaml > slides[].demos) ───
+  - id: acid-tracks-cold-open
+    source: "01_acid-tracks.wav"
+    start: "1:27"
+    end: "1:35"
+    fade_in_ms: 600
+    fade_out_ms: 1800
+    normalize_lufs: -14          # song role under cold-open narration; master chain finishes it
+    notes: "The squelchy resonant 303 alone, ~1:27 — cutoff/reso swept by hand. Under the cold open. Adjust start if the solo-303 region sits elsewhere in your rip."
+
+  - id: flash-light-bass
+    source: "02_flash-light.wav"
+    start: "0:00"
+    end: "0:08"
+    fade_in_ms: 120
+    fade_out_ms: 500
+    normalize_lufs: -16
+    notes: "Parliament — the elastic rubber-band Minimoog bass riff (stacked Minimoogs, pitch-bend). Drop under 02b 'rubber-band bass.' Move start to the bass-hook entry in your rip."
+
+  - id: acid-tracks-303
+    source: "01_acid-tracks.wav"
+    start: "3:00"
+    end: "3:10"
+    fade_in_ms: 300
+    fade_out_ms: 900
+    normalize_lufs: -16
+    notes: "A second, longer Acid Tracks excerpt for 02e — now the listener knows what the knobs do (accent, slide, resonance). Pick a busier 303 passage than the cold-open cut so they don't read as identical."
+
+  - id: digeridoo-clip
+    source: "03_digeridoo.wav"
+    start: "0:20"
+    end: "0:30"
+    fade_in_ms: 300
+    fade_out_ms: 900
+    normalize_lufs: -16
+    notes: "Aphex — the self-oscillating drone bass (no actual didgeridoo). For the A/B against an-digeridoo-drone in 06a. Pick a section where the drone is exposed over the break."
+
+  - id: tri-repetae-clip
+    source: "04_tri-repetae.wav"
+    start: "0:30"
+    end: "0:40"
+    fade_in_ms: 300
+    fade_out_ms: 900
+    normalize_lufs: -16
+    notes: "Autechre — resonant/self-oscillating filter texture (MS-20/MC-202, lo-fi processed). Reference for the an-ms20-scream A/B in 06b. Choose a passage where the resonant-filter timbre is foregrounded."
+
+  # ── Transition cues (background music between sections) ─────────────────────
+  #   Long fades, quiet normalization. Referenced from episode.yaml >
+  #   transitions.insertions[].clip_id (currently TBD — wire these ids in after
+  #   SCRIPT LOCK). extract_clips.py cuts them like song clips.
+  - id: trans-flash-light          # after 02f-virtual-analog → into synthesis (03)
+    source: "02_flash-light.wav"
+    start: "0:30"
+    end: "0:42"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "End of section 2 (history) → section 3 (synthesis). Warm Moog-bass groove under the door."
+
+  - id: trans-i-feel-love          # after 03f-drive → into device (04)
+    source: "05_i-feel-love.wav"
+    start: "0:10"
+    end: "0:24"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "End of section 3 (synthesis) → section 4 (Ableton deep-dive). The 16th-note Moog sequence as a pulse bed."
+
+  - id: trans-can-you-feel-it      # after 04f-voice-architecture → into walkthrough (05)
+    source: "06_can-you-feel-it.wav"
+    start: "0:20"
+    end: "0:34"
+    fade_in_ms: 3000
+    fade_out_ms: 4000
+    normalize_lufs: -22
+    notes: "End of section 4 (device) → section 5 (patch walkthrough). Warm Juno-60 chorus pad."
+
+  - id: trans-acid-tracks          # after 05i-save → into IDM application (06)
+    source: "01_acid-tracks.wav"
+    start: "5:00"
+    end: "5:12"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "End of walkthrough → section 6 (IDM). Squelchy 303 carries the two-bass payoff into the abuse section."
+
+  - id: trans-tri-repetae          # after 06d-fat-principle → into the exercise
+    source: "04_tri-repetae.wav"
+    start: "2:00"
+    end: "2:14"
+    fade_in_ms: 3000
+    fade_out_ms: 4500
+    normalize_lufs: -22
+    notes: "Before the listener-exercise outro. Late-Autechre stillness to land the episode."
+
+  # ── Background beds (sidechain-ducked under narration) ──────────────────────
+  #   Long, slow, loop-friendly, normalized quiet (-26 LUFS) so they sit far
+  #   below the voice even before the duck. Referenced from episode.yaml >
+  #   beds.insertions[].clip_id (TBD — wire after lock).
+  - id: bed-flash-light            # section 2 (history)
+    source: "02_flash-light.wav"
+    start: "2:30"
+    end: "3:10"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    notes: "Section 2 (history) bed — sparse Parliament groove, era-appropriate, low and slow."
+
+  - id: bed-i-feel-love            # section 3 (synthesis)
+    source: "05_i-feel-love.wav"
+    start: "3:00"
+    end: "3:40"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    notes: "Section 3 (synthesis deep-dive) bed — the relentless Moog sequence, hypnotic under theory."
+
+  - id: bed-can-you-feel-it        # section 4 (device)
+    source: "06_can-you-feel-it.wav"
+    start: "1:30"
+    end: "2:10"
+    fade_in_ms: 4000
+    fade_out_ms: 5000
+    normalize_lufs: -26
+    notes: "Section 4 (Ableton deep-dive) bed — Juno chorus pad, warm and stationary."
+
+  - id: bed-tri-repetae            # section 6 (IDM application + outro)
+    source: "04_tri-repetae.wav"
+    start: "1:00"
+    end: "2:00"
+    fade_in_ms: 4000
+    fade_out_ms: 5000
+    normalize_lufs: -26
+    notes: "Section 6 (IDM application + exercise) bed — late Autechre lo-fi stillness."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DEVICE DEMOS — Ableton Analog patches, rendered headless (an- prefix)
+# ═══════════════════════════════════════════════════════════════════════════════
+# Rendered via the analog-render pipeline (AbletonOSC / M4L freeze; mirrors e01's
+# operator_render — to be scaffolded for Analog). Each entry declares the patch
+# parameters + MIDI clip + render settings, isolates ONE variable, and carries a
+# teaching `structure` (ab | sweep | ladder | single) plus a `verification`
+# block. Output: build/ableton-devices/audio/clips/e02-analog/<id>.wav
+#
+# PARAMETER NAMES — best-effort. Analog's LOM-exposed device-parameter names are
+# NOT yet probed (no analog.json equivalent of e01's operator.json exists). Names
+# below follow the Live 12 Analog UI labels from the dossier §1; ones marked
+# `# UNCERTAIN` need confirmation against the LOM dump once analog-render is
+# scaffolded (lom_probe → param_maps/analog.json). Treat numeric values for
+# Freq/Reso/Detune/Drive as starting points to tune by ear after first render.
+#
+# CONVENTIONS (mirrors the §1 dossier reference):
+#   Osc Shape    : "Sine" | "Saw" | "Rect" | "Noise"   (no triangle)
+#   Filter Type  : "LP" | "HP" | "BP" | "Notch" | "Formant", each "2"(12dB) or "4"(24dB)
+#   Filter Freq  : Hz where given; else 0-1 normalized (UNCERTAIN scaling)
+#   Reso         : 0-100 (%)
+#   Drive        : "Off" | "Sym" | "Asym"
+#   Detune       : cents (osc ±300; global ±50)
+#   Routing      : "Series" | "Parallel"  (Series = F1.To F2 full)
+#   Env amounts  : 0-100 unless noted
+# Each demo sets every relevant param explicitly so it is self-contained (the
+# render driver does not reset Analog between demos).
+device_demos:
+
+  # ── 03a — oscillator spectra ────────────────────────────────────────────────
+  - id: an-pwm-sweep
+    concept: "Pulse width → harmonic content (even harmonics appear)"
+    what_you_hear: "One held note, constant pitch and loudness, the tone thinning and nasalizing as the duty cycle narrows from 50% — even harmonics fading in with no filter touched."
+    structure: sweep
+    isolates: "OSC1 Pulse Width"
+    duration_s: 4.5
+    midi: {note: "C3", length_s: 4.2}
+    verification:
+      check: pwm-sweep
+      audible: "Pitch and loudness constant; only the timbre thins/nasalizes."
+      spectral: "At PW=50% the spectrum is odd-harmonic-only (square); as PW narrows, even harmonics rise and energy spreads upward. Spectral centroid rises monotonically; even-harmonic energy increases start→end."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Rect"
+      "OSC1 Pulse Width": {automation: {from: 50, to: 8, over_s: 4.0}}  # % duty; sweep 50→narrow
+      "OSC1 Octave": 0
+      "OSC1 Detune": 0
+      "OSC1 Sub": 0
+      "OSC1 F1/F2": "F1"            # full to filter 1   # UNCERTAIN param name (balance slider)
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"            # filter wide open so it does NOT color the demo
+      "FIL1 Freq": 18000           # Hz; effectively bypassed
+      "FIL1 Reso": 0
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 5         # ms
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 80       # ms
+      "Error": 0                   # keep the spectrum clean so PW is the only variable
+
+  # ── 03b — slope ─────────────────────────────────────────────────────────────
+  - id: an-slope-12-vs-24
+    concept: "Filter slope (poles) → darkness above cutoff"
+    what_you_hear: "The same held saw at the same cutoff, played twice: 12 dB then 24 dB. The 24 dB version is audibly darker above the cutoff — twice the roll-off."
+    structure: ab
+    isolates: "FIL1 slope (2nd-order 12 dB vs 4th-order 24 dB)"
+    duration_s: 5.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 2.0}    # segment A: 12 dB
+        - {note: "C3", t: 2.6, length_s: 2.0}    # segment B: 24 dB
+    verification:
+      check: slope-ab
+      audible: "Same pitch/cutoff both segments; segment B has less high-frequency content."
+      spectral: "Segment B's spectral centroid and high-band energy are measurably lower than A's at the identical cutoff (steeper roll-off above f_c). A ≈ B ⇒ reject."
+    # Rendered as two takes (12 dB then 24 dB) concatenated with a beat of silence
+    # between. Only FIL1 Type changes; cutoff, note, resonance, level held.
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": {ab: ["LP2", "LP4"]}   # A = 12 dB, B = 24 dB — the ONE variable
+      "FIL1 Freq": 800             # Hz; same for both segments
+      "FIL1 Reso": 15              # slight, identical both segments
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 5
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 120
+      "Error": 0
+
+  # ── 03c — self-oscillation ──────────────────────────────────────────────────
+  - id: an-reso-to-self-osc
+    concept: "Resonance → self-oscillation (the filter becomes a sine oscillator)"
+    what_you_hear: "A held saw with the resonance climbing from zero to maximum: a peak emerges at the cutoff, sharpens, then the filter sings its own near-pure sine — Barkhausen unity gain, by ear."
+    structure: sweep
+    isolates: "FIL1 Reso (0 → 100)"
+    duration_s: 6.0
+    midi: {note: "C3", length_s: 5.7}
+    verification:
+      check: reso-self-osc
+      audible: "Loudness roughly constant; a tuned peak emerges and turns into a sustained sine tone at the cutoff."
+      spectral: "Narrow spectral peak at f_c grows and dominates; by clip end a single near-pure partial at the cutoff (low spectral spread, high tonality). Flat/absent peak ⇒ reject."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 600             # Hz; fixed so the sung sine is a clear pitch
+      "FIL1 Reso": {automation: {from: 0, to: 100, over_s: 5.5}}  # the ONE variable
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 10
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 150
+      "Error": 0
+
+  # ── 03d — beating (Reese) ───────────────────────────────────────────────────
+  - id: an-reese-detune-sweep
+    concept: "Detuning two saws → beating / phase-cancellation ('fat' = interference)"
+    what_you_hear: "A held low note: two saws starting in unison (static), then OSC2 detuned 0 → 20 cents — the static tone blooms into a slow, accelerating 'wub' with no LFO anywhere."
+    structure: sweep
+    isolates: "OSC2 Detune (0 → 20 cents)"
+    duration_s: 6.0
+    midi: {note: "C1", length_s: 5.7}
+    verification:
+      check: reese-detune
+      audible: "Pitch/loudness steady; an amplitude beating emerges and its rate rises as detune widens."
+      spectral: "Onset of amplitude modulation (beat envelope) at Δf that increases start→end; near-zero AM at clip start. No AM growth ⇒ reject (the detune automation didn't take)."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Detune": 0
+      "OSC1 F1/F2": "F1"           # UNCERTAIN — both oscs to F1
+      "OSC2 On": "On"
+      "OSC2 Shape": "Saw"
+      "OSC2 Detune": {automation: {from: 0, to: 20, over_s: 5.5}}  # cents — the ONE variable
+      "OSC2 F1/F2": "F1"           # UNCERTAIN
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 1200            # Hz; low-ish, fixed — tames the saws but lets the beat through
+      "FIL1 Reso": 10
+      "FIL1 Drive": "Sym"          # touch of body
+      "AMP1 Env Attack": 10
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 150
+      "Error": 0                   # the beating must come from Detune, not from Error drift
+
+  # ── 03d — PWM strings ───────────────────────────────────────────────────────
+  - id: an-pwm-strings
+    concept: "LFO → Pulse Width = one oscillator behaving like two (PWM strings)"
+    what_you_hear: "A single rectangular oscillator on a held chord, an LFO slowly sweeping the pulse width: a lush, chorusing string-ensemble shimmer from one oscillator and no chorus effect."
+    structure: single
+    isolates: "LFO1 → OSC1 Pulse Width (PWM); everything else held"
+    duration_s: 5.0
+    midi:
+      notes:
+        - {note: "C3", t: 0, length_s: 4.6}
+        - {note: "Eb3", t: 0, length_s: 4.6}
+        - {note: "G3", t: 0, length_s: 4.6}
+    verification:
+      check: pwm-strings
+      audible: "Steady chord with a slow chorusing/phasing movement; no second oscillator, no chorus device."
+      spectral: "Periodic motion of the sinc nulls at the LFO rate — a slow, regular spectral modulation matching LFO1 Rate. Static spectrum ⇒ the LFO→PW routing didn't take ⇒ reject."
+    # `single` justified: PWM movement on a sustained chord is unmistakable on any
+    # speaker, and the concept (one osc = two) has no honest A/B without building
+    # the two-osc version, which is a different demo (an-reese-detune-sweep).
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Rect"
+      "OSC1 Pulse Width": 50       # LFO modulates around this center
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "LFO1 On": "On"
+      "LFO1 Shape": "Sine"         # UNCERTAIN enum label ("Sine"/"Tri"/"Rect"/"Noise")
+      "LFO1 Rate": 0.4             # Hz (free) — slow chorus rate   # UNCERTAIN units
+      "LFO1 → PW Amount": 35       # routes LFO1 to OSC1 Pulse Width  # UNCERTAIN routing param name
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 4000            # Hz; gentle top-end taming, fixed
+      "FIL1 Reso": 5
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 300       # ms — slow string swell
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 600
+      "Error": 8                   # small drift adds ensemble width (still one osc)
+
+  # ── 03e — filter env vs amp env ─────────────────────────────────────────────
+  - id: an-filter-env-vs-amp-env
+    concept: "Same envelope, two destinations: filter env = brightness, amp env = loudness"
+    what_you_hear: "One decay shape played twice. First on the FILTER envelope: the note 'plucks' brighter→darker at constant volume. Then on the AMP envelope: the loudness drops while the timbre stays put. Same shape, opposite result."
+    structure: ab
+    isolates: "Decay envelope destination (filter Freq vs amp Level)"
+    duration_s: 6.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 2.2}    # segment A: filter env decay, amp sustained
+        - {note: "C3", t: 3.0, length_s: 2.2}    # segment B: amp env decay, filter static
+    verification:
+      check: env-destination-ab
+      audible: "Segment A: constant loudness, brightness collapses (a wah/pluck). Segment B: loudness collapses, brightness constant."
+      spectral: "A: RMS roughly flat while spectral centroid falls over the note. B: centroid roughly flat while RMS falls. If both segments behave the same ⇒ reject (the routing didn't differ)."
+    # The explicit Ep1 callback (FM modulator-env vs subtractive filter-env). The
+    # decay TIME/shape is identical between segments; only its destination moves.
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      # Segment A: filter env sweeps cutoff; amp env holds. Segment B: inverse.
+      "FIL1 Freq": 700             # base cutoff
+      "FIL1 Reso": 25
+      "FIL1 Drive": "Off"
+      "FIL1 Env Amount": {ab: [70, 0]}    # A: filter env drives cutoff; B: off  # UNCERTAIN name
+      "FIL1 Env Attack": 5
+      "FIL1 Env Decay": 600        # ms — the shared decay shape
+      "FIL1 Env Sustain": 0
+      "AMP1 Env Attack": 5
+      "AMP1 Env Decay": {ab: [0, 600]}    # A: sustained (no amp decay); B: same 600ms decay
+      "AMP1 Env Sustain": {ab: [100, 0]}  # A: full sustain; B: decays to silence
+      "AMP1 Env Release": 120
+      "Error": 0
+
+  # ── 03f — drive ─────────────────────────────────────────────────────────────
+  - id: an-drive-sym-vs-asym
+    concept: "Filter Drive: symmetric (odd harmonics) vs asymmetric (even harmonics)"
+    what_you_hear: "The same resonant note played twice at the same cutoff: Drive=Sym (fuzzy, odd-harmonic, square-ward) then Drive=Asym (warmer, even-harmonic, tube-ish). Same sweep, different grit."
+    structure: ab
+    isolates: "FIL1 Drive mode (Sym vs Asym)"
+    duration_s: 5.0
+    midi:
+      notes:
+        - {note: "C2", t: 0.0, length_s: 2.0}    # segment A: Sym
+        - {note: "C2", t: 2.6, length_s: 2.0}    # segment B: Asym
+    verification:
+      check: drive-ab
+      audible: "Same pitch/cutoff; A reads as harder/buzzier, B as warmer/rounder."
+      spectral: "Segment A's added harmonics are predominantly ODD; segment B adds significant EVEN (notably 2nd) harmonic energy. Equal harmonic profiles ⇒ reject."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 500             # Hz; identical both segments
+      "FIL1 Reso": 40              # enough drive into the saturation stage
+      "FIL1 Drive": {ab: ["Sym", "Asym"]}   # the ONE variable
+      "AMP1 Env Attack": 5
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 120
+      "Error": 0
+
+  # ── 04b — the Error thesis ──────────────────────────────────────────────────
+  - id: an-error-drift
+    concept: "Error → re-injected per-voice tuning drift ('make it analog')"
+    what_you_hear: "The same sustained chord twice: Error=0 (dead-stable, clinical) then Error dialed up (each voice drifts slightly out of tune — the model 'comes alive')."
+    structure: ab
+    isolates: "Global Error (0 vs raised)"
+    duration_s: 7.0
+    midi:
+      notes:
+        # segment A: Error 0
+        - {note: "C3", t: 0.0, length_s: 2.6}
+        - {note: "E3", t: 0.0, length_s: 2.6}
+        - {note: "G3", t: 0.0, length_s: 2.6}
+        # segment B: Error raised
+        - {note: "C3", t: 3.4, length_s: 2.6}
+        - {note: "E3", t: 3.4, length_s: 2.6}
+        - {note: "G3", t: 3.4, length_s: 2.6}
+    verification:
+      check: error-ab
+      audible: "Segment A perfectly still; segment B has slow beating/chorusing between voices."
+      spectral: "Segment B shows per-partial micro-detuning ⇒ amplitude beating / spectral-line broadening absent in A. A ≈ B ⇒ Error didn't engage ⇒ reject."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "On"
+      "OSC2 Shape": "Saw"
+      "OSC2 Detune": 0             # keep Detune at 0 so Error is the ONLY source of drift
+      "OSC2 F1/F2": "F1"           # UNCERTAIN
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 3000            # open-ish, fixed
+      "FIL1 Reso": 10
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 80
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 400
+      "Voices": 4                  # polyphony for the chord; per-voice Error needs voices
+      "Error": {ab: [0, 35]}       # the ONE variable (0 → raised)  # UNCERTAIN scale (0-100?)
+
+  # ── 04c — sync ──────────────────────────────────────────────────────────────
+  - id: an-sync-ratio-sweep
+    concept: "Hard-sync Ratio → tearing/formant sweep (the screaming sync lead)"
+    what_you_hear: "One held note, the sync Ratio swept up: the waveform is hard-restarted faster and faster, the harmonics tearing upward into the classic screaming sync lead."
+    structure: sweep
+    isolates: "OSC1 Sync Ratio"
+    duration_s: 5.0
+    midi: {note: "C3", length_s: 4.7}
+    verification:
+      check: sync-sweep
+      audible: "Constant fundamental pitch; a formant/harmonic peak sweeps upward as Ratio rises."
+      spectral: "A moving formant peak / rising spectral centroid driven by the sync restart rate; fundamental stays fixed. Flat centroid ⇒ Ratio sweep didn't take ⇒ reject."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sync Mode": "Sync"     # UNCERTAIN enum label
+      "OSC1 Sync Ratio": {automation: {from: 1.0, to: 8.0, over_s: 4.5}}  # the ONE variable  # UNCERTAIN range/units
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 16000           # wide open so sync content is unmasked
+      "FIL1 Reso": 0
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 5
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 120
+      "Error": 0
+
+  # ── 04d — MS-20 series filter ───────────────────────────────────────────────
+  - id: an-ms20-series-filter
+    concept: "Two filters in series: resonant HP → resonant LP (the MS-20 band)"
+    what_you_hear: "A saw through a resonant high-pass into a resonant low-pass, the two cutoffs swept against each other: a vocal, hollow, band-limited sweep — the MS-20's HP→LP architecture rebuilt in Analog."
+    structure: sweep
+    isolates: "FIL1 Freq (HP) swept while FIL2 (LP) holds — the band edge moving"
+    duration_s: 6.0
+    midi: {note: "C2", length_s: 5.7}
+    verification:
+      check: ms20-series
+      audible: "A pass-band that narrows/moves; resonant peaks on both edges; no all-pass 'full' moment."
+      spectral: "Band-pass response (low and high roll-off simultaneously) with two resonant peaks; the lower edge sweeps with FIL1 Freq while the upper edge (FIL2) holds. A flat LP-only response ⇒ series routing didn't engage ⇒ reject."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"           # into filter 1 first  # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "Routing": "Series"          # F1 → F2  # UNCERTAIN representation
+      "FIL1 To F2": 100            # full series amount  # UNCERTAIN name
+      "FIL1 Type": "HP4"           # resonant high-pass
+      "FIL1 Freq": {automation: {from: 200, to: 2000, over_s: 5.5}}  # the ONE variable (HP edge sweeps)
+      "FIL1 Reso": 65
+      "FIL1 Drive": "Off"
+      "FIL2 Type": "LP4"           # resonant low-pass
+      "FIL2 Freq": 2400            # Hz; held — the upper band edge
+      "FIL2 Reso": 65
+      "FIL2 Follow": "Off"
+      "AMP1 Env Attack": 10
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 150
+      "Error": 0
+
+  # ── 04f — unison supersaw ───────────────────────────────────────────────────
+  - id: an-unison-supersaw
+    concept: "Unison voices + Detune → the JP-8000 Supersaw (fat = many copies that almost agree)"
+    what_you_hear: "A held chord played twice: Unison off (thin, single saw per note) then Unison 4 + Detune (a wide, shimmering supersaw wall). Same notes, four detuned copies each."
+    structure: ab
+    isolates: "Unison (Off vs 4 voices) with Detune"
+    duration_s: 6.0
+    midi:
+      notes:
+        # segment A: unison off
+        - {note: "C3", t: 0.0, length_s: 2.4}
+        - {note: "G3", t: 0.0, length_s: 2.4}
+        # segment B: unison 4 + detune
+        - {note: "C3", t: 3.2, length_s: 2.4}
+        - {note: "G3", t: 3.2, length_s: 2.4}
+    verification:
+      check: unison-ab
+      audible: "Segment B is wider, thicker, and chorusing vs the thin segment A; same pitches."
+      spectral: "Segment B shows each harmonic split into a cluster of detuned lines (stereo-widened, beating); segment A shows single clean lines. A ≈ B ⇒ Unison didn't engage ⇒ reject."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 6000            # bright so the supersaw shimmer is audible
+      "FIL1 Reso": 5
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 60
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 300
+      "Voices": 6
+      "Unison Mode": {ab: ["Off", "4"]}   # the ONE variable (Off vs 4 voices)  # UNCERTAIN enum
+      "Unison Detune": 30          # cents spread; only audible when Unison is on
+
+  # ── 05a–05f — the 303 acid build (ladder of patch steps) ────────────────────
+  - id: an-303-step1
+    concept: "303 build step 1 — mono saw, glide + legato (the raw source)"
+    what_you_hear: "A bare sawtooth, monophonic, notes gliding into each other — no filter shaping yet. The starting material."
+    structure: single
+    isolates: "Source only (saw, mono, glide) — nothing subtracted yet"
+    duration_s: 4.0
+    midi: {pattern: "C2-C2-Eb2-C2 16ths, 2 bars, 130 BPM, some overlapping (legato) notes", length_s: 3.8}
+    verification:
+      check: step-self
+      audible: "A bright unfiltered saw line with audible glide between overlapping notes."
+    params:
+      "Voices": 1                  # mono
+      "Glide Mode": "Const"        # UNCERTAIN enum ("Const"/"Prop")
+      "Glide Time": 60             # ms — short  # UNCERTAIN units
+      "Legato": "On"
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sub": 0
+      "OSC1 F1/F2": "F1"           # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 16000           # wide open this step
+      "FIL1 Reso": 0
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 2
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 80
+      "Error": 0
+
+  - id: an-303-step2
+    concept: "303 build step 2 — add the resonant 24 dB low-pass"
+    what_you_hear: "The same line, now darkened and slightly peaky as a 24 dB low-pass closes over it with light resonance. The carve begins."
+    structure: single
+    isolates: "FIL1 engaged (LP4, mid cutoff, ~40% reso) vs step1's open filter"
+    duration_s: 4.0
+    midi: {pattern: "C2-C2-Eb2-C2 16ths, 2 bars, 130 BPM, some legato", length_s: 3.8}
+    verification:
+      check: step-self
+      audible: "Same line as step1, audibly darker with a slight resonant edge."
+    params:
+      "Voices": 1
+      "Glide Mode": "Const"
+      "Glide Time": 60
+      "Legato": "On"
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sub": 0
+      "OSC1 F1/F2": "F1"           # full to F1  # UNCERTAIN
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"           # 24 dB
+      "FIL1 Freq": 700             # Hz; mid — the carve
+      "FIL1 Reso": 40              # %
+      "FIL1 Drive": "Off"
+      "AMP1 Env Attack": 2
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 80
+      "Error": 0
+
+  - id: an-303-step3
+    concept: "303 build step 3 — filter envelope → Freq (the per-note 'wow')"
+    what_you_hear: "Each note now blips open and shut: a fast filter-envelope decay sweeps the cutoff per note while the volume stays constant — the acid 'wow'."
+    structure: single
+    isolates: "FIL1 Env Amount + short Decay added (filter env → cutoff)"
+    duration_s: 4.0
+    midi: {pattern: "C2-C2-Eb2-C2 16ths, 2 bars, 130 BPM, some legato", length_s: 3.8}
+    verification:
+      check: step-self
+      audible: "Per-note brightness blip (open→shut) at constant loudness."
+    params:
+      "Voices": 1
+      "Glide Mode": "Const"
+      "Glide Time": 60
+      "Legato": "On"
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sub": 0
+      "OSC1 F1/F2": "F1"
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 400             # lower base; the env opens it upward per note
+      "FIL1 Reso": 40
+      "FIL1 Drive": "Off"
+      "FIL1 Env Amount": 75        # filter env → cutoff, high  # UNCERTAIN name
+      "FIL1 Env Attack": 2
+      "FIL1 Env Decay": 180        # ms — short, the per-note wow
+      "FIL1 Env Sustain": 0        # falls back to base cutoff
+      "AMP1 Env Attack": 2
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 80
+      "Error": 0
+
+  - id: an-303-step4
+    concept: "303 build step 4 — resonance up toward self-oscillation (the squelch)"
+    what_you_hear: "Same line, the resonance pushed to ~80%: the per-note sweep sharpens into the singing squelch that defines acid."
+    structure: single
+    isolates: "FIL1 Reso (40% → ~80%)"
+    duration_s: 4.0
+    midi: {pattern: "C2-C2-Eb2-C2 16ths, 2 bars, 130 BPM, some legato", length_s: 3.8}
+    verification:
+      check: step-self
+      audible: "Sharper, more vocal/squelchy resonant peak on each note vs step3."
+    params:
+      "Voices": 1
+      "Glide Mode": "Const"
+      "Glide Time": 60
+      "Legato": "On"
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sub": 0
+      "OSC1 F1/F2": "F1"
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 400
+      "FIL1 Reso": 80              # the ONE change from step3
+      "FIL1 Drive": "Off"
+      "FIL1 Env Amount": 75
+      "FIL1 Env Attack": 2
+      "FIL1 Env Decay": 180
+      "FIL1 Env Sustain": 0
+      "AMP1 Env Attack": 2
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 80
+      "Error": 0
+
+  - id: an-303-step5
+    concept: "303 build step 5 — Asym Drive for dirt + Env<Vel for the accent"
+    what_you_hear: "Asymmetric drive adds 303-style grit; high-velocity (accented) notes now open brighter than soft ones — that's the accent button, as velocity → filter-envelope depth."
+    structure: single
+    isolates: "FIL1 Drive=Asym + FIL1 Env<Vel raised (accent via velocity)"
+    duration_s: 5.0
+    # Two velocity levels in the pattern so the accent is audible within the clip.
+    midi: {pattern: "C2-C2-Eb2-C2 16ths, 2 bars, 130 BPM; alternate vel 60 / vel 120 to show accent; some legato", length_s: 4.8}
+    verification:
+      check: step-accent
+      audible: "Gritty tone; accented (loud-velocity) notes audibly brighter/more open than soft ones."
+      spectral: "High-velocity notes show higher spectral centroid / more open filter than low-velocity at the same pitch. Equal ⇒ Env<Vel didn't take ⇒ reject."
+    params:
+      "Voices": 1
+      "Glide Mode": "Const"
+      "Glide Time": 60
+      "Legato": "On"
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sub": 0
+      "OSC1 F1/F2": "F1"
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 400
+      "FIL1 Reso": 80
+      "FIL1 Drive": "Asym"        # dirt
+      "FIL1 Env Amount": 75
+      "FIL1 Env Attack": 2
+      "FIL1 Env Decay": 180
+      "FIL1 Env Sustain": 0
+      "FIL1 Env < Vel": 60        # velocity → filter-env depth = the accent  # UNCERTAIN name
+      "AMP1 Env Attack": 2
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 80
+      "Error": 0
+
+  - id: an-303-step6
+    concept: "303 build step 6 — the full acid line with cutoff automated"
+    what_you_hear: "The finished 303: a 16th-note line with slides, FIL1 Freq swept by automation across the loop — saw, resonant low-pass, and a hand on the cutoff."
+    structure: single
+    isolates: "FIL1 Freq automation across the loop (the performed cutoff)"
+    duration_s: 8.0
+    midi: {pattern: "16th acid line with slides (legato), 4 bars, 130 BPM, accents on the offbeats", length_s: 7.7}
+    verification:
+      check: step-self
+      audible: "A complete acid line whose cutoff visibly opens and closes across the loop."
+      spectral: "Spectral centroid tracks the FIL1 Freq automation curve across the clip (non-flat). Flat ⇒ automation didn't render ⇒ reject."
+    params:
+      "Voices": 1
+      "Glide Mode": "Const"
+      "Glide Time": 60
+      "Legato": "On"
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sub": 0
+      "OSC1 F1/F2": "F1"
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": {automation: {from: 300, to: 2200, over_s: 3.85, then_back_to: 300}}  # performed sweep
+      "FIL1 Reso": 80
+      "FIL1 Drive": "Asym"
+      "FIL1 Env Amount": 75
+      "FIL1 Env Attack": 2
+      "FIL1 Env Decay": 180
+      "FIL1 Env Sustain": 0
+      "FIL1 Env < Vel": 60
+      "AMP1 Env Attack": 2
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 80
+      "Error": 0
+
+  # ── 05g–05h — the morph into a Reese ────────────────────────────────────────
+  - id: an-reese-morph
+    concept: "Morph the 303 into a Reese — add OSC2 saw, detune, sub, drop the filter env"
+    what_you_hear: "The same patch with OSC2 turned on and detuned ±18 cents, Sub on, the filter envelope dropped and the cutoff lowered: the acid squelch becomes a fat, growling detuned bass."
+    structure: single
+    isolates: "OSC2 On + Detune ±18c + Sub on + filter-env removed (303 → Reese)"
+    duration_s: 5.0
+    midi: {note: "C1", length_s: 4.7}    # held low note so the beating reads
+    verification:
+      check: step-self
+      audible: "A sustained low growl with slow beating between two detuned saws; no per-note filter wow."
+      spectral: "Steady detuned-saw spectrum with amplitude beating at the OSC1/OSC2 Δf; no per-note centroid sweep. Per-note wow still present ⇒ filter env not dropped ⇒ reject."
+    params:
+      "Voices": 1
+      "Glide Mode": "Const"
+      "Glide Time": 60
+      "Legato": "On"
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sub": 60               # sub-osc weight on  # UNCERTAIN scale
+      "OSC1 Detune": 0
+      "OSC1 F1/F2": "F1"
+      "OSC2 On": "On"              # the pivot — second saw
+      "OSC2 Shape": "Saw"
+      "OSC2 Detune": 18            # cents — the Reese beating
+      "OSC2 F1/F2": "F1"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 500             # lower, fixed — Reese is darker
+      "FIL1 Reso": 20              # back off the squelch
+      "FIL1 Drive": "Sym"
+      "FIL1 Env Amount": 0         # filter envelope DROPPED (the morph)
+      "FIL1 Env Decay": 180
+      "FIL1 Env Sustain": 100
+      "AMP1 Env Attack": 5
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 200
+      "Error": 0
+
+  - id: an-reese-final
+    concept: "The finished Reese — hold a low note, hear the saws beat (and accelerate up the keyboard)"
+    what_you_hear: "Two detuned saws on a held low note: the 'wub' of phase cancellation with no LFO, the beating speeding up as the pitch rises (constant-cents detune)."
+    structure: single
+    isolates: "Pitch (low note held, then a higher note) — beating rate scales with pitch"
+    duration_s: 6.0
+    midi:
+      notes:
+        - {note: "C1", t: 0.0, length_s: 2.6}    # slow beating
+        - {note: "C2", t: 3.0, length_s: 2.6}    # faster beating (octave up)
+    verification:
+      check: reese-pitch
+      audible: "Audible beating on both notes; the higher note beats roughly twice as fast (Δf scales with f)."
+      spectral: "Amplitude-beat rate on the C2 note is ~2x the C1 note (constant cents ⇒ Δf doubles per octave). Equal rates ⇒ detune is set in Hz not cents, or didn't render ⇒ reject."
+    params:
+      "Voices": 1
+      "Glide Mode": "Const"
+      "Glide Time": 60
+      "Legato": "On"
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 Sub": 60
+      "OSC1 Detune": 0
+      "OSC1 F1/F2": "F1"
+      "OSC2 On": "On"
+      "OSC2 Shape": "Saw"
+      "OSC2 Detune": 18
+      "OSC2 F1/F2": "F1"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 500
+      "FIL1 Reso": 20
+      "FIL1 Drive": "Sym"
+      "FIL1 Env Amount": 0
+      "AMP1 Env Attack": 5
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 200
+      "Error": 0
+
+  - id: an-303-reese-final
+    concept: "The saved 'Subtractive-303-Reese' patch — both sounds from one device"
+    what_you_hear: "A short A/B: four bars of the acid 303 line, then four bars of the Reese on a held low note — two of the most influential bass sounds from one default Analog patch."
+    structure: ab
+    isolates: "Patch mode (303 acid config vs Reese config) — same device, two presets"
+    duration_s: 9.0
+    midi:
+      notes:
+        - {pattern: "303 acid 16th line, 4 bars, 130 BPM (uses the 303 config)", t: 0.0, length_s: 3.7}
+        - {note: "C1", t: 4.2, length_s: 3.7}    # Reese held low note (Reese config)
+    verification:
+      check: patch-ab
+      audible: "Segment A: resonant per-note acid squelch. Segment B: sustained detuned-saw Reese growl. Clearly two different sounds from one chain."
+      spectral: "A shows per-note centroid sweeps + high resonance; B shows steady detuned-saw beating, lower/flatter centroid. A ≈ B ⇒ reject."
+    # Rendered as two takes from the same saved patch with the documented two
+    # parameter sets (303 = an-303-step6 config; Reese = an-reese-final config),
+    # concatenated with a beat of silence. The saved preset is the source of truth.
+    params:
+      "_segment_A": "use an-303-step6 params (303 acid config)"
+      "_segment_B": "use an-reese-final params (Reese config)"
+
+  # ── 06a — self-oscillation as a sound source (Digeridoo) ────────────────────
+  - id: an-digeridoo-drone
+    concept: "Play the self-oscillating filter as an instrument (the Digeridoo rebuild)"
+    what_you_hear: "Oscillators off, Reso at max, a 24 dB LP self-oscillating into a sine, key-tracked so the keyboard plays it — then an LFO sweeps the cutoff for the drone. The filter IS the oscillator."
+    structure: single
+    isolates: "Filter-as-oscillator (osc levels 0, Reso max, key-tracked Freq + LFO)"
+    duration_s: 7.0
+    midi:
+      notes:
+        - {note: "C1", t: 0.0, length_s: 3.2}    # play the self-osc filter as a pitched drone
+        - {note: "G1", t: 3.4, length_s: 3.2}    # tracks the keyboard ⇒ it's an oscillator
+    verification:
+      check: self-osc-instrument
+      audible: "A near-sine drone whose pitch follows the played note, with a slow LFO wobble on top."
+      spectral: "Dominant single partial that changes pitch with MIDI note (key-tracked), slow cyclic modulation at the LFO rate. No pitch tracking ⇒ Freq key-track didn't engage ⇒ reject."
+    params:
+      "OSC1 On": "Off"             # oscillators down — the filter is the source
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 200             # base; key-track + LFO move it
+      "FIL1 Reso": 100             # self-oscillation
+      "FIL1 Drive": "Off"
+      "FIL1 Freq Key": 100         # cutoff tracks MIDI pitch ⇒ playable  # UNCERTAIN name
+      "LFO1 On": "On"
+      "LFO1 Shape": "Sine"
+      "LFO1 Rate": 5               # Hz — the drone wobble  # UNCERTAIN units
+      "LFO1 → FIL1 Freq Amount": 20   # UNCERTAIN routing name
+      "AMP1 Env Attack": 50
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 200
+      "Error": 0
+
+  # ── 06b — MS-20 abused ──────────────────────────────────────────────────────
+  - id: an-ms20-scream
+    concept: "The MS-20 dual filter pushed past polite (HP→LP series, both screaming)"
+    what_you_hear: "A saw through a resonant HP into a resonant LP in series, both cutoffs swept hard against each other into a vocal, screaming, semi-broken sweep — the Autechre move before the lo-fi degrade."
+    structure: sweep
+    isolates: "Both filter cutoffs swept in opposition (HP up while LP down)"
+    duration_s: 6.0
+    midi: {note: "C2", length_s: 5.7}
+    verification:
+      check: ms20-scream
+      audible: "An aggressive, vocal, resonant sweep with a moving narrow pass-band; no clean/full moment."
+      spectral: "Two resonant peaks converging then diverging as the cutoffs cross; high tonality at the crossing point. A static spectrum ⇒ the opposed automation didn't render ⇒ reject."
+    # Distinct from an-ms20-series-filter (04d): here BOTH cutoffs sweep in
+    # OPPOSITION and resonances are pushed to extreme — the IDM abuse, not the
+    # clean architecture demo. Post-chain (bitcrush + short reverb) is applied in
+    # the mix, not baked into this render.
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "Routing": "Series"
+      "FIL1 To F2": 100
+      "FIL1 Type": "HP4"
+      "FIL1 Freq": {automation: {from: 150, to: 1800, over_s: 5.5}}   # HP sweeps UP
+      "FIL1 Reso": 85              # pushed
+      "FIL1 Drive": "Asym"
+      "FIL2 Type": "LP4"
+      "FIL2 Freq": {automation: {from: 3000, to: 700, over_s: 5.5}}   # LP sweeps DOWN (opposition)
+      "FIL2 Reso": 85
+      "FIL2 Follow": "Off"
+      "AMP1 Env Attack": 10
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 150
+      "Error": 5
+
+  # ── 06c — looping envelope as rhythm ────────────────────────────────────────
+  - id: an-loop-env-pulse
+    concept: "Looping filter envelope (AD-R) = rhythm from one held note (no LFO, no sequencer)"
+    what_you_hear: "A single held note; the filter envelope set to loop (AD-R) at a tempo-ish rate cycles the cutoff open and shut — an evolving rhythmic filter pulse with nothing sequencing it."
+    structure: single
+    isolates: "FIL1 Env Loop = AD-R (the envelope itself becomes the rhythm)"
+    duration_s: 6.0
+    midi: {note: "C2", length_s: 5.8}    # ONE sustained note — the loop does the rhythm
+    verification:
+      check: loop-env-rhythm
+      audible: "A regular, repeating filter open/close pulse from a single sustained note."
+      spectral: "Periodic spectral-centroid modulation at the loop rate (regular onsets) over one continuous note. No periodic motion ⇒ loop didn't engage ⇒ reject (the static-envelope failure mode from the ep1 rhythmic-demo lesson)."
+    params:
+      "OSC1 On": "On"
+      "OSC1 Shape": "Saw"
+      "OSC1 F1/F2": "F1"
+      "OSC2 On": "Off"
+      "Noise On": "Off"
+      "FIL1 Type": "LP4"
+      "FIL1 Freq": 350             # base; the looping env opens it
+      "FIL1 Reso": 55
+      "FIL1 Drive": "Off"
+      "FIL1 Env Amount": 80
+      "FIL1 Env Loop": "AD-R"      # the ONE variable that makes this rhythmic  # UNCERTAIN enum label
+      "FIL1 Env Attack": 40        # ms — sets the pulse rise
+      "FIL1 Env Decay": 220        # ms — sets the pulse fall; A+D = the loop period
+      "FIL1 Env Sustain": 0
+      "AMP1 Env Attack": 10
+      "AMP1 Env Decay": 0
+      "AMP1 Env Sustain": 100
+      "AMP1 Env Release": 150
+      "Error": 0

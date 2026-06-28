@@ -1,0 +1,275 @@
+id: e02-analog
+title: "Analog: The Subtractive Foundation"
+device: Analog
+synthesis_type: "Subtractive (VCO → VCF → VCA)"
+week: 2                        # episode-number alias for shared build_episode
+target_duration_minutes: 40
+ableton_manual_url: "https://www.ableton.com/en/manual/live-instrument-reference/"
+
+idm_primary_artists:
+  - Aphex Twin
+  - Autechre
+  - Squarepusher
+idm_primary_records:
+  - "Aphex Twin — Selected Ambient Works 85-92"
+  - "Autechre — Tri Repetae"
+  - "Plastikman — Sheet One"
+adjacent_genres:
+  - acid house
+  - Detroit techno
+  - drum and bass
+
+# Bibliography references checked by validate.ts; full entries in references/bibliography.json.
+# NOTE: ep02 bib keys to be added during scripting — listed here as the citation
+# spine the Researcher's dossier (specs/ableton_course_ep2_analog_research.md) hangs on.
+references:
+  - bib:ableton_manual_analog
+  - bib:aas_ultra_analog
+  - bib:ableton_press_live7_suite
+  - bib:moog_patent_us3475623
+  - bib:wikipedia_minimoog
+  - bib:wikipedia_subtractive_synthesis
+  - bib:wikipedia_arp_2600
+  - bib:wikipedia_tb303
+  - bib:stinchcombe_diode_ladder
+  - bib:sos_oberheim_sem
+  - bib:wikipedia_prophet5
+  - bib:rbma_dj_pierre_phuture
+  - bib:roland_articles_hsoc
+  - bib:musicradar_saunderson_reese
+  - bib:ni_reese_bass
+  - bib:vintagesynth_ms20
+  - bib:szabo_supersaw
+  - bib:huovilainen_dafx04
+  - bib:sos_pwm_strings
+  - bib:sos_i_feel_love
+
+# Background-music transitions inserted after specific slides. Each entry's
+# clip_id resolves to an entry in clip_manifest.yaml (under song_clips). Left
+# minimal for the skeleton — Sound Designer fills clip ids after SCRIPT LOCK.
+transitions:
+  enabled: true
+  insertions:
+    - after_slide: 02f-virtual-analog          # end of section 2 (history) → into 3
+      clip_id: TBD
+    - after_slide: 03f-drive                    # end of section 3 (synthesis) → into 4
+      clip_id: TBD
+    - after_slide: 04f-voice-architecture       # end of section 4 (device) → into 5
+      clip_id: TBD
+    - after_slide: 05i-save                      # end of walkthrough → into 6
+      clip_id: TBD
+    - after_slide: 06d-fat-principle             # before listener exercise
+      clip_id: TBD
+
+# Background music beds — sidechain-ducked under narration. Left minimal for the
+# skeleton; ranges are placeholders the Sound Designer tightens after lock.
+beds:
+  enabled: true
+  duck_db: -14
+  insertions:
+    - clip_id: TBD
+      start_at_slide: 02a-silver-box
+      end_at_slide: 02f-virtual-analog
+      gain_db: -3
+    - clip_id: TBD
+      start_at_slide: 03a-oscillator-spectra
+      end_at_slide: 03f-drive
+      gain_db: -2
+    - clip_id: TBD
+      start_at_slide: 04a-origin
+      end_at_slide: 04f-voice-architecture
+      gain_db: -3
+    - clip_id: TBD
+      start_at_slide: 06a-self-oscillation
+      end_at_slide: 06e-exercise
+      gain_db: -3
+
+# Episode runs as a sequence of slides (chunks); shared/tools/build_episode.py
+# concatenates narration WAVs in this order, splicing demo clips after each
+# slide's narration. Each demo id resolves via clip_manifest.yaml to either a
+# song-clip or analog-render WAV. Analog device renders use the `an-` prefix.
+#
+# ── ARC (planted up front — this is the ep1 structural lesson applied) ──────
+#   FOCUS SENTENCE: "Subtractive synthesis is the oldest idea in the box —
+#     start with a rich sound and carve away what you don't want — and 'analog
+#     character' is just the imperfection a perfect digital model has to add
+#     back; your hand on the cutoff knob is still the instrument."
+#   DRIVING QUESTION: "Why did one idea — filter a rich source down — outlast
+#     every machine built to do it, and what does Analog have to fake to keep it
+#     alive?"
+#   SURPRISING PAYOFF: the signal chain never changed since Moog's 1964 modules;
+#     what changed is that the filter became a performance instrument (Phuture's
+#     hands), then a physics demo (Aphex's self-oscillation), then a perfect
+#     model that has to ADD drift back to sound alive.
+#   PAYOFF REFRAIN (seed in 01-cold-open; echo once per act boundary —
+#     02f / 03f / 04f / 05i — and land in 06e): "Start rich. Carve. Listen."
+#   ANECDOTE/REFLECTION ALTERNATION: history beats (silver box, Phuture, Aphex,
+#     Saunderson) are ANECDOTE; theory + device beats are REFLECTION; the
+#     walkthrough is hands-on. Keep them interleaved — never run >2 reflection
+#     beats without an anecdote (the ep1 Section-4 flatline failure).
+#   ACT-BOUNDARY SIGNPOSTS: every section-opening slide names the stop and ties
+#     it to the focus sentence (cold open plants the four-stop map; each act open
+#     says "you are here"). See script/*.md headers.
+slides:
+  # ── Cold Open (90s) — confession: the box built to fail. PLANT HERE: the
+  #    four-stop map (history / theory / the device / make-IDM-with-it) and the
+  #    first instance of the "Start rich. Carve. Listen." refrain. ────────────
+  - id: 01-cold-open
+    heading: "Cold Open"
+    script_md: script/01-cold-open.md
+    demos: [acid-tracks-cold-open]
+
+  # ── Section 2: History & Theory (8–9 min, 6 beats) ─────────────────────
+  #    ACT OPEN — signpost: "Stop one — where this idea came from." 02a defines
+  #    subtractive concretely (osc → filter → amp, start rich) so every history
+  #    beat after it is an ANSWER to "who built the filter, and why did it win?".
+  - id: 02a-silver-box
+    heading: "What Subtractive Means"
+    script_md: script/02a-silver-box.md
+  - id: 02b-moog-ladder
+    heading: "Moog and the Ladder Filter (1964–71)"
+    script_md: script/02b-moog-ladder.md
+    demos: [flash-light-bass]
+  - id: 02c-filter-wars
+    heading: "The Filter Wars: ARP, Roland, Oberheim"
+    script_md: script/02c-filter-wars.md
+  - id: 02d-east-west
+    heading: "East Coast vs West Coast"
+    script_md: script/02d-east-west.md
+  - id: 02e-tb303-acid
+    heading: "The TB-303 and Acid House"
+    script_md: script/02e-tb303-acid.md
+    demos: [acid-tracks-303]
+  - id: 02f-virtual-analog
+    heading: "Why Model Analog at All"
+    script_md: script/02f-virtual-analog.md
+
+  # ── Section 3: Synthesis Deep Dive (8–9 min, 6 beats) ──────────────────
+  #    ACT SEAM (history → theory) must be MOTIVATED, not a cut: 03a opens by
+  #    turning the just-heard acid squelch into a question — "we heard the filter
+  #    perform; now, for a physicist, what is it actually doing to the harmonics?"
+  #    ACT OPEN — signpost: "Stop two — how it actually works."
+  - id: 03a-oscillator-spectra
+    heading: "Oscillator Spectra: Saw, Square, Pulse"
+    script_md: script/03a-oscillator-spectra.md
+    demos: [an-pwm-sweep]
+  - id: 03b-filter-physicist
+    heading: "The Filter, for a Physicist"
+    script_md: script/03b-filter-physicist.md
+    demos: [an-slope-12-vs-24]
+  - id: 03c-self-oscillation
+    heading: "Self-Oscillation: The Barkhausen Condition"
+    script_md: script/03c-self-oscillation.md
+    demos: [an-reso-to-self-osc]
+  - id: 03d-beating-pwm
+    heading: "Detuning, Beating, and PWM"
+    script_md: script/03d-beating-pwm.md
+    demos: [an-reese-detune-sweep, an-pwm-strings]
+  - id: 03e-two-envelopes
+    heading: "Two Envelopes, Two Jobs"
+    script_md: script/03e-two-envelopes.md
+    demos: [an-filter-env-vs-amp-env]
+  - id: 03f-drive
+    heading: "Drive: Re-Introducing Nonlinearity"
+    script_md: script/03f-drive.md
+    demos: [an-drive-sym-vs-asym]
+
+  # ── Section 4: Ableton Analog Deep Dive (8–9 min, 6 beats) ─────────────
+  #    DRIVING QUESTION — planted at 04a, answered by EVERY beat after it (the
+  #    ep1 Section-4 fix; without this the device tour flatlines into "and also,
+  #    and also"): "AAS had to fold the entire subtractive canon — Moog, ARP,
+  #    Roland, Oberheim, the MS-20 — into one device, and then make a perfect
+  #    digital model sound imperfect. So: what did they KEEP, what did they ADD
+  #    that no vintage synth had, and where do they hide the imperfection?"
+  #    Each beat is an answer: 04b = the imperfection (Error); 04c/04d = what they
+  #    kept (the canonical osc + the canon's filters, rebuilt); 04e/04f = what
+  #    they ADDED (looping envelopes, two-of-everything, Unison supersaw).
+  - id: 04a-origin
+    heading: "Analog Origin: AAS, Live 7, 2007"
+    script_md: script/04a-origin.md
+  - id: 04b-error-thesis
+    heading: "Physical Modeling and the Error Knob"
+    script_md: script/04b-error-thesis.md
+    demos: [an-error-drift]
+  - id: 04c-oscillators
+    heading: "The Oscillators: Shapes, Sub, Sync"
+    script_md: script/04c-oscillators.md
+    demos: [an-sync-ratio-sweep]
+  - id: 04d-two-filters
+    heading: "The Two Filters: Multimode, Series, Formant"
+    script_md: script/04d-two-filters.md
+    demos: [an-ms20-series-filter]
+  - id: 04e-envelopes-lfos
+    heading: "Envelopes, LFOs, Modulation"
+    script_md: script/04e-envelopes-lfos.md
+  - id: 04f-voice-architecture
+    heading: "Voice Architecture and Make-It-Analog"
+    script_md: script/04f-voice-architecture.md
+    demos: [an-unison-supersaw]
+
+  # ── Section 5: Patch Walkthrough — 303 acid → Reese (5–6 min, 9 steps) ─
+  #    ACT SEAM (device → hands-on) motivated: "enough touring the panel — the
+  #    only way subtractive means anything is one decision at a time." ACT OPEN —
+  #    signpost: "Stop three — build it." Plant position markers in the steps
+  #    ("step 3 of 9", "halfway — now we make it Bristol 1994") so the build does
+  #    not feel like it might run forever (the ep1 Section-5 progress-marker gap).
+  - id: 05a-default
+    heading: "Step 1: Mono, Glide, One Saw"
+    script_md: script/05a-default.md
+    demos: [an-303-step1]
+  - id: 05b-lowpass
+    heading: "Step 2: Route to a 24 dB Low-Pass"
+    script_md: script/05b-lowpass.md
+    demos: [an-303-step2]
+  - id: 05c-filter-env
+    heading: "Step 3: Filter Envelope, the Per-Note Wow"
+    script_md: script/05c-filter-env.md
+    demos: [an-303-step3]
+  - id: 05d-resonance
+    heading: "Step 4: Resonance Toward the Squelch"
+    script_md: script/05d-resonance.md
+    demos: [an-303-step4]
+  - id: 05e-drive-accent
+    heading: "Step 5: Asym Drive and Velocity Accent"
+    script_md: script/05e-drive-accent.md
+    demos: [an-303-step5]
+  - id: 05f-automate
+    heading: "Step 6: Program and Automate the Cutoff"
+    script_md: script/05f-automate.md
+    demos: [an-303-step6]
+  - id: 05g-morph-reese
+    heading: "Step 7: Morph the 303 into a Reese"
+    script_md: script/05g-morph-reese.md
+    demos: [an-reese-morph]
+  - id: 05h-detune-listen
+    heading: "Step 8: Detune and Listen for the Beating"
+    script_md: script/05h-detune-listen.md
+    demos: [an-reese-final]
+  - id: 05i-save
+    heading: "Step 9: Save the Patch"
+    script_md: script/05i-save.md
+    demos: [an-303-reese-final]
+
+  # ── Section 6: IDM Application (5–6 min, 5 beats) ──────────────────────
+  #    ACT OPEN — signpost: "Stop four — make Aphex and Autechre out of it." The
+  #    payoff lands in 06e: restate the focus sentence and the "Start rich. Carve.
+  #    Listen." refrain as resolution (NOT as a new thought) — close on the
+  #    exercise + a shrug, never a motivational kicker.
+  - id: 06a-self-oscillation
+    heading: "The Filter as Oscillator: Digeridoo"
+    script_md: script/06a-self-oscillation.md
+    demos: [an-digeridoo-drone, digeridoo-clip]
+  - id: 06b-ms20-abused
+    heading: "The MS-20 Dual Filter, Abused"
+    script_md: script/06b-ms20-abused.md
+    demos: [an-ms20-scream, tri-repetae-clip]
+  - id: 06c-loop-envelopes
+    heading: "Looping Envelopes as Rhythm"
+    script_md: script/06c-loop-envelopes.md
+    demos: [an-loop-env-pulse]
+  - id: 06d-fat-principle
+    heading: "Fat Is Just Interference"
+    script_md: script/06d-fat-principle.md
+  - id: 06e-exercise
+    heading: "Listener Exercise"
+    script_md: script/06e-exercise.md
