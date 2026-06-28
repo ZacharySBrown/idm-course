@@ -1,4 +1,4 @@
-The LFO has a Range chooser with three settings: Low, Hi, and Hi audio. In Hi audio, the LFO reaches roughly twelve kilohertz. Which means it functions as a fifth audio-rate operator.
+Now the *added* column — the things Chowning's four operators couldn't do on their own. Start with the LFO, because Operator's is secretly a fifth operator. The LFO has a Range chooser with three settings: Low, Hi, and Hi audio. In Hi audio, the LFO reaches roughly twelve kilohertz. Which means it functions as a fifth audio-rate operator.
 
 [pause 500ms]
 

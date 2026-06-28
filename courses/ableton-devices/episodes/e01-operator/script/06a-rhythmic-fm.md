@@ -1,4 +1,4 @@
-One specific technique that takes Operator out of bell-and-pluck territory and into texture-as-rhythm territory. Rhythmic FM via envelope loop modes.
+That bell is one decision-tree. Here's the other branch — where the same envelopes stop making notes and start making rhythm. One specific technique that takes Operator out of bell-and-pluck territory and into texture-as-rhythm territory. Rhythmic FM via envelope loop modes.
 
 [pause 500ms]
 

@@ -14,7 +14,7 @@ Which is why FM became the defining synthesis method for IDM percussion. The ins
 
 [pause 500ms]
 
-And it did not stop in the nineties. Tim Hecker's *Black Refraction*, from *Ravedeath, 1972* — that is the year in the title, the record is twenty-eleven — is FM ambient built the modern way. Stack several Operator instances at irrational ratios, stretch the envelopes to several seconds, and let slow LFOs drag the modulator levels around so the harmonic content never sits still.
+And it did not stop in the nineties. Tim Hecker's *Black Refraction*, from *Virgins*, twenty-thirteen, is FM ambient built the modern way. Stack several Operator instances at irrational ratios, stretch the envelopes to several seconds, and let slow LFOs drag the modulator levels around so the harmonic content never sits still.
 
 [cue: black-refraction-fm]
 

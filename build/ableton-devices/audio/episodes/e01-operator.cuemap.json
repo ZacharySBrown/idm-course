@@ -3,231 +3,231 @@
     "heading": "Cold Open",
     "cue_id": "polynomial-c-cold-open",
     "role": "song",
-    "demo_start_ms": 40300,
-    "demo_end_ms": 54300
+    "demo_start_ms": 46100,
+    "demo_end_ms": 60100
   },
   {
     "heading": "The Stanford Compositions",
     "cue_id": "stria-excerpt-1",
     "role": "song",
-    "demo_start_ms": 196400,
-    "demo_end_ms": 211400
+    "demo_start_ms": 217700,
+    "demo_end_ms": 232700
   },
   {
     "heading": "The DX7 Defines Pop",
     "cue_id": "greatest-love-epiano",
     "role": "song",
-    "demo_start_ms": 375850,
-    "demo_end_ms": 387850
+    "demo_start_ms": 410650,
+    "demo_end_ms": 422650
   },
   {
     "heading": "The DX7 Defines Pop",
     "cue_id": "take-on-me-bass",
     "role": "song",
-    "demo_start_ms": 432950,
-    "demo_end_ms": 444950
+    "demo_start_ms": 467050,
+    "demo_end_ms": 479050
   },
   {
     "heading": "TX81Z and the Underground",
     "cue_id": "french-kiss-bass",
     "role": "song",
-    "demo_start_ms": 525800,
-    "demo_end_ms": 533800
+    "demo_start_ms": 559900,
+    "demo_end_ms": 567900
   },
   {
     "heading": "TX81Z and the Underground",
     "cue_id": "trans-syro-warm",
     "role": "transition",
-    "demo_start_ms": 560650,
-    "demo_end_ms": 572650
+    "demo_start_ms": 594750,
+    "demo_end_ms": 606750
   },
   {
     "heading": "Bessel Functions, Friendly",
     "cue_id": "op-mod-index-sweep",
     "role": "demo",
-    "demo_start_ms": 713250,
-    "demo_end_ms": 715250
+    "demo_start_ms": 762800,
+    "demo_end_ms": 767000
   },
   {
     "heading": "Integer vs Irrational Ratios",
     "cue_id": "op-ratio-1to1",
     "role": "demo",
-    "demo_start_ms": 767050,
-    "demo_end_ms": 769050
+    "demo_start_ms": 818800,
+    "demo_end_ms": 820800
   },
   {
     "heading": "Integer vs Irrational Ratios",
     "cue_id": "op-ratio-1to2",
     "role": "demo",
-    "demo_start_ms": 775950,
-    "demo_end_ms": 777950
+    "demo_start_ms": 827700,
+    "demo_end_ms": 829700
   },
   {
     "heading": "Integer vs Irrational Ratios",
     "cue_id": "op-ratio-1to3",
     "role": "demo",
-    "demo_start_ms": 782350,
-    "demo_end_ms": 787263
+    "demo_start_ms": 834100,
+    "demo_end_ms": 839013
   },
   {
     "heading": "Integer vs Irrational Ratios",
     "cue_id": "op-ratio-1-sqrt2",
     "role": "demo",
-    "demo_start_ms": 792513,
-    "demo_end_ms": 794513
+    "demo_start_ms": 844263,
+    "demo_end_ms": 846263
   },
   {
     "heading": "Integer vs Irrational Ratios",
     "cue_id": "op-ratio-1-phi",
     "role": "demo",
-    "demo_start_ms": 799013,
-    "demo_end_ms": 803926
+    "demo_start_ms": 850763,
+    "demo_end_ms": 855676
   },
   {
     "heading": "Integer vs Irrational Ratios",
     "cue_id": "stria-excerpt-2",
     "role": "song",
-    "demo_start_ms": 810326,
-    "demo_end_ms": 825326
+    "demo_start_ms": 862076,
+    "demo_end_ms": 877076
   },
   {
     "heading": "Integer vs Irrational Ratios",
     "cue_id": "xtal-bell",
     "role": "song",
-    "demo_start_ms": 852526,
-    "demo_end_ms": 862526
+    "demo_start_ms": 904276,
+    "demo_end_ms": 914276
   },
   {
     "heading": "Feedback as Kepler's Equation",
     "cue_id": "op-feedback-bifurcation",
     "role": "demo",
-    "demo_start_ms": 1019176,
-    "demo_end_ms": 1025676
+    "demo_start_ms": 1079426,
+    "demo_end_ms": 1085926
   },
   {
     "heading": "Four Operators vs Six",
     "cue_id": "trans-bike-pulse",
     "role": "transition",
-    "demo_start_ms": 1131726,
-    "demo_end_ms": 1143726
+    "demo_start_ms": 1186226,
+    "demo_end_ms": 1198226
   },
   {
     "heading": "Envelopes and the Five Loop Modes",
     "cue_id": "an-ending-pad",
     "role": "song",
-    "demo_start_ms": 1515726,
-    "demo_end_ms": 1531726
+    "demo_start_ms": 1584476,
+    "demo_end_ms": 1600476
   },
   {
     "heading": "Operator vs FM8 vs Dexed",
     "cue_id": "trans-ending-ascent",
     "role": "transition",
-    "demo_start_ms": 1760026,
-    "demo_end_ms": 1774026
+    "demo_start_ms": 1815676,
+    "demo_end_ms": 1829676
   },
   {
     "heading": "Step 1: Algorithm 1, all sines",
     "cue_id": "op-poly-bell-step1",
     "role": "demo",
-    "demo_start_ms": 1803326,
-    "demo_end_ms": 1806741
+    "demo_start_ms": 1871426,
+    "demo_end_ms": 1874841
   },
   {
     "heading": "Step 2: Carrier (A)",
     "cue_id": "op-poly-bell-step2",
     "role": "demo",
-    "demo_start_ms": 1837841,
-    "demo_end_ms": 1838293
+    "demo_start_ms": 1905941,
+    "demo_end_ms": 1906393
   },
   {
     "heading": "Step 3: Modulator B at \u221a2 ratio",
     "cue_id": "op-poly-bell-step3",
     "role": "demo",
-    "demo_start_ms": 1889543,
-    "demo_end_ms": 1889997
+    "demo_start_ms": 1957643,
+    "demo_end_ms": 1958097
   },
   {
     "heading": "Step 4: Modulator C feeding B",
     "cue_id": "op-poly-bell-step4",
     "role": "demo",
-    "demo_start_ms": 1913797,
-    "demo_end_ms": 1914247
+    "demo_start_ms": 1981897,
+    "demo_end_ms": 1982347
   },
   {
     "heading": "Step 5: Feedback on C",
     "cue_id": "op-poly-bell-step5",
     "role": "demo",
-    "demo_start_ms": 1944747,
-    "demo_end_ms": 1945197
+    "demo_start_ms": 2017347,
+    "demo_end_ms": 2017797
   },
   {
     "heading": "Step 6: Spread + Filter",
     "cue_id": "op-poly-bell-step6",
     "role": "demo",
-    "demo_start_ms": 1973847,
-    "demo_end_ms": 1974313
+    "demo_start_ms": 2046447,
+    "demo_end_ms": 2046913
   },
   {
     "heading": "Step 7: Velocity Routing",
     "cue_id": "op-poly-bell-step7",
     "role": "demo",
-    "demo_start_ms": 2005713,
-    "demo_end_ms": 2009175
+    "demo_start_ms": 2078313,
+    "demo_end_ms": 2081775
   },
   {
     "heading": "Step 7: Velocity Routing",
     "cue_id": "beep-street-velocity",
     "role": "song",
-    "demo_start_ms": 2047125,
-    "demo_end_ms": 2061125
+    "demo_start_ms": 2119725,
+    "demo_end_ms": 2133725
   },
   {
     "heading": "Step 8: Save the Patch",
     "cue_id": "op-poly-bell-final",
     "role": "demo",
-    "demo_start_ms": 2093825,
-    "demo_end_ms": 2103736
+    "demo_start_ms": 2166425,
+    "demo_end_ms": 2176336
   },
   {
     "heading": "Step 8: Save the Patch",
     "cue_id": "trans-beep-street",
     "role": "transition",
-    "demo_start_ms": 2104136,
-    "demo_end_ms": 2116136
+    "demo_start_ms": 2176736,
+    "demo_end_ms": 2188736
   },
   {
     "heading": "Rhythmic FM via Loop Modes",
     "cue_id": "bike-fm-perc",
     "role": "song",
-    "demo_start_ms": 2210336,
-    "demo_end_ms": 2224336
+    "demo_start_ms": 2284086,
+    "demo_end_ms": 2298086
   },
   {
     "heading": "Rhythmic FM via Loop Modes",
     "cue_id": "op-rhythmic-single",
     "role": "demo",
-    "demo_start_ms": 2240736,
-    "demo_end_ms": 2250736
+    "demo_start_ms": 2314486,
+    "demo_end_ms": 2324486
   },
   {
     "heading": "Layered Polyrhythm",
     "cue_id": "op-rhythmic-layered",
     "role": "demo",
-    "demo_start_ms": 2313736,
-    "demo_end_ms": 2323736
+    "demo_start_ms": 2387486,
+    "demo_end_ms": 2397486
   },
   {
     "heading": "Connecting Back to the Math",
     "cue_id": "black-refraction-fm",
     "role": "song",
-    "demo_start_ms": 2399986,
-    "demo_end_ms": 2417986
+    "demo_start_ms": 2470086,
+    "demo_end_ms": 2488086
   },
   {
     "heading": "Wet/Dry, Squarepusher-Style",
     "cue_id": "trans-black-refraction",
     "role": "transition",
-    "demo_start_ms": 2490686,
-    "demo_end_ms": 2505686
+    "demo_start_ms": 2560786,
+    "demo_end_ms": 2575786
   }
 ]

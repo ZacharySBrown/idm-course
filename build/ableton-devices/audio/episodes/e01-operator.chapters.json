@@ -3,204 +3,204 @@
     "id": "ch000",
     "title": "Cold Open",
     "start_ms": 0,
-    "end_ms": 77850
+    "end_ms": 99150
   },
   {
     "id": "ch001",
     "title": "Chowning's Vibrato Accident (1967)",
-    "start_ms": 78250,
-    "end_ms": 161200
+    "start_ms": 99550,
+    "end_ms": 182500
   },
   {
     "id": "ch002",
     "title": "The Stanford Compositions",
-    "start_ms": 161600,
-    "end_ms": 238850
+    "start_ms": 182900,
+    "end_ms": 269150
   },
   {
     "id": "ch003",
     "title": "Hammond, Wurlitzer, Lowrey All Said No",
-    "start_ms": 239250,
-    "end_ms": 277500
+    "start_ms": 269550,
+    "end_ms": 307800
   },
   {
     "id": "ch004",
     "title": "Yamaha Takes the Call",
-    "start_ms": 277900,
-    "end_ms": 323550
+    "start_ms": 308200,
+    "end_ms": 358350
   },
   {
     "id": "ch005",
     "title": "The DX7 Defines Pop",
-    "start_ms": 323950,
-    "end_ms": 455000
+    "start_ms": 358750,
+    "end_ms": 489100
   },
   {
     "id": "ch006",
     "title": "The Backlash",
-    "start_ms": 455400,
-    "end_ms": 491200
+    "start_ms": 489500,
+    "end_ms": 525300
   },
   {
     "id": "ch007",
     "title": "TX81Z and the Underground",
-    "start_ms": 491600,
-    "end_ms": 572650
+    "start_ms": 525700,
+    "end_ms": 606750
   },
   {
     "id": "ch008",
     "title": "The Equation in One Breath",
-    "start_ms": 573050,
-    "end_ms": 658800
+    "start_ms": 607150,
+    "end_ms": 708350
   },
   {
     "id": "ch009",
     "title": "Bessel Functions, Friendly",
-    "start_ms": 659200,
-    "end_ms": 724750
+    "start_ms": 708750,
+    "end_ms": 776500
   },
   {
     "id": "ch010",
     "title": "Integer vs Irrational Ratios",
-    "start_ms": 725150,
-    "end_ms": 885526
+    "start_ms": 776900,
+    "end_ms": 945776
   },
   {
     "id": "ch011",
     "title": "Modulation Index Equals Brightness",
-    "start_ms": 885926,
-    "end_ms": 970726
+    "start_ms": 946176,
+    "end_ms": 1030976
   },
   {
     "id": "ch012",
     "title": "Feedback as Kepler's Equation",
-    "start_ms": 971126,
-    "end_ms": 1042326
+    "start_ms": 1031376,
+    "end_ms": 1102576
   },
   {
     "id": "ch013",
     "title": "Four Operators vs Six",
-    "start_ms": 1042726,
-    "end_ms": 1143726
+    "start_ms": 1102976,
+    "end_ms": 1198226
   },
   {
     "id": "ch014",
     "title": "Operator Origin: Onyx, 2004",
-    "start_ms": 1144126,
-    "end_ms": 1211026
+    "start_ms": 1198626,
+    "end_ms": 1293526
   },
   {
     "id": "ch015",
     "title": "The 11 Algorithms",
-    "start_ms": 1211426,
-    "end_ms": 1277076
+    "start_ms": 1293926,
+    "end_ms": 1359576
   },
   {
     "id": "ch016",
     "title": "Coarse, Fine, Fixed, Level",
-    "start_ms": 1277476,
-    "end_ms": 1395576
+    "start_ms": 1359976,
+    "end_ms": 1478076
   },
   {
     "id": "ch017",
     "title": "Envelopes and the Five Loop Modes",
-    "start_ms": 1395976,
-    "end_ms": 1543876
+    "start_ms": 1478476,
+    "end_ms": 1612626
   },
   {
     "id": "ch018",
     "title": "LFO as Fifth Operator",
-    "start_ms": 1544276,
-    "end_ms": 1597126
+    "start_ms": 1613026,
+    "end_ms": 1677826
   },
   {
     "id": "ch019",
     "title": "Filter Circuits and Spread",
-    "start_ms": 1597526,
-    "end_ms": 1686376
+    "start_ms": 1678226,
+    "end_ms": 1774676
   },
   {
     "id": "ch020",
     "title": "Operator vs FM8 vs Dexed",
-    "start_ms": 1686776,
-    "end_ms": 1774026
+    "start_ms": 1775076,
+    "end_ms": 1829676
   },
   {
     "id": "ch021",
     "title": "Step 1: Algorithm 1, all sines",
-    "start_ms": 1774426,
-    "end_ms": 1806741
+    "start_ms": 1830076,
+    "end_ms": 1874841
   },
   {
     "id": "ch022",
     "title": "Step 2: Carrier (A)",
-    "start_ms": 1807141,
-    "end_ms": 1838293
+    "start_ms": 1875241,
+    "end_ms": 1906393
   },
   {
     "id": "ch023",
     "title": "Step 3: Modulator B at \u221a2 ratio",
-    "start_ms": 1838693,
-    "end_ms": 1889997
+    "start_ms": 1906793,
+    "end_ms": 1958097
   },
   {
     "id": "ch024",
     "title": "Step 4: Modulator C feeding B",
-    "start_ms": 1890397,
-    "end_ms": 1914247
+    "start_ms": 1958497,
+    "end_ms": 1982347
   },
   {
     "id": "ch025",
     "title": "Step 5: Feedback on C",
-    "start_ms": 1914647,
-    "end_ms": 1945197
+    "start_ms": 1982747,
+    "end_ms": 2017797
   },
   {
     "id": "ch026",
     "title": "Step 6: Spread + Filter",
-    "start_ms": 1945597,
-    "end_ms": 1974313
+    "start_ms": 2018197,
+    "end_ms": 2046913
   },
   {
     "id": "ch027",
     "title": "Step 7: Velocity Routing",
-    "start_ms": 1974713,
-    "end_ms": 2074425
+    "start_ms": 2047313,
+    "end_ms": 2147025
   },
   {
     "id": "ch028",
     "title": "Step 8: Save the Patch",
-    "start_ms": 2074825,
-    "end_ms": 2116136
+    "start_ms": 2147425,
+    "end_ms": 2188736
   },
   {
     "id": "ch029",
     "title": "Rhythmic FM via Loop Modes",
-    "start_ms": 2116536,
-    "end_ms": 2250736
+    "start_ms": 2189136,
+    "end_ms": 2324486
   },
   {
     "id": "ch030",
     "title": "Layered Polyrhythm",
-    "start_ms": 2251136,
-    "end_ms": 2323736
+    "start_ms": 2324886,
+    "end_ms": 2397486
   },
   {
     "id": "ch031",
     "title": "Connecting Back to the Math",
-    "start_ms": 2324136,
-    "end_ms": 2437186
+    "start_ms": 2397886,
+    "end_ms": 2507286
   },
   {
     "id": "ch032",
     "title": "Wet/Dry, Squarepusher-Style",
-    "start_ms": 2437586,
-    "end_ms": 2505686
+    "start_ms": 2507686,
+    "end_ms": 2575786
   },
   {
     "id": "ch033",
     "title": "Listener Exercise",
-    "start_ms": 2506086,
-    "end_ms": 2559536
+    "start_ms": 2576186,
+    "end_ms": 2626486
   }
 ]

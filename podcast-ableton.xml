@@ -10,8 +10,8 @@
     <description>A device-by-device walking-podcast deep-dive into Ableton Live&#x27;s instruments, effects, and Max for Live. Each episode pairs a device&#x27;s history and synthesis theory with patch-walkthroughs and IDM-style production techniques. Hosted by a sardonic studio rat who reads Tape Op and refuses to use the word &quot;journey.&quot;</description>
     <language>en-us</language>
     <copyright>© 2026 Zak. Course content CC-BY-NC 4.0.</copyright>
-    <lastBuildDate>Sun, 28 Jun 2026 13:56:14 +0000</lastBuildDate>
-    <pubDate>Tue, 16 Jun 2026 13:56:14 +0000</pubDate>
+    <lastBuildDate>Sun, 28 Jun 2026 18:53:52 +0000</lastBuildDate>
+    <pubDate>Tue, 16 Jun 2026 18:53:52 +0000</pubDate>
     <image>
       <url>https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/artwork-ableton.jpg</url>
       <title>Ableton Live Mastery</title>
@@ -35,11 +35,11 @@
 Pillars: .
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/ableton-devices/html/e01-operator/index.html</description>
-      <pubDate>Tue, 16 Jun 2026 13:56:14 +0000</pubDate>
+      <pubDate>Tue, 16 Jun 2026 18:53:52 +0000</pubDate>
       <guid isPermaLink="false">idm-course-e01-operator</guid>
-      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/ableton-devices/audio/episodes/e01-operator.mp3" length="61495572" type="audio/mpeg" />
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/ableton-devices/audio/episodes/e01-operator.mp3" length="63104219" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
-      <itunes:duration>42:39</itunes:duration>
+      <itunes:duration>43:46</itunes:duration>
       <itunes:episode>1</itunes:episode>
       <itunes:season>1</itunes:season>
       <itunes:episodeType>full</itunes:episodeType>

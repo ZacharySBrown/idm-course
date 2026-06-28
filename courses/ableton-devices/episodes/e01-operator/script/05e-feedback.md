@@ -1,4 +1,4 @@
-Step five. Add Feedback to operator C. Thirty percent.
+Halfway. It's already a bell — now we make it *Aphex's* bell. Step five. Add Feedback to operator C. Thirty percent.
 
 [pause 400ms]
 

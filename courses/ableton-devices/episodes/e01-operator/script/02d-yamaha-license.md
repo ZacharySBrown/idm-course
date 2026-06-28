@@ -2,11 +2,11 @@ In nineteen seventy-three, a Yamaha engineer flew to Palo Alto. Chowning, recall
 
 [pause 600ms]
 
-Stanford signed a license to Yamaha. The patent was filed in nineteen seventy-four and granted three years later. By the time it expired in the mid-nineteen-nineties, FM had become the second-most-lucrative patent in Stanford's history.
+Stanford signed a license to Yamaha. The patent was first filed in nineteen seventy-four and granted in nineteen seventy-seven. By the time it expired in the mid-nineteen-nineties, FM was one of the most lucrative patents Stanford had ever licensed.
 
 [pause 400ms]
 
-The only one that earned them more was recombinant DNA.
+Only two ever earned the university more — recombinant DNA gene-splicing, and, eventually, Google.
 
 [pause 500ms]
 

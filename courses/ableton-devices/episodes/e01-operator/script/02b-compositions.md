@@ -12,4 +12,4 @@ That is FM at irrational ratios — bell-like spectra without a bell. Decades be
 
 [pause 400ms]
 
-Stanford, ironically, denied Chowning tenure in their music department. The same year, he founded CCRMA — the Center for Computer Research in Music and Acoustics — funded by the FM royalties his department had refused to consider serious work.
+Years before *Stria*, Stanford had — ironically — denied Chowning tenure in their music department. He founded CCRMA, the Center for Computer Research in Music and Acoustics, anyway, around the time the Yamaha deal was coming together. The department dismissed computer music as not serious work; the lab it spawned became the most important of its kind in the world.

@@ -276,7 +276,7 @@ When asked directly in the 2013 WATMM AMA whether they preferred FM, Booth confi
 
 **Whitney Houston — Greatest Love of All (1985).** 0:00–0:25 solo E.PIANO 1 plays the introduction with no other instrumentation — gold-standard isolated demo of the most famous synth preset of all time. Built from a 4-operator Rhodes simulation: a carrier sine (the "tine") plus a modulator at a high ratio producing the bell-attack chirp not present on a real Rhodes. **Velocity sensitivity is huge** — soft notes mellow, hard notes ring.
 
-**Tim Hecker — Black Refraction (Ravedeath, 1972, 2011).** Modern FM ambient practice: stack multiple Operator instances at irrational ratios (1:√2, 1:√3), very long envelopes, modulator level automated by slow LFOs to make harmonic content drift. The 2010s descendant of *Apollo*, darker.
+**Tim Hecker — Black Refraction (Virgins, 2013).** [corrected: this track is on *Virgins* (2013), not *Ravedeath, 1972* (2011) — verified Discogs/Wikipedia/Fact.] Modern FM ambient practice: stack multiple Operator instances at irrational ratios (1:√2, 1:√3), very long envelopes, modulator level automated by slow LFOs to make harmonic content drift. The 2010s descendant of *Apollo*, darker.
 
 **Drop the Reese & Santonio reference** — the Reese bass is Casio CZ-5000 phase distortion, not FM. Address this misconception directly in script as a teaching moment about the FM/PD cousin technologies.
 

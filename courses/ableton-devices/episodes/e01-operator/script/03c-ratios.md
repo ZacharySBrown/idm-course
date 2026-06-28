@@ -40,4 +40,4 @@ You can hear that inharmonic-bell character in the wild on Aphex Twin's *Xtal* �
 
 [cue: xtal-bell]
 
-One caveat, because the receipts matter. The pad underneath that bell is not FM at all — Reverb Machine's twenty-twenty-two teardown traced it to a nineteen-eighty-six library record, a sampled Rhodes-and-voice through a Quadraverb. So *Xtal* teaches two things at once: real inharmonic FM in the lead, and a sampled pad doing the work everyone assumes is synthesis.
+One caveat, because the receipts matter. The pad underneath that bell is not FM at all — SynaMax's twenty-twenty-two teardown traced it to a nineteen-eighty-six library record, a sampled Rhodes-and-voice through a Quadraverb. So *Xtal* teaches two things at once: real inharmonic FM in the lead, and a sampled pad doing the work everyone assumes is synthesis. Trust the lead, learn from the pad — telling those two apart by ear is the listening skill this whole episode is training.

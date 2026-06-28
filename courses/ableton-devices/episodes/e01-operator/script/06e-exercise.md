@@ -10,7 +10,7 @@ Now program a melody that sounds beautiful only because of inharmonic spectra. N
 
 [pause 600ms]
 
-If you can't, you have understood the depth of what Eno did with *Glide*. If you can, you have understood why Aphex Twin sold custom DX patches by mail order in nineteen-ninety-one under the name *Lannerlog*. Either way, you have spent forty minutes inside the same equation Chowning wrote in nineteen-sixty-seven.
+If you can't, you have understood the depth of what Eno did with *Glide*. If you can, you have understood why Aphex Twin sold custom DX patches by mail order as a teenager under the name *Lannerlog*. Either way, you have spent forty minutes inside the same equation Chowning wrote in nineteen-sixty-seven.
 
 [pause 500ms]
 

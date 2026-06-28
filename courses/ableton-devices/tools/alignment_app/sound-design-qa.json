@@ -98,11 +98,11 @@
       "demo_end_ms": 444950,
       "demo_loudness": {
         "mean": -17.8,
-        "peak": -1.1
+        "peak": -1.2
       },
       "voice_loudness": {
         "mean": -20.2,
-        "peak": -5.3
+        "peak": -5.4
       },
       "delta_db": 2.3999999999999986,
       "auto_checks": {
@@ -153,16 +153,16 @@
       "heading": "Bessel Functions, Friendly",
       "role": "demo",
       "demo_start_ms": 713250,
-      "demo_end_ms": 715250,
+      "demo_end_ms": 717450,
       "demo_loudness": {
-        "mean": -19.4,
+        "mean": -20.9,
         "peak": -13.8
       },
       "voice_loudness": {
         "mean": -19.6,
         "peak": -5.0
       },
-      "delta_db": 0.20000000000000284,
+      "delta_db": -1.2999999999999972,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -183,17 +183,17 @@
       "cue_id": "op-ratio-1to1",
       "heading": "Integer vs Irrational Ratios",
       "role": "demo",
-      "demo_start_ms": 767050,
-      "demo_end_ms": 769050,
+      "demo_start_ms": 769250,
+      "demo_end_ms": 771250,
       "demo_loudness": {
-        "mean": -20.5,
-        "peak": -12.0
+        "mean": -20.8,
+        "peak": -13.4
       },
       "voice_loudness": {
         "mean": -20.1,
         "peak": -5.3
       },
-      "delta_db": -0.3999999999999986,
+      "delta_db": -0.6999999999999993,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -214,26 +214,24 @@
       "cue_id": "op-ratio-1to2",
       "heading": "Integer vs Irrational Ratios",
       "role": "demo",
-      "demo_start_ms": 775950,
-      "demo_end_ms": 777950,
+      "demo_start_ms": 778150,
+      "demo_end_ms": 780150,
       "demo_loudness": {
-        "mean": -21.7,
-        "peak": -13.6
+        "mean": -22.6,
+        "peak": -18.2
       },
       "voice_loudness": {
-        "mean": -20.7,
+        "mean": -20.2,
         "peak": -4.8
       },
-      "delta_db": -1.0,
+      "delta_db": -2.400000000000002,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
-        "framed_by_silence": false,
+        "framed_by_silence": true,
         "overlaps_bed": true
       },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
+      "flags": [],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
         "frame -> demo -> label ordering present",
@@ -245,17 +243,17 @@
       "cue_id": "op-ratio-1to3",
       "heading": "Integer vs Irrational Ratios",
       "role": "demo",
-      "demo_start_ms": 782350,
-      "demo_end_ms": 787263,
+      "demo_start_ms": 784550,
+      "demo_end_ms": 789463,
       "demo_loudness": {
-        "mean": -22.3,
-        "peak": -13.4
+        "mean": -23.1,
+        "peak": -15.9
       },
       "voice_loudness": {
         "mean": -19.3,
-        "peak": -4.6
+        "peak": -4.4
       },
-      "delta_db": -3.0,
+      "delta_db": -3.8000000000000007,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -276,17 +274,17 @@
       "cue_id": "op-ratio-1-sqrt2",
       "heading": "Integer vs Irrational Ratios",
       "role": "demo",
-      "demo_start_ms": 792513,
-      "demo_end_ms": 794513,
+      "demo_start_ms": 794713,
+      "demo_end_ms": 796713,
       "demo_loudness": {
-        "mean": -21.5,
-        "peak": -14.0
+        "mean": -21.9,
+        "peak": -16.2
       },
       "voice_loudness": {
-        "mean": -21.0,
+        "mean": -21.1,
         "peak": -4.5
       },
-      "delta_db": -0.5,
+      "delta_db": -0.7999999999999972,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -307,17 +305,17 @@
       "cue_id": "op-ratio-1-phi",
       "heading": "Integer vs Irrational Ratios",
       "role": "demo",
-      "demo_start_ms": 799013,
-      "demo_end_ms": 803926,
+      "demo_start_ms": 801213,
+      "demo_end_ms": 806126,
       "demo_loudness": {
-        "mean": -22.0,
-        "peak": -13.6
+        "mean": -22.5,
+        "peak": -18.3
       },
       "voice_loudness": {
-        "mean": -19.1,
-        "peak": -7.4
+        "mean": -19.0,
+        "peak": -7.3
       },
-      "delta_db": -2.8999999999999986,
+      "delta_db": -3.5,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -338,26 +336,24 @@
       "cue_id": "stria-excerpt-2",
       "heading": "Integer vs Irrational Ratios",
       "role": "song",
-      "demo_start_ms": 810326,
-      "demo_end_ms": 825326,
+      "demo_start_ms": 812526,
+      "demo_end_ms": 827526,
       "demo_loudness": {
         "mean": -15.9,
-        "peak": -2.5
+        "peak": -2.7
       },
       "voice_loudness": {
-        "mean": -18.8,
-        "peak": -6.0
+        "mean": -18.9,
+        "peak": -6.2
       },
-      "delta_db": 2.9000000000000004,
+      "delta_db": 2.9999999999999982,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
-        "framed_by_silence": false,
+        "framed_by_silence": true,
         "overlaps_bed": true
       },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
+      "flags": [],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
         "frame -> demo -> label ordering present",
@@ -369,11 +365,11 @@
       "cue_id": "xtal-bell",
       "heading": "Integer vs Irrational Ratios",
       "role": "song",
-      "demo_start_ms": 852526,
-      "demo_end_ms": 862526,
+      "demo_start_ms": 854726,
+      "demo_end_ms": 864726,
       "demo_loudness": {
         "mean": -14.6,
-        "peak": -4.9
+        "peak": -4.7
       },
       "voice_loudness": {
         "mean": -19.3,
@@ -398,17 +394,17 @@
       "cue_id": "op-feedback-bifurcation",
       "heading": "Feedback as Kepler's Equation",
       "role": "demo",
-      "demo_start_ms": 1019176,
-      "demo_end_ms": 1025676,
+      "demo_start_ms": 1021376,
+      "demo_end_ms": 1027876,
       "demo_loudness": {
-        "mean": -19.2,
-        "peak": -13.5
+        "mean": -19.6,
+        "peak": -14.0
       },
       "voice_loudness": {
-        "mean": -19.7,
-        "peak": -5.9
+        "mean": -19.8,
+        "peak": -6.0
       },
-      "delta_db": 0.5,
+      "delta_db": 0.1999999999999993,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -429,8 +425,8 @@
       "cue_id": "an-ending-pad",
       "heading": "Envelopes and the Five Loop Modes",
       "role": "song",
-      "demo_start_ms": 1515726,
-      "demo_end_ms": 1531726,
+      "demo_start_ms": 1517926,
+      "demo_end_ms": 1533926,
       "demo_loudness": {
         "mean": -14.8,
         "peak": -2.5
@@ -460,11 +456,11 @@
       "cue_id": "op-poly-bell-step1",
       "heading": "Step 1: Algorithm 1, all sines",
       "role": "demo",
-      "demo_start_ms": 1803326,
-      "demo_end_ms": 1806741,
+      "demo_start_ms": 1805526,
+      "demo_end_ms": 1808941,
       "demo_loudness": {
         "mean": -19.8,
-        "peak": -15.0
+        "peak": -14.6
       },
       "voice_loudness": {
         "mean": -19.1,
@@ -489,25 +485,26 @@
       "cue_id": "op-poly-bell-step2",
       "heading": "Step 2: Carrier (A)",
       "role": "demo",
-      "demo_start_ms": 1837841,
-      "demo_end_ms": 1838293,
+      "demo_start_ms": 1840041,
+      "demo_end_ms": 1840493,
       "demo_loudness": {
-        "mean": -35.4,
-        "peak": -14.5
+        "mean": -45.9,
+        "peak": -25.9
       },
       "voice_loudness": {
         "mean": -26.9,
         "peak": -4.8
       },
-      "delta_db": -8.5,
+      "delta_db": -19.0,
       "auto_checks": {
-        "audible": true,
+        "audible": false,
         "loudness_matched": false,
         "framed_by_silence": true,
         "overlaps_bed": false
       },
       "flags": [
-        "demo -8.5dB vs nearby voice (want \u00b16)"
+        "demo too quiet (peak -25.9dB)",
+        "demo -19.0dB vs nearby voice (want \u00b16)"
       ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
@@ -520,17 +517,17 @@
       "cue_id": "op-poly-bell-step3",
       "heading": "Step 3: Modulator B at \u221a2 ratio",
       "role": "demo",
-      "demo_start_ms": 1889543,
-      "demo_end_ms": 1889997,
+      "demo_start_ms": 1891743,
+      "demo_end_ms": 1892197,
       "demo_loudness": {
-        "mean": -28.1,
-        "peak": -6.5
+        "mean": -34.7,
+        "peak": -12.1
       },
       "voice_loudness": {
-        "mean": -19.1,
+        "mean": -19.2,
         "peak": -5.2
       },
-      "delta_db": -9.0,
+      "delta_db": -15.500000000000004,
       "auto_checks": {
         "audible": true,
         "loudness_matched": false,
@@ -538,7 +535,7 @@
         "overlaps_bed": false
       },
       "flags": [
-        "demo -9.0dB vs nearby voice (want \u00b16)"
+        "demo -15.5dB vs nearby voice (want \u00b16)"
       ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
@@ -551,25 +548,26 @@
       "cue_id": "op-poly-bell-step4",
       "heading": "Step 4: Modulator C feeding B",
       "role": "demo",
-      "demo_start_ms": 1913797,
-      "demo_end_ms": 1914247,
+      "demo_start_ms": 1915997,
+      "demo_end_ms": 1916447,
       "demo_loudness": {
-        "mean": -42.4,
-        "peak": -21.7
+        "mean": -48.8,
+        "peak": -29.4
       },
       "voice_loudness": {
         "mean": -18.0,
         "peak": -5.2
       },
-      "delta_db": -24.4,
+      "delta_db": -30.799999999999997,
       "auto_checks": {
-        "audible": true,
+        "audible": false,
         "loudness_matched": false,
         "framed_by_silence": true,
         "overlaps_bed": false
       },
       "flags": [
-        "demo -24.4dB vs nearby voice (want \u00b16)"
+        "demo too quiet (peak -29.4dB)",
+        "demo -30.8dB vs nearby voice (want \u00b16)"
       ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
@@ -582,26 +580,25 @@
       "cue_id": "op-poly-bell-step5",
       "heading": "Step 5: Feedback on C",
       "role": "demo",
-      "demo_start_ms": 1944747,
-      "demo_end_ms": 1945197,
+      "demo_start_ms": 1946947,
+      "demo_end_ms": 1947397,
       "demo_loudness": {
-        "mean": -49.1,
-        "peak": -29.2
+        "mean": -34.3,
+        "peak": -11.8
       },
       "voice_loudness": {
-        "mean": -20.3,
+        "mean": -20.2,
         "peak": -6.4
       },
-      "delta_db": -28.8,
+      "delta_db": -14.099999999999998,
       "auto_checks": {
-        "audible": false,
+        "audible": true,
         "loudness_matched": false,
         "framed_by_silence": true,
         "overlaps_bed": false
       },
       "flags": [
-        "demo too quiet (peak -29.2dB)",
-        "demo -28.8dB vs nearby voice (want \u00b16)"
+        "demo -14.1dB vs nearby voice (want \u00b16)"
       ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
@@ -614,17 +611,17 @@
       "cue_id": "op-poly-bell-step6",
       "heading": "Step 6: Spread + Filter",
       "role": "demo",
-      "demo_start_ms": 1973847,
-      "demo_end_ms": 1974313,
+      "demo_start_ms": 1976047,
+      "demo_end_ms": 1976513,
       "demo_loudness": {
-        "mean": -27.4,
-        "peak": -1.5
+        "mean": -34.0,
+        "peak": -13.0
       },
       "voice_loudness": {
         "mean": -20.0,
         "peak": -4.8
       },
-      "delta_db": -7.399999999999999,
+      "delta_db": -14.0,
       "auto_checks": {
         "audible": true,
         "loudness_matched": false,
@@ -632,7 +629,7 @@
         "overlaps_bed": false
       },
       "flags": [
-        "demo -7.4dB vs nearby voice (want \u00b16)"
+        "demo -14.0dB vs nearby voice (want \u00b16)"
       ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
@@ -645,17 +642,17 @@
       "cue_id": "op-poly-bell-step7",
       "heading": "Step 7: Velocity Routing",
       "role": "demo",
-      "demo_start_ms": 2005713,
-      "demo_end_ms": 2009175,
+      "demo_start_ms": 2007913,
+      "demo_end_ms": 2011375,
       "demo_loudness": {
-        "mean": -31.9,
+        "mean": -36.5,
         "peak": -1.5
       },
       "voice_loudness": {
-        "mean": -21.4,
+        "mean": -21.5,
         "peak": -2.8
       },
-      "delta_db": -10.5,
+      "delta_db": -15.0,
       "auto_checks": {
         "audible": true,
         "loudness_matched": false,
@@ -663,7 +660,7 @@
         "overlaps_bed": false
       },
       "flags": [
-        "demo -10.5dB vs nearby voice (want \u00b16)"
+        "demo -15.0dB vs nearby voice (want \u00b16)"
       ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
@@ -676,11 +673,11 @@
       "cue_id": "beep-street-velocity",
       "heading": "Step 7: Velocity Routing",
       "role": "song",
-      "demo_start_ms": 2047125,
-      "demo_end_ms": 2061125,
+      "demo_start_ms": 2049325,
+      "demo_end_ms": 2063325,
       "demo_loudness": {
         "mean": -16.8,
-        "peak": -1.3
+        "peak": -1.4
       },
       "voice_loudness": {
         "mean": -18.6,
@@ -705,8 +702,8 @@
       "cue_id": "op-poly-bell-final",
       "heading": "Step 8: Save the Patch",
       "role": "demo",
-      "demo_start_ms": 2093825,
-      "demo_end_ms": 2103736,
+      "demo_start_ms": 2096025,
+      "demo_end_ms": 2105936,
       "demo_loudness": {
         "mean": -22.1,
         "peak": -1.7
@@ -734,11 +731,11 @@
       "cue_id": "bike-fm-perc",
       "heading": "Rhythmic FM via Loop Modes",
       "role": "song",
-      "demo_start_ms": 2210336,
-      "demo_end_ms": 2224336,
+      "demo_start_ms": 2212536,
+      "demo_end_ms": 2226536,
       "demo_loudness": {
         "mean": -17.9,
-        "peak": -1.2
+        "peak": -1.3
       },
       "voice_loudness": {
         "mean": -20.2,
@@ -763,8 +760,8 @@
       "cue_id": "op-rhythmic-single",
       "heading": "Rhythmic FM via Loop Modes",
       "role": "demo",
-      "demo_start_ms": 2240736,
-      "demo_end_ms": 2250736,
+      "demo_start_ms": 2242936,
+      "demo_end_ms": 2252936,
       "demo_loudness": {
         "mean": -19.1,
         "peak": -12.3
@@ -792,8 +789,8 @@
       "cue_id": "op-rhythmic-layered",
       "heading": "Layered Polyrhythm",
       "role": "demo",
-      "demo_start_ms": 2313736,
-      "demo_end_ms": 2323736,
+      "demo_start_ms": 2315936,
+      "demo_end_ms": 2325936,
       "demo_loudness": {
         "mean": -19.0,
         "peak": -13.8
@@ -821,11 +818,11 @@
       "cue_id": "black-refraction-fm",
       "heading": "Connecting Back to the Math",
       "role": "song",
-      "demo_start_ms": 2399986,
-      "demo_end_ms": 2417986,
+      "demo_start_ms": 2402186,
+      "demo_end_ms": 2420186,
       "demo_loudness": {
         "mean": -16.0,
-        "peak": -1.4
+        "peak": -1.5
       },
       "voice_loudness": {
         "mean": -18.6,
@@ -856,15 +853,15 @@
     ],
     [
       573050,
-      1143726
+      1145926
     ],
     [
-      1144126,
-      1774026
+      1146326,
+      1776226
     ],
     [
-      2324136,
-      2559536
+      2326336,
+      2561736
     ]
   ]
 }

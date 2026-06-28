@@ -1,4 +1,4 @@
-We are going to build a patch live. The target is an Aphex-style inharmonic bell-pluck. Eight steps. Roughly six minutes. By the end you will have something you could drop into a Drukqs-era track without anyone flinching.
+Enough comparison. Stop four — the one you actually do with your hands. The only way the equation means anything is in your hands, so we make one decision at a time and watch a bell appear. We are going to build a patch live. The target is an Aphex-style inharmonic bell-pluck. Eight steps. Roughly six minutes. By the end you will have something you could drop into a Drukqs-era track without anyone flinching.
 
 [pause 500ms]
 

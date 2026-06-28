@@ -1,4 +1,4 @@
-Operator's filter sits at the very end of the chain — after each operator's amplitude envelope. There is no global VCA after the filter, so high resonance with self-oscillating circuits can ring indefinitely.
+Still in the *added* column — the filter and Spread are the other two things Chowning never had, bolted on to buy back what four operators give up. Operator's filter sits at the very end of the chain — after each operator's amplitude envelope. There is no global VCA after the filter, so high resonance with self-oscillating circuits can ring indefinitely.
 
 [pause 400ms]
 

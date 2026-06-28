@@ -10,11 +10,7 @@ The genuine power tool is the loop modes. There are five of them. *None* is stan
 
 [pause 500ms]
 
-What this means in practice: a modulator envelope set to Beat at one-sixteenth, with peak decay shorter than the loop period, becomes a built-in arpeggiator that lives inside the synthesis topology rather than outside it. No external sequencer required. You hold one note, and the modulator's brightness pulses on the grid, generating a glitch-pattern timbral wobble locked to the song tempo.
-
-[pause 500ms]
-
-There's also a long-standing forum-confirmed quirk in Operator's pitch envelope: routing it to the LFO destination accidentally modulates the LFO rate as well. Bug, or feature, depending on what week you ask. Forum thread two-one-seven-four-seven-nine on the Ableton forums confirms it.
+What this means in practice: a modulator envelope set to Beat at one-sixteenth, with peak decay shorter than the loop period, becomes a built-in arpeggiator that lives inside the synthesis topology rather than outside it. No external sequencer required. You hold one note, and the modulator's brightness pulses on the grid, generating a glitch-pattern timbral wobble locked to the song tempo — and hold that one, because it's exactly how Autechre's rhythm works when we get to it in twenty minutes.
 
 [pause 500ms]
 

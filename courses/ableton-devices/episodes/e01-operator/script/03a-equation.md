@@ -1,3 +1,7 @@
+That's stop one — forty years of what FM *did*. We have not yet heard what it actually *is*. So: stop two. Two minutes of how, and then we never have to talk about the math again.
+
+[pause 500ms]
+
 Here's the recipe. Take a clean sine wave. That's your *carrier*. Now take a second sine wave, and use it to nudge the carrier's pitch up and down — slowly, like a vibrato. That's your *modulator*. Now turn up the modulator's speed. Past sixty oscillations a second. Past a hundred. Past a thousand.
 
 [pause 400ms]
@@ -6,7 +10,7 @@ What started as vibrato turns into something else. The carrier doesn't sound lik
 
 [pause 600ms]
 
-Three knobs. Carrier pitch. Modulator pitch. Modulator volume. From those three you can synthesize a marimba, a bell, a clarinet, a chainsaw, the metallic clang on a Squarepusher record, and the swelling pad behind every nineteen-eighties NASA documentary.
+Three knobs. Carrier pitch. Modulator pitch. Modulator volume. From those three you can synthesize a marimba, a bell, a clarinet, a chainsaw, the metallic clang on a Squarepusher record, and the swelling pad behind every nineteen-eighties NASA documentary. Same three knobs every time — same equation, different decisions.
 
 [pause 500ms]
 
