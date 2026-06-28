@@ -168,6 +168,7 @@ def build_bed_track(
     total_ms: int,
     clips_dir: Path | None,
     out_path: Path,
+    mute_spans: list[tuple[int, int]] | None = None,
 ) -> None:
     """Generate a single 44.1kHz/16-bit stereo WAV of length total_ms with each
     bed clip placed at the right time offset and faded in/out. Returns nothing
@@ -239,10 +240,21 @@ def build_bed_track(
     else:
         labels = "".join(f"[b{i}]" for i in range(len(inputs)))
         parts.append(f"{labels}amix=inputs={len(inputs)}:normalize=0:dropout_transition=2,apad=whole_dur={total_ms / 1000}[bedout]")
+    # Hard-MUTE the bed under every foreground demo/song cue (not just duck):
+    # a demo is itself music, so the bed must vanish so the example stands alone.
+    # Pad each span by 200ms so the bed is already silent as the demo begins.
+    out_label = "bedout"
+    if mute_spans:
+        conds = "+".join(
+            f"between(t,{max(0, s - 200) / 1000:.3f},{(e + 200) / 1000:.3f})"
+            for s, e in mute_spans
+        )
+        parts.append(f"[bedout]volume=0:enable='{conds}'[bedmuted]")
+        out_label = "bedmuted"
     filter_complex = ";".join(parts)
     args += [
         "-filter_complex", filter_complex,
-        "-map", "[bedout]",
+        "-map", f"[{out_label}]",
         "-ar", "44100", "-ac", "2", "-c:a", "pcm_s16le",
         "-t", f"{total_ms / 1000}",
         str(out_path),
@@ -604,6 +616,9 @@ def build_one(
     beds_cfg = lesson.get("beds") or {}
     if beds_cfg.get("enabled") and clips_dir is not None:
         bed_track_path = out_dir / f"{lesson_id}.bed.wav"
+        # mute the bed under every foreground demo/song cue (from the cuemap)
+        mute_spans = [(c["demo_start_ms"], c["demo_end_ms"]) for c in cuemap
+                      if c.get("role") in ("demo", "song")]
         try:
             build_bed_track(
                 bed_insertions=beds_cfg.get("insertions") or [],
@@ -613,6 +628,7 @@ def build_one(
                 total_ms=total_ms,
                 clips_dir=clips_dir,
                 out_path=bed_track_path,
+                mute_spans=mute_spans,
             )
             if not bed_track_path.exists():
                 bed_track_path = None
