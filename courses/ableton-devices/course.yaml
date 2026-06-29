@@ -50,7 +50,7 @@ episodes:
     status: editorial-locked   # scripts locked + fact-corrected (12-voice cap, Granulator III)
   - id: e05-warp-modes
     title: "Warp Modes as Sound Design"
-    status: researched
+    status: editorial-locked   # scripts locked + fact-checked; demos = warped audio (no synth)
   - id: e06-drum-rack
     title: "Drum Rack + Simpler: The Sampler Engine"
     status: planned

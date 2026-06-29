@@ -1,0 +1,557 @@
+# clip_manifest — every audio asset spliced into e05-warp-modes.mp3.
+#
+# Two families:
+#   song_clips    — extracted from acquired tracks via shared/tools/extract_clips.py
+#                   (also carries the transition + bed cues so every clip_id in
+#                   episode.yaml resolves).
+#   device_demos  — WARP recipes. Ep5's "device" is Live's audio-warp engine, NOT
+#                   a synth, so each device_demo is a *source-audio description +
+#                   a Warp Mode + the ONE control pushed to an extreme*. They are
+#                   rendered LATER by warping audio inside Live (no synth param
+#                   map), so `warp:` values are best-effort but concrete. The
+#                   `wd-` analogue here is just the bare id (matches episode.yaml).
+#
+# Each entry's `id` matches a slide's `demos:` reference in episode.yaml (or a
+# [cue: …] in script/*.md). Output paths:
+#   build/ableton-devices/audio/clips/e05-warp-modes/<id>.wav
+#
+# Demo-design note (Gate 3): each warp demo ISOLATES ONE warp control and has a
+# teaching `structure` (ab/sweep/single) chosen so the breakage is obvious on
+# laptop + phone speakers. `verification.check` names the Gate-7 machine
+# assertion; audible/spectral describe the pass condition. Because warping is
+# always an effect, every demo holds the SAME source on both sides of an A/B and
+# moves only the named control.
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# REQUIRED SOURCE WAVs — the user must acquire these and drop them in
+#   songs/ableton-ep05/  (git-ignored; copyrighted — cite, don't commit)
+# ─────────────────────────────────────────────────────────────────────────────
+#  ── Foreground artist references (Section 6 + cold open) ──
+#   01_systemisch.wav     Oval — "Systemisch" (1994, Mille Plateaux)
+#                                                   [CD-skip glitch; the error-as-instrument anchor]
+#   02_akufen-my-way.wav  Akufen (Marc Leclair) — from "My Way" (2002, Force Inc.)
+#                                                   [sub-second FM-radio microsamples; microhouse]
+#   03_riverrun.wav       Barry Truax — "Riverrun" (1986)
+#                                                   [first real-time granular cloud; DMX-1000]
+#   04_u-smile.wav        Justin Bieber — "U Smile" (2010)   [the cold-open Texture/Flux wash
+#                                                   source — the "U Smile 800% Slower" cousin,
+#                                                   built in a clip, NOT PaulStretch]
+#
+#  ── Warp-demo source material (royalty-free / self-recorded; NOT copyrighted) ──
+#   These feed the device_demos. They are NOT songs — acquire/record neutral
+#   sources so the demos are reproducible and clean to ship:
+#   src_vox-ah.wav        A dry sung "ah", ~2 s, no reverb/no chain. THE walkthrough
+#                         source (Section 5) and the formant/Tones demos.
+#   src_drumbreak.wav     A clean drum/break loop (kick+snare+hats), ~2 bars.
+#                         Beats/Complex transient-survival + Re-Pitch demos.
+#   src_cymbals.wav       A bright cymbal/ride/hat loop (lots of HF energy).
+#                         The aliasing-on-speed-up demo (Nyquist fold-back).
+#   src_synth-note.wav    One sustained synth note (a held pad/sine-ish tone), ~2 s.
+#                         The granular-seam + Flux demos (needs a steady spectrum).
+#   src_pad-chord.wav     A sustained polyphonic chord / pad, ~2 s. Texture-cloud
+#                         demos where a de-pitched wash is wanted.
+#   src_melodic-loop.wav  A short melodic loop whose transients DON'T fall on 1/16
+#                         (so wrong-grid Preserve manufactures glitch). Oval rebuild.
+#   src_radio-vox.wav     A spoken-word / radio-style voice clip (words + breaths).
+#                         The Akufen microslice rebuild (transient placement).
+#
+# Acquire songs as 44.1k/16-or-24-bit stereo WAV; record/source the src_* the
+# same. Filenames above are the `source:` values below; rename to match (or edit
+# `source:` per entry). Song timestamps are from
+# specs/ableton_course_ep5_warp_modes_research.md §3 — RE-CUT BY EAR if your rip
+# differs (extract_clips.py re-slices on edit). Verify entry points on the actual
+# pressings before stating anything on-mic.
+
+# Where the user drops acquired song WAVs. Override per entry if needed.
+song_source_dir: songs/ableton-ep05
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SONG CLIPS — acquired-track excerpts + transitions + beds.
+# Each: id, source filename, start/end, fades, normalize_lufs, notes.
+# (Transitions/beds live here so every episode.yaml clip_id resolves; they are
+# cut exactly like song clips, just with longer fades and quieter targets.)
+# ═══════════════════════════════════════════════════════════════════════════════
+song_clips:
+
+  # ── Foreground artist cues (Section 6) ──────────────────────────────────────
+  - id: systemisch-clip
+    source: "01_systemisch.wav"
+    start: "0:20"
+    end: "0:32"
+    fade_in_ms: 150
+    fade_out_ms: 900
+    normalize_lufs: -16
+    notes: "Oval 'Systemisch' (1994, Mille Plateaux) — CD-skip stutter and loops-that-shouldn't-be-there as rhythm. The 'error promoted to a part' anchor for 06a. Cut a passage where the damaged-disc skipping is obvious, not a clean melodic stretch. Verify by ear — the record is dense; pick the most overtly glitched 12 s."
+
+  - id: akufen-clip
+    source: "02_akufen-my-way.wav"
+    start: "0:15"
+    end: "0:27"
+    fade_in_ms: 150
+    fade_out_ms: 900
+    normalize_lufs: -16
+    notes: "Akufen 'My Way' (2002) — sub-second FM-radio microsamples (song slivers, ad fragments, banter, static) sequenced into a microhouse groove. For 06b: every click/word is a grain cut by hand. Pick a passage where the radio-collage character is audible, not just the 4/4 pulse."
+
+  - id: truax-texture-cloud
+    source: "03_riverrun.wav"
+    start: "1:00"
+    end: "1:14"
+    fade_in_ms: 1500
+    fade_out_ms: 2500
+    normalize_lufs: -16
+    notes: "Barry Truax 'Riverrun' (1986) — the first real-time granular cloud (DMX-1000). Closes the 02c history loop in 06c: the cloud that took a custom machine + research budget, now one mode + one knob. Choose an evolving granular-wash passage (the piece builds slowly); avoid the bare opening if it is too sparse to read as a 'cloud'."
+
+  # ── Foreground warp-rebuild cues (Section 6) ────────────────────────────────
+  # These are WARP recipes that happen to live in song_clips because the SOURCE
+  # is a song-adjacent loop. The renderer warps `source` per the inline `warp:`
+  # block (mirror of a device_demo). They prove the in-the-box rebuild of the
+  # artist technique that precedes them.
+  - id: oval-beats-glitch
+    source: "src_melodic-loop.wav"
+    start: "0:00"
+    end: "0:08"
+    fade_in_ms: 60
+    fade_out_ms: 300
+    normalize_lufs: -16
+    warp:
+      mode: "Beats"
+      preserve: "1/16"                # deliberately fighting the real transients
+      transient_loop_mode: "Loop Forward"
+      transient_envelope: 100         # hard, clicky edges
+      project_tempo_pct: 70           # ~70% of original (the dossier Recipe 1 value)
+    notes: "06a rebuild — Oval's skipping CD, automated. Melodic loop whose transients DON'T land on 1/16; Beats + Preserve 1/16 + Loop Forward + Envelope 100 at ~70% tempo manufactures hard-edged stutters/skips you didn't play. Source must be a loop with off-grid transients or the 'wrong-grid' point is lost."
+
+  - id: akufen-microslice
+    source: "src_radio-vox.wav"
+    start: "0:00"
+    end: "0:08"
+    fade_in_ms: 60
+    fade_out_ms: 300
+    normalize_lufs: -16
+    warp:
+      mode: "Beats"
+      preserve: "Transients"          # start honest, then drag markers onto non-transients
+      transient_loop_mode: "Loop Forward"
+      transient_envelope: 100
+      warp_marker_note: "Drag Warp Markers onto un-transient material (mid-word/breath) and Loop-Forward short segments — transient PLACEMENT is the composition."
+      project_tempo_pct: 100
+    notes: "06b rebuild — Akufen's hand-cut radio grains, automated via transient placement. Spoken-radio voice into Beats; move markers onto arbitrary slivers and short-loop them into rhythmic percussion. The teaching point is marker placement, so the render must move markers off the real onsets."
+
+  # ── Transition cues (act-boundary background music) ─────────────────────────
+  # Long fades, quiet target. Referenced from episode.yaml > transitions.
+  # insertions[].clip_id. Each is a warp-flavored seam (a short warped/granular
+  # bridge) cut from an artist source so the seams stay on-theme.
+  - id: trans-warp-seam-1
+    source: "03_riverrun.wav"
+    start: "0:30"
+    end: "0:42"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 02e-democratization → into Section 3 (DSP families). Truax granular wash as a bridge from the lab era into 'the physics of how it breaks'."
+
+  - id: trans-warp-seam-2
+    source: "04_u-smile.wav"
+    start: "0:00"
+    end: "0:12"
+    fade_in_ms: 2800
+    fade_out_ms: 3800
+    normalize_lufs: -22
+    warp:
+      mode: "Texture"
+      grain_size: 0.35                # small-mid
+      flux: 90                        # high — smooth ambient wash
+      project_tempo_pct: 12.5         # ~800% stretch (the cold-open cousin)
+    notes: "After 03e-varispeed-nyquist → into Section 4 (device tour). A Texture/Flux wash of 'U Smile' — the cold-open texture returning as the act seam into the dropdown tour."
+
+  - id: trans-warp-seam-3
+    source: "01_systemisch.wav"
+    start: "0:40"
+    end: "0:52"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 04f-abuse-map → into Section 5 (walkthrough). Oval glitch as the bridge into 'destroy two seconds six ways' — the abuse map made motion."
+
+  - id: trans-warp-seam-4
+    source: "02_akufen-my-way.wav"
+    start: "0:40"
+    end: "0:52"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 05h-save-instrument → into Section 6 (IDM application). Akufen microhouse groove nodding toward the records where this lives."
+
+  # ── Background bed (sidechain-ducked under narration) ───────────────────────
+  # Long, slow, granular/ambient, loop-friendly. Normalized quiet (-26 LUFS) so
+  # even before the duck it sits far below the voice. Referenced from
+  # episode.yaml > beds.insertions[].clip_id (used under Section 2 history and
+  # the Section 6 IDM stretch).
+  - id: bed-warp-cloud
+    source: "04_u-smile.wav"
+    start: "0:00"
+    end: "0:40"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    warp:
+      mode: "Texture"
+      grain_size: 0.4
+      flux: 95                        # maximal smoothing → stationary cloud bed
+      project_tempo_pct: 10           # ~1000% — a near-static drone
+    notes: "Granular Texture/Flux cloud of 'U Smile' as a slow, evolving bed. Used twice (02a→02e history, and 06a→06d IDM/outro) per episode.yaml beds.insertions. De-pitched and unobtrusive; the same wash family as the cold open so the episode reads as one instrument."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DEVICE DEMOS — WARP recipes rendered by warping audio in Live.
+# Output: build/ableton-devices/audio/clips/e05-warp-modes/<id>.wav
+#
+# Each: id, concept, what_you_hear, structure (ab/sweep/single), isolates (the
+# ONE warp control), verification {check, audible, spectral}, a `warp:` block
+# (mode + key control values + transpose if any), a `source:` description
+# (which src_* WAV to feed), and duration_s.
+#
+# WARP-PARAM NOTES (resolve during render scaffolding):
+#   - `mode` ∈ {Beats, Tones, Texture, Re-Pitch, Complex, Complex Pro}.
+#   - Beats controls: `preserve` ∈ {Transients,1/4,1/8,1/16,1/32};
+#     `transient_loop_mode` ∈ {Loop Off, Loop Forward, Loop Back-and-Forth};
+#     `transient_envelope` 0..100 (100 = hard edges).
+#   - Tones/Texture: `grain_size` 0..1 (UI knob; Tones overrides it from pitch
+#     clarity, Texture honors it). Texture also has `flux` 0..100.
+#   - Re-Pitch: NO per-mode params; the lever is `project_tempo_pct` (ratio of
+#     warped tempo to original; 50 = half-speed/-1 oct, 200 = double/+1 oct).
+#     Transpose is DISABLED in Re-Pitch — do not set it here.
+#   - Complex Pro: `formants` 0..100 (preserve→destroy), `envelope` (default 128),
+#     plus clip `transpose` in semitones.
+#   - `project_tempo_pct` is the stretch lever for the granular/spectral modes
+#     too (12.5 ≈ 800% stretch, 50 ≈ 200% stretch is half-tempo, etc.). These are
+#     best-effort; calibrate the exact ratio by ear on first render.
+# Each demo holds the SAME source on both A/B sides and moves ONLY `isolates`.
+# ═══════════════════════════════════════════════════════════════════════════════
+device_demos:
+
+  # ── Cold open — the Texture/Flux wash (the "U Smile" cousin) ────────────────
+  - id: cold-open-texture-wash
+    concept: "Texture + high Flux at extreme stretch → a finished pop song broken into a de-pitched ambient cloud"
+    what_you_hear: "~12 seconds of a smooth, slowly-evolving ambient wash with no clear pitch and no beat — a Justin Bieber song stretched past recognition, the pop still buried inside but unfindable."
+    structure: single
+    isolates: "Texture Flux (high) at extreme stretch — the marquee cloud control"
+    duration_s: 12.0
+    source: "04_u-smile.wav (a ~4 s vocal/hook excerpt; warp the clip, not a synth)"
+    warp:
+      mode: "Texture"
+      grain_size: 0.35              # small-mid → fine grains feed a smooth wash
+      flux: 90                      # high → randomized grains, PaulStretch-style smooth cloud
+      project_tempo_pct: 12.5       # ~800% stretch (the 2010 meme ratio, in a clip)
+    verification:
+      check: cold-open-wash
+      audible: "No beat, no recognizable melody; a smooth sustained wash that evolves slowly across ~12 s. Recognizable pop = stretch/Flux didn't take ⇒ reject."
+      spectral: "Stationary, smeared spectrum with no periodic onset peaks; spectral flux is low/continuous (a cloud), not a repeating metallic buzz. Strong periodic buzz at the grain rate ⇒ Flux too low ⇒ reject."
+
+  # ── 03a — Granular seam: grain size sets grain rate (a pitch) ────────────────
+  - id: granular-seam-grainsize
+    concept: "Texture Grain Size → grain rate → the pitch of the seam-buzz between grains"
+    what_you_hear: "One sustained note warped to 400% in signal-blind Texture, buzzing at the grain rate; as Grain Size is dragged UP, the buzz drops in pitch because the seams come less often."
+    structure: sweep
+    isolates: "Texture Grain Size (small → large), Flux held at 0 so only the seam-rate moves"
+    duration_s: 6.0
+    source: "src_synth-note.wav (one sustained note — needs a steady spectrum)"
+    warp:
+      mode: "Texture"
+      flux: 0                       # HELD at 0 so the periodic seam-buzz is exposed
+      project_tempo_pct: 25         # ~400% stretch
+      grain_size_automation: {from: 0.1, to: 0.85, ramp_s: 5.0}   # the ONE variable
+    verification:
+      check: grainsize-buzz-pitch
+      audible: "Pitch of the held note constant; a buzz is present throughout and its PITCH falls as Grain Size rises (grain rate drops). Buzz pitch flat ⇒ Grain Size didn't move the rate ⇒ reject."
+      spectral: "A buzz/comb whose spacing (grain rate) decreases monotonically as Grain Size increases; the source fundamental stays fixed. Flat comb spacing ⇒ reject."
+
+  # ── 03b — Transient survival: Beats vs Complex (A/B) ────────────────────────
+  - id: transient-survival-ab
+    concept: "Transient-locked granular (Beats) vs phase-vocoder smear (Complex) → the kick survives vs the kick blurs"
+    what_you_hear: "The same break loop at half tempo, played twice: first in Beats (kick stays punchy), beat of silence, then in Complex (kick smears into a watery, blurred thwip)."
+    structure: ab
+    isolates: "Warp Mode (Beats vs Complex); same source, same half-tempo stretch both segments"
+    duration_s: 8.0
+    source: "src_drumbreak.wav (a clean kick+snare+hat break)"
+    warp:
+      ab:
+        - {label: "A", mode: "Beats", preserve: "Transients", transient_loop_mode: "Loop Off", transient_envelope: 100}
+        - {label: "B", mode: "Complex"}
+      project_tempo_pct: 50         # half tempo, identical in both segments
+    verification:
+      check: transient-survival-ab
+      audible: "Segment A's kick/snare stay sharp and punchy; segment B's hits are softened/smeared and 'watery'. A ≈ B ⇒ reject (the mode switch did nothing)."
+      spectral: "Segment A preserves sharp broadband onset transients (high onset-strength peaks); segment B shows time-smeared onsets (lower, wider onset peaks) and raised inter-onset energy. Equal transient sharpness ⇒ reject."
+
+  # ── 03c — Flux smooths the buzz (the PaulStretch insight) ───────────────────
+  - id: flux-smooths-buzz
+    concept: "Texture Flux 0 → 100 → randomizing grain phase trades a periodic metallic buzz for a smooth cloud"
+    what_you_hear: "A held note in Texture: Flux at 0 gives the periodic seam-buzz from the previous demo; pushing Flux to 100 dissolves that buzz into a smooth, stationary wash."
+    structure: sweep
+    isolates: "Texture Flux (0 → 100), grain size & stretch held constant"
+    duration_s: 6.0
+    source: "src_synth-note.wav (same sustained note as granular-seam-grainsize)"
+    warp:
+      mode: "Texture"
+      grain_size: 0.3               # small-mid, HELD
+      project_tempo_pct: 20         # ~500% stretch, HELD
+      flux_automation: {from: 0, to: 100, ramp_s: 5.0}   # the ONE variable
+    verification:
+      check: flux-smooths-buzz
+      audible: "Starts as an obvious periodic buzz; ends as a smooth wash with the buzz gone. Buzz still present at the end ⇒ Flux didn't engage ⇒ reject."
+      spectral: "Spectral flux / periodic-buzz energy at the grain rate DROPS monotonically as Flux rises; the spectrum becomes stationary/decorrelated (cloud). Buzz energy flat or rising ⇒ reject."
+
+  # ── 03d — Formant decouple: Complex Pro, +12, Formants 100% vs 0% (A/B) ──────
+  - id: formant-decouple-ab
+    concept: "Complex Pro Formants → excitation vs spectral envelope: keep the body human, or drag it up into a chipmunk"
+    what_you_hear: "The same vocal transposed up 12 semitones, twice: first Formants 100% (a person singing higher, body intact), beat of silence, then Formants 0% (the chipmunk — envelope dragged up with the pitch)."
+    structure: ab
+    isolates: "Complex Pro Formants (100% vs 0%); same vocal, same +12 transpose both segments"
+    duration_s: 7.0
+    source: "src_vox-ah.wav (a dry sung 'ah')"
+    warp:
+      mode: "Complex Pro"
+      transpose: 12                 # +1 octave, identical in both segments
+      ab:
+        - {label: "A", formants: 100}   # preserved → still human
+        - {label: "B", formants: 0}     # destroyed → chipmunk
+      envelope: 128                 # default; held
+    verification:
+      check: formant-decouple-ab
+      audible: "Both segments same pitch (up an octave); segment A sounds like the SAME voice higher, segment B sounds chipmunked/thin. A ≈ B ⇒ Formants didn't move ⇒ reject."
+      spectral: "Both share the transposed harmonic comb (same f0); segment B's spectral-envelope/formant peaks are shifted UP relative to A (formant centroid higher) while A's envelope sits near the original. Equal envelope position ⇒ reject."
+
+  # ── 03e — Aliasing on speed-up: Re-Pitch at 2× (Nyquist fold-back) ──────────
+  - id: aliasing-on-speedup
+    concept: "Re-Pitch (varispeed) sped up → partials cross Nyquist and fold back as inharmonic fizz — sampling theory by ear"
+    what_you_hear: "A bright cymbal loop in Re-Pitch pushed to double speed: brighter and chipmunked, with an inharmonic 'fizz' on the very top that does not belong to the cymbal — partials folding back under Nyquist."
+    structure: single
+    isolates: "Re-Pitch tempo ratio (2×) — the only lever; Transpose is disabled in Re-Pitch"
+    duration_s: 4.0
+    source: "src_cymbals.wav (a bright cymbal/ride loop — lots of HF energy)"
+    warp:
+      mode: "Re-Pitch"
+      project_tempo_pct: 200        # double speed → +1 oct, pushes HF toward/over Nyquist
+      # NOTE: no transpose key — Re-Pitch disables it. The ratio IS the pitch.
+    verification:
+      check: aliasing-on-speedup
+      audible: "An inharmonic fizz/whistle on the top end that is NOT a clean octave-up of the cymbal — aliasing. Clean octave-up with no fizz ⇒ no audible aliasing on this rip ⇒ try a brighter source / steeper push, else reject."
+      spectral: "Inharmonic energy appears at frequencies that are NOT integer images of the source partials (folded under Nyquist), distinct from a simple frequency-scaled spectrum. Pure scaled spectrum, no fold-back components ⇒ reject."
+    note: "If Live's resampler is clean enough to hide aliasing, exaggerate: brighter source, higher ratio (e.g. 2.5–3×), or a sample with strong content near f_s/2. Don't claim a measured resampler spec on-mic — the dossier flags Live's resampler quality as unpublished."
+
+  # ── 04b — Beats: the stutter-freeze glitch ──────────────────────────────────
+  - id: beats-stutter-freeze
+    concept: "Beats Loop Forward + Transient Envelope 100 at half tempo → each slice freezes into a hard-edged loop (the Ableton stutter-freeze)"
+    what_you_hear: "A drum/melodic loop dropped to half tempo in Beats: instead of smoothly stretching, every segment freezes into a tiny held loop with sharp, clicky seams — a stutter-glitch."
+    structure: single
+    isolates: "Beats Transient Loop Mode = Loop Forward (with Envelope 100), at half tempo"
+    duration_s: 6.0
+    source: "src_drumbreak.wav (a clean break loop)"
+    warp:
+      mode: "Beats"
+      preserve: "Transients"
+      transient_loop_mode: "Loop Forward"   # the stutter-freeze lever
+      transient_envelope: 100               # hard, clicky edges
+      project_tempo_pct: 50                 # half tempo so each slice must fill time by looping
+    verification:
+      check: beats-stutter-freeze
+      audible: "Clearly rhythmic stutter/freeze — repeated tiny loops with hard seams — not a smooth slow-down. A smooth stretch ⇒ Loop Forward didn't engage ⇒ reject."
+      spectral: "Strong periodic onset/segment-repeat peaks (a stutter rate) and sharp segment-edge transients (Envelope 100). Smooth, low-onset envelope ⇒ reject."
+
+  # ── 04c — Tones vs Texture: the granular twins (two demos) ───────────────────
+  - id: tones-warble
+    concept: "Tones on pitch-less material → the pitch tracker chases a fundamental that isn't there → warbling/underwater artifacts"
+    what_you_hear: "A source with no clear pitch (a drum/chord/noise wash) stretched in Tones: a fluttery, metallic, 'underwater' warble as the mode hunts a pitch that does not exist."
+    structure: single
+    isolates: "Warp Mode = Tones on deliberately pitch-less source (the wrong-mode-on-purpose)"
+    duration_s: 5.0
+    source: "src_drumbreak.wav (pitch-less to Tones — a loop it can't track)"
+    warp:
+      mode: "Tones"
+      grain_size: 0.7               # large → grain repetition / warble exaggerated
+      project_tempo_pct: 33         # ~300% stretch so the hunting is audible
+    verification:
+      check: tones-warble
+      audible: "A pitched-but-wobbly, fluttery metallic warble (the tracker chasing a nonexistent pitch) — gentle, not clicky. Clean stretch with no warble ⇒ Tones found a stable pitch ⇒ use a more pitch-less source / larger grain ⇒ reject."
+      spectral: "Wandering, unstable pseudo-pitch with grain-repetition flutter (periodic amplitude/centroid modulation) rather than a stable harmonic comb. Stable comb ⇒ reject."
+
+  - id: texture-cloud
+    concept: "Texture on the same source → signal-blind granular gives a de-pitched cloud (no pitch hunting)"
+    what_you_hear: "The SAME source as tones-warble, now in Texture: no pitch hunting, just a de-pitched granular cloud — the hero mangler, a granular cloud generator hiding in a clip."
+    structure: single
+    isolates: "Warp Mode = Texture (signal-blind) on the same source — contrast partner to tones-warble"
+    duration_s: 5.0
+    source: "src_drumbreak.wav (same source as tones-warble)"
+    warp:
+      mode: "Texture"
+      grain_size: 0.4               # mid
+      flux: 60                      # enough randomization to de-pitch into a cloud
+      project_tempo_pct: 33         # same stretch as tones-warble for a fair A/B across slides
+    verification:
+      check: texture-cloud
+      audible: "A smooth de-pitched cloud with NO warbling pitch-hunt (contrast vs tones-warble). Audible pitch-tracking warble ⇒ this rendered as Tones, not Texture ⇒ reject."
+      spectral: "Stationary, smeared spectrum with no tracked pseudo-pitch; lower periodic-pitch energy than the Tones render of the same source. Tracked pitch present ⇒ reject."
+
+  # ── 04d — Re-Pitch: half-speed, the honest tape drop ────────────────────────
+  - id: repitch-halfspeed
+    concept: "Re-Pitch at half speed → dark, pitched-down, lo-fi grain — varispeed and nothing else (no smear)"
+    what_you_hear: "A loop in Re-Pitch dropped to half speed: darker, pitched down an octave, with audible lo-fi grain — the samples spaced out like a sampler dropped two octaves. No granular buzz, no phase smear."
+    structure: single
+    isolates: "Re-Pitch tempo ratio (50% / half speed); Transpose disabled — the ratio is the pitch"
+    duration_s: 5.0
+    source: "src_drumbreak.wav (a clean break loop)"
+    warp:
+      mode: "Re-Pitch"
+      project_tempo_pct: 50         # half speed → -1 oct, darker + lo-fi grain
+    verification:
+      check: repitch-halfspeed
+      audible: "Pitched down ~1 octave and duration doubled together (turntable law); darker with lo-fi grain, NO granular seam-buzz and NO watery phase smear. Smear/buzz present ⇒ wrong mode rendered ⇒ reject."
+      spectral: "Whole spectrum scaled DOWN by ~2× (pitch and tempo locked); no added inharmonic/smear components — only HF roll-off and interpolation grain. Added smear bands ⇒ reject."
+
+  # ── 04e — Complex Pro: the goblin/giant formant monster ─────────────────────
+  - id: complexpro-formant-monster
+    concept: "Complex Pro Formants pulled out under a big transpose → goblin (up) and giant (down) from one dial"
+    what_you_hear: "The same vocal twice: up 12 semitones with Formants 0% (the envelope dragged up into a goblin), then down 7 with Formants 0% (the envelope hauled down into a giant)."
+    structure: ab
+    isolates: "Transpose direction with Formants pinned to 0% (goblin vs giant) — the destroy-the-envelope lever"
+    duration_s: 7.0
+    source: "src_vox-ah.wav (a dry sung 'ah')"
+    warp:
+      mode: "Complex Pro"
+      formants: 0                   # destroyed in BOTH segments (the constant choice)
+      envelope: 128
+      ab:
+        - {label: "A (goblin)", transpose: 12}    # up an octave, envelope dragged up
+        - {label: "B (giant)", transpose: -7}     # down a fifth, envelope hauled down
+    verification:
+      check: formant-monster-ab
+      audible: "Segment A is a high, thin goblin; segment B is a low, hollow giant — same voice, two monsters, one dial. A ≈ B (or either still 'human') ⇒ Formants weren't at 0% ⇒ reject."
+      spectral: "Segment A's formant/spectral-envelope peaks shifted UP with the +12 transpose; segment B's shifted DOWN with the -7 transpose (envelope tracks the pitch, not preserved). Envelope peaks staying put ⇒ Formants not destroyed ⇒ reject."
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # SECTION 5 — Walkthrough: ONE 2-second source (src_vox-ah.wav, a sung 'ah'),
+  # destroyed six ways, then the resample loop. Each `walk-*` demo warps the SAME
+  # source so the listener hears that the instrument is the breakage, not a new
+  # sample. (walk-texture-cloud is reused by 05d and 05h.)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  - id: walk-source-dry
+    concept: "Walkthrough step 1 — the dry source, the reference for every destruction"
+    what_you_hear: "Two seconds of a dry sung 'ah' — no plugins, no reverb, no chain. The raw material to hold in your ear for the next six steps."
+    structure: single
+    isolates: "Nothing — the unwarped reference (Warp engine effectively transparent / off)"
+    duration_s: 2.5
+    source: "src_vox-ah.wav (a dry sung 'ah')"
+    warp:
+      mode: "Beats"                 # any mode at 100% tempo; no stretch = effectively dry
+      project_tempo_pct: 100        # no time change — the clip plays at its native length
+      note: "Render dry: warp at original tempo so nothing is processed. This is the A in every subsequent A-against-the-source comparison."
+    verification:
+      check: walk-source-dry
+      audible: "A clean, unprocessed sung 'ah', ~2 s, no artifacts. Any audible warp artifact ⇒ the render stretched it ⇒ reject."
+      spectral: "Spectrum identical to the source file (no smear, no scaling). Any deviation ⇒ reject."
+
+  - id: walk-beats-stutter
+    concept: "Walkthrough step 2 — Beats turns the held vowel into a stutter it never performed"
+    what_you_hear: "The sung 'ah' in Beats: Preserve 1/16 (gridding a vowel that has no transients), Loop Forward, Envelope 100, half tempo — the smooth voice becomes a chopped, stuttering machine rhythm."
+    structure: single
+    isolates: "Beats on a transient-less vowel with wrong-grid Preserve 1/16 + Loop Forward"
+    duration_s: 5.0
+    source: "src_vox-ah.wav (the walkthrough source)"
+    warp:
+      mode: "Beats"
+      preserve: "1/16"              # grid a vowel that has no real transients
+      transient_loop_mode: "Loop Forward"
+      transient_envelope: 100
+      project_tempo_pct: 50         # half tempo
+    verification:
+      check: walk-beats-stutter
+      audible: "A clear sixteenth-grid stutter/rhythm from a source that was one long sustain. Smooth stretch ⇒ Loop Forward / grid didn't take ⇒ reject."
+      spectral: "Periodic onset peaks at the imposed 1/16 grid (a rhythm the source never had) with hard segment edges. No periodic onsets ⇒ reject."
+
+  - id: walk-tones-warble
+    concept: "Walkthrough step 3 — Tones stretched 300% with large grains → brittle jungle-vocal warble"
+    what_you_hear: "The same 'ah' in Tones, stretched to 300% with a large Grain Size: a metallic flutter — the brittle Akai-era timestretch wobble early-90s jungle producers kept."
+    structure: single
+    isolates: "Tones large Grain Size at 300% stretch (the monophonic-stretch breakage)"
+    duration_s: 6.0
+    source: "src_vox-ah.wav (the walkthrough source)"
+    warp:
+      mode: "Tones"
+      grain_size: 0.8               # large → audible grain repetition / flutter
+      project_tempo_pct: 33         # ~300% stretch
+    verification:
+      check: walk-tones-warble
+      audible: "A pitched but metallic, fluttery warble (grain repetition) on the stretched vowel — the jungle-vocal artifact. Clean stretch ⇒ grains too small / stretch too mild ⇒ reject."
+      spectral: "Periodic grain-repetition modulation (amplitude/centroid flutter at the grain rate) over the held pitch. Smooth, unmodulated stretch ⇒ reject."
+
+  - id: walk-texture-cloud
+    concept: "Walkthrough step 4 (and step 8 reuse) — Texture 800% + Flux 60 → the ambient granular cloud (the cold-open sound, built live)"
+    what_you_hear: "The same 'ah' in Texture warped to 800%, Grain Size mid, Flux ~60: two seconds of voice become a slowly-evolving pad with no clear pitch — the 'U Smile' move and the Truax cloud, in a clip."
+    structure: single
+    isolates: "Texture Flux (~60) at 800% stretch — the cloud breakage (the hero mangler)"
+    duration_s: 8.0
+    source: "src_vox-ah.wav (the walkthrough source)"
+    warp:
+      mode: "Texture"
+      grain_size: 0.5               # mid
+      flux: 60                      # decorrelate grains → stationary cloud, no metallic loop
+      project_tempo_pct: 12.5       # ~800% stretch
+    verification:
+      check: walk-texture-cloud
+      audible: "A smooth, slowly-evolving, de-pitched pad/cloud — no beat, no clear pitch, no metallic looping buzz. A repeating metallic loop ⇒ Flux too low ⇒ reject."
+      spectral: "Stationary smeared spectrum, low periodic-buzz energy (Flux decorrelation), evolving slowly. Strong grain-rate comb ⇒ reject. (Reused by 05d-texture-cloud and 05h-save-instrument.)"
+
+  - id: walk-repitch-tape
+    concept: "Walkthrough step 5 — Re-Pitch down then up → tape drop and chipmunk, the honest mode"
+    what_you_hear: "The same 'ah' in Re-Pitch: first half speed (dark, pitched down, lo-fi grain, no aliasing), then double speed (bright, chipmunked, with fizz on top where partials cross Nyquist). No smear either way."
+    structure: ab
+    isolates: "Re-Pitch tempo ratio (down 50% vs up 200%); Transpose disabled — ratio is the pitch"
+    duration_s: 6.0
+    source: "src_vox-ah.wav (the walkthrough source)"
+    warp:
+      mode: "Re-Pitch"
+      ab:
+        - {label: "A (tape down)", project_tempo_pct: 50}    # -1 oct, dark + lo-fi grain
+        - {label: "B (chipmunk up)", project_tempo_pct: 200} # +1 oct, bright + aliasing fizz
+    verification:
+      check: walk-repitch-tape
+      audible: "Segment A pitched down an octave and longer (dark, grainy, no fizz); segment B pitched up an octave and shorter (chipmunk, with HF fizz). No smear/buzz in either ⇒ correct (Re-Pitch). Smear present ⇒ wrong mode ⇒ reject."
+      spectral: "Segment A spectrum scaled down ~2× (no aliasing); segment B scaled up ~2× WITH folded-back inharmonic components on top. No scaling / added smear bands ⇒ reject."
+
+  - id: walk-complexpro-formant
+    concept: "Walkthrough step 6 — Complex Pro: goblin (+12, Formants 0) then giant (-7, Formants 0)"
+    what_you_hear: "The same 'ah' in Complex Pro: up 12 with Formants 0 (goblin — envelope dragged up), then down 7 with Formants 0 (giant — envelope hauled down). Two monsters from one dial; nudge Envelope off-default for hollow coloration."
+    structure: ab
+    isolates: "Transpose direction with Formants pinned to 0 (goblin vs giant)"
+    duration_s: 7.0
+    source: "src_vox-ah.wav (the walkthrough source)"
+    warp:
+      mode: "Complex Pro"
+      formants: 0                   # destroyed in both
+      envelope: 128                 # default; optionally nudge for hollow color (calibrate)
+      ab:
+        - {label: "A (goblin)", transpose: 12}
+        - {label: "B (giant)", transpose: -7}
+    verification:
+      check: walk-complexpro-formant
+      audible: "Segment A a thin high goblin; segment B a low hollow giant — same voice, formants destroyed both ways. Either still human ⇒ Formants not at 0 ⇒ reject."
+      spectral: "Envelope/formant peaks shifted UP in A (+12) and DOWN in B (-7), tracking the transpose. Envelope peaks fixed ⇒ reject. (Mirrors complexpro-formant-monster; same recipe, walkthrough framing.)"
+
+  - id: walk-resample-pass3
+    concept: "Walkthrough step 7 — the Hopkins resample loop: warp → resample → warp → resample, the source gone by pass 3"
+    what_you_hear: "The third pass of a commit-and-mangle chain: the Texture cloud resampled, re-warped in Complex Pro, resampled again — the 'ah' has been granulated, phase-smeared, granulated again. You can't find the voice anymore."
+    structure: single
+    isolates: "Iterated warp+resample (the method, not one control) — pass 3 of the destructive loop"
+    duration_s: 7.0
+    source: "src_vox-ah.wav → (pass1) Texture cloud → resample → (pass2) Complex Pro stretch → resample → (pass3 render)"
+    warp:
+      pipeline:
+        - {pass: 1, mode: "Texture", grain_size: 0.5, flux: 60, project_tempo_pct: 12.5, then: "resample to new clip"}
+        - {pass: 2, mode: "Complex Pro", transpose: 5, formants: 30, project_tempo_pct: 25, then: "resample to new clip"}
+        - {pass: 3, mode: "Texture", grain_size: 0.35, flux: 80, project_tempo_pct: 25, then: "render this"}
+    verification:
+      check: walk-resample-pass3
+      audible: "An evolving, source-less texture — no recognizable 'ah', no clear pitch, layered granular + spectral character. If the original vowel is still identifiable ⇒ the passes didn't commit/print ⇒ reject."
+      spectral: "Spectrum unrecognizable vs src_vox-ah.wav: smeared + granulated, low correlation with the source's harmonic structure. High correlation with the source ⇒ reject."
+    note: "Each pass must be PRINTED (resampled to a new clip) before the next warp — the point is committing destructively and discarding the source (the Hopkins method)."

@@ -1,0 +1,254 @@
+id: e05-warp-modes
+title: "Warp Modes as Sound Design"
+device: Warp                  # Live's audio-warp engine, NOT a synth — demos are WARPED AUDIO
+synthesis_type: "Audio time-stretch (granular / phase-vocoder / varispeed)"
+week: 5                        # episode-number alias for shared build_episode
+target_duration_minutes: 40
+ableton_manual_url: "https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/"
+
+idm_primary_artists:
+  - Oval
+  - Akufen
+  - Jon Hopkins
+idm_primary_records:
+  - "Oval — Systemisch"
+  - "Akufen — My Way"
+  - "Shamantis — U Smile 800% Slower (PaulStretch)"
+adjacent_genres:
+  - glitch
+  - microhouse
+  - ambient
+  - jungle
+
+# Bibliography references checked by validate.ts; full entries in references/bibliography.json.
+# (ids to be reconciled against the bibliography during fact-check; sourced from the dossier.)
+references:
+  - bib:ableton_manual_warping
+  - bib:zplane_elastique
+  - bib:gabor_1946
+  - bib:xenakis_formalized_music
+  - bib:roads_microsound_2001
+  - bib:truax_riverrun
+  - bib:flanagan_golden_1966
+  - bib:portnoff_1976
+  - bib:dolson_pvoc_tutorial
+  - bib:bernsee_pitch_time_overview
+  - bib:paulnasca_paulstretch
+  - bib:npr_u_smile_800
+  - bib:oval_systemisch
+  - bib:ableton_artists_akufen
+  - bib:ra_hopkins_3210
+  - bib:cdm_hopkins_live
+  - bib:soundhack_erbe
+  - bib:cdp_wishart
+
+# ── STORY SPINE (Gate 2 lock — see outline.md). Surfaced here so the Writer
+#    keeps it in view while drafting; do not advance line-level work past a
+#    flatline list, this is not one. ───────────────────────────────────────
+#   FOCUS SENTENCE: "Every Warp Mode is a real-time time-stretch algorithm, and
+#     every time-stretch algorithm has a characteristic failure mode — and the
+#     failure mode IS the sound."
+#   DRIVING QUESTION: "If Warp is just for matching tempo, why are there six of
+#     them — and why does the manual admit even the best one is 'never neutral,
+#     not even at the original tempo'?"
+#   SURPRISING PAYOFF: the six modes are three DSP families (granular =
+#     Beats/Tones/Texture, phase vocoder = Complex/Complex Pro, varispeed =
+#     Re-Pitch) answering one question — how do I make this longer/shorter
+#     without it falling apart? Each one's way of FALLING APART is a usable
+#     instrument: Beats→glitch, Texture→clouds, Complex→ghosts, Re-Pitch→lo-fi
+#     grain. You don't pick a mode for transparency; you pick the breakage.
+#   PAYOFF REFRAIN (seed in 01-cold-open; echo once per act boundary —
+#     02e / 03e / 04f / 05h — and land in 06d): "Pick the breakage."
+#   ANECDOTE/REFLECTION ALTERNATION: history beats (Gabor, Xenakis, Roads,
+#     Truax, Flanagan) are ANECDOTE; the DSP-families and device-tour beats are
+#     REFLECTION, each given an anecdote anchor (the Bieber meme, Oval's knife)
+#     so no act flatlines (the ep1 Section-4 failure).
+#   ACT-BOUNDARY SIGNPOSTS: every section-opening slide names the stop and ties
+#     it to the focus sentence; the cold open plants the four-stop map. See
+#     script/*.md headers and the `transitions` insertions below.
+#   SCOPE: demos are WARPED AUDIO SOURCES, not synth renders. Each warp_demos
+#     entry in clip_manifest.yaml is a recipe (source + mode + key control at an
+#     extreme) rendered later by warping audio in Live.
+
+# Background-music transitions inserted after specific slides (act boundaries).
+# Each clip_id resolves to an entry in clip_manifest.yaml; spliced into the same
+# chapter as the slide it follows. Resolve clip_ids in clip_manifest.yaml after
+# SCRIPT LOCK. Left minimal here — one transition per act seam.
+transitions:
+  enabled: true
+  insertions:
+    - after_slide: 02e-democratization           # end of history → into the DSP families
+      clip_id: trans-warp-seam-1
+    - after_slide: 03e-varispeed-nyquist          # end of DSP families → into the device tour
+      clip_id: trans-warp-seam-2
+    - after_slide: 04f-abuse-map                  # end of device tour → into the walkthrough
+      clip_id: trans-warp-seam-3
+    - after_slide: 05h-save-instrument            # end of walkthrough → into IDM application
+      clip_id: trans-warp-seam-4
+
+# Background music beds — sidechain-ducked under narration. Left minimal:
+# a single granular/ambient bed under the reflection-heavy stretches. Resolve
+# clip_ids in clip_manifest.yaml after lock. Set enabled:false to skip.
+beds:
+  enabled: true
+  duck_db: -14
+  insertions:
+    - clip_id: bed-warp-cloud
+      start_at_slide: 02a-gabor-quantum
+      end_at_slide: 02e-democratization
+      gain_db: -3
+    - clip_id: bed-warp-cloud
+      start_at_slide: 06a-oval-glitch
+      end_at_slide: 06d-exercise
+      gain_db: -3
+
+# Episode runs as a sequence of slides (chunks); shared/tools/build_episode.py
+# concatenates narration WAVs in this order, splicing demo clips after each
+# slide's narration. Each demo id resolves via clip_manifest.yaml to either a
+# song-clip or a warp-render (warped-audio) WAV.
+slides:
+  # ── Cold Open (90s) — confession: a pop song slowed into ambient art, and an
+  #    80-year line that ends in a dropdown you ignore. PLANT HERE: the four-stop
+  #    map (history / physics / the six modes / destroy-two-seconds-six-ways) and
+  #    the first instance of the "Pick the breakage." refrain. Bed = the cold-open
+  #    Texture wash itself. ───────────────────────────────────────────────────
+  - id: 01-cold-open
+    heading: "Cold Open"
+    script_md: script/01-cold-open.md
+    demos: [cold-open-texture-wash]
+
+  # ── Section 2: History & Theory (8–9 min, 5 beats) ─────────────────────────
+  #    ACT OPEN — signpost: "Stop one — where this came from." Two lineages, in
+  #    the order you need them: the grain (Gabor → Xenakis → Roads/Truax) then
+  #    the frequency-domain family (Flanagan) then the labs and the dropdown.
+  - id: 02a-gabor-quantum
+    heading: "Gabor's Acoustic Quantum (1946)"
+    script_md: script/02a-gabor-quantum.md
+  - id: 02b-xenakis-razor
+    heading: "Xenakis and the Razor Blade (1959)"
+    script_md: script/02b-xenakis-razor.md
+  - id: 02c-roads-truax
+    heading: "Digital, Then Real-Time: Roads and Truax"
+    script_md: script/02c-roads-truax.md
+  - id: 02d-phase-vocoder
+    heading: "The Other Family: The Phase Vocoder (1966)"
+    script_md: script/02d-phase-vocoder.md
+  - id: 02e-democratization
+    heading: "From a Lab in Paris to the Dropdown"
+    script_md: script/02e-democratization.md
+
+  # ── Section 3: The Three DSP Families (8–9 min, 5 beats) ───────────────────
+  #    ACT SEAM (history → physics) MOTIVATED, not a cut: 03a opens by turning
+  #    the just-told 80-year line into a question — "so what is the grain
+  #    actually doing, by ear?" ACT OPEN — signpost: "Stop two — the physics of
+  #    how it breaks." Reflection-heavy; EVERY beat carries a live demo so the
+  #    math is heard, not lectured.
+  - id: 03a-granular-math
+    heading: "Granular, in One Breath"
+    script_md: script/03a-granular-math.md
+    demos: [granular-seam-grainsize]
+  - id: 03b-phase-vocoder-smear
+    heading: "Phase Vocoder: Why It Smears"
+    script_md: script/03b-phase-vocoder-smear.md
+    demos: [transient-survival-ab]
+  - id: 03c-flux-paradox
+    heading: "The Flux Paradox: Randomness Smooths"
+    script_md: script/03c-flux-paradox.md
+    demos: [flux-smooths-buzz]
+  - id: 03d-formants
+    heading: "Formants: Excitation vs Spectral Envelope"
+    script_md: script/03d-formants.md
+    demos: [formant-decouple-ab]
+  - id: 03e-varispeed-nyquist
+    heading: "Varispeed and Where the Aliasing Lives"
+    script_md: script/03e-varispeed-nyquist.md
+    demos: [aliasing-on-speedup]
+
+  # ── Section 4: Ableton Warp Deep Dive (8–9 min, 6 beats) ───────────────────
+  #    DRIVING QUESTION — planted at 04a, answered by EVERY beat after it (the
+  #    ep1 device-tour fix; without it the six-mode tour flatlines into "and
+  #    also"): "Ableton put three unrelated DSP families behind one dropdown and
+  #    admits even the best is 'never neutral.' So: what runs BEFORE any mode,
+  #    which mode breaks WHICH way, and which control is the one that breaks it?"
+  #    Each beat is an answer: 04a = the shared substrate; 04b–04e = the modes,
+  #    one breakage each; 04f = the abuse map that indexes them.
+  - id: 04a-substrate
+    heading: "Warp Markers and Transient Detection"
+    script_md: script/04a-substrate.md
+  - id: 04b-beats-glitch
+    heading: "Beats: The Glitch Engine"
+    script_md: script/04b-beats-glitch.md
+    demos: [beats-stutter-freeze]
+  - id: 04c-tones-texture
+    heading: "Tones vs Texture: The Granular Twins"
+    script_md: script/04c-tones-texture.md
+    demos: [tones-warble, texture-cloud]
+  - id: 04d-repitch-purist
+    heading: "Re-Pitch: The Purist (No Time-Stretch)"
+    script_md: script/04d-repitch-purist.md
+    demos: [repitch-halfspeed]
+  - id: 04e-complex-ghosts
+    heading: "Complex and Complex Pro: The Spectral Ghosts"
+    script_md: script/04e-complex-ghosts.md
+    demos: [complexpro-formant-monster]
+  - id: 04f-abuse-map
+    heading: "The Abuse Map: Transparency Lever vs Sound-Design Lever"
+    script_md: script/04f-abuse-map.md
+
+  # ── Section 5: Sound-Design Walkthrough (5–6 min, 8 steps) ─────────────────
+  #    ONE 2-second source, destroyed six ways live, then the Hopkins resample
+  #    loop, then saved as an instrument. Each step is an ANECDOTE (a move that
+  #    raises and answers "what just happened to the sound"). 05a establishes the
+  #    dry source so every destruction has a reference.
+  - id: 05a-the-source
+    heading: "Step 1: The Dry Source (Two Seconds)"
+    script_md: script/05a-the-source.md
+    demos: [walk-source-dry]
+  - id: 05b-beats-stutter
+    heading: "Step 2: Beats — Stutter-Glitch"
+    script_md: script/05b-beats-stutter.md
+    demos: [walk-beats-stutter]
+  - id: 05c-tones-warble
+    heading: "Step 3: Tones — Jungle-Vocal Warble"
+    script_md: script/05c-tones-warble.md
+    demos: [walk-tones-warble]
+  - id: 05d-texture-cloud
+    heading: "Step 4: Texture — Ambient Granular Cloud"
+    script_md: script/05d-texture-cloud.md
+    demos: [walk-texture-cloud]
+  - id: 05e-repitch-tape
+    heading: "Step 5: Re-Pitch — Tape/Chipmunk"
+    script_md: script/05e-repitch-tape.md
+    demos: [walk-repitch-tape]
+  - id: 05f-complexpro-formant
+    heading: "Step 6: Complex Pro — Goblin and Giant"
+    script_md: script/05f-complexpro-formant.md
+    demos: [walk-complexpro-formant]
+  - id: 05g-resample-loop
+    heading: "Step 7: The Hopkins Resample Loop"
+    script_md: script/05g-resample-loop.md
+    demos: [walk-resample-pass3]
+  - id: 05h-save-instrument
+    heading: "Step 8: Save the Cloud as an Instrument"
+    script_md: script/05h-save-instrument.md
+    demos: [walk-texture-cloud]
+
+  # ── Section 6: IDM Application & Exercise (5–6 min, 4 beats) ───────────────
+  #    Ordered: glitch-from-order (Oval) → microsampling (Akufen) → the cloud
+  #    (Roads/Truax, closing the 02c loop) → the exercise. Closes on the exercise
+  #    then a STOP — no kicker (voice rule). LAND the refrain in 06d.
+  - id: 06a-oval-glitch
+    heading: "Glitch from Order: Oval"
+    script_md: script/06a-oval-glitch.md
+    demos: [systemisch-clip, oval-beats-glitch]
+  - id: 06b-akufen-microsample
+    heading: "Microsampling: Akufen"
+    script_md: script/06b-akufen-microsample.md
+    demos: [akufen-clip, akufen-microslice]
+  - id: 06c-truax-cloud
+    heading: "The Cloud: Roads, Truax, and a Clip"
+    script_md: script/06c-truax-cloud.md
+    demos: [truax-texture-cloud]
+  - id: 06d-exercise
+    heading: "Listener Exercise"
+    script_md: script/06d-exercise.md
