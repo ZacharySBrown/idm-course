@@ -280,9 +280,51 @@ class Renderer:
                 time.sleep(1.0 / 30.0)
         threading.Thread(target=run, daemon=True).start()
 
+    def _concat(self, segs: list[Path], dst: Path, gap_s: float = 0.45):
+        """Concatenate segments with a short silence between (for A/B demos)."""
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            sil = Path(td) / "sil.wav"
+            subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-f", "lavfi",
+                            "-i", "anullsrc=r=48000:cl=stereo", "-t", str(gap_s),
+                            "-c:a", "pcm_s24le", str(sil)], check=True)
+            lst = Path(td) / "l.txt"
+            parts = []
+            for i, s in enumerate(segs):
+                if i: parts.append(f"file {sil}")
+                parts.append(f"file {s.resolve()}")
+            lst.write_text("\n".join(parts))
+            subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-f", "concat",
+                            "-safe", "0", "-i", str(lst), "-c:a", "pcm_s24le", str(dst)], check=True)
+
+    def _render_ab(self, demo: dict) -> dict:
+        """A/B demo: render segment A and B (one param differs), concat A | B."""
+        did = demo["id"]
+        ab_param = demo["ab_param"]; ab_values = demo["ab_values"]
+        self.log(f"    A/B on {ab_param!r}: {ab_values[0]} | {ab_values[1]}")
+        segs = []
+        for i, val in enumerate(ab_values[:2]):
+            sub = dict(demo)
+            sub.pop("ab_param", None); sub.pop("ab_values", None)
+            sub["params"] = {**(demo.get("params") or {}), ab_param: val}
+            sub["id"] = f"{did}__seg{i}"
+            self.render_one(sub)
+            p = self.output_dir / f"{did}__seg{i}.wav"
+            if p.exists(): segs.append(p)
+        out = self.output_dir / f"{did}.wav"
+        if len(segs) == 2:
+            self._concat(segs, out)
+            for s in segs: s.unlink()
+            db = measure_db(out)
+            self.log(f"    → {out.name} (A/B)  mean={db['mean']:.1f}dB peak={db['peak']:.1f}dB")
+            return {"id": did, "status": "ok" if db["mean"] > -45 else "quiet", "out": str(out)}
+        return {"id": did, "status": "ab-incomplete"}
+
     def render_one(self, demo: dict) -> dict:
         did = demo["id"]
         self.log(f"  ▶ {did}")
+        if demo.get("ab_param") and demo.get("ab_values") and len(demo["ab_values"]) >= 2:
+            return self._render_ab(demo)
         params = demo.get("params") or {}
         if params:
             self.apply_params(params)
@@ -575,19 +617,30 @@ def main() -> int:
                      cap_track=cap_track, tempo=args.tempo, recorded_dir=recorded_dir,
                      tail_s=args.tail_s, settle_s=args.settle_s, output_dir=output_dir)
         results = []
-        # render real demos first, then mix_from
-        for d in [x for x in demos if not x.get("mix_from")]:
+        def _composed(x):
+            return x.get("mix_from") or x.get("concat_from")
+        # render real demos first, then composed (mix/concat) demos
+        for d in [x for x in demos if not _composed(x)]:
             if find_rendered(d["id"], output_dir):
                 print(f"  [skip] {d['id']} already rendered")
                 continue
             results.append(r.render_one(d))
             time.sleep(0.3)
-        for d in [x for x in demos if x.get("mix_from")]:
+        for d in [x for x in demos if _composed(x)]:
             if find_rendered(d["id"], output_dir):
                 continue
-            dest = mix_demos(d["mix_from"], d["id"], output_dir)
-            results.append({"id": d["id"], "status": "ok" if dest else "mix-failed"})
-            print(f"  [mix] {d['id']} ← {d['mix_from']} → {'ok' if dest else 'FAILED'}")
+            if d.get("concat_from"):
+                segs = [p for s in d["concat_from"] if (p := find_rendered(s, output_dir))]
+                if len(segs) == len(d["concat_from"]):
+                    r._concat(segs, output_dir / f"{d['id']}.wav")
+                    results.append({"id": d["id"], "status": "ok"})
+                    print(f"  [concat] {d['id']} ← {d['concat_from']} → ok")
+                else:
+                    results.append({"id": d["id"], "status": "concat-missing-src"})
+            else:
+                dest = mix_demos(d["mix_from"], d["id"], output_dir)
+                results.append({"id": d["id"], "status": "ok" if dest else "mix-failed"})
+                print(f"  [mix] {d['id']} ← {d['mix_from']} → {'ok' if dest else 'FAILED'}")
     finally:
         live.close()
 

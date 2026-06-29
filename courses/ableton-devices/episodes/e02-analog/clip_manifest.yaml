@@ -999,7 +999,7 @@ device_demos:
     # segment B = an-reese-final config (Reese). Rendered as two takes from the
     # saved preset, concatenated with a beat of silence — the saved preset is the
     # source of truth. mix_from references the two already-real sub-demo renders.
-    mix_from:
+    concat_from:
       - an-303-step6
       - an-reese-final
 
