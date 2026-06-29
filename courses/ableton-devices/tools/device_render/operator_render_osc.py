@@ -186,16 +186,36 @@ class Renderer:
             self.live.send("/live/clip_slot/delete_clip", track, slot)
             time.sleep(0.1)
 
+    @staticmethod
+    def _note_dur(n: dict, length_s: float) -> float:
+        """Per-note duration. Manifests write `length_s:` (or `dur_s:`) on a note;
+        fall back to clip-length-minus-onset. Always >= 0.05s so /live/clip/add/notes
+        never receives a negative/zero length (which silently rejects the WHOLE batch)."""
+        t = float(n.get("t", 0.0))
+        raw = n.get("dur_s", n.get("length_s", length_s - t))
+        return max(0.05, float(raw))
+
     def _make_midi_clip(self, midi: dict, slot: int = 0) -> float:
         """Create a MIDI clip on the Operator track and add notes. Returns the
         length in seconds the recording must cover."""
-        length_s = float(midi.get("length_s") or 2.0)
+        notes_spec = midi.get("notes")
+        # Clip length: explicit length_s wins; else derive from the notes' max
+        # extent (onset + per-note duration) so staggered/segmented notes all fit.
+        if midi.get("length_s"):
+            length_s = float(midi["length_s"])
+        elif notes_spec:
+            length_s = max(
+                float(n.get("t", 0.0)) + float(n.get("dur_s", n.get("length_s", 1.0)))
+                for n in notes_spec
+            )
+        else:
+            length_s = 2.0
         # collect notes
         notes = []
-        if midi.get("notes"):
-            for n in midi["notes"]:
+        if notes_spec:
+            for n in notes_spec:
                 t = float(n.get("t", 0.0))
-                dur = float(n.get("dur_s", length_s - t))
+                dur = self._note_dur(n, length_s)
                 notes.append((note_to_midi(n["note"]), t, dur, int(n.get("vel", 100))))
         else:
             note = midi.get("note", "C3")
@@ -297,16 +317,41 @@ class Renderer:
             subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-f", "concat",
                             "-safe", "0", "-i", str(lst), "-c:a", "pcm_s24le", str(dst)], check=True)
 
+    @staticmethod
+    def _first_segment_midi(midi: dict | None) -> dict | None:
+        """For an A/B demo, the manifest often encodes BOTH segments as two notes
+        in one clip (segment A at t≈0, segment B later). The A/B renderer plays the
+        SAME phrase twice (once per param value), so collapse to just the first
+        segment's notes, rebased to t=0, and re-derive the clip length from them."""
+        if not midi or not midi.get("notes"):
+            return midi
+        notes = midi["notes"]
+        min_t = min(float(n.get("t", 0.0)) for n in notes)
+        seg = [n for n in notes if abs(float(n.get("t", 0.0)) - min_t) < 1e-3]
+        out = dict(midi)
+        out["notes"] = [{**n, "t": 0.0} for n in seg]
+        out.pop("length_s", None)  # re-derive from the (now single-segment) notes
+        return out
+
     def _render_ab(self, demo: dict) -> dict:
-        """A/B demo: render segment A and B (one param differs), concat A | B."""
+        """A/B demo: render segment A and B, concat A | B. Supports either
+        `ab_param`/`ab_values` (one param, two values) or `ab_params`
+        (dict of param → [valA, valB] when several params differ A↔B)."""
         did = demo["id"]
-        ab_param = demo["ab_param"]; ab_values = demo["ab_values"]
-        self.log(f"    A/B on {ab_param!r}: {ab_values[0]} | {ab_values[1]}")
+        if demo.get("ab_param"):
+            ab = {demo["ab_param"]: list(demo["ab_values"])[:2]}
+        else:
+            ab = {k: list(v)[:2] for k, v in demo["ab_params"].items()}
+        self.log(f"    A/B: " + " | ".join(f"{p}={v[0]}→{v[1]}" for p, v in ab.items()))
+        seg_midi = self._first_segment_midi(demo.get("midi"))
         segs = []
-        for i, val in enumerate(ab_values[:2]):
+        for i in range(2):
             sub = dict(demo)
-            sub.pop("ab_param", None); sub.pop("ab_values", None)
-            sub["params"] = {**(demo.get("params") or {}), ab_param: val}
+            for key in ("ab_param", "ab_values", "ab_params", "duration_s", "automation"):
+                sub.pop(key, None)
+            sub["params"] = {**(demo.get("params") or {}),
+                             **{p: vals[i] for p, vals in ab.items()}}
+            sub["midi"] = seg_midi
             sub["id"] = f"{did}__seg{i}"
             self.render_one(sub)
             p = self.output_dir / f"{did}__seg{i}.wav"
@@ -316,14 +361,17 @@ class Renderer:
             self._concat(segs, out)
             for s in segs: s.unlink()
             db = measure_db(out)
-            self.log(f"    → {out.name} (A/B)  mean={db['mean']:.1f}dB peak={db['peak']:.1f}dB")
-            return {"id": did, "status": "ok" if db["mean"] > -45 else "quiet", "out": str(out)}
+            status = "ok" if db["mean"] > -45 else "quiet"
+            self.log(f"    → {out.name} (A/B)  mean={db['mean']:.1f}dB peak={db['peak']:.1f}dB [{status}]")
+            return {"id": did, "status": status, "out": str(out),
+                    "mean_db": db["mean"], "peak_db": db["peak"]}
         return {"id": did, "status": "ab-incomplete"}
 
     def render_one(self, demo: dict) -> dict:
         did = demo["id"]
         self.log(f"  ▶ {did}")
-        if demo.get("ab_param") and demo.get("ab_values") and len(demo["ab_values"]) >= 2:
+        if (demo.get("ab_param") and demo.get("ab_values") and len(demo["ab_values"]) >= 2) \
+                or demo.get("ab_params"):
             return self._render_ab(demo)
         params = demo.get("params") or {}
         if params:

@@ -1,10 +1,10 @@
 [
   {
-    "lesson": "e01-operator",
+    "lesson": "e02-analog",
     "status": "ok",
-    "mp3": "build/ableton-devices/audio/episodes/e01-operator.mp3",
-    "chapters": 34,
-    "pieces": 86,
-    "duration_ms": 2626486
+    "mp3": "build/ableton-devices/audio/episodes/e02-analog.mp3",
+    "chapters": 29,
+    "pieces": 81,
+    "duration_ms": 2723653
   }
 ]

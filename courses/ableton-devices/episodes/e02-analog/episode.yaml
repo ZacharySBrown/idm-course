@@ -51,15 +51,15 @@ transitions:
   enabled: true
   insertions:
     - after_slide: 02f-virtual-analog          # end of section 2 (history) → into 3
-      clip_id: TBD
+      clip_id: trans-i-feel-love               # Moroder/Summer — the analog-sequencer foundation
     - after_slide: 03f-drive                    # end of section 3 (synthesis) → into 4
-      clip_id: TBD
+      clip_id: trans-flash-light               # Parliament — Moog-bass funk
     - after_slide: 04f-voice-architecture       # end of section 4 (device) → into 5
-      clip_id: TBD
+      clip_id: trans-acid-tracks               # Phuture — leads into the 303 walkthrough
     - after_slide: 05i-save                      # end of walkthrough → into 6
-      clip_id: TBD
+      clip_id: trans-tri-repetae               # Autechre — into the IDM-application act
     - after_slide: 06d-fat-principle             # before listener exercise
-      clip_id: TBD
+      clip_id: trans-can-you-feel-it           # Mr Fingers — house closer sting
 
 # Background music beds — sidechain-ducked under narration. Left minimal for the
 # skeleton; ranges are placeholders the Sound Designer tightens after lock.
@@ -67,19 +67,19 @@ beds:
   enabled: true
   duck_db: -14
   insertions:
-    - clip_id: TBD
+    - clip_id: bed-i-feel-love                 # history act — sustained Moroder pulse
       start_at_slide: 02a-silver-box
       end_at_slide: 02f-virtual-analog
       gain_db: -3
-    - clip_id: TBD
+    - clip_id: bed-flash-light                 # synthesis act — funk bed
       start_at_slide: 03a-oscillator-spectra
       end_at_slide: 03f-drive
       gain_db: -2
-    - clip_id: TBD
+    - clip_id: bed-can-you-feel-it             # device act — house bed
       start_at_slide: 04a-origin
       end_at_slide: 04f-voice-architecture
       gain_db: -3
-    - clip_id: TBD
+    - clip_id: bed-tri-repetae                 # IDM-application act — Autechre bed
       start_at_slide: 06a-self-oscillation
       end_at_slide: 06e-exercise
       gain_db: -3

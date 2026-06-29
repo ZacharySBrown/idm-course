@@ -1,0 +1,205 @@
+[
+  {
+    "heading": "Cold Open",
+    "cue_id": "acid-tracks-cold-open",
+    "role": "song",
+    "demo_start_ms": 40100,
+    "demo_end_ms": 48100
+  },
+  {
+    "heading": "Moog and the Ladder Filter (1964\u201371)",
+    "cue_id": "flash-light-bass",
+    "role": "song",
+    "demo_start_ms": 318500,
+    "demo_end_ms": 326500
+  },
+  {
+    "heading": "The TB-303 and Acid House",
+    "cue_id": "acid-tracks-303",
+    "role": "song",
+    "demo_start_ms": 647650,
+    "demo_end_ms": 657650
+  },
+  {
+    "heading": "Why Model Analog at All",
+    "cue_id": "trans-i-feel-love",
+    "role": "transition",
+    "demo_start_ms": 781900,
+    "demo_end_ms": 795900
+  },
+  {
+    "heading": "Oscillator Spectra: Saw, Square, Pulse",
+    "cue_id": "an-pwm-sweep",
+    "role": "song",
+    "demo_start_ms": 878500,
+    "demo_end_ms": 883000
+  },
+  {
+    "heading": "The Filter, for a Physicist",
+    "cue_id": "an-slope-12-vs-24",
+    "role": "song",
+    "demo_start_ms": 995250,
+    "demo_end_ms": 999700
+  },
+  {
+    "heading": "Self-Oscillation: The Barkhausen Condition",
+    "cue_id": "an-reso-to-self-osc",
+    "role": "song",
+    "demo_start_ms": 1069100,
+    "demo_end_ms": 1073233
+  },
+  {
+    "heading": "Detuning, Beating, and PWM",
+    "cue_id": "an-reese-detune-sweep",
+    "role": "song",
+    "demo_start_ms": 1148833,
+    "demo_end_ms": 1154833
+  },
+  {
+    "heading": "Detuning, Beating, and PWM",
+    "cue_id": "an-pwm-strings",
+    "role": "song",
+    "demo_start_ms": 1197633,
+    "demo_end_ms": 1200305
+  },
+  {
+    "heading": "Two Envelopes, Two Jobs",
+    "cue_id": "an-filter-env-vs-amp-env",
+    "role": "song",
+    "demo_start_ms": 1298105,
+    "demo_end_ms": 1301434
+  },
+  {
+    "heading": "Drive: Re-Introducing Nonlinearity",
+    "cue_id": "an-drive-sym-vs-asym",
+    "role": "song",
+    "demo_start_ms": 1381234,
+    "demo_end_ms": 1385684
+  },
+  {
+    "heading": "Drive: Re-Introducing Nonlinearity",
+    "cue_id": "trans-flash-light",
+    "role": "transition",
+    "demo_start_ms": 1410834,
+    "demo_end_ms": 1422834
+  },
+  {
+    "heading": "Physical Modeling and the Error Knob",
+    "cue_id": "an-error-drift",
+    "role": "song",
+    "demo_start_ms": 1604184,
+    "demo_end_ms": 1608380
+  },
+  {
+    "heading": "The Oscillators: Shapes, Sub, Sync",
+    "cue_id": "an-sync-ratio-sweep",
+    "role": "song",
+    "demo_start_ms": 1719930,
+    "demo_end_ms": 1724930
+  },
+  {
+    "heading": "The Two Filters: Multimode, Series, Formant",
+    "cue_id": "an-ms20-series-filter",
+    "role": "song",
+    "demo_start_ms": 1838580,
+    "demo_end_ms": 1844580
+  },
+  {
+    "heading": "Voice Architecture and Make-It-Analog",
+    "cue_id": "an-unison-supersaw",
+    "role": "song",
+    "demo_start_ms": 2057380,
+    "demo_end_ms": 2061109
+  },
+  {
+    "heading": "Voice Architecture and Make-It-Analog",
+    "cue_id": "trans-acid-tracks",
+    "role": "transition",
+    "demo_start_ms": 2083909,
+    "demo_end_ms": 2095909
+  },
+  {
+    "heading": "Step 1: Mono, Glide, One Saw",
+    "cue_id": "an-303-step1",
+    "role": "song",
+    "demo_start_ms": 2149259,
+    "demo_end_ms": 2153259
+  },
+  {
+    "heading": "Step 2: Route to a 24 dB Low-Pass",
+    "cue_id": "an-303-step2",
+    "role": "song",
+    "demo_start_ms": 2192359,
+    "demo_end_ms": 2196359
+  },
+  {
+    "heading": "Step 3: Filter Envelope, the Per-Note Wow",
+    "cue_id": "an-303-step3",
+    "role": "song",
+    "demo_start_ms": 2251509,
+    "demo_end_ms": 2255509
+  },
+  {
+    "heading": "Step 4: Resonance Toward the Squelch",
+    "cue_id": "an-303-step4",
+    "role": "song",
+    "demo_start_ms": 2301109,
+    "demo_end_ms": 2303210
+  },
+  {
+    "heading": "Step 5: Asym Drive and Velocity Accent",
+    "cue_id": "an-303-step5",
+    "role": "song",
+    "demo_start_ms": 2361060,
+    "demo_end_ms": 2365161
+  },
+  {
+    "heading": "Step 6: Program and Automate the Cutoff",
+    "cue_id": "an-303-step6",
+    "role": "song",
+    "demo_start_ms": 2419961,
+    "demo_end_ms": 2425755
+  },
+  {
+    "heading": "Step 7: Morph the 303 into a Reese",
+    "cue_id": "an-reese-morph",
+    "role": "song",
+    "demo_start_ms": 2508155,
+    "demo_end_ms": 2513155
+  },
+  {
+    "heading": "Step 8: Detune and Listen for the Beating",
+    "cue_id": "an-reese-final",
+    "role": "song",
+    "demo_start_ms": 2559955,
+    "demo_end_ms": 2564007
+  },
+  {
+    "heading": "Step 9: Save the Patch",
+    "cue_id": "an-303-reese-final",
+    "role": "song",
+    "demo_start_ms": 2607707,
+    "demo_end_ms": 2618003
+  },
+  {
+    "heading": "Step 9: Save the Patch",
+    "cue_id": "trans-tri-repetae",
+    "role": "transition",
+    "demo_start_ms": 2639203,
+    "demo_end_ms": 2653203
+  },
+  {
+    "heading": "The Filter as Oscillator: Digeridoo",
+    "cue_id": "an-digeridoo-drone",
+    "role": "song",
+    "demo_start_ms": 2706253,
+    "demo_end_ms": 2713253
+  },
+  {
+    "heading": "The Filter as Oscillator: Digeridoo",
+    "cue_id": "digeridoo-clip",
+    "role": "song",
+    "demo_start_ms": 2713653,
+    "demo_end_ms": 2723653
+  }
+]

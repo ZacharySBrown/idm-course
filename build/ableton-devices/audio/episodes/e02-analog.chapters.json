@@ -1,0 +1,176 @@
+[
+  {
+    "id": "ch000",
+    "title": "Cold Open",
+    "start_ms": 0,
+    "end_ms": 122550
+  },
+  {
+    "id": "ch001",
+    "title": "What Subtractive Means",
+    "start_ms": 122950,
+    "end_ms": 216100
+  },
+  {
+    "id": "ch002",
+    "title": "Moog and the Ladder Filter (1964\u201371)",
+    "start_ms": 216500,
+    "end_ms": 352350
+  },
+  {
+    "id": "ch003",
+    "title": "The Filter Wars: ARP, Roland, Oberheim",
+    "start_ms": 352750,
+    "end_ms": 463800
+  },
+  {
+    "id": "ch004",
+    "title": "East Coast vs West Coast",
+    "start_ms": 464200,
+    "end_ms": 546650
+  },
+  {
+    "id": "ch005",
+    "title": "The TB-303 and Acid House",
+    "start_ms": 547050,
+    "end_ms": 672500
+  },
+  {
+    "id": "ch006",
+    "title": "Why Model Analog at All",
+    "start_ms": 672900,
+    "end_ms": 795900
+  },
+  {
+    "id": "ch007",
+    "title": "Oscillator Spectra: Saw, Square, Pulse",
+    "start_ms": 796300,
+    "end_ms": 906000
+  },
+  {
+    "id": "ch008",
+    "title": "The Filter, for a Physicist",
+    "start_ms": 906400,
+    "end_ms": 1010750
+  },
+  {
+    "id": "ch009",
+    "title": "Self-Oscillation: The Barkhausen Condition",
+    "start_ms": 1011150,
+    "end_ms": 1092383
+  },
+  {
+    "id": "ch010",
+    "title": "Detuning, Beating, and PWM",
+    "start_ms": 1092783,
+    "end_ms": 1215605
+  },
+  {
+    "id": "ch011",
+    "title": "Two Envelopes, Two Jobs",
+    "start_ms": 1216005,
+    "end_ms": 1320034
+  },
+  {
+    "id": "ch012",
+    "title": "Drive: Re-Introducing Nonlinearity",
+    "start_ms": 1320434,
+    "end_ms": 1422834
+  },
+  {
+    "id": "ch013",
+    "title": "Analog Origin: AAS, Live 7, 2007",
+    "start_ms": 1423234,
+    "end_ms": 1523034
+  },
+  {
+    "id": "ch014",
+    "title": "Physical Modeling and the Error Knob",
+    "start_ms": 1523434,
+    "end_ms": 1623280
+  },
+  {
+    "id": "ch015",
+    "title": "The Oscillators: Shapes, Sub, Sync",
+    "start_ms": 1623680,
+    "end_ms": 1738180
+  },
+  {
+    "id": "ch016",
+    "title": "The Two Filters: Multimode, Series, Formant",
+    "start_ms": 1738580,
+    "end_ms": 1857880
+  },
+  {
+    "id": "ch017",
+    "title": "Envelopes, LFOs, Modulation",
+    "start_ms": 1858280,
+    "end_ms": 1977130
+  },
+  {
+    "id": "ch018",
+    "title": "Voice Architecture and Make-It-Analog",
+    "start_ms": 1977530,
+    "end_ms": 2095909
+  },
+  {
+    "id": "ch019",
+    "title": "Step 1: Mono, Glide, One Saw",
+    "start_ms": 2096309,
+    "end_ms": 2163809
+  },
+  {
+    "id": "ch020",
+    "title": "Step 2: Route to a 24 dB Low-Pass",
+    "start_ms": 2164209,
+    "end_ms": 2210259
+  },
+  {
+    "id": "ch021",
+    "title": "Step 3: Filter Envelope, the Per-Note Wow",
+    "start_ms": 2210659,
+    "end_ms": 2267909
+  },
+  {
+    "id": "ch022",
+    "title": "Step 4: Resonance Toward the Squelch",
+    "start_ms": 2268309,
+    "end_ms": 2315160
+  },
+  {
+    "id": "ch023",
+    "title": "Step 5: Asym Drive and Velocity Accent",
+    "start_ms": 2315560,
+    "end_ms": 2381761
+  },
+  {
+    "id": "ch024",
+    "title": "Step 6: Program and Automate the Cutoff",
+    "start_ms": 2382161,
+    "end_ms": 2446805
+  },
+  {
+    "id": "ch025",
+    "title": "Step 7: Morph the 303 into a Reese",
+    "start_ms": 2447205,
+    "end_ms": 2528705
+  },
+  {
+    "id": "ch026",
+    "title": "Step 8: Detune and Listen for the Beating",
+    "start_ms": 2529105,
+    "end_ms": 2586307
+  },
+  {
+    "id": "ch027",
+    "title": "Step 9: Save the Patch",
+    "start_ms": 2586707,
+    "end_ms": 2653203
+  },
+  {
+    "id": "ch028",
+    "title": "The Filter as Oscillator: Digeridoo",
+    "start_ms": 2653603,
+    "end_ms": 2723653
+  }
+]

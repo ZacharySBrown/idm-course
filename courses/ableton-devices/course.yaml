@@ -35,19 +35,22 @@ podcast:
 episodes:
   - id: e01-operator
     title: "Operator: The FM Machine"
-    status: in-progress
+    status: published
   - id: e02-analog
     title: "Analog: The Subtractive Foundation"
-    status: planned
+    status: published
   - id: e03-wavetable
     title: "Wavetable: Morphing Through Spectra"
-    status: planned
+    status: editorial-locked   # scripts locked + fact-checked; needs songs + demo render
   - id: e04-meld
-    title: "Meld: Physical Modelling Hybrid"
-    status: planned
+    # NOTE: research found "Physical Modelling Hybrid" is inaccurate — Meld is a
+    # bi-timbral dual macro-oscillator MPE synth (modal resonators are its only
+    # physical-modelling DSP, and only as filters). Consider retitling.
+    title: "Meld: The Bi-Timbral Macro-Oscillator Synth"
+    status: researched
   - id: e05-warp-modes
     title: "Warp Modes as Sound Design"
-    status: planned
+    status: researched
   - id: e06-drum-rack
     title: "Drum Rack + Simpler: The Sampler Engine"
     status: planned

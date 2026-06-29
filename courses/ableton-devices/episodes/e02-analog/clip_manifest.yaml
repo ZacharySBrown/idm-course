@@ -855,7 +855,10 @@ device_demos:
     structure: single
     isolates: "F1 Freq automation across the loop (the performed cutoff)"
     duration_s: 8.0
-    midi: {pattern: "16th acid line with slides (legato), 4 bars, 130 BPM, accents on the offbeats", length_s: 7.7}
+    # Explicit pitches REQUIRED — a description-only pattern (no note names) fails
+    # expand_pattern and silently falls back to a single C3. Classic acid line:
+    # root drone with octave jumps + chromatic slides, 16ths.
+    midi: {pattern: "C2-C2-C3-C2-Eb2-C2-G2-Bb2 16ths, 4 bars, 130 BPM, accents on the offbeats", length_s: 7.7}
     verification:
       check: step-self
       audible: "A complete acid line whose cutoff visibly opens and closes across the loop."
@@ -886,6 +889,7 @@ device_demos:
       "AEG1 Attack": 0.01
       "AEG1 Decay": 0.0
       "AEG1 Sustain": 1.0
+      "AMP1 Level": 0.85         # match the Reese level so the an-303-reese-final A/B concat is level-balanced
       "AEG1 Rel": 0.15           # ~80 ms
       "Key Error": 0.0
     automation:
@@ -913,8 +917,8 @@ device_demos:
       "Glide Legato": "On"
       "OSC1 On/Off": "On"
       "OSC1 Shape": "Saw"
-      "OSC1 Mode": "Sub"         # Sub/Sync slider acts as sub-osc level
-      "O1 Sub/Sync": 0.6         # sub-osc weight on
+      "OSC1 Mode": "Sub"         # Sub/Sync slider acts as sub-osc level (Sub IS the narrated move here)
+      "O1 Sub/Sync": 0.5         # sub-osc weight on (was 0.6; trimmed so the ~33 Hz sub doesn't dominate headroom)
       "OSC1 Detune": 0.5         # 0 cents
       "OSC1 Balance": 1.0
       "OSC2 On/Off": "On"        # the pivot — second saw
@@ -925,7 +929,7 @@ device_demos:
       "F1 On/Off": "On"
       "F2 On/Off": "Off"        # keep F2 out of the chain (renderer does not reset)
       "F1 Type": "Low-pass 24dB/oct"
-      "F1 Freq": 0.453           # ~500 Hz lower, fixed — Reese is darker
+      "F1 Freq": 0.507           # ref: ~870 Hz (raised from ~610) so saw body + beating carry level on phone speakers
       "F1 Resonance": 0.2        # back off the squelch
       "F1 Drive": "Sym1"
       "F1 Freq < Env": 0.0       # filter envelope DROPPED (the morph)
@@ -933,6 +937,7 @@ device_demos:
       "FEG1 Sustain": 1.0
       "AEG1 Attack": 0.03        # ~5 ms
       "AEG1 Decay": 0.0
+      "AMP1 Level": 0.85         # set explicitly so the held low note lands at a healthy level (default 0.474 = quiet)
       "AEG1 Sustain": 1.0
       "AEG1 Rel": 0.3            # ~200 ms
       "Key Error": 0.0
@@ -959,8 +964,11 @@ device_demos:
       "Glide Legato": "On"
       "OSC1 On/Off": "On"
       "OSC1 Shape": "Saw"
-      "OSC1 Mode": "Sub"
-      "O1 Sub/Sync": 0.6
+      # ref: canonical Reese (Kevin Saunderson "Just Another Chance" 1988) = TWO detuned
+      # saws beating — NO sub osc. Sub put energy at ~33 Hz (inaudible on phone, ate
+      # normalization headroom → the measured -47 dB mean). Sub dropped so the beating
+      # saw body carries the level; concept (pitch-scaled beating) unchanged.
+      "O1 Sub/Sync": 0.0         # sub OFF (was Sub mode @0.6 — un-canonical + quiet)
       "OSC1 Detune": 0.5         # 0 cents
       "OSC1 Balance": 1.0
       "OSC2 On/Off": "On"
@@ -971,13 +979,14 @@ device_demos:
       "F1 On/Off": "On"
       "F2 On/Off": "Off"        # keep F2 out of the chain (renderer does not reset)
       "F1 Type": "Low-pass 24dB/oct"
-      "F1 Freq": 0.453           # ~500 Hz
+      "F1 Freq": 0.507           # ref: raised ~610→~870 Hz so more saw body passes (was 0.453, rendered quiet)
       "F1 Resonance": 0.2
       "F1 Drive": "Sym1"
       "F1 Freq < Env": 0.0
       "AEG1 Attack": 0.03        # ~5 ms
       "AEG1 Decay": 0.0
       "AEG1 Sustain": 1.0
+      "AMP1 Level": 0.85         # ref: patch never set AMP1 (default 0.474 = ~ -6.5 dB) → main cause of quiet render
       "AEG1 Rel": 0.3            # ~200 ms
       "Key Error": 0.0
 
@@ -1006,9 +1015,9 @@ device_demos:
   # ── 06a — self-oscillation as a sound source (Digeridoo) ────────────────────
   - id: an-digeridoo-drone
     concept: "Play the self-oscillating filter as an instrument (the Digeridoo rebuild)"
-    what_you_hear: "Oscillators off, Reso at max, a 24 dB LP self-oscillating into a sine, key-tracked so the keyboard plays it — then an LFO sweeps the cutoff for the drone. The filter IS the oscillator."
+    what_you_hear: "Oscillators off, Reso near max, a 24 dB LP ringing at its cutoff, noise-excited and key-tracked so the keyboard plays it — then an LFO sweeps the cutoff for the drone. The filter IS the oscillator (reedy/breathy, didgeridoo-like)."
     structure: single
-    isolates: "Filter-as-oscillator (osc off, Reso max, key-tracked Freq + LFO)"
+    isolates: "Filter-as-oscillator (osc off, noise excitation, Reso near max, key-tracked Freq + LFO)"
     duration_s: 7.0
     midi:
       notes:
@@ -1016,20 +1025,30 @@ device_demos:
         - {note: "G1", t: 3.4, length_s: 3.2}    # tracks the keyboard ⇒ it's an oscillator
     verification:
       check: self-osc-instrument
-      audible: "A near-sine drone whose pitch follows the played note, with a slow LFO wobble on top."
-      spectral: "Dominant single partial that changes pitch with MIDI note (key-tracked), slow cyclic modulation at the LFO rate. No pitch tracking ⇒ Freq key-track didn't engage ⇒ reject."
+      audible: "A reedy pitched drone (dominant near-pure ring over a faint breath of noise) whose pitch follows the played note, with a slow LFO wobble on top."
+      spectral: "Dominant resonant partial that changes pitch with MIDI note (key-tracked) over a low broadband noise floor; slow cyclic modulation at the LFO rate. No pitch tracking ⇒ Freq key-track didn't engage ⇒ reject."
+    # NOTE: Analog's filter will NOT self-oscillate from bare resonance without an
+    # excitation source (oscillators fully off → silence; confirmed by render).
+    # ref: classic "filter-as-oscillator" technique (SOS subtractive primers; the
+    # MS-20/Moog self-osc patch) excites a high-Q key-tracked filter with NOISE, not
+    # a pitched osc. A low continuous noise feed makes the filter RING at its
+    # (key-tracked) cutoff — so the pitched drone is provably the filter, not the
+    # oscillator. (Using a Sine at the played pitch would be ambiguous: you couldn't
+    # tell the filter from the osc. Noise excitation makes the assertion clean.)
     params:
-      "OSC1 On/Off": "Off"       # oscillators down — the filter is the source
+      "OSC1 On/Off": "Off"       # oscillators OFF — the filter is the only pitched source
       "OSC2 On/Off": "Off"
-      "Noise On/Off": "Off"
+      "Noise On/Off": "On"       # broadband noise EXCITES the resonant filter (it then rings at cutoff)
+      "Noise Level": 0.35        # low feed — enough to ring the filter, not to swamp it
+      "Noise Balance": 1.0       # noise routed fully into F1
       "F1 On/Off": "On"
       "F2 On/Off": "Off"        # keep F2 out of the chain (renderer does not reset)
       "F1 Type": "Low-pass 24dB/oct"
-      "F1 Freq": 0.305           # ~200 Hz base; key-track + LFO move it
-      "F1 Resonance": 1.0        # self-oscillation
-      "F1 Drive": "Off"
-      "F1 Freq < Key": 1.0       # cutoff tracks MIDI pitch ⇒ playable
-      "F1 Freq < LFO": 0.2       # LFO1 → F1 cutoff depth (the drone wobble)
+      "F1 Freq": 0.36            # ~330 Hz base; key-track + LFO move it
+      "F1 Resonance": 0.95       # very high Q — the filter rings (sings) at cutoff
+      "F1 Drive": "Sym1"         # a little body/reed buzz
+      "F1 Freq < Key": 1.0       # cutoff tracks MIDI pitch ⇒ the drone follows the keyboard (= it's an oscillator)
+      "F1 Freq < LFO": 0.25      # LFO1 → F1 cutoff depth (the drone wobble)
       "F1 Freq < Env": 0.0
       "LFO1 On/Off": "On"
       "LFO1 Shape": "Sine"
@@ -1038,6 +1057,7 @@ device_demos:
       "AEG1 Attack": 0.1         # ~50 ms
       "AEG1 Decay": 0.0
       "AEG1 Sustain": 1.0
+      "AMP1 Level": 0.9          # high — a ringing-filter drone is quieter than an osc; lift it
       "AEG1 Rel": 0.3            # ~200 ms
       "Key Error": 0.0
 
