@@ -81,9 +81,11 @@ def main() -> int:
     now = datetime.now(timezone.utc)
     base_pub = now - timedelta(days=12)
 
-    for w in weeks:
+    for idx, w in enumerate(weeks, 1):
         lesson_id = w["id"]
-        week_num = w.get("week", w.get("episode_number", 1))
+        # Episode number = explicit episode_number/week if set, else position in
+        # the course's episode list (so each is a distinct, sequential episode).
+        ep_num = w.get("episode_number", w.get("week", idx))
         title = w["title"]
 
         item_yaml = lessons_dir(cfg) / lesson_id / "lesson.yaml"
@@ -107,7 +109,7 @@ def main() -> int:
                 duration_ms = chapters[-1]["end_ms"]
 
         desc_lines = [
-            f"Week {week_num} of 12. {title}.",
+            f"Episode {ep_num}. {title}.",
             "",
             f"Pillars: {', '.join(item_meta.get('pillars', []))}.",
         ]
@@ -126,18 +128,18 @@ def main() -> int:
         desc_lines += ["", f"Deck + references: {deck_url}"]
         description = "\n".join(desc_lines)
 
-        pub = base_pub + timedelta(days=week_num - 1)
+        pub = base_pub + timedelta(days=ep_num - 1)
         enclosure_url = f"{repo_raw_base}/{enclosure_rel}"
 
         item = f"""    <item>
-      <title>{escape(f"W{week_num} — {title}")}</title>
+      <title>{escape(title)}</title>
       <description>{escape(description)}</description>
       <pubDate>{rfc822(pub)}</pubDate>
       <guid isPermaLink="false">idm-course-{lesson_id}</guid>
       <enclosure url="{escape(enclosure_url)}" length="{size_bytes}" type="audio/mpeg" />
       <itunes:author>{escape(show_author)}</itunes:author>
       <itunes:duration>{fmt_duration_hms(duration_ms)}</itunes:duration>
-      <itunes:episode>{week_num}</itunes:episode>
+      <itunes:episode>{ep_num}</itunes:episode>
       <itunes:season>1</itunes:season>
       <itunes:episodeType>full</itunes:episodeType>
       <itunes:explicit>false</itunes:explicit>
