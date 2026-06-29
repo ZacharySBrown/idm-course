@@ -47,7 +47,7 @@ episodes:
     # bi-timbral dual macro-oscillator MPE synth (modal resonators are its only
     # physical-modelling DSP, and only as filters). Consider retitling.
     title: "Meld: The Bi-Timbral Macro-Oscillator Synth"
-    status: researched
+    status: editorial-locked   # scripts locked + fact-corrected (12-voice cap, Granulator III)
   - id: e05-warp-modes
     title: "Warp Modes as Sound Design"
     status: researched

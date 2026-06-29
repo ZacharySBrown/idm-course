@@ -1,0 +1,918 @@
+# clip_manifest — every audio asset spliced into e04-meld.mp3.
+#
+# Two families:
+#   song_clips    — extracted from acquired tracks via shared/tools/extract_clips.py
+#   device_demos  — rendered by the meld-render tool (AbletonOSC / M4L freeze
+#                   pipeline; `meld-` prefix). Mirrors e01's operator_demos and
+#                   e02/e03's device_demos families, but the device is Ableton Meld
+#                   (bi-timbral: two full engines A/B, each with one of 24+1
+#                   macro-oscillator types, 2 macros per osc, 17 filter types,
+#                   per-engine modulation matrix with MIDI + MPE sources).
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# !! HEADLESS-RENDER CAVEAT (dossier §1.2) — READ BEFORE RENDERING !!
+#   Meld's two oscillator macros and ALL matrix amounts are NORMALIZED floats
+#   (0–1 / 0–100%), NOT Hz — even when the audible effect is a frequency (FM
+#   Ratio, Square Sync Freq 1/2, Bitgrunge Frequency). The public docs give
+#   parameter NAMES, not LOM value ranges. So:
+#     - Every `params:` value below is BEST-EFFORT and many are marked UNCERTAIN.
+#     - Inspect the live `meld` device's LOM (lom_probe / param dump) and
+#       calibrate macro/matrix values BY EAR before trusting any render.
+#     - Loop-mode names are Meld's own set — Trigger / Loop / AD Loop — NOT
+#       Operator's None/Loop/Beat/Sync/Trigger. Do not transplant.
+#     - Per-engine pitch = Transpose (semitones, int) + Detune (cents). Macros
+#       are addressed by name ("Osc Macro 1" etc.) — exact LOM names UNCERTAIN.
+#     - MPE demos: render with an MPE-aware clip (per-note channels). If the
+#       headless pipeline can't author MPE, render the channel-aftertouch
+#       fallback and flag the demo as fallback (see meld-mpe-per-note).
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# Each entry's `id` matches a slide's `demos:` reference in episode.yaml.
+# Output paths: <build_root>/audio/clips/<episode>/<id>.wav
+#                = build/ableton-devices/audio/clips/e04-meld/<id>.wav
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# REQUIRED SOURCE WAVs — the user must acquire these and drop them in
+#   songs/ableton-ep04/  (git-ignored; copyrighted — cite, don't commit)
+# ─────────────────────────────────────────────────────────────────────────────
+#   01_polymer-clock.wav    Plaid — "CLOCK" (album Polymer, 2019)
+#                             [Tone2 Icarus + Madrona Polymer wavetable scan;
+#                              the "timbre-as-composition" exemplar — NOT a Meld claim]
+#                             NOTE: "Polymer" is the ALBUM; the cut is "CLOCK"
+#                             (or any wavetable-texture track off Polymer). Label
+#                             references the album/method, not a title track.
+#   02_geogaddi.wav         Boards of Canada — a textural cut from Geogaddi (2002)
+#                             [analog + sampler field-recording ambience — the
+#                              environmental-texture AESTHETIC target, NOT Meld gear]
+#   03_confield.wav         Autechre — a self-generating-pattern cut from Confield (2001)
+#                             [custom Max/MSP — the self-sequencing-timbre METHOD
+#                              kinship, NOT a Meld-usage claim]
+#   04_beep-street.wav      Squarepusher — "Beep Street" (Hard Normal Daddy, 1997)
+#                             [TX81Z FM — the FM-feedback growl callback; honest
+#                              negative: Squarepusher builds his own tools]
+#   05_plaits-module-ref.wav  A short recording of a Mutable Instruments PLAITS
+#                             module (or a faithful clone/VCV port) sweeping a
+#                             couple of models — the macro-oscillator LINEAGE
+#                             reference for 02b. This is a MODULE, not Meld, and
+#                             not a commercial track; the user records/sources it
+#                             (e.g. VCV Rack render) and drops it in. Labelled on
+#                             air as "a Plaits module, the lineage — not Meld."
+#
+# Acquire as 44.1k/16-or-24-bit stereo WAV. Filenames above are the `source:`
+# values below; rename your rips to match (or edit `source:` per entry).
+# Timestamps are placeholders from specs/ableton_course_ep4_meld_research.md §4 —
+# RE-CUT BY EAR if your rip differs; extract_clips.py re-slices on edit. None of
+# these tracks use Meld (2024 instrument, no canon) — every clip is technique /
+# aesthetic kinship only. Verify entry points by ear before stating on-mic.
+
+# Where the user drops acquired song WAVs. Override per entry if needed.
+song_source_dir: songs/ableton-ep04
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SONG CLIPS — foreground catalog examples + transitions + beds.
+# Foreground = cued "listen to this in a real track" moments. Transitions sit on
+# the >> SIGNPOST act boundaries (episode.yaml transitions.insertions). Beds are
+# the sidechain-ducked under-narration layers (episode.yaml beds.insertions).
+# All clip_id placeholders in episode.yaml (currently TBD) resolve to ids here
+# after SCRIPT LOCK; the Sound Designer wires them.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+song_clips:
+
+  # ── Foreground catalog examples ─────────────────────────────────────────────
+  - id: polymer-timbre-as-comp
+    source: "01_polymer-clock.wav"
+    start: "0:30"
+    end: "0:44"
+    fade_in_ms: 200
+    fade_out_ms: 800
+    normalize_lufs: -16
+    notes: "Plaid — wavetable-scan timbre-as-composition. Cue under 02a (macro-osc breadth) / 03b families. Technique exemplar, NOT a Meld claim. Re-cut by ear."
+
+  - id: beep-street-fm-feedback
+    source: "04_beep-street.wav"
+    start: "0:22"
+    end: "0:36"
+    fade_in_ms: 200
+    fade_out_ms: 700
+    normalize_lufs: -16
+    notes: "Squarepusher — TX81Z FM lead, metallic feedback edge. The FM-feedback callback for 03c (FM, the macro way). Honest negative: he builds his own tools."
+
+  - id: geogaddi-environmental
+    source: "02_geogaddi.wav"
+    start: "0:10"
+    end: "0:26"
+    fade_in_ms: 800
+    fade_out_ms: 1200
+    normalize_lufs: -16
+    notes: "Boards of Canada — environmental-texture aesthetic target for 06b (Rain/Crackle as source). Gear is analog/sampler, NOT Meld. Aesthetic only."
+
+  - id: plaits-module-ref
+    source: "05_plaits-module-ref.wav"
+    start: "0:00"
+    end: "0:14"
+    fade_in_ms: 150
+    fade_out_ms: 700
+    normalize_lufs: -16
+    notes: "02b lineage reference — a Mutable Instruments PLAITS module sweeping a couple of models. A MODULE, not Meld; label as 'the lineage, not Meld.' User records/sources (e.g. VCV Rack). Re-cut by ear."
+
+  - id: confield-self-sequencing
+    source: "03_confield.wav"
+    start: "0:30"
+    end: "0:46"
+    fade_in_ms: 600
+    fade_out_ms: 900
+    normalize_lufs: -16
+    notes: "Autechre — self-generating pattern; the 'modulate the timbre instead of writing notes' kinship for 06a. Custom Max/MSP, NOT Meld. Method kinship only."
+
+  # ── Transition cues (>> SIGNPOST act boundaries; episode.yaml transitions) ───
+  - id: trans-after-02d
+    source: "01_polymer-clock.wav"
+    start: "1:00"
+    end: "1:12"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 02d-four-synth-map → into Act 3 (synthesis). Wavetable-scan warmth."
+
+  - id: trans-after-03e
+    source: "03_confield.wav"
+    start: "1:10"
+    end: "1:22"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 03e-scale-and-audiorate → into Act 4 (device). Glitchy Autechre pulse."
+
+  - id: trans-after-04e
+    source: "02_geogaddi.wav"
+    start: "0:40"
+    end: "0:54"
+    fade_in_ms: 3000
+    fade_out_ms: 4000
+    normalize_lufs: -22
+    notes: "After 04e-vs-the-family → into Act 5 (patch walkthrough). BoC ambient pad."
+
+  - id: trans-after-05g
+    source: "04_beep-street.wav"
+    start: "0:40"
+    end: "0:52"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 05g-save → into Act 6 (IDM application). Squelchy FM bass."
+
+  - id: trans-after-06c
+    source: "02_geogaddi.wav"
+    start: "1:20"
+    end: "1:34"
+    fade_in_ms: 3000
+    fade_out_ms: 4500
+    normalize_lufs: -22
+    notes: "After 06c-shepard-trick → into the myth-recap/exercise close. Slow stillness."
+
+  # ── Background beds (sidechain-ducked under narration; episode.yaml beds) ─────
+  - id: bed-history-polymer
+    source: "01_polymer-clock.wav"
+    start: "2:00"
+    end: "2:40"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    notes: "Act 2 (history) bed — slow wavetable drift, 02a→02d."
+
+  - id: bed-synthesis-confield
+    source: "03_confield.wav"
+    start: "2:30"
+    end: "3:10"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    notes: "Act 3 (synthesis) bed — sparse Autechre motion, 03a→03e."
+
+  - id: bed-device-geogaddi
+    source: "02_geogaddi.wav"
+    start: "2:00"
+    end: "3:00"
+    fade_in_ms: 4000
+    fade_out_ms: 5000
+    normalize_lufs: -26
+    notes: "Act 4 (device) bed — BoC sustained texture, 04a→04e."
+
+  - id: bed-idm-geogaddi-amb
+    source: "02_geogaddi.wav"
+    start: "3:30"
+    end: "4:30"
+    fade_in_ms: 4000
+    fade_out_ms: 5000
+    normalize_lufs: -26
+    notes: "Act 6 (IDM application + outro) bed — late stillness, 06a→06d."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DEVICE DEMOS — Ableton Meld renders (`meld-` prefix).
+#
+# Gate 3 contract (per .claude/agents/ableton-expert.md): every demo states a
+# one-sentence `concept` + `what_you_hear`, has a teaching `structure`
+# (ab | sweep | ladder | single), `isolates` the ONE variable (everything else
+# held), and carries a `verification` block whose `check:` names the Gate-7
+# machine assertion. Each must read clearly on laptop + phone speakers.
+#
+# `verification.check` keys (for verify_demo.py / Gate 7):
+#   type-switch     A/B/C segments at one f0 → measurably distinct spectra per segment.
+#   feedback-sweep  RMS ~flat; spectral spread / harmonic count rises monotonically.
+#   resonator-ab    Resonator-OFF vs ON: ON shows discrete modal peaks absent in OFF.
+#   scale-snap-ab   Scale-OFF chord = inharmonic spread; scale-ON = partials on scale degrees.
+#   macro-mod-sweep Pitch/f0 constant; timbre (centroid) oscillates with the LFO; pitch flat.
+#   mpe-per-note    Two simultaneous notes have DIFFERENT timbre trajectories (per-voice).
+#   shepard-rise    Spectral centroid rises continuously / cyclically with no octave jump.
+#   self-sequence   Onset/timbre events recur on a grid from ONE held note (no new notes).
+#   build-step      Step N differs from step N-1 by exactly the one added element (A/B vs prev).
+# Macro/matrix params are NORMALIZED — see the top caveat. Names UNCERTAIN where flagged.
+# Output: build/ableton-devices/audio/clips/e04-meld/<id>.wav
+# ═══════════════════════════════════════════════════════════════════════════════
+
+device_demos:
+
+  # ── 02a — What a macro-oscillator IS: the thesis, audible in 90s ─────────────
+  - id: meld-one-knob-three-worlds
+    concept: "The macro-oscillator promise: ONE macro knob sweeps a whole behavior, and switching the TYPE hands you a whole new instrument — breadth from two knobs"
+    what_you_hear: "One held note: first Macro 1 sweeps through Basic Shapes (sine→saw→square), then the oscillator TYPE switches to Harmonic FM, then to Rain — the thesis of the episode in one note."
+    structure: ladder                 # 3 discrete worlds after the sweep — calibrates 'how far two knobs reach'
+    isolates: "Engine A Macro 1 sweep, THEN oscillator type (Basic Shapes → Harmonic FM → Rain); note/level/filter held"
+    duration_s: 8.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 2.6}    # Basic Shapes, Macro 1 swept across this segment
+        - {note: "C3", t: 3.0, length_s: 1.8}    # Harmonic FM
+        - {note: "C3", t: 5.2, length_s: 1.8}    # Rain
+    verification:
+      check: type-switch
+      audible: "Constant pitch and loudness; segment 1 morphs continuously (the sweep), then two discrete new instruments. Three audibly different worlds."
+      spectral: "Segment 1 centroid rises during the Macro-1 sweep; segments 2 and 3 are measurably distinct spectra at the same f0. Any pair indistinguishable ⇒ reject."
+    ab_param: "Engine A Osc Type"
+    ab_values: ["Basic Shapes", "Harmonic FM", "Rain"]   # type indices 0, 9, 12
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Basic Shapes"        # overridden per-segment by ab_values
+      "Engine A Osc Macro 1": 0.0                # swept 0→1 during segment 1 (automation below); base for 2/3
+      "Engine A Osc Macro 2": 0.50
+      "Engine A Transpose": 0
+      "Engine A Detune": 0
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 1.0             # open, transparent
+      "Engine A Filter Macro 2": 0.0
+      "Engine A Amp Env Attack": 0.01
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.15
+      "Engine B On": "Off"
+      "Voicing": "Poly"
+    automation:
+      "Engine A Osc Macro 1": {from: 0.0, to: 1.0, ramp_s: 2.5, segment: 0}   # sweep across segment 1 only (normalized)
+
+  # ── 01 — Cold open: Shepard's Pi endless rise (the named cold-open candidate) ─
+  - id: shepard-pi-cold-open
+    concept: "A whole psychoacoustic illusion (endless-rising barberpole) is one oscillator type, one knob"
+    what_you_hear: "One held note that seems to climb forever and never arrives — a staircase with no top — held alone ~8s, then ducked as narration enters."
+    structure: single                 # justification: the illusion IS the sound; no A/B needed — it's the cold-open hook, unmistakable on any speaker
+    isolates: "Engine A oscillator type = Shepard's Pi (the only thing producing the rise)"
+    duration_s: 9.0
+    midi: {note: "C2", length_s: 8.5}
+    verification:
+      check: shepard-rise
+      audible: "Continuous sense of upward motion with no audible octave reset; pitch class never 'lands.'"
+      spectral: "Spectral centroid drifts upward continuously / cyclically across the clip with NO discrete octave jump. A static centroid ⇒ Shepard motion didn't take ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Shepard's Pi"       # type index 13
+      "Engine A Osc Macro 1": 0.20              # Rate (slow rise) — UNCERTAIN macro LOM name; normalized
+      "Engine A Osc Macro 2": 0.50              # Width — UNCERTAIN
+      "Engine A Transpose": 0
+      "Engine A Detune": 0
+      "Engine A Filter Type": "Lowpass"         # UNCERTAIN; wide open, transparent
+      "Engine A Filter Macro 1": 1.0            # cutoff fully open (normalized)
+      "Engine A Filter Macro 2": 0.0            # resonance off
+      "Engine A Amp Env Attack": 0.2
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.6
+      "Engine B On": "Off"
+      "Global Drive": 0.0
+      "Global Limiter": "On"
+      "Voicing": "Poly"
+
+  # ── 03b — The 25 oscillators, by family: one note, change the WORLD (THE demo) ─
+  - id: meld-type-switch-live
+    concept: "Two knobs hide a whole instrument — same note, change the oscillator type, get a new instrument"
+    what_you_hear: "One held pitch, constant in pitch and loudness, played three times: Basic Shapes, then Harmonic FM, then Rain — three different instruments from the same key."
+    structure: ab                     # A/B/C: three segments separated by a beat of silence; the discrete world-jumps are the teaching
+    isolates: "Engine A oscillator TYPE (Basic Shapes → Harmonic FM → Rain); note, level, filter held"
+    duration_s: 6.5
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 1.6}    # segment A: Basic Shapes
+        - {note: "C3", t: 2.1, length_s: 1.6}    # segment B: Harmonic FM
+        - {note: "C3", t: 4.2, length_s: 1.6}    # segment C: Rain
+    verification:
+      check: type-switch
+      audible: "Same pitch and loudness all three; each segment is an audibly different instrument (clean shape → metallic FM → noisy weather)."
+      spectral: "The three segments have measurably distinct spectra (centroid / harmonicity) at identical f0. Any two segments ≈ each other ⇒ the type switch didn't take ⇒ reject."
+    ab_param: "Engine A Osc Type"
+    ab_values: ["Basic Shapes", "Harmonic FM", "Rain"]   # type indices 0, 9, 12
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Basic Shapes"        # overridden per-segment by ab_values
+      "Engine A Osc Macro 1": 0.50               # Shape / FM Amount / Tone — meaning changes per type (UNCERTAIN, normalized)
+      "Engine A Osc Macro 2": 0.50               # Tone / FM Ratio / Rate — meaning changes per type
+      "Engine A Transpose": 0
+      "Engine A Detune": 0
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 1.0             # open, transparent — must NOT color the contrast
+      "Engine A Filter Macro 2": 0.0
+      "Engine A Amp Env Attack": 0.01
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.15
+      "Engine B On": "Off"
+      "Global Drive": 0.0
+      "Voicing": "Poly"
+
+  # ── 03c — FM, the macro way: Squelch feedback (Ep1 callback) ─────────────────
+  - id: meld-squelch-feedback
+    concept: "FM operator feedback → harmonic complexity, exposed as one macro (the Ep1 feedback physics, collapsed)"
+    what_you_hear: "One held note opening from a pure sine into a saw, then into a noisy squelch edge, as the Feedback macro sweeps up. Pitch and loudness hold."
+    structure: sweep                  # hold the note, ramp ONE macro min→max
+    isolates: "Engine A Osc Macro 2 = Feedback (FM Bass / Squelch); FM Amount held fixed"
+    duration_s: 5.0
+    midi: {note: "C2", length_s: 4.7}
+    verification:
+      check: feedback-sweep
+      audible: "Pitch and loudness roughly constant; tone roughens sine → saw → noise-edge as the sweep proceeds."
+      spectral: "RMS roughly flat (±2 dB); spectral spread / harmonic count rises monotonically start→end. Flat spread ⇒ the feedback sweep didn't take ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "FM Bass (Squelch)"   # type index 17
+      "Engine A Osc Macro 1": 0.65               # FM Amount — held fixed (UNCERTAIN, normalized)
+      "Engine A Osc Macro 2": 0.0                # Feedback — swept by automation below (the ONE variable)
+      "Engine A Transpose": 0
+      "Engine A Detune": 0
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 1.0             # open so feedback harmonics are audible
+      "Engine A Filter Macro 2": 0.0
+      "Engine A Amp Env Attack": 0.01
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.2
+      "Engine B On": "Off"
+      "Global Drive": 0.1                        # a touch of squelch grit
+      "Voicing": "Mono"
+    automation:
+      "Engine A Osc Macro 2": {from: 0.0, to: 1.0, ramp_s: 4.5}   # Feedback 0→max (normalized)
+
+  # ── 03d — The modal resonator: the ONE physical-modelling part (myth payoff) ──
+  - id: meld-plate-resonator
+    concept: "The only 'physical modelling' in Meld is a FILTER — a modal Plate Resonator on the oscillator, not the oscillator itself"
+    what_you_hear: "The same bright source played twice: first dry (raw oscillator), beat of silence, then through the Plate Resonator filter — a struck, body-resonant, pluck-like tone appears."
+    structure: ab                     # A = resonator OFF, B = resonator ON; everything else held
+    isolates: "Engine A Filter Type = Plate Resonator (OFF/bypass vs ON); oscillator + note held"
+    duration_s: 5.5
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 2.0}    # segment A: filter bypassed (dry source)
+        - {note: "C3", t: 2.6, length_s: 2.4}    # segment B: Plate Resonator engaged
+    verification:
+      check: resonator-ab
+      audible: "Same pitch both segments; B gains a struck, ringing, body-resonant character absent in A."
+      spectral: "Segment B shows discrete modal resonance peaks (plate modes) NOT present in A's smoother spectrum. A ≈ B ⇒ the resonator didn't engage ⇒ reject."
+    ab_param: "Engine A Filter Type"
+    ab_values: ["Bypass", "Plate Resonator"]     # A bypass/transparent, B modal resonator (UNCERTAIN: 'Bypass' may be filter-off toggle)
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Harmonic FM"         # a bright source to excite the modes (index 9)
+      "Engine A Osc Macro 1": 0.55               # FM Amount (UNCERTAIN, normalized)
+      "Engine A Osc Macro 2": 0.40               # FM Ratio
+      "Engine A Transpose": 0
+      "Engine A Detune": 0
+      "Engine A Filter Type": "Plate Resonator"  # overridden per-segment by ab_values
+      "Engine A Filter Scale Aware": "On"        # snap modal freqs to the Live Scale (UNCERTAIN LOM name)
+      "Engine A Filter Macro 1": 0.50            # Decay / structure (UNCERTAIN macro meaning, normalized)
+      "Engine A Filter Macro 2": 0.50            # Tone / brightness
+      "Engine A Amp Env Attack": 0.005
+      "Engine A Amp Env Decay": 0.5
+      "Engine A Amp Env Sustain": 0.3
+      "Engine A Amp Env Release": 0.4
+      "Engine B On": "Off"
+      "Voicing": "Poly"
+
+  # ── 03e — Scale-aware swarm: partials snap into key (Kleine's "must-have") ────
+  - id: meld-swarm-scale-snap
+    concept: "Scale-aware oscillators snap their inharmonic spread to the Live Scale — a wide swarm stays in key"
+    what_you_hear: "A held chord with a wide swarm spread: first with scale-awareness OFF (the spread smears inharmonically), beat of silence, then ON (the same spread snaps into key)."
+    structure: ab                     # A = scale OFF, B = scale ON; Spacing and chord identical
+    isolates: "Engine A scale-awareness (OFF vs ON) on Swarm Sine; Spacing/Motion/chord held"
+    duration_s: 6.0
+    midi:
+      notes:
+        # segment A: chord, scale OFF
+        - {note: "C3", t: 0.0, length_s: 2.2}
+        - {note: "E3", t: 0.0, length_s: 2.2}
+        - {note: "G3", t: 0.0, length_s: 2.2}
+        # segment B: same chord, scale ON
+        - {note: "C3", t: 2.8, length_s: 2.4}
+        - {note: "E3", t: 2.8, length_s: 2.4}
+        - {note: "G3", t: 2.8, length_s: 2.4}
+    verification:
+      check: scale-snap-ab
+      audible: "Same chord both segments; A sounds smeared/detuned at the edges, B sounds locked in key."
+      spectral: "Segment B's swarm partials cluster on scale-degree frequencies; segment A's spread is inharmonic/unquantized. A ≈ B ⇒ scale-awareness didn't engage ⇒ reject."
+    ab_param: "Engine A Osc Scale Aware"
+    ab_values: ["Off", "On"]                     # UNCERTAIN LOM name; scale-aware is a per-osc-type property in the device
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Swarm Sine"          # scale-aware type (index 20, marked flat-sharp)
+      "Engine A Osc Macro 1": 0.30               # Motion (UNCERTAIN, normalized)
+      "Engine A Osc Macro 2": 0.70               # Spacing — wide spread so the snap is obvious
+      "Engine A Osc Scale Aware": "On"           # overridden per-segment by ab_values
+      "Engine A Transpose": 0
+      "Engine A Detune": 0
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 1.0             # open, transparent
+      "Engine A Filter Macro 2": 0.0
+      "Engine A Amp Env Attack": 0.05
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.3
+      "Engine B On": "Off"
+      "Global Scale": "C Minor"                  # the active Live Scale the partials snap to (UNCERTAIN routing)
+      "Voicing": "Poly"
+
+  # ── 03e — Loop-mode envelope → macro: the timbre sequences itself (synth-side) ─
+  - id: meld-modenv-loop-macro
+    concept: "A Mod Env in AD-Loop routed to an oscillator macro is a self-cycling timbral sequencer on one held note"
+    what_you_hear: "One held note whose timbre cycles on its own — a looping modulation envelope sweeps Macro 1 over and over, so a sustained key turns into a repeating timbral figure. No new notes."
+    structure: single                 # justification: the recurring self-morph from one note IS the demo; A/B breaks the illusion
+    isolates: "Engine A Mod Env mode = AD Loop, routed to Engine A Osc Macro 1 (the only motion)"
+    duration_s: 7.0
+    midi: {note: "C3", length_s: 6.7}
+    verification:
+      check: self-sequence
+      audible: "Constant pitch; the timbre cyclically morphs on a steady period from a single held note."
+      spectral: "Spectral centroid follows a repeating AD-Loop contour from one held note; f0 fixed. No recurrence ⇒ the loop env didn't engage ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Basic Shapes"
+      "Engine A Osc Macro 1": 0.30               # center the AD-Loop env sweeps
+      "Engine A Osc Macro 2": 0.50
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.8
+      "Engine A Filter Macro 2": 0.1
+      "Engine A Mod Env Mode": "AD Loop"         # Meld loop set: Trigger / Loop / AD Loop
+      "Engine A Mod Env Attack": 0.15
+      "Engine A Mod Env Decay": 0.4              # sets the self-sequence period
+      "Engine A Amp Env Attack": 0.02
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.3
+      "Engine B On": "Off"
+      "Voicing": "Mono"
+    matrix:
+      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.85}   # AD-Loop self-sequence
+
+  # ── 04b — LFO → Macro: modulate the macro, the timbre breathes, pitch unchanged
+  - id: meld-lfo-to-macro
+    concept: "The oscillator macro is a first-class matrix target — modulate it and the whole timbre breathes without touching pitch (the 'macro is the new Position')"
+    what_you_hear: "One held note at constant pitch and loudness whose timbre slowly opens and closes, cycling, as a slow LFO drives Macro 1."
+    structure: single                 # justification: a slow cyclic morph at fixed pitch is unmistakable; A/B would hide the cycling
+    isolates: "Matrix routing LFO 1 → Osc Macro 1 (the only modulation; pitch/level/filter held)"
+    duration_s: 7.0
+    midi: {note: "C3", length_s: 6.7}
+    verification:
+      check: macro-mod-sweep
+      audible: "Pitch and loudness constant; timbre cyclically brightens and darkens at the LFO rate."
+      spectral: "f0 fixed; spectral centroid oscillates at the LFO period while pitch stays flat. Flat centroid ⇒ the matrix route didn't take ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Basic Shapes"
+      "Engine A Osc Macro 1": 0.50               # center value the LFO modulates around (normalized)
+      "Engine A Osc Macro 2": 0.50
+      "Engine A Transpose": 0
+      "Engine A Detune": 0
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 1.0             # open so the macro morph is the only audible change
+      "Engine A Filter Macro 2": 0.0
+      "Engine A LFO 1 Rate": 0.5                 # ~0.5 Hz, slow breathe (UNCERTAIN units; normalized/Hz)
+      "Engine A LFO 1 Shape": "Sine"
+      "Engine A Amp Env Attack": 0.05
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.3
+      "Engine B On": "Off"
+      "Voicing": "Poly"
+    matrix:
+      - {source: "LFO 1", target: "Osc Macro 1", amount: 0.8}   # bipolar amount, normalized (UNCERTAIN exact source/target LOM names)
+
+  # ── 04c — MPE, hands-on: per-note matrix → two fingers, two timbres ──────────
+  - id: meld-mpe-per-note
+    concept: "The matrix runs PER VOICE over MPE — two simultaneously-held notes morph independently under two fingers (this is where the control went)"
+    what_you_hear: "Two notes held together: one finger presses harder and slides (its timbre opens and brightens) while the other is held still (unchanged). Two different sounds, one patch, one chord."
+    structure: ab                     # A = the still note, B = the expressed note, sounding together; the per-voice DIFFERENCE is the teaching
+    isolates: "Per-note MPE Press + Slide on ONE of two held voices (matrix is per-voice)"
+    duration_s: 6.0
+    # MPE render: needs a per-note-channel clip. If the headless pipeline can't
+    # author MPE, render the channel-aftertouch FALLBACK (one note expressed via
+    # global aftertouch) and FLAG as fallback — the per-voice claim then can't be
+    # fully proven and the demo drops to a single-note expression illustration.
+    midi:
+      mpe: true
+      notes:
+        - {note: "C3", t: 0.0, length_s: 5.5, press: "flat-0.0", slide: "flat-0.0"}   # the still voice
+        - {note: "G3", t: 0.0, length_s: 5.5, press: "ramp-0.0-1.0", slide: "ramp-0.0-1.0"}  # the expressed voice
+    verification:
+      check: mpe-per-note
+      audible: "Two notes start identical in character; only the expressed note brightens/morphs over the hold while the still note does not."
+      spectral: "Isolate the two voices: the expressed voice's centroid rises over time, the still voice's stays flat. Both voices identical ⇒ per-voice routing didn't take (or MPE collapsed to channel) ⇒ reject (or mark fallback)."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Harmonic FM"
+      "Engine A Osc Macro 1": 0.30               # FM Amount — base, raised per-note by Press (normalized)
+      "Engine A Osc Macro 2": 0.40
+      "Engine A Transpose": 0
+      "Engine A Detune": 0
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.6             # base cutoff — raised per-note by Slide
+      "Engine A Filter Macro 2": 0.1
+      "Engine A Amp Env Attack": 0.02
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.3
+      "Engine B On": "Off"
+      "Voicing": "Poly"
+    matrix:
+      - {source: "MPE Press", target: "Osc Macro 1", amount: 0.7}     # per-note pressure → FM Amount
+      - {source: "MPE Slide", target: "Filter Macro 1", amount: 0.6}  # per-note Y/CC74 → cutoff
+      # fallback when MPE unavailable: source "Press" (channel aftertouch) → Osc Macro 1
+
+  # ── 05 — Patch walkthrough "Two-Hands": additive build, one element per step ──
+  # Each step ISOLATES the one element added vs the previous step; verification
+  # 'build-step' = step N must differ from step N-1 by exactly that element.
+
+  - id: meld-twohands-step1
+    concept: "Step 1 — Engine A: Swarm Saw, scale-locked: the anthemic body"
+    what_you_hear: "A held chord with a wide, in-key saw swarm — full and anthemic, partials snapped to the scale."
+    structure: single
+    isolates: "Engine A only = Swarm Saw (scale-aware) — the foundation, nothing else on yet"
+    duration_s: 4.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 3.6}
+        - {note: "G3", t: 0.0, length_s: 3.6}
+    verification:
+      check: build-step
+      audible: "A wide in-key saw body; no FM layer, no resonator, no modulation yet."
+      spectral: "Dense saw-swarm comb quantized to scale degrees; single engine only."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Swarm Saw"           # scale-aware (index 19)
+      "Engine A Osc Macro 1": 0.30               # Motion ~30 (UNCERTAIN, normalized)
+      "Engine A Osc Macro 2": 0.40               # Spacing ~40
+      "Engine A Osc Scale Aware": "On"
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.55            # gentle low-pass
+      "Engine A Filter Macro 2": 0.1
+      "Engine A Amp Env Attack": 0.05
+      "Engine A Amp Env Sustain": 0.9
+      "Engine A Amp Env Release": 0.4
+      "Engine B On": "Off"
+      "Global Scale": "C Minor"
+      "Voicing": "Poly"
+
+  - id: meld-twohands-step2
+    concept: "Step 2 — Engine B: Harmonic FM an octave up → Plate Resonator (the one filter that's 'physical modelling')"
+    what_you_hear: "Step 1's body plus a glassy, body-resonant overtone layer an octave up — the resonator gives it a struck, metallic shimmer."
+    structure: single
+    isolates: "Engine B added = Harmonic FM (octave up) into Plate Resonator filter"
+    duration_s: 4.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 3.6}
+        - {note: "G3", t: 0.0, length_s: 3.6}
+    verification:
+      check: build-step
+      audible: "Step 1's saw body PLUS a new high glassy resonant layer; differs from step1 by exactly the Engine B layer."
+      spectral: "Step1 spectrum + added discrete modal peaks an octave up (Plate Resonator). No B layer ⇒ reject."
+    params:
+      # Engine A — unchanged from step1
+      "Engine A On": "On"
+      "Engine A Osc Type": "Swarm Saw"
+      "Engine A Osc Macro 1": 0.30
+      "Engine A Osc Macro 2": 0.40
+      "Engine A Osc Scale Aware": "On"
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.55
+      "Engine A Filter Macro 2": 0.1
+      # Engine B — the added element
+      "Engine B On": "On"
+      "Engine B Osc Type": "Harmonic FM"
+      "Engine B Osc Macro 1": 0.50               # FM Amount (UNCERTAIN, normalized)
+      "Engine B Osc Macro 2": 0.40               # FM Ratio
+      "Engine B Transpose": 12                   # octave up
+      "Engine B Filter Type": "Plate Resonator"
+      "Engine B Filter Scale Aware": "On"
+      "Engine B Filter Macro 1": 0.50
+      "Engine B Filter Macro 2": 0.55
+      "Engine B Volume": 0.4                     # low level — a layer, not the lead
+      "Engine B Amp Env Attack": 0.005
+      "Engine B Amp Env Decay": 0.5
+      "Engine B Amp Env Sustain": 0.4
+      "Engine B Amp Env Release": 0.4
+      "Global Scale": "C Minor"
+      "Voicing": "Poly"
+
+  - id: meld-twohands-step3
+    concept: "Step 3 — Cross-engine: A's LFO 1 drives B's Macro 1 (control-rate, NOT audio-rate cross-mod)"
+    what_you_hear: "The two layers now breathe together but differently — A's slow LFO morphs B's FM timbre, so the glassy layer drifts under the steady body."
+    structure: single
+    isolates: "Cross-engine matrix route: Engine A LFO 1 → Engine B Osc Macro 1"
+    duration_s: 5.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 4.6}
+        - {note: "G3", t: 0.0, length_s: 4.6}
+    verification:
+      check: build-step
+      audible: "Same two layers as step2, but B's timbre now slowly morphs at the LFO rate while A holds steady."
+      spectral: "B's centroid oscillates at A's LFO rate; A unchanged. No B motion ⇒ the cross-engine route didn't take ⇒ reject."
+    params:
+      # A + B as step2 (abbreviated; renderer carries forward — set explicitly in build)
+      "Engine A On": "On"
+      "Engine A Osc Type": "Swarm Saw"
+      "Engine A Osc Macro 1": 0.30
+      "Engine A Osc Macro 2": 0.40
+      "Engine A Osc Scale Aware": "On"
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.55
+      "Engine A LFO 1 Rate": 0.4                 # slow (UNCERTAIN units)
+      "Engine A LFO 1 Shape": "Sine"
+      "Engine B On": "On"
+      "Engine B Osc Type": "Harmonic FM"
+      "Engine B Osc Macro 1": 0.50               # modulated by A's LFO via matrix
+      "Engine B Osc Macro 2": 0.40
+      "Engine B Transpose": 12
+      "Engine B Filter Type": "Plate Resonator"
+      "Engine B Filter Scale Aware": "On"
+      "Engine B Volume": 0.4
+      "Global Scale": "C Minor"
+      "Voicing": "Poly"
+    matrix:
+      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}   # cross-engine, control-rate (UNCERTAIN LOM source name)
+
+  - id: meld-twohands-step4
+    concept: "Step 4 — Self-morph: Engine A Mod Env in AD Loop → A's Macro 1 (the body sequences itself)"
+    what_you_hear: "The saw body now self-morphs on held notes — a looping modulation envelope cycles A's timbre without any new keypress. The seam to the IDM act."
+    structure: single
+    isolates: "Engine A Mod Env mode = AD Loop, routed to Engine A Osc Macro 1"
+    duration_s: 5.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 4.6}
+        - {note: "G3", t: 0.0, length_s: 4.6}
+    verification:
+      check: self-sequence
+      audible: "On a single held chord, A's body cyclically morphs (the AD-Loop envelope), recurring on a steady period."
+      spectral: "A's centroid shows a repeating AD-Loop contour from one held note; no recurrence ⇒ the loop env didn't engage ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Swarm Saw"
+      "Engine A Osc Macro 1": 0.40               # center the AD-Loop env modulates
+      "Engine A Osc Macro 2": 0.40
+      "Engine A Osc Scale Aware": "On"
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.55
+      "Engine A LFO 1 Rate": 0.4
+      "Engine A Mod Env Mode": "AD Loop"         # Meld's loop set: Trigger / Loop / AD Loop
+      "Engine A Mod Env Attack": 0.2
+      "Engine A Mod Env Decay": 0.6
+      "Engine B On": "On"
+      "Engine B Osc Type": "Harmonic FM"
+      "Engine B Transpose": 12
+      "Engine B Filter Type": "Plate Resonator"
+      "Engine B Volume": 0.4
+      "Global Scale": "C Minor"
+      "Voicing": "Poly"
+    matrix:
+      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}
+      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.7}   # AD-Loop self-morph
+
+  - id: meld-twohands-step5
+    concept: "Step 5 — Wire the fingers in: MPE Press → B's FM Amount, Slide → A's filter, Note Bend → A detune"
+    what_you_hear: "Now each finger shapes its own note's timbre, brightness, and pitch — the step the whole patch exists to reach. Pressing brightens the FM layer; sliding opens the body filter."
+    structure: single
+    isolates: "MPE matrix sources added: Press → B Macro 1, Slide → A Filter, Note Bend → A Detune"
+    duration_s: 6.0
+    midi:
+      mpe: true
+      notes:
+        - {note: "C3", t: 0.0, length_s: 5.5, press: "ramp-0.0-0.9", slide: "ramp-0.2-0.8"}
+        - {note: "G3", t: 0.0, length_s: 5.5, press: "flat-0.3", slide: "flat-0.4"}
+    verification:
+      check: mpe-per-note
+      audible: "The pressed/slid note morphs more than the held-steady note — per-voice expression is audible."
+      spectral: "The expressed voice's centroid moves with Press/Slide; the steady voice moves less. Identical ⇒ MPE routing didn't take ⇒ reject (or mark fallback)."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Swarm Saw"
+      "Engine A Osc Macro 1": 0.40
+      "Engine A Osc Scale Aware": "On"
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.5             # base cutoff, raised per-note by Slide
+      "Engine A Mod Env Mode": "AD Loop"
+      "Engine B On": "On"
+      "Engine B Osc Type": "Harmonic FM"
+      "Engine B Osc Macro 1": 0.30               # base FM Amount, raised per-note by Press
+      "Engine B Transpose": 12
+      "Engine B Filter Type": "Plate Resonator"
+      "Engine B Volume": 0.4
+      "Global Scale": "C Minor"
+      "Voicing": "Poly"
+    matrix:
+      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}
+      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.7}
+      - {source: "MPE Press", target: "Engine B Osc Macro 1", amount: 0.7}
+      - {source: "MPE Slide", target: "Engine A Filter Macro 1", amount: 0.5}
+      - {source: "MPE Note Bend", target: "Engine A Detune", amount: 0.3}
+
+  - id: meld-twohands-step6
+    concept: "Step 6 — Global glue: Drive, Limiter, Stacked Voices + Spread for width"
+    what_you_hear: "The finished patch widens and thickens — a touch of drive, a small unison spread, the limiter catching peaks. Fuller and wider than step 5, same notes."
+    structure: single
+    isolates: "Global Drive + Limiter + Stacked Voices (2) + Spread (the finishing layer)"
+    duration_s: 5.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 4.6}
+        - {note: "G3", t: 0.0, length_s: 4.6}
+    verification:
+      check: build-step
+      audible: "Same patch as step5, now wider (Spread) and thicker (Drive); differs from step5 only by the global glue."
+      spectral: "Increased stereo width + saturation harmonics vs step5; no narrowing. No change ⇒ the global stage didn't engage ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Swarm Saw"
+      "Engine A Osc Scale Aware": "On"
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Mod Env Mode": "AD Loop"
+      "Engine B On": "On"
+      "Engine B Osc Type": "Harmonic FM"
+      "Engine B Transpose": 12
+      "Engine B Filter Type": "Plate Resonator"
+      "Engine B Volume": 0.4
+      "Global Drive": 0.25                        # up a touch
+      "Global Limiter": "On"
+      "Stacked Voices": 2
+      "Spread": 0.3                               # small unison detune for width (normalized)
+      "Global Scale": "C Minor"
+      "Voicing": "Poly"
+    matrix:
+      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}
+      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.7}
+      - {source: "MPE Press", target: "Engine B Osc Macro 1", amount: 0.7}
+      - {source: "MPE Slide", target: "Engine A Filter Macro 1", amount: 0.5}
+
+  - id: meld-twohands-final
+    concept: "The finished 'Two-Hands' patch — two engines, ten fingers — played as a short MPE phrase"
+    what_you_hear: "The complete bi-timbral MPE patch played as a short expressive phrase: in-key saw body, glassy resonant FM layer, self-morphing, each note shaped by the hand."
+    structure: single
+    isolates: "The full assembled patch (no new variable — the capstone playthrough)"
+    duration_s: 10.0
+    midi:
+      mpe: true
+      pattern: "Cm texture-lead phrase, ~4 bars at 90 BPM, per-note Press/Slide expression"
+      length_s: 9.6
+    verification:
+      check: build-step
+      audible: "All elements present and balanced; reads as one coherent instrument, not a pile of layers."
+      spectral: "Saw-swarm body + octave-up modal-resonant FM layer + AD-Loop morph + per-note MPE motion all present."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Swarm Saw"
+      "Engine A Osc Scale Aware": "On"
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Mod Env Mode": "AD Loop"
+      "Engine B On": "On"
+      "Engine B Osc Type": "Harmonic FM"
+      "Engine B Transpose": 12
+      "Engine B Filter Type": "Plate Resonator"
+      "Engine B Volume": 0.4
+      "Global Drive": 0.25
+      "Global Limiter": "On"
+      "Stacked Voices": 2
+      "Spread": 0.3
+      "Global Scale": "C Minor"
+      "Voicing": "Poly"
+    matrix:
+      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}
+      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.7}
+      - {source: "MPE Press", target: "Engine B Osc Macro 1", amount: 0.7}
+      - {source: "MPE Slide", target: "Engine A Filter Macro 1", amount: 0.5}
+      - {source: "MPE Note Bend", target: "Engine A Detune", amount: 0.3}
+
+  # ── 06a — Self-sequencing timbre: one note becomes a pattern (the Autechre move)
+  - id: meld-self-sequence-onenote
+    concept: "Modulate the timbre instead of writing the notes — a looping Mod Env + audio-rate LFO turn ONE held note into a pattern"
+    what_you_hear: "A single held note that becomes a rhythmic, evolving pattern: the timbre cycles (Mod Env AD-Loop → macro) while an audio-rate LFO adds sideband grit. No new notes."
+    structure: single                 # justification: the whole point is ONE note producing a pattern — A/B would break the illusion
+    isolates: "Engine A Mod Env (AD Loop) → Osc Macro 1 + audio-rate LFO 1 (~200 Hz) → filter, on one held note"
+    duration_s: 8.0
+    midi: {note: "C3", length_s: 7.6}
+    verification:
+      check: self-sequence
+      audible: "From a single sustained key: a recurring rhythmic/timbral pattern, with a grainy sideband edge — no new note onsets."
+      spectral: "Onset/timbre events recur on a steady grid from one held note; audio-rate LFO adds sidebands. No recurrence ⇒ the loop env didn't engage ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Basic Shapes"
+      "Engine A Osc Macro 1": 0.40               # center the AD-Loop env sweeps
+      "Engine A Osc Macro 2": 0.50
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.6             # cutoff modulated by audio-rate LFO
+      "Engine A Filter Macro 2": 0.2
+      "Engine A Mod Env Mode": "AD Loop"
+      "Engine A Mod Env Attack": 0.1
+      "Engine A Mod Env Decay": 0.35             # sets the self-sequence period
+      "Engine A LFO 1 Rate": 200                 # ~200 Hz, audio-rate → sideband grit (UNCERTAIN units; top of range)
+      "Engine A LFO 1 Shape": "Sine"
+      "Engine A Amp Env Attack": 0.02
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.3
+      "Engine B On": "Off"
+      "Voicing": "Mono"
+    matrix:
+      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.8}   # AD-Loop self-sequence
+      - {source: "Engine A LFO 1", target: "Engine A Filter Macro 1", amount: 0.5}  # audio-rate → sideband grit
+
+  # ── 06b — Environmental oscillators as composition (Rain/Crackle as source) ───
+  - id: meld-rain-crackle-sub
+    concept: "A synthesized environmental oscillator (Rain/Crackle) is the SOURCE, not an effect — evolving weather from a held note"
+    what_you_hear: "An evolving synthesized-weather bed: Engine A is Rain (drops + wind), slowly evolving as a looping envelope drives its macro, over a quiet Sub from Engine B for body."
+    structure: single                 # justification: a texture bed is a single evolving sound; A/B isn't the lesson here
+    isolates: "Engine A oscillator type = Rain as the sound source (Mod Env Loop → macro for evolution)"
+    duration_s: 8.0
+    midi: {note: "C2", length_s: 7.6}
+    verification:
+      check: self-sequence
+      audible: "A clearly synthesized rain/weather texture (not a sample) that evolves over the hold, with a low sub body underneath."
+      spectral: "Broadband stochastic 'rain' content evolving over time + a low sub fundamental from Engine B. Static/flat ⇒ Mod Env evolution didn't engage ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Rain"                # type index 12
+      "Engine A Osc Macro 1": 0.50               # Tone (UNCERTAIN, normalized)
+      "Engine A Osc Macro 2": 0.40               # Rate — swept by the loop env
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.7
+      "Engine A Mod Env Mode": "Loop"            # Meld loop set: Trigger / Loop / AD Loop
+      "Engine A Mod Env Attack": 0.5
+      "Engine A Mod Env Decay": 1.0
+      "Engine A Amp Env Attack": 0.4
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.6
+      "Engine B On": "On"
+      "Engine B Osc Type": "Sub"                 # type index 18 — quiet body
+      "Engine B Osc Macro 1": 0.3                # Tone
+      "Engine B Osc Macro 2": 0.2                # Aux
+      "Engine B Volume": 0.35
+      "Engine B Filter Type": "Lowpass"
+      "Engine B Filter Macro 1": 0.4
+      "Voicing": "Poly"
+    matrix:
+      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 2", amount: 0.7}   # Loop env → Rain Rate = evolving weather
+
+  # ── 06c — The Shepard trick, back to the cold open: endless build under a pad ─
+  - id: meld-shepard-under-pad
+    concept: "The cold-open Shepard's Pi oscillator, put to work — an endless build for IDM tension under a pad"
+    what_you_hear: "The endless-rising Shepard's Pi from the cold open, now running under a sustained pad — a build that never resolves, used as tension."
+    structure: single                 # justification: callback to the cold open; the illusion is the sound
+    isolates: "Engine A = Shepard's Pi (the build) layered under Engine B pad"
+    duration_s: 9.0
+    midi:
+      notes:
+        - {note: "C2", t: 0.0, length_s: 8.5}    # Shepard build (Engine A)
+        - {note: "C3", t: 0.0, length_s: 8.5}    # pad (Engine B)
+    verification:
+      check: shepard-rise
+      audible: "A continuous sense of rising tension under a steady pad; the rise never lands."
+      spectral: "Engine A centroid drifts upward continuously with no octave reset, over Engine B's steady pad spectrum. Static A centroid ⇒ Shepard motion didn't take ⇒ reject."
+    params:
+      "Engine A On": "On"
+      "Engine A Osc Type": "Shepard's Pi"        # type index 13
+      "Engine A Osc Macro 1": 0.25               # Rate
+      "Engine A Osc Macro 2": 0.50               # Width
+      "Engine A Filter Type": "Lowpass"
+      "Engine A Filter Macro 1": 0.8
+      "Engine A Volume": 0.5
+      "Engine A Amp Env Attack": 0.4
+      "Engine A Amp Env Sustain": 1.0
+      "Engine A Amp Env Release": 0.8
+      "Engine B On": "On"
+      "Engine B Osc Type": "Basic Shapes"        # warm pad
+      "Engine B Osc Macro 1": 0.4
+      "Engine B Osc Macro 2": 0.5
+      "Engine B Filter Type": "Lowpass"
+      "Engine B Filter Macro 1": 0.5
+      "Engine B Volume": 0.6
+      "Engine B Amp Env Attack": 0.6
+      "Engine B Amp Env Sustain": 1.0
+      "Engine B Amp Env Release": 1.0
+      "Global Limiter": "On"
+      "Voicing": "Poly"

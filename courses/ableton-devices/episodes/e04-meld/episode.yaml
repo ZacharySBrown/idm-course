@@ -1,0 +1,278 @@
+id: e04-meld
+title: "Meld: The Bi-Timbral Macro-Oscillator Synth"
+device: Meld
+synthesis_type: "Macro-oscillator (24+1 algorithm bank, two macros each), bi-timbral, MPE-first"
+week: 4                        # episode-number alias for shared build_episode
+target_duration_minutes: 40
+ableton_manual_url: "https://www.ableton.com/en/manual/live-instrument-reference/"
+
+# NOTE (from dossier, specs/ableton_course_ep4_meld_research.md): the original brief
+# subtitle "Physical Modelling Hybrid" is INACCURATE and has been dropped — Meld is a
+# macro-oscillator synth; the ONLY physical-modelling DSP is the Plate/Membrane Resonator
+# FILTERS (modal). Meld shipped in Live 12.0 (5 March 2024), NOT 12.1; the Chord oscillator
+# was added in 12.2 (24 osc types at launch, 25 for a 12.4 user). Suite-only.
+
+idm_primary_artists:
+  - Aphex Twin        # kinship only — per-note timbre (Iridium collab, AFX Mode), NOT Meld credit
+  - Autechre          # kinship only — self-sequencing-timbre aesthetic, NOT Meld credit
+  - Squarepusher      # honest negative — builds his own tools; would treat macros as raw material
+idm_primary_records:
+  - "Plaid — Polymer"                          # timbre-as-composition exemplar (technique, not Meld)
+  - "Boards of Canada — Geogaddi"              # environmental-texture target (analog/sampler, not Meld)
+  - "Mutable Instruments Plaits — the lineage" # the macro-oscillator genre-definer, open-source DSP
+adjacent_genres:
+  - modular / Eurorack
+  - ambient / generative
+  - MPE performance / IDM
+
+# Bibliography references checked by validate.ts; full entries in references/bibliography.json.
+# NOTE: ep04 bib keys to be added during scripting — listed here as the citation spine the
+# Researcher's dossier (specs/ableton_course_ep4_meld_research.md) hangs on.
+references:
+  - bib:ableton_manual_meld
+  - bib:ableton_blog_meld_bitimbral
+  - bib:sos_ableton_live_meld
+  - bib:ableton_dsp_ref_meldosc
+  - bib:ableton_packs_meld
+  - bib:ableton_blog_live12_march5
+  - bib:engadget_live12_meld_roar
+  - bib:musictech_live12_daw
+  - bib:ableton_release_notes_live12
+  - bib:ableton_compare_editions
+  - bib:musicradar_meld_ultimate_guide
+  - bib:pichenettes_plaits_docs
+  - bib:github_pichenettes_eurorack
+  - bib:synthanatomy_behringer_brains
+  - bib:midi_mpe_spec_2018
+  - bib:musicradar_waldorf_iridium_aphex
+  - bib:sos_autechre_techno_logical
+  - bib:sos_squarepusher
+  - bib:headphonecommute_plaid_polymer
+  - bib:gearnews_boards_of_canada
+
+# Background-music transitions inserted after specific slides. Each entry's clip_id resolves
+# to an entry in clip_manifest.yaml (under song_clips). Left minimal for the skeleton —
+# Sound Designer fills clip ids after SCRIPT LOCK. Insertion points = the outline's
+# >> SIGNPOST act-boundary lines (after 02d / 03e / 04e / 05g / 06c).
+transitions:
+  enabled: true
+  insertions:
+    - after_slide: 02d-where-meld-sits          # end of section 2 (history) → into 3
+      clip_id: TBD
+    - after_slide: 03e-lfo-loop-env             # end of section 3 (synthesis) → into 4
+      clip_id: TBD
+    - after_slide: 04e-when-to-reach            # end of section 4 (device) → into 5
+      clip_id: TBD
+    - after_slide: 05g-save                      # end of walkthrough → into 6
+      clip_id: TBD
+    - after_slide: 06c-shepard-trick             # before listener exercise
+      clip_id: TBD
+
+# Background music beds — sidechain-ducked under narration. Left minimal for the
+# skeleton; ranges are placeholders the Sound Designer tightens after lock.
+beds:
+  enabled: true
+  duck_db: -14
+  insertions:
+    - clip_id: TBD
+      start_at_slide: 02a-what-a-macro-osc-is
+      end_at_slide: 02d-where-meld-sits
+      gain_db: -3
+    - clip_id: TBD
+      start_at_slide: 03a-the-osc-families
+      end_at_slide: 03e-lfo-loop-env
+      gain_db: -2
+    - clip_id: TBD
+      start_at_slide: 04a-bi-timbral
+      end_at_slide: 04e-when-to-reach
+      gain_db: -3
+    - clip_id: TBD
+      start_at_slide: 06a-self-sequencing
+      end_at_slide: 06e-exercise
+      gain_db: -3
+
+# Episode runs as a sequence of slides (chunks); shared/tools/build_episode.py concatenates
+# narration WAVs in this order, splicing demo clips after each slide's narration. Each demo
+# id resolves via clip_manifest.yaml to either a song-clip or a Meld-render WAV. Meld device
+# renders use the `meld-` prefix. NOTE (dossier 1.2): Meld oscillator macros and matrix
+# amounts are addressed as NORMALIZED floats (0–1 / 0–100%), not Hz — inspect the live device
+# before headless rendering. Slide ids + demo ids are kept in lockstep with outline.md.
+#
+# ── ARC (planted up front — this is the ep1 structural lesson applied) ──────
+#   FOCUS SENTENCE: "Operator builds a spectrum and Wavetable scans one, but Meld
+#     hands you twenty-five ready-made worlds — two knobs each — lets you run two
+#     of them at once, and routes your fingers into them: so you don't engineer a
+#     sound here, you pick one and play it."
+#   DRIVING QUESTION: "If this synth gives you almost nothing to edit — two knobs
+#     per oscillator — where did all the control go, and why is the most important
+#     part of Meld not an oscillator at all?"
+#   SURPRISING PAYOFF: the control didn't vanish — it moved out of the patch and
+#     into the PERFORMANCE. The most important thing in Meld is not an oscillator
+#     at all — it is the per-note matrix (MPE) that lets every finger hold a
+#     different sound. And the "physical-modelling hybrid" on the box is a myth
+#     that resolves to exactly one thing: two modal resonator FILTERS.
+#   PAYOFF REFRAIN (seed in 01-cold-open; echo once per act boundary —
+#     02d / 03e / 04e / 05g — and land in 06e): "You don't build the sound here.
+#     You pick it, and you play it."  (spine, made sayable)
+#   SECOND (myth) REFRAIN: "It's a filter, not the oscillator." — planted at the
+#     resonator beat 03c, echoed at the patch step that uses it 05b, landed in 06e.
+#   ANECDOTE/REFLECTION ALTERNATION: history beats (the macro-oscillator idea, the
+#     Plaits lineage, MPE's per-finger channel, the design-team story) and the
+#     walkthrough steps are ANECDOTE; abstraction/theory + device beats are
+#     REFLECTION. Interleave — never run >2 reflection beats without an anecdote
+#     (the ep1 Section-4 flatline failure). Both myth-busts are aired as ANECDOTE
+#     confessions in the cold open, not footnotes.
+#   ACT-BOUNDARY SIGNPOSTS: every section-opening slide names the stop and ties it
+#     to the focus sentence (cold open plants the four-stop map; Act 4 carries an
+#     explicit driving question instead of a feature list). See outline.md + the
+#     script/*.md headers.
+slides:
+  # ── Cold Open (90s) — confession/contradiction: three impossible-sounding
+  #    oscillators in one box (Shepard's Pi endless-rise, Rain, a cassette-loading
+  #    Chip), all one knob away. PLANT HERE: the four-stop map; BOTH myth-busts as
+  #    confessions (not a physical modeller; shipped 12.0 not 12.1); and the first
+  #    instance of the "You don't build the sound here. You pick it, and you play
+  #    it." refrain. Bed in under the Shepard's Pi barberpole. ───────────────────
+  - id: 01-cold-open
+    heading: "Cold Open"
+    script_md: script/01-cold-open.md
+    demos: [shepard-pi-cold-open]
+
+  # ── Section 2: History & Theory (8–9 min, 4 beats) ─────────────────────
+  #    ACT OPEN — signpost: "Stop one — where this idea came from." Ordered by
+  #    "what do I need next?": what the THING is (macro-oscillator) → where it came
+  #    from (Plaits) → the paradigm that makes Meld matter (MPE) → where it lands in
+  #    Live's four-synth map. Version myth busted at 02d.
+  - id: 02a-what-a-macro-osc-is
+    heading: "What a Macro-Oscillator IS"
+    script_md: script/02a-what-a-macro-osc-is.md
+    demos: [meld-one-knob-three-worlds]
+  - id: 02b-plaits-lineage
+    heading: "The Plaits Lineage (Braids 2013 → Plaits 2018)"
+    script_md: script/02b-plaits-lineage.md
+    demos: [plaits-module-ref]
+  - id: 02c-mpe-paradigm
+    heading: "MPE: A Channel Per Finger"
+    script_md: script/02c-mpe-paradigm.md
+  - id: 02d-where-meld-sits
+    heading: "Where Meld Sits: Pick-and-Play"
+    script_md: script/02d-where-meld-sits.md
+
+  # ── Section 3: Synthesis Deep-Dive (8–9 min, 5 beats) ──────────────────
+  #    ACT SEAM (history → theory) MOTIVATED: 03a turns "two knobs, a whole
+  #    algorithm" into a question — for a physicist, WHICH routines, and how does
+  #    one knob mean six things? ACT OPEN — signpost: "Stop two — the physics."
+  #    First myth payoff lands at 03c (modal filters).
+  - id: 03a-the-osc-families
+    heading: "The 25 Oscillators, By Family"
+    script_md: script/03a-the-osc-families.md
+    demos: [meld-type-switch-live]
+  - id: 03b-fm-the-macro-way
+    heading: "FM, the Macro Way (Callback to Operator)"
+    script_md: script/03b-fm-the-macro-way.md
+    demos: [meld-squelch-feedback]
+  - id: 03c-modal-resonators
+    heading: "The Modal Resonators: The One Physical-Modelling Part"
+    script_md: script/03c-modal-resonators.md
+    demos: [meld-plate-resonator]
+  - id: 03d-scale-aware
+    heading: "Scale-Aware Oscillators (Six of Them)"
+    script_md: script/03d-scale-aware.md
+    demos: [meld-swarm-scale-snap]
+  - id: 03e-lfo-loop-env
+    heading: "LFOs Into Audio Rate + Loop Envelopes"
+    script_md: script/03e-lfo-loop-env.md
+    demos: [meld-modenv-loop-macro]
+
+  # ── Section 4: Ableton Meld Deep-Dive (8–9 min, 5 beats) ───────────────
+  #    DRIVING QUESTION — planted at 04a, answered by EVERY beat after it (the ep1
+  #    Section-4 fix; without this the device tour flatlines into "and also"): "If a
+  #    macro-oscillator already gives you a whole instrument behind two knobs, why
+  #    does Meld give you TWO engines — and what is the single thing it was built
+  #    AROUND that the other three Live synths don't have?"
+  #    Each beat answers it: 04a = two full engines = the literal meaning of bi-
+  #    timbral (+ the sum-not-cross-mod caveat); 04b = the macros are first-class
+  #    matrix targets, the matrix is the heart; 04c = MPE is the thing it was built
+  #    around (the answer); 04d = filters/mixer/global serve the two engines;
+  #    04e = when to reach for it vs the family.
+  - id: 04a-bi-timbral
+    heading: "Bi-Timbral: Two Full Engines, Summed"
+    script_md: script/04a-bi-timbral.md
+  - id: 04b-macros-and-matrix
+    heading: "The Two Macros + the Matrix (The Macro Is the New Position)"
+    script_md: script/04b-macros-and-matrix.md
+    demos: [meld-lfo-to-macro]
+  - id: 04c-mpe-hands-on
+    heading: "MPE, Hands-On: A Finger's Signal Path"
+    script_md: script/04c-mpe-hands-on.md
+    demos: [meld-mpe-per-note]
+  - id: 04d-filters-mixer-global
+    heading: "Filters, Mixer, Global, Voicing"
+    script_md: script/04d-filters-mixer-global.md
+  - id: 04e-when-to-reach
+    heading: "Meld vs the Family: When to Reach for It"
+    script_md: script/04e-when-to-reach.md
+
+  # ── Section 5: Patch Walkthrough — "Two-Hands": a bi-timbral, MPE-played
+  #    texture-lead that proves "two synths, one note, ten fingers" (5–6 min,
+  #    7 steps). ACT SEAM (device → hands-on) MOTIVATED: "enough touring the panel
+  #    — build one patch that is two synths and ten fingers, and play one note with
+  #    it." ACT OPEN — signpost: "Stop three — build it." Plant position markers in
+  #    the steps ("halfway — now we wire the fingers in") so the build does not feel
+  #    open-ended (the ep1 Section-5 marker gap). 05b echoes the filter myth refrain.
+  - id: 05a-engine-a-swarm
+    heading: "Step 1: Engine A — Swarm Saw, Scale-Locked"
+    script_md: script/05a-engine-a-swarm.md
+    demos: [meld-twohands-step1]
+  - id: 05b-engine-b-fm-resonator
+    heading: "Step 2: Engine B — Harmonic FM + Plate Resonator"
+    script_md: script/05b-engine-b-fm-resonator.md
+    demos: [meld-twohands-step2]
+  - id: 05c-cross-engine-lfo
+    heading: "Step 3: Cross-Engine — A's LFO Drives B's Macro"
+    script_md: script/05c-cross-engine-lfo.md
+    demos: [meld-twohands-step3]
+  - id: 05d-self-morph-loop-env
+    heading: "Step 4: Self-Morph — Mod Env AD-Loop to Macro"
+    script_md: script/05d-self-morph-loop-env.md
+    demos: [meld-twohands-step4]
+  - id: 05e-mpe-routing
+    heading: "Step 5: Wire the Fingers In — MPE Press / Slide / Bend"
+    script_md: script/05e-mpe-routing.md
+    demos: [meld-twohands-step5]
+  - id: 05f-drive-limiter-spread
+    heading: "Step 6: Global Drive, Limiter, Stacked Voices + Spread"
+    script_md: script/05f-drive-limiter-spread.md
+    demos: [meld-twohands-step6]
+  - id: 05g-save
+    heading: "Step 7: Save the Patch"
+    script_md: script/05g-save.md
+    demos: [meld-twohands-final]
+
+  # ── Section 6: IDM Application (5–6 min, 5 beats) ──────────────────────
+  #    ACT OPEN — signpost: "Stop four — three ways IDM uses Meld when there's no
+  #    preset for what you want." Ordered: modulate-don't-write (Autechre kinship) →
+  #    environmental oscillators as source → the Shepard trick (cold-open callback)
+  #    → the myth recap → the exercise. Payoff LANDS in 06e: restate the focus
+  #    sentence + the "You don't build the sound here. You pick it, and you play
+  #    it." refrain (and the "It's a filter, not the oscillator." myth refrain) as
+  #    resolution — close on the exercise + a stop, never a motivational kicker.
+  #    ALL artists are KINSHIP, never Meld credit.
+  - id: 06a-self-sequencing
+    heading: "Self-Sequencing Timbre (the Autechre Idea)"
+    script_md: script/06a-self-sequencing.md
+    demos: [meld-self-sequence-onenote]
+  - id: 06b-environmental-osc
+    heading: "Environmental Oscillators as Composition"
+    script_md: script/06b-environmental-osc.md
+    demos: [meld-rain-crackle-sub]
+  - id: 06c-shepard-trick
+    heading: "The Shepard Trick (Back to the Cold Open)"
+    script_md: script/06c-shepard-trick.md
+    demos: [meld-shepard-under-pad]
+  - id: 06d-myth-recap
+    heading: "Two Myths, Logged: Not a Physical Modeller, Not 12.1"
+    script_md: script/06d-myth-recap.md
+  - id: 06e-exercise
+    heading: "Listener Exercise"
+    script_md: script/06e-exercise.md
