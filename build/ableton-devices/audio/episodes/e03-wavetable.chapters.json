@@ -1,0 +1,176 @@
+[
+  {
+    "id": "ch000",
+    "title": "Cold Open",
+    "start_ms": 0,
+    "end_ms": 111500
+  },
+  {
+    "id": "ch001",
+    "title": "The Palm Accident (1978)",
+    "start_ms": 111900,
+    "end_ms": 201550
+  },
+  {
+    "id": "ch002",
+    "title": "The PPG Wave Defines the 80s",
+    "start_ms": 201950,
+    "end_ms": 351600
+  },
+  {
+    "id": "ch003",
+    "title": "Waldorf Carries the Grit (1989\u20132007)",
+    "start_ms": 352000,
+    "end_ms": 438000
+  },
+  {
+    "id": "ch004",
+    "title": "The Plugin Revival: Massive, Serum, Vital",
+    "start_ms": 438400,
+    "end_ms": 562050
+  },
+  {
+    "id": "ch005",
+    "title": "Ableton Enters (Live 10, 2018)",
+    "start_ms": 562450,
+    "end_ms": 642150
+  },
+  {
+    "id": "ch006",
+    "title": "What a Wavetable IS",
+    "start_ms": 642550,
+    "end_ms": 719011
+  },
+  {
+    "id": "ch007",
+    "title": "The Additive Connection (For the Physicist)",
+    "start_ms": 719411,
+    "end_ms": 804861
+  },
+  {
+    "id": "ch008",
+    "title": "Interpolation: The Math of Scanning",
+    "start_ms": 805261,
+    "end_ms": 901061
+  },
+  {
+    "id": "ch009",
+    "title": "Aliasing: The Central DSP Fight",
+    "start_ms": 901461,
+    "end_ms": 994761
+  },
+  {
+    "id": "ch010",
+    "title": "Wavetable vs FM: Interpolate, Don't Generate",
+    "start_ms": 995161,
+    "end_ms": 1097611
+  },
+  {
+    "id": "ch011",
+    "title": "Wavetable Architecture: 2 Osc + Sub",
+    "start_ms": 1098011,
+    "end_ms": 1179261
+  },
+  {
+    "id": "ch012",
+    "title": "The Oscillator Effects: FM, Classic, Modern",
+    "start_ms": 1179661,
+    "end_ms": 1269511
+  },
+  {
+    "id": "ch013",
+    "title": "The Modulation Matrix: The Heart",
+    "start_ms": 1269911,
+    "end_ms": 1365711
+  },
+  {
+    "id": "ch014",
+    "title": "Envelopes and LFOs: The Fade-In Trick",
+    "start_ms": 1366111,
+    "end_ms": 1456966
+  },
+  {
+    "id": "ch015",
+    "title": "Filters and Unison: Cytomic + Position Spread",
+    "start_ms": 1457366,
+    "end_ms": 1546416
+  },
+  {
+    "id": "ch016",
+    "title": "Wavetable vs Serum vs Massive",
+    "start_ms": 1546816,
+    "end_ms": 1632366
+  },
+  {
+    "id": "ch017",
+    "title": "Step 1: A Static Vowel Pad",
+    "start_ms": 1632766,
+    "end_ms": 1682916
+  },
+  {
+    "id": "ch018",
+    "title": "Step 2: Slow LFO to Position \u2014 the PPG Choir",
+    "start_ms": 1683316,
+    "end_ms": 1729916
+  },
+  {
+    "id": "ch019",
+    "title": "Step 3: Position Spread \u2014 a Chord of Timbres",
+    "start_ms": 1730316,
+    "end_ms": 1768294
+  },
+  {
+    "id": "ch020",
+    "title": "Step 4: Sub for Weight, Osc 2 for Glass",
+    "start_ms": 1768694,
+    "end_ms": 1823244
+  },
+  {
+    "id": "ch021",
+    "title": "Step 5: Arm the Growl \u2014 Fast LFO + FM",
+    "start_ms": 1823644,
+    "end_ms": 1881143
+  },
+  {
+    "id": "ch022",
+    "title": "Step 6: One Macro \u2014 Pad to Growl",
+    "start_ms": 1881543,
+    "end_ms": 1933543
+  },
+  {
+    "id": "ch023",
+    "title": "Step 7: Save the Patch",
+    "start_ms": 1933943,
+    "end_ms": 1994365
+  },
+  {
+    "id": "ch024",
+    "title": "Import Your Own Wavetable",
+    "start_ms": 1994765,
+    "end_ms": 2079147
+  },
+  {
+    "id": "ch025",
+    "title": "Rhythmic Timbre: Loop Envelopes",
+    "start_ms": 2079547,
+    "end_ms": 2149949
+  },
+  {
+    "id": "ch026",
+    "title": "The Aliasing Aesthetic, On Purpose",
+    "start_ms": 2150349,
+    "end_ms": 2205749
+  },
+  {
+    "id": "ch027",
+    "title": "MPE: Pressure Scans the Timbre",
+    "start_ms": 2206149,
+    "end_ms": 2285999
+  },
+  {
+    "id": "ch028",
+    "title": "Listener Exercise",
+    "start_ms": 2286399,
+    "end_ms": 2332949
+  }
+]

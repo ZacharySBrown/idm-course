@@ -1,0 +1,212 @@
+[
+  {
+    "heading": "Cold Open",
+    "cue_id": "see-you-cold-open",
+    "role": "song",
+    "demo_start_ms": 42000,
+    "demo_end_ms": 54000
+  },
+  {
+    "heading": "The PPG Wave Defines the 80s",
+    "cue_id": "see-you-choir",
+    "role": "song",
+    "demo_start_ms": 273900,
+    "demo_end_ms": 283900
+  },
+  {
+    "heading": "The PPG Wave Defines the 80s",
+    "cue_id": "everybody-wants-bass",
+    "role": "song",
+    "demo_start_ms": 317350,
+    "demo_end_ms": 325350
+  },
+  {
+    "heading": "The Plugin Revival: Massive, Serum, Vital",
+    "cue_id": "scary-monsters-growl",
+    "role": "song",
+    "demo_start_ms": 488350,
+    "demo_end_ms": 496350
+  },
+  {
+    "heading": "Ableton Enters (Live 10, 2018)",
+    "cue_id": "trans-see-you-pad",
+    "role": "transition",
+    "demo_start_ms": 630150,
+    "demo_end_ms": 642150
+  },
+  {
+    "heading": "What a Wavetable IS",
+    "cue_id": "wt-position-by-hand",
+    "role": "song",
+    "demo_start_ms": 703350,
+    "demo_end_ms": 706461
+  },
+  {
+    "heading": "The Additive Connection (For the Physicist)",
+    "cue_id": "wt-ab-two-positions",
+    "role": "song",
+    "demo_start_ms": 780811,
+    "demo_end_ms": 785261
+  },
+  {
+    "heading": "Interpolation: The Math of Scanning",
+    "cue_id": "wt-zipper-vs-smooth",
+    "role": "song",
+    "demo_start_ms": 880111,
+    "demo_end_ms": 886561
+  },
+  {
+    "heading": "Aliasing: The Central DSP Fight",
+    "cue_id": "wt-hiq-on-vs-off",
+    "role": "song",
+    "demo_start_ms": 978511,
+    "demo_end_ms": 983761
+  },
+  {
+    "heading": "Wavetable vs FM: Interpolate, Don't Generate",
+    "cue_id": "wt-fm-inside-wavetable",
+    "role": "song",
+    "demo_start_ms": 1059211,
+    "demo_end_ms": 1064211
+  },
+  {
+    "heading": "Wavetable vs FM: Interpolate, Don't Generate",
+    "cue_id": "trans-everybody-bell",
+    "role": "transition",
+    "demo_start_ms": 1085611,
+    "demo_end_ms": 1097611
+  },
+  {
+    "heading": "The Oscillator Effects: FM, Classic, Modern",
+    "cue_id": "wt-modern-fold-sweep",
+    "role": "song",
+    "demo_start_ms": 1241611,
+    "demo_end_ms": 1246611
+  },
+  {
+    "heading": "The Modulation Matrix: The Heart",
+    "cue_id": "wt-lfo-to-position",
+    "role": "song",
+    "demo_start_ms": 1341461,
+    "demo_end_ms": 1346461
+  },
+  {
+    "heading": "Envelopes and LFOs: The Fade-In Trick",
+    "cue_id": "wt-lfo-attack-bloom",
+    "role": "song",
+    "demo_start_ms": 1434811,
+    "demo_end_ms": 1440066
+  },
+  {
+    "heading": "Filters and Unison: Cytomic + Position Spread",
+    "cue_id": "wt-position-spread-chord",
+    "role": "song",
+    "demo_start_ms": 1522916,
+    "demo_end_ms": 1527366
+  },
+  {
+    "heading": "Wavetable vs Serum vs Massive",
+    "cue_id": "trans-polymer-scan",
+    "role": "transition",
+    "demo_start_ms": 1618366,
+    "demo_end_ms": 1632366
+  },
+  {
+    "heading": "Step 1: A Static Vowel Pad",
+    "cue_id": "wt-spectra-step1",
+    "role": "song",
+    "demo_start_ms": 1664516,
+    "demo_end_ms": 1669516
+  },
+  {
+    "heading": "Step 2: Slow LFO to Position \u2014 the PPG Choir",
+    "cue_id": "wt-spectra-step2",
+    "role": "song",
+    "demo_start_ms": 1707016,
+    "demo_end_ms": 1713016
+  },
+  {
+    "heading": "Step 3: Position Spread \u2014 a Chord of Timbres",
+    "cue_id": "wt-spectra-step3",
+    "role": "song",
+    "demo_start_ms": 1753366,
+    "demo_end_ms": 1757894
+  },
+  {
+    "heading": "Step 4: Sub for Weight, Osc 2 for Glass",
+    "cue_id": "wt-spectra-step4",
+    "role": "song",
+    "demo_start_ms": 1801994,
+    "demo_end_ms": 1807994
+  },
+  {
+    "heading": "Step 5: Arm the Growl \u2014 Fast LFO + FM",
+    "cue_id": "wt-spectra-step5",
+    "role": "song",
+    "demo_start_ms": 1858994,
+    "demo_end_ms": 1863543
+  },
+  {
+    "heading": "Step 6: One Macro \u2014 Pad to Growl",
+    "cue_id": "wt-spectra-macro-sweep",
+    "role": "song",
+    "demo_start_ms": 1907043,
+    "demo_end_ms": 1915043
+  },
+  {
+    "heading": "Step 7: Save the Patch",
+    "cue_id": "wt-spectra-morph-final",
+    "role": "song",
+    "demo_start_ms": 1950443,
+    "demo_end_ms": 1957815
+  },
+  {
+    "heading": "Step 7: Save the Patch",
+    "cue_id": "trans-scary-monsters",
+    "role": "transition",
+    "demo_start_ms": 1982365,
+    "demo_end_ms": 1994365
+  },
+  {
+    "heading": "Import Your Own Wavetable",
+    "cue_id": "wt-user-table-scan",
+    "role": "song",
+    "demo_start_ms": 2026765,
+    "demo_end_ms": 2030897
+  },
+  {
+    "heading": "Import Your Own Wavetable",
+    "cue_id": "polymer-clip",
+    "role": "song",
+    "demo_start_ms": 2060647,
+    "demo_end_ms": 2068647
+  },
+  {
+    "heading": "Rhythmic Timbre: Loop Envelopes",
+    "cue_id": "wt-loop-env-sequence",
+    "role": "song",
+    "demo_start_ms": 2107697,
+    "demo_end_ms": 2113799
+  },
+  {
+    "heading": "The Aliasing Aesthetic, On Purpose",
+    "cue_id": "wt-hiq-off-grit",
+    "role": "song",
+    "demo_start_ms": 2172949,
+    "demo_end_ms": 2177949
+  },
+  {
+    "heading": "MPE: Pressure Scans the Timbre",
+    "cue_id": "wt-mpe-pressure-position",
+    "role": "song",
+    "demo_start_ms": 2232449,
+    "demo_end_ms": 2238449
+  },
+  {
+    "heading": "MPE: Pressure Scans the Timbre",
+    "cue_id": "trans-see-you-outro",
+    "role": "transition",
+    "demo_start_ms": 2271999,
+    "demo_end_ms": 2285999
+  }
+]

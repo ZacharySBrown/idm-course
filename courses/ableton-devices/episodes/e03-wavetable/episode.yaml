@@ -53,15 +53,15 @@ transitions:
   enabled: true
   insertions:
     - after_slide: 02e-ableton-enters         # end of section 2 (history) → into 3
-      clip_id: TBD
+      clip_id: trans-see-you-pad
     - after_slide: 03e-wavetable-vs-fm         # end of section 3 (synthesis) → into 4
-      clip_id: TBD
+      clip_id: trans-everybody-bell
     - after_slide: 04f-vs-serum-massive         # end of section 4 (device) → into 5
-      clip_id: TBD
+      clip_id: trans-polymer-scan
     - after_slide: 05g-save                      # end of walkthrough → into 6
-      clip_id: TBD
+      clip_id: trans-scary-monsters
     - after_slide: 06d-mpe-position              # before listener exercise
-      clip_id: TBD
+      clip_id: trans-see-you-outro
 
 # Background music beds — sidechain-ducked under narration. Left minimal for the
 # skeleton; ranges are placeholders the Sound Designer tightens after lock.
@@ -69,19 +69,19 @@ beds:
   enabled: true
   duck_db: -14
   insertions:
-    - clip_id: TBD
+    - clip_id: bed-see-you-drift
       start_at_slide: 02a-palm-accident
       end_at_slide: 02e-ableton-enters
       gain_db: -3
-    - clip_id: TBD
+    - clip_id: bed-everybody-pad
       start_at_slide: 03a-what-a-wavetable-is
       end_at_slide: 03e-wavetable-vs-fm
       gain_db: -2
-    - clip_id: TBD
+    - clip_id: bed-polymer-texture
       start_at_slide: 04a-architecture
       end_at_slide: 04f-vs-serum-massive
       gain_db: -3
-    - clip_id: TBD
+    - clip_id: bed-polymer-amb
       start_at_slide: 06a-import-your-own
       end_at_slide: 06e-exercise
       gain_db: -3

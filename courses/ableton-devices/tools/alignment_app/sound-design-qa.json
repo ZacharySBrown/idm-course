@@ -1,592 +1,21 @@
 {
-  "episode": "e02-analog",
+  "episode": "e03-wavetable",
   "cues": [
     {
-      "cue_id": "acid-tracks-cold-open",
+      "cue_id": "see-you-cold-open",
       "heading": "Cold Open",
       "role": "song",
-      "demo_start_ms": 40100,
-      "demo_end_ms": 48100,
-      "demo_loudness": {
-        "mean": -17.4,
-        "peak": -1.2
-      },
-      "voice_loudness": {
-        "mean": -20.2,
-        "peak": -5.2
-      },
-      "delta_db": 2.8000000000000007,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": false
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "flash-light-bass",
-      "heading": "Moog and the Ladder Filter (1964\u201371)",
-      "role": "song",
-      "demo_start_ms": 318500,
-      "demo_end_ms": 326500,
-      "demo_loudness": {
-        "mean": -18.3,
-        "peak": -1.2
-      },
-      "voice_loudness": {
-        "mean": -18.0,
-        "peak": -3.9
-      },
-      "delta_db": -0.3000000000000007,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "acid-tracks-303",
-      "heading": "The TB-303 and Acid House",
-      "role": "song",
-      "demo_start_ms": 647650,
-      "demo_end_ms": 657650,
-      "demo_loudness": {
-        "mean": -17.0,
-        "peak": -0.7
-      },
-      "voice_loudness": {
-        "mean": -19.1,
-        "peak": -4.6
-      },
-      "delta_db": 2.1000000000000014,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-pwm-sweep",
-      "heading": "Oscillator Spectra: Saw, Square, Pulse",
-      "role": "song",
-      "demo_start_ms": 878500,
-      "demo_end_ms": 883000,
-      "demo_loudness": {
-        "mean": -17.2,
-        "peak": -7.3
-      },
-      "voice_loudness": {
-        "mean": -19.4,
-        "peak": -5.0
-      },
-      "delta_db": 2.1999999999999993,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-slope-12-vs-24",
-      "heading": "The Filter, for a Physicist",
-      "role": "song",
-      "demo_start_ms": 995250,
-      "demo_end_ms": 999700,
-      "demo_loudness": {
-        "mean": -15.6,
-        "peak": -5.4
-      },
-      "voice_loudness": {
-        "mean": -19.0,
-        "peak": -5.6
-      },
-      "delta_db": 3.4000000000000004,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": true
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-reso-to-self-osc",
-      "heading": "Self-Oscillation: The Barkhausen Condition",
-      "role": "song",
-      "demo_start_ms": 1069100,
-      "demo_end_ms": 1073233,
-      "demo_loudness": {
-        "mean": -15.1,
-        "peak": -6.1
-      },
-      "voice_loudness": {
-        "mean": -17.5,
-        "peak": -3.0
-      },
-      "delta_db": 2.4000000000000004,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": true
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-reese-detune-sweep",
-      "heading": "Detuning, Beating, and PWM",
-      "role": "song",
-      "demo_start_ms": 1148833,
-      "demo_end_ms": 1154833,
-      "demo_loudness": {
-        "mean": -15.1,
-        "peak": -8.8
-      },
-      "voice_loudness": {
-        "mean": -18.2,
-        "peak": -4.7
-      },
-      "delta_db": 3.0999999999999996,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": true
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-pwm-strings",
-      "heading": "Detuning, Beating, and PWM",
-      "role": "song",
-      "demo_start_ms": 1197633,
-      "demo_end_ms": 1200305,
-      "demo_loudness": {
-        "mean": -16.9,
-        "peak": -9.6
-      },
-      "voice_loudness": {
-        "mean": -19.7,
-        "peak": -4.9
-      },
-      "delta_db": 2.8000000000000007,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-filter-env-vs-amp-env",
-      "heading": "Two Envelopes, Two Jobs",
-      "role": "song",
-      "demo_start_ms": 1298105,
-      "demo_end_ms": 1301434,
-      "demo_loudness": {
-        "mean": -16.9,
-        "peak": -4.9
-      },
-      "voice_loudness": {
-        "mean": -20.6,
-        "peak": -3.8
-      },
-      "delta_db": 3.700000000000003,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-drive-sym-vs-asym",
-      "heading": "Drive: Re-Introducing Nonlinearity",
-      "role": "song",
-      "demo_start_ms": 1381234,
-      "demo_end_ms": 1385684,
-      "demo_loudness": {
-        "mean": -17.3,
-        "peak": -1.6
-      },
-      "voice_loudness": {
-        "mean": -20.0,
-        "peak": -4.2
-      },
-      "delta_db": 2.6999999999999993,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-error-drift",
-      "heading": "Physical Modeling and the Error Knob",
-      "role": "song",
-      "demo_start_ms": 1604184,
-      "demo_end_ms": 1608380,
-      "demo_loudness": {
-        "mean": -17.1,
-        "peak": -6.2
-      },
-      "voice_loudness": {
-        "mean": -18.8,
-        "peak": -4.3
-      },
-      "delta_db": 1.6999999999999993,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-sync-ratio-sweep",
-      "heading": "The Oscillators: Shapes, Sub, Sync",
-      "role": "song",
-      "demo_start_ms": 1719930,
-      "demo_end_ms": 1724930,
+      "demo_start_ms": 42000,
+      "demo_end_ms": 54000,
       "demo_loudness": {
         "mean": -16.6,
-        "peak": -6.2
-      },
-      "voice_loudness": {
-        "mean": -19.3,
-        "peak": -4.2
-      },
-      "delta_db": 2.6999999999999993,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-ms20-series-filter",
-      "heading": "The Two Filters: Multimode, Series, Formant",
-      "role": "song",
-      "demo_start_ms": 1838580,
-      "demo_end_ms": 1844580,
-      "demo_loudness": {
-        "mean": -16.5,
-        "peak": -8.0
-      },
-      "voice_loudness": {
-        "mean": -19.2,
-        "peak": -4.9
-      },
-      "delta_db": 2.6999999999999993,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-unison-supersaw",
-      "heading": "Voice Architecture and Make-It-Analog",
-      "role": "song",
-      "demo_start_ms": 2057380,
-      "demo_end_ms": 2061109,
-      "demo_loudness": {
-        "mean": -16.7,
-        "peak": -1.7
-      },
-      "voice_loudness": {
-        "mean": -18.0,
-        "peak": -3.6
-      },
-      "delta_db": 1.3000000000000007,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": false,
-        "overlaps_bed": true
-      },
-      "flags": [
-        "no silence frame before the demo onset"
-      ],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-303-step1",
-      "heading": "Step 1: Mono, Glide, One Saw",
-      "role": "song",
-      "demo_start_ms": 2149259,
-      "demo_end_ms": 2153259,
-      "demo_loudness": {
-        "mean": -15.7,
-        "peak": -7.7
-      },
-      "voice_loudness": {
-        "mean": -19.4,
-        "peak": -3.7
-      },
-      "delta_db": 3.6999999999999993,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": false
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-303-step2",
-      "heading": "Step 2: Route to a 24 dB Low-Pass",
-      "role": "song",
-      "demo_start_ms": 2192359,
-      "demo_end_ms": 2196359,
-      "demo_loudness": {
-        "mean": -16.6,
-        "peak": -6.1
-      },
-      "voice_loudness": {
-        "mean": -21.0,
-        "peak": -5.4
-      },
-      "delta_db": 4.399999999999999,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": false
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-303-step3",
-      "heading": "Step 3: Filter Envelope, the Per-Note Wow",
-      "role": "song",
-      "demo_start_ms": 2251509,
-      "demo_end_ms": 2255509,
-      "demo_loudness": {
-        "mean": -16.4,
-        "peak": -4.5
-      },
-      "voice_loudness": {
-        "mean": -20.0,
-        "peak": -5.4
-      },
-      "delta_db": 3.6000000000000014,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": false
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-303-step4",
-      "heading": "Step 4: Resonance Toward the Squelch",
-      "role": "song",
-      "demo_start_ms": 2301109,
-      "demo_end_ms": 2303210,
-      "demo_loudness": {
-        "mean": -16.7,
-        "peak": -6.6
-      },
-      "voice_loudness": {
-        "mean": -22.1,
-        "peak": -4.9
-      },
-      "delta_db": 5.400000000000002,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": false
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-303-step5",
-      "heading": "Step 5: Asym Drive and Velocity Accent",
-      "role": "song",
-      "demo_start_ms": 2361060,
-      "demo_end_ms": 2365161,
-      "demo_loudness": {
-        "mean": -16.3,
-        "peak": -6.0
-      },
-      "voice_loudness": {
-        "mean": -19.4,
-        "peak": -4.4
-      },
-      "delta_db": 3.099999999999998,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": false
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-303-step6",
-      "heading": "Step 6: Program and Automate the Cutoff",
-      "role": "song",
-      "demo_start_ms": 2419961,
-      "demo_end_ms": 2425755,
-      "demo_loudness": {
-        "mean": -15.8,
-        "peak": -8.0
+        "peak": -1.5
       },
       "voice_loudness": {
         "mean": -19.9,
-        "peak": -6.7
+        "peak": -4.0
       },
-      "delta_db": 4.099999999999998,
+      "delta_db": 3.299999999999997,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -602,27 +31,61 @@
       ]
     },
     {
-      "cue_id": "an-reese-morph",
-      "heading": "Step 7: Morph the 303 into a Reese",
+      "cue_id": "see-you-choir",
+      "heading": "The PPG Wave Defines the 80s",
       "role": "song",
-      "demo_start_ms": 2508155,
-      "demo_end_ms": 2513155,
+      "demo_start_ms": 273900,
+      "demo_end_ms": 283900,
       "demo_loudness": {
-        "mean": -14.9,
-        "peak": -8.4
+        "mean": -16.2,
+        "peak": -1.5
+      },
+      "voice_loudness": {
+        "mean": -21.4,
+        "peak": -5.5
+      },
+      "delta_db": 5.199999999999999,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "everybody-wants-bass",
+      "heading": "The PPG Wave Defines the 80s",
+      "role": "song",
+      "demo_start_ms": 317350,
+      "demo_end_ms": 325350,
+      "demo_loudness": {
+        "mean": -13.6,
+        "peak": -1.7
       },
       "voice_loudness": {
         "mean": -19.6,
         "peak": -4.7
       },
-      "delta_db": 4.700000000000001,
+      "delta_db": 6.000000000000002,
       "auto_checks": {
         "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": false
+        "loudness_matched": false,
+        "framed_by_silence": false,
+        "overlaps_bed": true
       },
-      "flags": [],
+      "flags": [
+        "demo +6.0dB vs nearby voice (want \u00b16)",
+        "no silence frame before the demo onset"
+      ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
         "frame -> demo -> label ordering present",
@@ -631,54 +94,25 @@
       ]
     },
     {
-      "cue_id": "an-reese-final",
-      "heading": "Step 8: Detune and Listen for the Beating",
+      "cue_id": "scary-monsters-growl",
+      "heading": "The Plugin Revival: Massive, Serum, Vital",
       "role": "song",
-      "demo_start_ms": 2559955,
-      "demo_end_ms": 2564007,
+      "demo_start_ms": 488350,
+      "demo_end_ms": 496350,
       "demo_loudness": {
-        "mean": -16.7,
-        "peak": -4.8
-      },
-      "voice_loudness": {
-        "mean": -18.2,
-        "peak": -4.5
-      },
-      "delta_db": 1.5,
-      "auto_checks": {
-        "audible": true,
-        "loudness_matched": true,
-        "framed_by_silence": true,
-        "overlaps_bed": false
-      },
-      "flags": [],
-      "manual_review": [
-        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
-        "frame -> demo -> label ordering present",
-        "A/B demos sequenced back-to-back on a tight loop",
-        "cold-window test: from a 10s window, the example is identifiable"
-      ]
-    },
-    {
-      "cue_id": "an-303-reese-final",
-      "heading": "Step 9: Save the Patch",
-      "role": "song",
-      "demo_start_ms": 2607707,
-      "demo_end_ms": 2618003,
-      "demo_loudness": {
-        "mean": -18.3,
-        "peak": -7.8
+        "mean": -15.4,
+        "peak": -6.4
       },
       "voice_loudness": {
         "mean": -19.1,
-        "peak": -4.9
+        "peak": -3.3
       },
-      "delta_db": 0.8000000000000007,
+      "delta_db": 3.700000000000001,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
         "framed_by_silence": true,
-        "overlaps_bed": false
+        "overlaps_bed": true
       },
       "flags": [],
       "manual_review": [
@@ -689,20 +123,290 @@
       ]
     },
     {
-      "cue_id": "an-digeridoo-drone",
-      "heading": "The Filter as Oscillator: Digeridoo",
+      "cue_id": "wt-position-by-hand",
+      "heading": "What a Wavetable IS",
       "role": "song",
-      "demo_start_ms": 2706253,
-      "demo_end_ms": 2713253,
+      "demo_start_ms": 703350,
+      "demo_end_ms": 706461,
       "demo_loudness": {
-        "mean": -10.3,
-        "peak": -4.2
+        "mean": -15.1,
+        "peak": -9.7
       },
       "voice_loudness": {
-        "mean": -19.3,
+        "mean": -22.0,
         "peak": -6.1
       },
-      "delta_db": 9.0,
+      "delta_db": 6.9,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": false,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "demo +6.9dB vs nearby voice (want \u00b16)",
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-ab-two-positions",
+      "heading": "The Additive Connection (For the Physicist)",
+      "role": "song",
+      "demo_start_ms": 780811,
+      "demo_end_ms": 785261,
+      "demo_loudness": {
+        "mean": -14.4,
+        "peak": -8.3
+      },
+      "voice_loudness": {
+        "mean": -18.6,
+        "peak": -3.9
+      },
+      "delta_db": 4.200000000000001,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-zipper-vs-smooth",
+      "heading": "Interpolation: The Math of Scanning",
+      "role": "song",
+      "demo_start_ms": 880111,
+      "demo_end_ms": 886561,
+      "demo_loudness": {
+        "mean": -14.9,
+        "peak": -9.2
+      },
+      "voice_loudness": {
+        "mean": -18.3,
+        "peak": -4.6
+      },
+      "delta_db": 3.4000000000000004,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-hiq-on-vs-off",
+      "heading": "Aliasing: The Central DSP Fight",
+      "role": "song",
+      "demo_start_ms": 978511,
+      "demo_end_ms": 983761,
+      "demo_loudness": {
+        "mean": -15.4,
+        "peak": -10.0
+      },
+      "voice_loudness": {
+        "mean": -18.4,
+        "peak": -4.8
+      },
+      "delta_db": 2.9999999999999982,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-fm-inside-wavetable",
+      "heading": "Wavetable vs FM: Interpolate, Don't Generate",
+      "role": "song",
+      "demo_start_ms": 1059211,
+      "demo_end_ms": 1064211,
+      "demo_loudness": {
+        "mean": -15.6,
+        "peak": -7.3
+      },
+      "voice_loudness": {
+        "mean": -17.5,
+        "peak": -4.5
+      },
+      "delta_db": 1.9000000000000004,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": true
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-modern-fold-sweep",
+      "heading": "The Oscillator Effects: FM, Classic, Modern",
+      "role": "song",
+      "demo_start_ms": 1241611,
+      "demo_end_ms": 1246611,
+      "demo_loudness": {
+        "mean": -16.9,
+        "peak": -6.4
+      },
+      "voice_loudness": {
+        "mean": -20.4,
+        "peak": -6.2
+      },
+      "delta_db": 3.5,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": true
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-lfo-to-position",
+      "heading": "The Modulation Matrix: The Heart",
+      "role": "song",
+      "demo_start_ms": 1341461,
+      "demo_end_ms": 1346461,
+      "demo_loudness": {
+        "mean": -17.2,
+        "peak": -5.4
+      },
+      "voice_loudness": {
+        "mean": -18.5,
+        "peak": -4.7
+      },
+      "delta_db": 1.3000000000000007,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": true
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-lfo-attack-bloom",
+      "heading": "Envelopes and LFOs: The Fade-In Trick",
+      "role": "song",
+      "demo_start_ms": 1434811,
+      "demo_end_ms": 1440066,
+      "demo_loudness": {
+        "mean": -20.5,
+        "peak": -3.9
+      },
+      "voice_loudness": {
+        "mean": -18.8,
+        "peak": -5.3
+      },
+      "delta_db": -1.6999999999999993,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": true
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-position-spread-chord",
+      "heading": "Filters and Unison: Cytomic + Position Spread",
+      "role": "song",
+      "demo_start_ms": 1522916,
+      "demo_end_ms": 1527366,
+      "demo_loudness": {
+        "mean": -20.2,
+        "peak": -2.8
+      },
+      "voice_loudness": {
+        "mean": -18.5,
+        "peak": -4.5
+      },
+      "delta_db": -1.6999999999999993,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": true
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-spectra-step1",
+      "heading": "Step 1: A Static Vowel Pad",
+      "role": "song",
+      "demo_start_ms": 1664516,
+      "demo_end_ms": 1669516,
+      "demo_loudness": {
+        "mean": -14.1,
+        "peak": -3.8
+      },
+      "voice_loudness": {
+        "mean": -22.1,
+        "peak": -4.7
+      },
+      "delta_db": 8.000000000000002,
       "auto_checks": {
         "audible": true,
         "loudness_matched": false,
@@ -710,7 +414,7 @@
         "overlaps_bed": false
       },
       "flags": [
-        "demo +9.0dB vs nearby voice (want \u00b16)"
+        "demo +8.0dB vs nearby voice (want \u00b16)"
       ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
@@ -720,20 +424,20 @@
       ]
     },
     {
-      "cue_id": "digeridoo-clip",
-      "heading": "The Filter as Oscillator: Digeridoo",
+      "cue_id": "wt-spectra-step2",
+      "heading": "Step 2: Slow LFO to Position \u2014 the PPG Choir",
       "role": "song",
-      "demo_start_ms": 2713653,
-      "demo_end_ms": 2723653,
+      "demo_start_ms": 1707016,
+      "demo_end_ms": 1713016,
       "demo_loudness": {
-        "mean": -15.6,
-        "peak": -3.9
+        "mean": -14.5,
+        "peak": -3.7
       },
       "voice_loudness": {
-        "mean": -10.5,
-        "peak": -4.6
+        "mean": -19.5,
+        "peak": -5.2
       },
-      "delta_db": -5.1,
+      "delta_db": 5.0,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -741,6 +445,307 @@
         "overlaps_bed": false
       },
       "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-spectra-step3",
+      "heading": "Step 3: Position Spread \u2014 a Chord of Timbres",
+      "role": "song",
+      "demo_start_ms": 1753366,
+      "demo_end_ms": 1757894,
+      "demo_loudness": {
+        "mean": -20.4,
+        "peak": -2.9
+      },
+      "voice_loudness": {
+        "mean": -20.1,
+        "peak": -5.8
+      },
+      "delta_db": -0.29999999999999716,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": false
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-spectra-step4",
+      "heading": "Step 4: Sub for Weight, Osc 2 for Glass",
+      "role": "song",
+      "demo_start_ms": 1801994,
+      "demo_end_ms": 1807994,
+      "demo_loudness": {
+        "mean": -19.7,
+        "peak": -1.9
+      },
+      "voice_loudness": {
+        "mean": -19.3,
+        "peak": -5.6
+      },
+      "delta_db": -0.3999999999999986,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": false
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-spectra-step5",
+      "heading": "Step 5: Arm the Growl \u2014 Fast LFO + FM",
+      "role": "song",
+      "demo_start_ms": 1858994,
+      "demo_end_ms": 1863543,
+      "demo_loudness": {
+        "mean": -21.3,
+        "peak": -2.2
+      },
+      "voice_loudness": {
+        "mean": -19.7,
+        "peak": -4.3
+      },
+      "delta_db": -1.6000000000000014,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": false
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-spectra-macro-sweep",
+      "heading": "Step 6: One Macro \u2014 Pad to Growl",
+      "role": "song",
+      "demo_start_ms": 1907043,
+      "demo_end_ms": 1915043,
+      "demo_loudness": {
+        "mean": -21.6,
+        "peak": -1.5
+      },
+      "voice_loudness": {
+        "mean": -18.9,
+        "peak": -6.9
+      },
+      "delta_db": -2.700000000000003,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": false
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-spectra-morph-final",
+      "heading": "Step 7: Save the Patch",
+      "role": "song",
+      "demo_start_ms": 1950443,
+      "demo_end_ms": 1957815,
+      "demo_loudness": {
+        "mean": -21.0,
+        "peak": -1.6
+      },
+      "voice_loudness": {
+        "mean": -18.2,
+        "peak": -3.8
+      },
+      "delta_db": -2.8000000000000007,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": true,
+        "overlaps_bed": false
+      },
+      "flags": [],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-user-table-scan",
+      "heading": "Import Your Own Wavetable",
+      "role": "song",
+      "demo_start_ms": 2026765,
+      "demo_end_ms": 2030897,
+      "demo_loudness": {
+        "mean": -13.7,
+        "peak": -6.2
+      },
+      "voice_loudness": {
+        "mean": -20.4,
+        "peak": -5.2
+      },
+      "delta_db": 6.699999999999999,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": false,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "demo +6.7dB vs nearby voice (want \u00b16)",
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "polymer-clip",
+      "heading": "Import Your Own Wavetable",
+      "role": "song",
+      "demo_start_ms": 2060647,
+      "demo_end_ms": 2068647,
+      "demo_loudness": {
+        "mean": -15.7,
+        "peak": -1.4
+      },
+      "voice_loudness": {
+        "mean": -19.3,
+        "peak": -3.9
+      },
+      "delta_db": 3.6000000000000014,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-loop-env-sequence",
+      "heading": "Rhythmic Timbre: Loop Envelopes",
+      "role": "song",
+      "demo_start_ms": 2107697,
+      "demo_end_ms": 2113799,
+      "demo_loudness": {
+        "mean": -19.5,
+        "peak": -1.7
+      },
+      "voice_loudness": {
+        "mean": -20.9,
+        "peak": -6.3
+      },
+      "delta_db": 1.3999999999999986,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-hiq-off-grit",
+      "heading": "The Aliasing Aesthetic, On Purpose",
+      "role": "song",
+      "demo_start_ms": 2172949,
+      "demo_end_ms": 2177949,
+      "demo_loudness": {
+        "mean": -20.7,
+        "peak": -5.1
+      },
+      "voice_loudness": {
+        "mean": -17.9,
+        "peak": -5.2
+      },
+      "delta_db": -2.8000000000000007,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "no silence frame before the demo onset"
+      ],
+      "manual_review": [
+        "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
+        "frame -> demo -> label ordering present",
+        "A/B demos sequenced back-to-back on a tight loop",
+        "cold-window test: from a 10s window, the example is identifiable"
+      ]
+    },
+    {
+      "cue_id": "wt-mpe-pressure-position",
+      "heading": "MPE: Pressure Scans the Timbre",
+      "role": "song",
+      "demo_start_ms": 2232449,
+      "demo_end_ms": 2238449,
+      "demo_loudness": {
+        "mean": -15.7,
+        "peak": -3.1
+      },
+      "voice_loudness": {
+        "mean": -20.3,
+        "peak": -5.9
+      },
+      "delta_db": 4.600000000000001,
+      "auto_checks": {
+        "audible": true,
+        "loudness_matched": true,
+        "framed_by_silence": false,
+        "overlaps_bed": true
+      },
+      "flags": [
+        "no silence frame before the demo onset"
+      ],
       "manual_review": [
         "temporal-contiguity: the naming word overlaps the demo onset within ~0.25s",
         "frame -> demo -> label ordering present",
@@ -751,16 +756,20 @@
   ],
   "bed_spans_ms": [
     [
-      122950,
-      795900
+      111900,
+      642150
     ],
     [
-      796300,
-      1422834
+      642550,
+      1097611
     ],
     [
-      1423234,
-      2095909
+      1098011,
+      1632366
+    ],
+    [
+      1994765,
+      2332949
     ]
   ]
 }

@@ -1,10 +1,10 @@
 [
   {
-    "lesson": "e02-analog",
+    "lesson": "e03-wavetable",
     "status": "ok",
-    "mp3": "build/ableton-devices/audio/episodes/e02-analog.mp3",
+    "mp3": "build/ableton-devices/audio/episodes/e03-wavetable.mp3",
     "chapters": 29,
-    "pieces": 81,
-    "duration_ms": 2723653
+    "pieces": 84,
+    "duration_ms": 2332949
   }
 ]

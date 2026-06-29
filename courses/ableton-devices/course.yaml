@@ -41,7 +41,7 @@ episodes:
     status: published
   - id: e03-wavetable
     title: "Wavetable: Morphing Through Spectra"
-    status: editorial-locked   # scripts locked + fact-checked; needs songs + demo render
+    status: published
   - id: e04-meld
     # NOTE: research found "Physical Modelling Hybrid" is inaccurate — Meld is a
     # bi-timbral dual macro-oscillator MPE synth (modal resonators are its only
