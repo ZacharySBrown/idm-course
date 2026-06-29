@@ -1,10 +1,10 @@
 [
   {
-    "lesson": "e03-wavetable",
+    "lesson": "e01-operator",
     "status": "ok",
-    "mp3": "build/ableton-devices/audio/episodes/e03-wavetable.mp3",
-    "chapters": 29,
-    "pieces": 84,
-    "duration_ms": 2332949
+    "mp3": "build/ableton-devices/audio/episodes/e01-operator.mp3",
+    "chapters": 34,
+    "pieces": 86,
+    "duration_ms": 2640942
   }
 ]

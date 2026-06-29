@@ -476,10 +476,10 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.75       # high-end of UI; envelope shapes it down
+      "Osc-A Level": 1.0       # high-end of UI; envelope shapes it down
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
-      "Ae Decay": 0.40
+      "Ae Decay": 0.72        # longer bell ring so the pluck is audibly present (was 0.4 — decayed to silence in ~0.45s)0
       "Ae Sustain": 0.0
       "Ae Release": 0.30
       "Osc-B On": "Off"
@@ -496,10 +496,10 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.75
+      "Osc-A Level": 1.0
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
-      "Ae Decay": 0.40
+      "Ae Decay": 0.72        # longer bell ring so the pluck is audibly present (was 0.4 — decayed to silence in ~0.45s)0
       "Ae Sustain": 0.0
       "Ae Release": 0.30
       "Osc-B On": "On"
@@ -529,10 +529,10 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.75
+      "Osc-A Level": 1.0
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
-      "Ae Decay": 0.40
+      "Ae Decay": 0.72        # longer bell ring so the pluck is audibly present (was 0.4 — decayed to silence in ~0.45s)0
       "Ae Sustain": 0.0
       "Ae Release": 0.30
       "Osc-B On": "On"
@@ -567,10 +567,10 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.75
+      "Osc-A Level": 1.0
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
-      "Ae Decay": 0.40
+      "Ae Decay": 0.72        # longer bell ring so the pluck is audibly present (was 0.4 — decayed to silence in ~0.45s)0
       "Ae Sustain": 0.0
       "Ae Release": 0.30
       "Osc-B On": "On"
@@ -605,10 +605,10 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.75
+      "Osc-A Level": 1.0
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
-      "Ae Decay": 0.40
+      "Ae Decay": 0.72        # longer bell ring so the pluck is audibly present (was 0.4 — decayed to silence in ~0.45s)0
       "Ae Sustain": 0.0
       "Ae Release": 0.30
       "Osc-B On": "On"
@@ -654,10 +654,10 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.75
+      "Osc-A Level": 1.0
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
-      "Ae Decay": 0.40
+      "Ae Decay": 0.72        # longer bell ring so the pluck is audibly present (was 0.4 — decayed to silence in ~0.45s)0
       "Ae Sustain": 0.0
       "Ae Release": 0.30
       "Osc-B On": "On"
@@ -701,10 +701,10 @@ operator_demos:
       "Osc-A Wave": "Sine"
       "A Coarse": 1
       "A Fine": 0
-      "Osc-A Level": 0.75
+      "Osc-A Level": 1.0
       "Osc-A Feedb": 0
       "Ae Attack": 0.01
-      "Ae Decay": 0.40
+      "Ae Decay": 0.72        # longer bell ring so the pluck is audibly present (was 0.4 — decayed to silence in ~0.45s)0
       "Ae Sustain": 0.0
       "Ae Release": 0.30
       "Osc-B On": "On"

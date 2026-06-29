@@ -102,132 +102,132 @@
     "cue_id": "op-feedback-bifurcation",
     "role": "demo",
     "demo_start_ms": 1079426,
-    "demo_end_ms": 1085926
+    "demo_end_ms": 1093626
   },
   {
     "heading": "Four Operators vs Six",
     "cue_id": "trans-bike-pulse",
     "role": "transition",
-    "demo_start_ms": 1186226,
-    "demo_end_ms": 1198226
+    "demo_start_ms": 1193926,
+    "demo_end_ms": 1205926
   },
   {
     "heading": "Envelopes and the Five Loop Modes",
     "cue_id": "an-ending-pad",
     "role": "song",
-    "demo_start_ms": 1584476,
-    "demo_end_ms": 1600476
+    "demo_start_ms": 1592176,
+    "demo_end_ms": 1608176
   },
   {
     "heading": "Operator vs FM8 vs Dexed",
     "cue_id": "trans-ending-ascent",
     "role": "transition",
-    "demo_start_ms": 1815676,
-    "demo_end_ms": 1829676
+    "demo_start_ms": 1823376,
+    "demo_end_ms": 1837376
   },
   {
     "heading": "Step 1: Algorithm 1, all sines",
     "cue_id": "op-poly-bell-step1",
     "role": "demo",
-    "demo_start_ms": 1871426,
-    "demo_end_ms": 1874841
+    "demo_start_ms": 1879126,
+    "demo_end_ms": 1882541
   },
   {
     "heading": "Step 2: Carrier (A)",
     "cue_id": "op-poly-bell-step2",
     "role": "demo",
-    "demo_start_ms": 1905941,
-    "demo_end_ms": 1906393
+    "demo_start_ms": 1913641,
+    "demo_end_ms": 1915209
   },
   {
     "heading": "Step 3: Modulator B at \u221a2 ratio",
     "cue_id": "op-poly-bell-step3",
     "role": "demo",
-    "demo_start_ms": 1957643,
-    "demo_end_ms": 1958097
+    "demo_start_ms": 1966459,
+    "demo_end_ms": 1968025
   },
   {
     "heading": "Step 4: Modulator C feeding B",
     "cue_id": "op-poly-bell-step4",
     "role": "demo",
-    "demo_start_ms": 1981897,
-    "demo_end_ms": 1982347
+    "demo_start_ms": 1991825,
+    "demo_end_ms": 1993393
   },
   {
     "heading": "Step 5: Feedback on C",
     "cue_id": "op-poly-bell-step5",
     "role": "demo",
-    "demo_start_ms": 2017347,
-    "demo_end_ms": 2017797
+    "demo_start_ms": 2028393,
+    "demo_end_ms": 2029961
   },
   {
     "heading": "Step 6: Spread + Filter",
     "cue_id": "op-poly-bell-step6",
     "role": "demo",
-    "demo_start_ms": 2046447,
-    "demo_end_ms": 2046913
+    "demo_start_ms": 2058611,
+    "demo_end_ms": 2060179
   },
   {
     "heading": "Step 7: Velocity Routing",
     "cue_id": "op-poly-bell-step7",
     "role": "demo",
-    "demo_start_ms": 2078313,
-    "demo_end_ms": 2081775
+    "demo_start_ms": 2091579,
+    "demo_end_ms": 2096142
   },
   {
     "heading": "Step 7: Velocity Routing",
     "cue_id": "beep-street-velocity",
     "role": "song",
-    "demo_start_ms": 2119725,
-    "demo_end_ms": 2133725
+    "demo_start_ms": 2134092,
+    "demo_end_ms": 2148092
   },
   {
     "heading": "Step 8: Save the Patch",
     "cue_id": "op-poly-bell-final",
     "role": "demo",
-    "demo_start_ms": 2166425,
-    "demo_end_ms": 2176336
+    "demo_start_ms": 2180792,
+    "demo_end_ms": 2190792
   },
   {
     "heading": "Step 8: Save the Patch",
     "cue_id": "trans-beep-street",
     "role": "transition",
-    "demo_start_ms": 2176736,
-    "demo_end_ms": 2188736
+    "demo_start_ms": 2191192,
+    "demo_end_ms": 2203192
   },
   {
     "heading": "Rhythmic FM via Loop Modes",
     "cue_id": "bike-fm-perc",
     "role": "song",
-    "demo_start_ms": 2284086,
-    "demo_end_ms": 2298086
+    "demo_start_ms": 2298542,
+    "demo_end_ms": 2312542
   },
   {
     "heading": "Rhythmic FM via Loop Modes",
     "cue_id": "op-rhythmic-single",
     "role": "demo",
-    "demo_start_ms": 2314486,
-    "demo_end_ms": 2324486
+    "demo_start_ms": 2328942,
+    "demo_end_ms": 2338942
   },
   {
     "heading": "Layered Polyrhythm",
     "cue_id": "op-rhythmic-layered",
     "role": "demo",
-    "demo_start_ms": 2387486,
-    "demo_end_ms": 2397486
+    "demo_start_ms": 2401942,
+    "demo_end_ms": 2411942
   },
   {
     "heading": "Connecting Back to the Math",
     "cue_id": "black-refraction-fm",
     "role": "song",
-    "demo_start_ms": 2470086,
-    "demo_end_ms": 2488086
+    "demo_start_ms": 2484542,
+    "demo_end_ms": 2502542
   },
   {
     "heading": "Wet/Dry, Squarepusher-Style",
     "cue_id": "trans-black-refraction",
     "role": "transition",
-    "demo_start_ms": 2560786,
-    "demo_end_ms": 2575786
+    "demo_start_ms": 2575242,
+    "demo_end_ms": 2590242
   }
 ]

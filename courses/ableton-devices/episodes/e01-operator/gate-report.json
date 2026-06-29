@@ -1,7 +1,7 @@
 {
   "episode": "e01-operator",
   "built": true,
-  "ready": false,
+  "ready": true,
   "checks": [
     {
       "check": "narration",
@@ -35,11 +35,9 @@
     },
     {
       "check": "beds",
-      "status": "fail",
-      "summary": "5 transitions, 4 beds; acts covered 4/6",
-      "problems": [
-        "act 05: no background-bed coverage (warn \u2014 fill or confirm demo-dense)"
-      ],
+      "status": "pass",
+      "summary": "5 transitions, 5 beds; acts covered 5/6",
+      "problems": [],
       "data": {
         "acts": [
           "01",
@@ -53,35 +51,27 @@
           "02",
           "03",
           "04",
+          "05",
           "06"
         ],
-        "uncovered": [
-          "05"
-        ]
+        "uncovered": []
       }
     },
     {
       "check": "audio_style",
-      "status": "fail",
-      "summary": "4 demos >12dB, 2 demos 6-12dB off voice",
-      "problems": [
-        "op-poly-bell-step2: demo -27.81dB vs voice (FAIL >12)",
-        "op-poly-bell-step3: demo -16.66dB vs voice (FAIL >12)",
-        "op-poly-bell-step4: demo -31.96dB vs voice (FAIL >12)",
-        "op-poly-bell-step5: demo -29.15dB vs voice (FAIL >12)",
-        "op-poly-bell-step6: demo -8.34dB vs voice (warn >6)",
-        "op-poly-bell-step7: demo -7.610000000000003dB vs voice (warn >6)"
-      ],
+      "status": "pass",
+      "summary": "0 demos >12dB, 0 demos 6-12dB off voice",
+      "problems": [],
       "data": {}
     },
     {
       "check": "loudness",
       "status": "pass",
-      "summary": "-16.2 LUFS / -1.12 dBTP",
+      "summary": "-16.46 LUFS / -2.24 dBTP",
       "problems": [],
       "data": {
-        "integrated_lufs": -16.2,
-        "true_peak_db": -1.12
+        "integrated_lufs": -16.46,
+        "true_peak_db": -2.24
       }
     },
     {

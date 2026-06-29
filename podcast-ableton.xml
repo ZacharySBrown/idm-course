@@ -10,8 +10,8 @@
     <description>A device-by-device walking-podcast deep-dive into Ableton Live&#x27;s instruments, effects, and Max for Live. Each episode pairs a device&#x27;s history and synthesis theory with patch-walkthroughs and IDM-style production techniques. Hosted by a sardonic studio rat who reads Tape Op and refuses to use the word &quot;journey.&quot;</description>
     <language>en-us</language>
     <copyright>© 2026 Zak. Course content CC-BY-NC 4.0.</copyright>
-    <lastBuildDate>Mon, 29 Jun 2026 23:07:08 +0000</lastBuildDate>
-    <pubDate>Wed, 17 Jun 2026 23:07:08 +0000</pubDate>
+    <lastBuildDate>Mon, 29 Jun 2026 23:17:46 +0000</lastBuildDate>
+    <pubDate>Wed, 17 Jun 2026 23:17:46 +0000</pubDate>
     <image>
       <url>https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/artwork-ableton.jpg</url>
       <title>Ableton Live Mastery</title>
@@ -35,11 +35,11 @@
 Pillars: .
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/ableton-devices/html/e01-operator/index.html</description>
-      <pubDate>Wed, 17 Jun 2026 23:07:08 +0000</pubDate>
+      <pubDate>Wed, 17 Jun 2026 23:17:46 +0000</pubDate>
       <guid isPermaLink="false">idm-course-e01-operator</guid>
-      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/ableton-devices/audio/episodes/e01-operator.mp3" length="63104219" type="audio/mpeg" />
+      <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/ableton-devices/audio/episodes/e01-operator.mp3" length="63451318" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
-      <itunes:duration>43:46</itunes:duration>
+      <itunes:duration>44:00</itunes:duration>
       <itunes:episode>1</itunes:episode>
       <itunes:season>1</itunes:season>
       <itunes:episodeType>full</itunes:episodeType>
@@ -53,7 +53,7 @@ Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/a
 Pillars: .
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/ableton-devices/html/e02-analog/index.html</description>
-      <pubDate>Thu, 18 Jun 2026 23:07:08 +0000</pubDate>
+      <pubDate>Thu, 18 Jun 2026 23:17:46 +0000</pubDate>
       <guid isPermaLink="false">idm-course-e02-analog</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/ableton-devices/audio/episodes/e02-analog.mp3" length="73886912" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -71,7 +71,7 @@ Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/a
 Pillars: .
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/ableton-devices/html/e03-wavetable/index.html</description>
-      <pubDate>Fri, 19 Jun 2026 23:07:08 +0000</pubDate>
+      <pubDate>Fri, 19 Jun 2026 23:17:46 +0000</pubDate>
       <guid isPermaLink="false">idm-course-e03-wavetable</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/ableton-devices/audio/episodes/e03-wavetable.mp3" length="56051994" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
@@ -89,7 +89,7 @@ Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/a
 Pillars: .
 
 Deck + references: https://github.com/ZacharySBrown/idm-course/blob/main/build/ableton-devices/html/e04-meld/index.html</description>
-      <pubDate>Sat, 20 Jun 2026 23:07:08 +0000</pubDate>
+      <pubDate>Sat, 20 Jun 2026 23:17:46 +0000</pubDate>
       <guid isPermaLink="false">idm-course-e04-meld</guid>
       <enclosure url="https://raw.githubusercontent.com/ZacharySBrown/idm-course/main/build/ableton-devices/audio/episodes/e04-meld.mp3" length="52966743" type="audio/mpeg" />
       <itunes:author>Zak (raindog.ai)</itunes:author>
