@@ -1,56 +1,49 @@
-# Patch tutorial — `op-poly-bell-step7`
+# Patch tutorial — `op-poly-bell-step7`  (Polynomial-Bell, Step 7 of 8)
 
-**Preset:** `presets/op-poly-bell-step7.adv`  ·  **Concept:** _(add concept)_
+**Preset:** `presets/op-poly-bell-step7.adv`  ·  **Concept:** Velocity → modulator level (= modulation index = brightness)  ·  **Used in slide:** `05g-velocity`
 
-> Step 6 + velocity routing: Osc-B Lev < Vel = +50 (LOM scale). Two notes: soft (vel 30) at t=0, hard (vel 110) at t=3.
+> Step 7 — the difference between a static patch and a playable one. Route **velocity to the
+> modulator's level** on B: harder notes raise B's level → higher modulation index → brighter,
+> more metallic timbre. Same patch, different velocity, different *color* — the FM equivalent of
+> an embouchure response, no external automation.
+>
+> **You should hear:** two C3s — a **soft** note (vel 30, nearly pure sine) then a **hard** note
+> (vel 110, metallic, bright). The bite on the loud note is velocity hitting modulation depth.
 
+> ⚠️ **Velocity panel note:** this is **Osc-B Lev < Vel** (modulator *level* per velocity), which
+> changes *brightness/index* — it lives in B's oscillator panel and is distinct from
+> **Freq < Vel** (which changes *pitch*). Do not conflate them.
+>
+> 📝 **Gate 4 reconciliation:** the `05g-velocity` script also says "set **Time-less-than-Vel**
+> +30 on B" (harder = shorter, brighter ring). The rendered demo / manifest sets only
+> **Osc-B Lev < Vel = +50**. Before SCRIPT LOCK, either add the velocity→envelope-time routing
+> to the patch or trim that line — the table below matches the **rendered** patch.
 
-Build from a **freshly loaded Operator** (init). One parameter per step;
-the right column is your self-check.
+Build from a **freshly loaded Operator** (init). One parameter per step. (Operators A–C and the
+Global block repeat Step 6; the new work is the single velocity routing on B.)
 
 | # | Panel | Parameter | Value | You should now hear |
 |---|---|---|---|---|
 | 0 | Load | Default Operator | init | A single pure sine on each note |
-| 1 | Global | Algorithm | Alg. 1 |  |
-| 2 | Osc A | On/Off | On |  |
-| 3 | Osc A | Wave | Sine |  |
-| 4 | Osc A | Coarse | 1 |  |
-| 5 | Osc A | Fine | 0 |  |
-| 6 | Osc A | Level | 0.75  *(0–1 ≈ 75%)* |  |
-| 7 | Osc A | Feedback | 0 |  |
-| 8 | Osc A | Env Attack | 0.01  *(norm 0–1; set by ear)* |  |
-| 9 | Osc A | Env Decay | 0.4  *(norm 0–1; set by ear)* |  |
-| 10 | Osc A | Env Sustain | 0  *(norm 0–1; set by ear)* |  |
-| 11 | Osc A | Env Release | 0.3  *(norm 0–1; set by ear)* |  |
-| 12 | Osc B | On/Off | On |  |
-| 13 | Osc B | Wave | Sine |  |
-| 14 | Osc B | Coarse | 1 |  |
-| 15 | Osc B | Fine | 414 |  |
-| 16 | Osc B | Level | 0.8  *(0–1 ≈ 80%)* |  |
-| 17 | Osc B | Feedback | 0 |  |
-| 18 | Osc B | Level<Vel | 50 |  |
-| 19 | Osc B | Env Attack | 0.01  *(norm 0–1; set by ear)* |  |
-| 20 | Osc B | Env Decay | 0.15  *(norm 0–1; set by ear)* |  |
-| 21 | Osc B | Env Sustain | 0  *(norm 0–1; set by ear)* |  |
-| 22 | Osc B | Env Release | 0.1  *(norm 0–1; set by ear)* |  |
-| 23 | Osc C | On/Off | On |  |
-| 24 | Osc C | Wave | Sine |  |
-| 25 | Osc C | Coarse | 7 |  |
-| 26 | Osc C | Fine | 0 |  |
-| 27 | Osc C | Level | 0.5  *(0–1 ≈ 50%)* |  |
-| 28 | Osc C | Feedback | 30 |  |
-| 29 | Osc C | Env Attack | 0.01  *(norm 0–1; set by ear)* |  |
-| 30 | Osc C | Env Decay | 0.08  *(norm 0–1; set by ear)* |  |
-| 31 | Osc C | Env Sustain | 0  *(norm 0–1; set by ear)* |  |
-| 32 | Osc C | Env Release | 0.08  *(norm 0–1; set by ear)* |  |
-| 33 | Osc D | On/Off | Off |  |
-| 34 | Global | Spread | 12 |  |
-| 35 | Global | Filter On | On |  |
-| 36 | Global | Filter Type | Lowpass |  |
-| 37 | Global | Filter Slope | 24 dB |  |
-| 38 | Global | Filter Circuit | OSR |  |
-| 39 | Global | Filter Freq | 0.85 |  |
-| 40 | Global | Filter Drive | 3 |  |
+| 1 | Global | Algorithm | Alg. 1 (linear stack) | Routing only |
+| 2 | Osc A | On / Wave / Coarse / Fine / Level | On / Sine / 1 / 0 / −12 dB | Carrier |
+| 3 | Osc A | Env A / D / S / R | 1 ms / 400 ms / −inf / 200 ms | Pure-sine pluck |
+| 4 | Osc B | On / Wave / Coarse / Fine / Level | On / Sine / 1 / 414 (√2) / 0.8 | Bell shimmer |
+| 5 | Osc B | Env A / D / S / R | 1 ms / 120 ms / −inf / 80 ms | Short metallic attack |
+| 6 | Osc B | **Lev < Vel** | **+50** | **Velocity now drives brightness:** soft = dull, hard = metallic |
+| 7 | Osc C | On / Wave / Coarse / Level / Feedback | On / Sine / 7 / 0.5 / 30% | Gritty high shimmer |
+| 8 | Osc C | Env A / D / S / R | 1 ms / 60 ms / −inf / 60 ms | Front-of-attack sparkle |
+| 9 | Osc D | On | Off | (unused) |
+| 10 | Global | Spread | 12 | Stereo width |
+| 11 | Global | Filter On / Type / Slope / Circuit | On / Lowpass / 24 dB / OSR | Analog-warm lowpass |
+| 12 | Global | Filter Freq / Drive | ~8 kHz (norm 0.85) / +3 dB | Top rounded, slight warmth |
 
-_Final check: it should match the preset and the demo render._
-_To persist: in Live, right-click the Operator title bar → **Save Preset** → save as `op-poly-bell-step7` into the episode's `presets/` folder._
+**Final check:** play soft → the bell is nearly a pure sine; play hard → it opens into a bright
+metallic strike. The change is in modulation depth, not a filter. Spectrum: the hard note has
+measurably more sideband energy than the soft note at the same pitch.
+
+**Verification (Gate 7):** `velocity` — high-velocity segment has more sideband energy than low
+at identical pitch. Equal ⇒ reject.
+
+_To persist: right-click the Operator title bar → **Save Preset** → save as
+`op-poly-bell-step7` into the episode's `presets/` folder._
