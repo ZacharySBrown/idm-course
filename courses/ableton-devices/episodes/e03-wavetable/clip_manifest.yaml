@@ -22,7 +22,10 @@
 #                                                                              [PPG Wave 2.3 click under DX7 bass]
 #   03_scary-monsters.wav   Skrillex — "Scary Monsters and Nice Sprites" (2010)
 #                                                                              [NI Massive + FM8 growl — NOT Serum]
-#   04_polymer.wav          Plaid — "Polymer" (2019, title track of Polymer)  [Tone2 Icarus 3D-wavetable scan]
+#   04_polymer.wav          Plaid — "CLOCK" (from the album Polymer, 2019)  [Tone2 Icarus 3D-wavetable scan]
+#       NOTE: Polymer is the ALBUM — there is no title track named "Polymer". The
+#       acquired file is "CLOCK" (a wavetable-texture cut). The script references
+#       the album/method, not a track, so the clip stands; this corrects the label.
 #
 # Acquire as 44.1k/16-or-24-bit stereo WAV. Filenames above are the `source:`
 # values below; rename your rips to match (or edit `source:` per entry).
