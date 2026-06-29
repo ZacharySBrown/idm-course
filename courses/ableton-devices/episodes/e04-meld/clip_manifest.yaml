@@ -10,21 +10,43 @@
 #                   per-engine modulation matrix with MIDI + MPE sources).
 #
 # ─────────────────────────────────────────────────────────────────────────────
-# !! HEADLESS-RENDER CAVEAT (dossier §1.2) — READ BEFORE RENDERING !!
-#   Meld's two oscillator macros and ALL matrix amounts are NORMALIZED floats
-#   (0–1 / 0–100%), NOT Hz — even when the audible effect is a frequency (FM
-#   Ratio, Square Sync Freq 1/2, Bitgrunge Frequency). The public docs give
-#   parameter NAMES, not LOM value ranges. So:
-#     - Every `params:` value below is BEST-EFFORT and many are marked UNCERTAIN.
-#     - Inspect the live `meld` device's LOM (lom_probe / param dump) and
-#       calibrate macro/matrix values BY EAR before trusting any render.
-#     - Loop-mode names are Meld's own set — Trigger / Loop / AD Loop — NOT
-#       Operator's None/Loop/Beat/Sync/Trigger. Do not transplant.
-#     - Per-engine pitch = Transpose (semitones, int) + Detune (cents). Macros
-#       are addressed by name ("Osc Macro 1" etc.) — exact LOM names UNCERTAIN.
-#     - MPE demos: render with an MPE-aware clip (per-note channels). If the
-#       headless pipeline can't author MPE, render the channel-aftertouch
-#       fallback and flag the demo as fallback (see meld-mpe-per-note).
+# !! HEADLESS-RENDER CAVEAT — RECONCILED 2026-06-29 against the dumped LOM map !!
+#   param_maps/meld.json (129 params) is now AUTHORITATIVE. Every `params:` key
+#   below has been mapped to a verbatim LOM name. Hard facts learned from the dump
+#   that drove this reconciliation (see DEMO_VERIFICATION.md for the full table):
+#     - PREFIXES are `A ` / `B ` (NOT "Engine A "/"Engine B ").
+#     - The two oscillator macros are `A Osc Shape` + `A Osc Tone` (NOT "Osc
+#       Macro 1/2"). They are normalized 0–1; meaning changes per Osc Type.
+#     - `A Osc Type` is QUANTIZED 0–24 but its value_items come back EMPTY over
+#       LOM, so enum STRINGS DO NOT RESOLVE — every quantized param (Osc Type,
+#       Filter Type, *Loop Mode, LFO *Type) MUST be set as a NUMERIC INDEX.
+#       Osc-type indices are the dossier §1.2 DSP-reference table (0..24).
+#     - Filter is `A Filter Type` (idx 0–16, EMPTY value_items → numeric),
+#       `A Filter Freq` (cutoff, 0–1), `A Filter Q` (reso, 0–1),
+#       `A Filter L-B-H-N` (LP→BP→HP→Notch morph within the analog type, 0–1),
+#       `A Filter Filter Scale Aware` (0/1). There is NO "Filter Macro 1/2".
+#       Plate/Membrane Resonator FILTER INDICES are UNKNOWN (no value_items, no
+#       doc ordering) → flagged per-demo; orchestrator must confirm the index.
+#     - Envelopes are `A Amp Attack/Decay/Sustain/Release` (no "Env" token).
+#       Loop modes are `A Amp Loop Mode` / `A Mod Loop Mode`, QUANTIZED 0–3
+#       (Meld set: Trigger / Loop / AD Loop / + one more → numeric, index UNCERTAIN).
+#       The Mod envelope is Initial/Attack/Peak/Decay/Sustain/Release/Final.
+#     - LFO: `A LFO 1 Rate` (0–1 normalized — NOT Hz; ~200 Hz is the top of range),
+#       `A LFO 1 Type` (waveform, idx 0–5, numeric). `A LFO 1 Shape` is a separate
+#       wave-shaping macro (0–1), NOT the waveform selector.
+#     - Pitch: `A Transpose` (semitones, -12..12) + `A Octave` (-3..3) +
+#       `A Detune` (0–1, 0.5 = 0 cents). For +12 use Octave 1 (Transpose maxes ±12).
+#     - Global: `Drive` (0–1), `Limiter On` (0/1), `Voice Spread` (0–1), `Volume`.
+#       There is NO "Stacked Voices", NO "Voicing" Poly/Mono, NO "Global Scale"
+#       param in the LOM map → those were REMOVED (see notes); voicing/scale are
+#       Live-set / clip properties, not Meld device params.
+#   !! NO MODULATION MATRIX IS EXPOSED IN THE LOM MAP !! Every `matrix:` route
+#   (LFO→macro, Mod Env→macro, MPE→macro, cross-engine A→B) is UNRENDERABLE over
+#   this param-set path. Such demos keep a `matrix:` block for the hand-build /
+#   tutorial, but carry an `automation:` FALLBACK that moves the target macro
+#   DIRECTLY so the AUDIBLE concept still renders + verifies. Flagged inline as
+#   `# NO-MATRIX-FALLBACK`. MPE per-note expression is likewise not authorable
+#   over this clip path → those demos are FLAGGED as play-it-yourself / fallback.
 # ─────────────────────────────────────────────────────────────────────────────
 #
 # Each entry's `id` matches a slide's `demos:` reference in episode.yaml.
@@ -227,7 +249,11 @@ song_clips:
 #   shepard-rise    Spectral centroid rises continuously / cyclically with no octave jump.
 #   self-sequence   Onset/timbre events recur on a grid from ONE held note (no new notes).
 #   build-step      Step N differs from step N-1 by exactly the one added element (A/B vs prev).
-# Macro/matrix params are NORMALIZED — see the top caveat. Names UNCERTAIN where flagged.
+# Macros (`Osc Shape`/`Osc Tone`) and `Filter Freq/Q` are NORMALIZED 0–1. All
+# QUANTIZED params (Osc Type, Filter Type, *Loop Mode, LFO *Type) are set as
+# NUMERIC INDICES because Meld returns EMPTY value_items over LOM (enum strings
+# do NOT resolve). A/B demos record both segment values in `ab_param`/`ab_values`
+# as indices; static `params` = segment A. See the top caveat + DEMO_VERIFICATION.md.
 # Output: build/ableton-devices/audio/clips/e04-meld/<id>.wav
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -249,25 +275,27 @@ device_demos:
       check: type-switch
       audible: "Constant pitch and loudness; segment 1 morphs continuously (the sweep), then two discrete new instruments. Three audibly different worlds."
       spectral: "Segment 1 centroid rises during the Macro-1 sweep; segments 2 and 3 are measurably distinct spectra at the same f0. Any pair indistinguishable ⇒ reject."
-    ab_param: "Engine A Osc Type"
-    ab_values: ["Basic Shapes", "Harmonic FM", "Rain"]   # type indices 0, 9, 12
+    ab_param: "A Osc Type"
+    ab_values: [0, 9, 12]                        # ref: dossier §1.2 — Basic Shapes=0, Harmonic FM=9, Rain=12 (numeric: empty value_items)
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Basic Shapes"        # overridden per-segment by ab_values
-      "Engine A Osc Macro 1": 0.0                # swept 0→1 during segment 1 (automation below); base for 2/3
-      "Engine A Osc Macro 2": 0.50
-      "Engine A Transpose": 0
-      "Engine A Detune": 0
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 1.0             # open, transparent
-      "Engine A Filter Macro 2": 0.0
-      "Engine A Amp Env Attack": 0.01
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.15
-      "Engine B On": "Off"
-      "Voicing": "Poly"
+      "A On": 1                                  # ref: "A On" idx1, quantized 0/1
+      "A Osc Type": 0                            # Basic Shapes; overridden per-segment by ab_values
+      "A Osc Shape": 0.0                         # ref: macro 1 = "A Osc Shape"; swept 0→1 in seg 1 (automation below); base for 2/3
+      "A Osc Tone": 0.50                         # ref: macro 2 = "A Osc Tone"
+      "A Transpose": 0
+      "A Detune": 0.5                            # ref: 0.5 = 0 cents (A Detune 0–1)
+      "A Filter On": 1
+      "A Filter Type": 0                         # ref: analog filter (idx0); L-B-H-N=0 → lowpass response
+      "A Filter L-B-H-N": 0.0                    # lowpass end of the morph
+      "A Filter Freq": 1.0                       # open, transparent
+      "A Filter Q": 0.0
+      "A Amp Attack": 0.05                        # ref: "A Amp Attack" 0–1 normalized time (~fast)
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.2
+      "A Volume": 0.7                             # explicit audible output level
+      "B On": 0                                  # Engine B off
     automation:
-      "Engine A Osc Macro 1": {from: 0.0, to: 1.0, ramp_s: 2.5, segment: 0}   # sweep across segment 1 only (normalized)
+      "A Osc Shape": {from: 0.0, to: 1.0, ramp_s: 2.5, segment: 0}   # ref: sweep macro 1 across segment 1 only (normalized)
 
   # ── 01 — Cold open: Shepard's Pi endless rise (the named cold-open candidate) ─
   - id: shepard-pi-cold-open
@@ -282,22 +310,24 @@ device_demos:
       audible: "Continuous sense of upward motion with no audible octave reset; pitch class never 'lands.'"
       spectral: "Spectral centroid drifts upward continuously / cyclically across the clip with NO discrete octave jump. A static centroid ⇒ Shepard motion didn't take ⇒ reject."
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Shepard's Pi"       # type index 13
-      "Engine A Osc Macro 1": 0.20              # Rate (slow rise) — UNCERTAIN macro LOM name; normalized
-      "Engine A Osc Macro 2": 0.50              # Width — UNCERTAIN
-      "Engine A Transpose": 0
-      "Engine A Detune": 0
-      "Engine A Filter Type": "Lowpass"         # UNCERTAIN; wide open, transparent
-      "Engine A Filter Macro 1": 1.0            # cutoff fully open (normalized)
-      "Engine A Filter Macro 2": 0.0            # resonance off
-      "Engine A Amp Env Attack": 0.2
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.6
-      "Engine B On": "Off"
-      "Global Drive": 0.0
-      "Global Limiter": "On"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 13                          # ref: dossier §1.2 — Shepard's Pi = index 13
+      "A Osc Shape": 0.20                        # ref: macro 1 = Rate (slow rise) → "A Osc Shape"
+      "A Osc Tone": 0.50                         # ref: macro 2 = Width → "A Osc Tone"
+      "A Transpose": 0
+      "A Detune": 0.5
+      "A Filter On": 1
+      "A Filter Type": 0                         # analog filter, wide open, transparent
+      "A Filter L-B-H-N": 0.0                    # lowpass
+      "A Filter Freq": 1.0                       # cutoff fully open
+      "A Filter Q": 0.0                          # resonance off
+      "A Amp Attack": 0.3                         # gentle fade-in
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.5
+      "A Volume": 0.7
+      "B On": 0
+      "Drive": 0.0
+      "Limiter On": 1                            # ref: global "Limiter On" idx123 (0/1)
 
   # ── 03b — The 25 oscillators, by family: one note, change the WORLD (THE demo) ─
   - id: meld-type-switch-live
@@ -315,31 +345,33 @@ device_demos:
       check: type-switch
       audible: "Same pitch and loudness all three; each segment is an audibly different instrument (clean shape → metallic FM → noisy weather)."
       spectral: "The three segments have measurably distinct spectra (centroid / harmonicity) at identical f0. Any two segments ≈ each other ⇒ the type switch didn't take ⇒ reject."
-    ab_param: "Engine A Osc Type"
-    ab_values: ["Basic Shapes", "Harmonic FM", "Rain"]   # type indices 0, 9, 12
+    ab_param: "A Osc Type"
+    ab_values: [0, 9, 12]                        # ref: dossier §1.2 — Basic Shapes=0, Harmonic FM=9, Rain=12 (numeric)
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Basic Shapes"        # overridden per-segment by ab_values
-      "Engine A Osc Macro 1": 0.50               # Shape / FM Amount / Tone — meaning changes per type (UNCERTAIN, normalized)
-      "Engine A Osc Macro 2": 0.50               # Tone / FM Ratio / Rate — meaning changes per type
-      "Engine A Transpose": 0
-      "Engine A Detune": 0
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 1.0             # open, transparent — must NOT color the contrast
-      "Engine A Filter Macro 2": 0.0
-      "Engine A Amp Env Attack": 0.01
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.15
-      "Engine B On": "Off"
-      "Global Drive": 0.0
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 0                            # Basic Shapes; overridden per-segment by ab_values
+      "A Osc Shape": 0.50                         # macro 1 (Shape / FM Amount / Tone — meaning changes per type)
+      "A Osc Tone": 0.50                          # macro 2 (Tone / FM Ratio / Rate — meaning changes per type)
+      "A Transpose": 0
+      "A Detune": 0.5
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0                     # lowpass
+      "A Filter Freq": 1.0                        # open, transparent — must NOT color the contrast
+      "A Filter Q": 0.0
+      "A Amp Attack": 0.05
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.2
+      "A Volume": 0.7
+      "B On": 0
+      "Drive": 0.0
 
   # ── 03c — FM, the macro way: Squelch feedback (Ep1 callback) ─────────────────
   - id: meld-squelch-feedback
     concept: "FM operator feedback → harmonic complexity, exposed as one macro (the Ep1 feedback physics, collapsed)"
     what_you_hear: "One held note opening from a pure sine into a saw, then into a noisy squelch edge, as the Feedback macro sweeps up. Pitch and loudness hold."
     structure: sweep                  # hold the note, ramp ONE macro min→max
-    isolates: "Engine A Osc Macro 2 = Feedback (FM Bass / Squelch); FM Amount held fixed"
+    isolates: "A Osc Tone = Feedback (FM Bass / Squelch); FM Amount (Osc Shape) held fixed"
     duration_s: 5.0
     midi: {note: "C2", length_s: 4.7}
     verification:
@@ -347,23 +379,25 @@ device_demos:
       audible: "Pitch and loudness roughly constant; tone roughens sine → saw → noise-edge as the sweep proceeds."
       spectral: "RMS roughly flat (±2 dB); spectral spread / harmonic count rises monotonically start→end. Flat spread ⇒ the feedback sweep didn't take ⇒ reject."
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "FM Bass (Squelch)"   # type index 17
-      "Engine A Osc Macro 1": 0.65               # FM Amount — held fixed (UNCERTAIN, normalized)
-      "Engine A Osc Macro 2": 0.0                # Feedback — swept by automation below (the ONE variable)
-      "Engine A Transpose": 0
-      "Engine A Detune": 0
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 1.0             # open so feedback harmonics are audible
-      "Engine A Filter Macro 2": 0.0
-      "Engine A Amp Env Attack": 0.01
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.2
-      "Engine B On": "Off"
-      "Global Drive": 0.1                        # a touch of squelch grit
-      "Voicing": "Mono"
+      "A On": 1
+      "A Osc Type": 17                           # ref: dossier §1.2 — FM Bass (Squelch) = index 17
+      "A Osc Shape": 0.65                         # ref: macro 1 = FM Amount → "A Osc Shape", held fixed
+      "A Osc Tone": 0.0                           # ref: macro 2 = Feedback → "A Osc Tone", swept (the ONE variable)
+      "A Transpose": 0
+      "A Detune": 0.5
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0                     # lowpass
+      "A Filter Freq": 1.0                        # open so feedback harmonics are audible
+      "A Filter Q": 0.0
+      "A Amp Attack": 0.05
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.2
+      "A Volume": 0.7
+      "B On": 0
+      "Drive": 0.1                               # ref: global "Drive" 0–1 — a touch of squelch grit
     automation:
-      "Engine A Osc Macro 2": {from: 0.0, to: 1.0, ramp_s: 4.5}   # Feedback 0→max (normalized)
+      "A Osc Tone": {from: 0.0, to: 1.0, ramp_s: 4.5}   # ref: Feedback macro 0→max (normalized)
 
   # ── 03d — The modal resonator: the ONE physical-modelling part (myth payoff) ──
   - id: meld-plate-resonator
@@ -380,25 +414,30 @@ device_demos:
       check: resonator-ab
       audible: "Same pitch both segments; B gains a struck, ringing, body-resonant character absent in A."
       spectral: "Segment B shows discrete modal resonance peaks (plate modes) NOT present in A's smoother spectrum. A ≈ B ⇒ the resonator didn't engage ⇒ reject."
-    ab_param: "Engine A Filter Type"
-    ab_values: ["Bypass", "Plate Resonator"]     # A bypass/transparent, B modal resonator (UNCERTAIN: 'Bypass' may be filter-off toggle)
+    # !! FILTER-INDEX UNCONFIRMED: Meld returns EMPTY value_items for "A Filter
+    #    Type", and no public doc gives the 0–16 ordering. PLATE_RESONATOR_IDX
+    #    below is a PLACEHOLDER — orchestrator MUST confirm the Plate Resonator
+    #    index in the live device before render (see DEMO_VERIFICATION.md).
+    ab_param: "A Filter Type"
+    ab_values: [0, 15]                           # A=transparent analog (idx0, no modes); B=Plate Resonator (idx 15 PLACEHOLDER — CONFIRM)
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Harmonic FM"         # a bright source to excite the modes (index 9)
-      "Engine A Osc Macro 1": 0.55               # FM Amount (UNCERTAIN, normalized)
-      "Engine A Osc Macro 2": 0.40               # FM Ratio
-      "Engine A Transpose": 0
-      "Engine A Detune": 0
-      "Engine A Filter Type": "Plate Resonator"  # overridden per-segment by ab_values
-      "Engine A Filter Scale Aware": "On"        # snap modal freqs to the Live Scale (UNCERTAIN LOM name)
-      "Engine A Filter Macro 1": 0.50            # Decay / structure (UNCERTAIN macro meaning, normalized)
-      "Engine A Filter Macro 2": 0.50            # Tone / brightness
-      "Engine A Amp Env Attack": 0.005
-      "Engine A Amp Env Decay": 0.5
-      "Engine A Amp Env Sustain": 0.3
-      "Engine A Amp Env Release": 0.4
-      "Engine B On": "Off"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 9                            # ref: Harmonic FM = index 9 — a bright source to excite the modes
+      "A Osc Shape": 0.55                         # macro 1 = FM Amount
+      "A Osc Tone": 0.40                          # macro 2 = FM Ratio
+      "A Transpose": 0
+      "A Detune": 0.5
+      "A Filter On": 1
+      "A Filter Type": 15                        # Plate Resonator (PLACEHOLDER idx — CONFIRM); overridden per-segment by ab_values
+      "A Filter Filter Scale Aware": 1           # ref: "A Filter Filter Scale Aware" idx18 (0/1) — snap modal freqs to scale
+      "A Filter Freq": 0.50                       # resonator structure/pitch (macro maps here for resonator types)
+      "A Filter Q": 0.50                          # resonator decay/sharpness
+      "A Amp Attack": 0.02
+      "A Amp Decay": 0.5
+      "A Amp Sustain": 0.3
+      "A Amp Release": 0.4
+      "A Volume": 0.7
+      "B On": 0
 
   # ── 03e — Scale-aware swarm: partials snap into key (Kleine's "must-have") ────
   - id: meld-swarm-scale-snap
@@ -421,88 +460,121 @@ device_demos:
       check: scale-snap-ab
       audible: "Same chord both segments; A sounds smeared/detuned at the edges, B sounds locked in key."
       spectral: "Segment B's swarm partials cluster on scale-degree frequencies; segment A's spread is inharmonic/unquantized. A ≈ B ⇒ scale-awareness didn't engage ⇒ reject."
-    ab_param: "Engine A Osc Scale Aware"
-    ab_values: ["Off", "On"]                     # UNCERTAIN LOM name; scale-aware is a per-osc-type property in the device
+    ab_param: "A Osc Scale Aware"
+    ab_values: [0, 1]                            # ref: "A Osc Scale Aware" idx10 (0/1); A=off, B=on
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Swarm Sine"          # scale-aware type (index 20, marked flat-sharp)
-      "Engine A Osc Macro 1": 0.30               # Motion (UNCERTAIN, normalized)
-      "Engine A Osc Macro 2": 0.70               # Spacing — wide spread so the snap is obvious
-      "Engine A Osc Scale Aware": "On"           # overridden per-segment by ab_values
-      "Engine A Transpose": 0
-      "Engine A Detune": 0
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 1.0             # open, transparent
-      "Engine A Filter Macro 2": 0.0
-      "Engine A Amp Env Attack": 0.05
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.3
-      "Engine B On": "Off"
-      "Global Scale": "C Minor"                  # the active Live Scale the partials snap to (UNCERTAIN routing)
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 20                           # ref: Swarm Sine = index 20 (scale-aware, marked ♭♯)
+      "A Osc Shape": 0.30                         # macro 1 = Motion
+      "A Osc Tone": 0.70                          # macro 2 = Spacing — wide spread so the snap is obvious
+      "A Osc Scale Aware": 1                     # overridden per-segment by ab_values
+      "A Transpose": 0
+      "A Detune": 0.5
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0                     # lowpass
+      "A Filter Freq": 1.0                        # open, transparent
+      "A Filter Q": 0.0
+      "A Amp Attack": 0.05
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.3
+      "A Volume": 0.65                            # chord — slightly lower to leave headroom
+      "B On": 0
+      # NOTE: the active scale the partials snap to is a LIVE-SET / clip Scale
+      # property, NOT a Meld param ("Global Scale" does not exist in the LOM map).
+      # Orchestrator: set the Set's Scale (e.g. C Minor) before render. The device
+      # "Scale Aware" idx125 is the master enable; per-osc "A Osc Scale Aware" is
+      # the one toggled here.
+      "Scale Aware": 1                           # ref: device-global "Scale Aware" idx125 (0/1) — master enable on
 
   # ── 03e — Loop-mode envelope → macro: the timbre sequences itself (synth-side) ─
   - id: meld-modenv-loop-macro
     concept: "A Mod Env in AD-Loop routed to an oscillator macro is a self-cycling timbral sequencer on one held note"
     what_you_hear: "One held note whose timbre cycles on its own — a looping modulation envelope sweeps Macro 1 over and over, so a sustained key turns into a repeating timbral figure. No new notes."
     structure: single                 # justification: the recurring self-morph from one note IS the demo; A/B breaks the illusion
-    isolates: "Engine A Mod Env mode = AD Loop, routed to Engine A Osc Macro 1 (the only motion)"
+    isolates: "A Mod Loop Mode = AD Loop, routed (matrix) to A Osc Shape (the only motion)"
     duration_s: 7.0
     midi: {note: "C3", length_s: 6.7}
     verification:
       check: self-sequence
       audible: "Constant pitch; the timbre cyclically morphs on a steady period from a single held note."
       spectral: "Spectral centroid follows a repeating AD-Loop contour from one held note; f0 fixed. No recurrence ⇒ the loop env didn't engage ⇒ reject."
+    # !! NO-MATRIX-FALLBACK: the Mod-Env→Osc-Shape ROUTE lives in the modulation
+    #    matrix, which is NOT exposed in the LOM param map → cannot be set headless.
+    #    Setting "A Mod Loop Mode" alone produces NO audible motion without the
+    #    matrix amount. The `self-sequence` recurrence therefore CANNOT be proven
+    #    over this render path. ORCHESTRATOR: hand-build the matrix route (Mod Env
+    #    → A Osc Shape, ~0.85) in the live device for this demo, OR accept the
+    #    single-sweep fallback automation below as an audible-motion stand-in that
+    #    will NOT pass the recurrence assertion. Flagged in DEMO_VERIFICATION.md.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Basic Shapes"
-      "Engine A Osc Macro 1": 0.30               # center the AD-Loop env sweeps
-      "Engine A Osc Macro 2": 0.50
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.8
-      "Engine A Filter Macro 2": 0.1
-      "Engine A Mod Env Mode": "AD Loop"         # Meld loop set: Trigger / Loop / AD Loop
-      "Engine A Mod Env Attack": 0.15
-      "Engine A Mod Env Decay": 0.4              # sets the self-sequence period
-      "Engine A Amp Env Attack": 0.02
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.3
-      "Engine B On": "Off"
-      "Voicing": "Mono"
+      "A On": 1
+      "A Osc Type": 0                            # Basic Shapes
+      "A Osc Shape": 0.30                         # center the AD-Loop env sweeps (matrix target)
+      "A Osc Tone": 0.50
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.8
+      "A Filter Q": 0.1
+      "A Mod Loop Mode": 2                       # ref: "A Mod Loop Mode" idx55, quantized 0–3; AD Loop=2 (UNCERTAIN order — CONFIRM)
+      "A Mod Attack": 0.15
+      "A Mod Decay": 0.4                          # sets the self-sequence period
+      "A Amp Attack": 0.05
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.3
+      "A Volume": 0.7
+      "B On": 0
+    automation:
+      # FALLBACK ONLY (audible motion, NOT a true loop — will not pass self-sequence):
+      "A Osc Shape": {from: 0.30, to: 0.80, ramp_s: 6.0}
     matrix:
-      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.85}   # AD-Loop self-sequence
+      # HAND-BUILD (not renderable over LOM param path; kept for tutorial/.adv):
+      - {source: "A Mod Env", target: "A Osc Shape", amount: 0.85}   # AD-Loop self-sequence
 
   # ── 04b — LFO → Macro: modulate the macro, the timbre breathes, pitch unchanged
   - id: meld-lfo-to-macro
     concept: "The oscillator macro is a first-class matrix target — modulate it and the whole timbre breathes without touching pitch (the 'macro is the new Position')"
     what_you_hear: "One held note at constant pitch and loudness whose timbre slowly opens and closes, cycling, as a slow LFO drives Macro 1."
     structure: single                 # justification: a slow cyclic morph at fixed pitch is unmistakable; A/B would hide the cycling
-    isolates: "Matrix routing LFO 1 → Osc Macro 1 (the only modulation; pitch/level/filter held)"
+    isolates: "Matrix routing A LFO 1 → A Osc Shape (the only modulation; pitch/level/filter held)"
     duration_s: 7.0
     midi: {note: "C3", length_s: 6.7}
     verification:
       check: macro-mod-sweep
       audible: "Pitch and loudness constant; timbre cyclically brightens and darkens at the LFO rate."
       spectral: "f0 fixed; spectral centroid oscillates at the LFO period while pitch stays flat. Flat centroid ⇒ the matrix route didn't take ⇒ reject."
+    # !! NO-MATRIX-FALLBACK: LFO-1 → Osc-Shape is a matrix route (not in the LOM
+    #    param map). Setting "A LFO 1 *" alone does nothing audible without the
+    #    matrix amount. The CYCLIC `macro-mod-sweep` cannot be proven headless.
+    #    ORCHESTRATOR: hand-build the matrix route (A LFO 1 → A Osc Shape, ~0.8)
+    #    in the live device. The fallback automation is a single morph stand-in
+    #    that will NOT pass the oscillation assertion. Flagged in DEMO_VERIFICATION.md.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Basic Shapes"
-      "Engine A Osc Macro 1": 0.50               # center value the LFO modulates around (normalized)
-      "Engine A Osc Macro 2": 0.50
-      "Engine A Transpose": 0
-      "Engine A Detune": 0
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 1.0             # open so the macro morph is the only audible change
-      "Engine A Filter Macro 2": 0.0
-      "Engine A LFO 1 Rate": 0.5                 # ~0.5 Hz, slow breathe (UNCERTAIN units; normalized/Hz)
-      "Engine A LFO 1 Shape": "Sine"
-      "Engine A Amp Env Attack": 0.05
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.3
-      "Engine B On": "Off"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 0                            # Basic Shapes
+      "A Osc Shape": 0.50                         # center value the LFO modulates around (matrix target)
+      "A Osc Tone": 0.50
+      "A Transpose": 0
+      "A Detune": 0.5
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 1.0                        # open so the macro morph is the only audible change
+      "A Filter Q": 0.0
+      "A LFO 1 Type": 0                          # ref: "A LFO 1 Type" idx19 (waveform, 0–5 numeric); 0 = first wave (sine-ish)
+      "A LFO 1 Rate": 0.25                        # ref: "A LFO 1 Rate" idx22 NORMALIZED 0–1 (slow breathe; NOT Hz)
+      "A Amp Attack": 0.05
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.3
+      "A Volume": 0.7
+      "B On": 0
+    automation:
+      # FALLBACK ONLY (single morph; will NOT pass cyclic macro-mod-sweep):
+      "A Osc Shape": {from: 0.20, to: 0.80, ramp_s: 6.0}
     matrix:
-      - {source: "LFO 1", target: "Osc Macro 1", amount: 0.8}   # bipolar amount, normalized (UNCERTAIN exact source/target LOM names)
+      # HAND-BUILD (not renderable over LOM param path; kept for tutorial/.adv):
+      - {source: "A LFO 1", target: "A Osc Shape", amount: 0.8}   # bipolar
 
   # ── 04c — MPE, hands-on: per-note matrix → two fingers, two timbres ──────────
   - id: meld-mpe-per-note
@@ -524,25 +596,36 @@ device_demos:
       check: mpe-per-note
       audible: "Two notes start identical in character; only the expressed note brightens/morphs over the hold while the still note does not."
       spectral: "Isolate the two voices: the expressed voice's centroid rises over time, the still voice's stays flat. Both voices identical ⇒ per-voice routing didn't take (or MPE collapsed to channel) ⇒ reject (or mark fallback)."
+    # !! CANNOT RENDER HEADLESS — TWO blockers: (1) per-note MPE expression
+    #    (per-note channels / Press / Slide curves) is NOT authorable over this
+    #    MIDI-clip render path; (2) the Press/Slide → macro routes live in the
+    #    modulation matrix, NOT in the LOM param map. The per-voice claim is
+    #    UNPROVABLE here. This becomes a PLAY-IT-YOURSELF moment on an MPE
+    #    controller (Push 3 / Seaboard / LinnStrument). A static two-note render
+    #    below makes sound but proves nothing about per-voice morphing → DO NOT
+    #    ship as the demo; use as a placeholder only. Flagged in DEMO_VERIFICATION.md.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Harmonic FM"
-      "Engine A Osc Macro 1": 0.30               # FM Amount — base, raised per-note by Press (normalized)
-      "Engine A Osc Macro 2": 0.40
-      "Engine A Transpose": 0
-      "Engine A Detune": 0
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.6             # base cutoff — raised per-note by Slide
-      "Engine A Filter Macro 2": 0.1
-      "Engine A Amp Env Attack": 0.02
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.3
-      "Engine B On": "Off"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 9                            # Harmonic FM
+      "A Osc Shape": 0.30                         # FM Amount — base (would be raised per-note by Press over MPE)
+      "A Osc Tone": 0.40
+      "A Transpose": 0
+      "A Detune": 0.5
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.6                        # base cutoff (would be raised per-note by Slide over MPE)
+      "A Filter Q": 0.1
+      "A Amp Attack": 0.05
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.3
+      "A Volume": 0.7
+      "B On": 0
     matrix:
-      - {source: "MPE Press", target: "Osc Macro 1", amount: 0.7}     # per-note pressure → FM Amount
-      - {source: "MPE Slide", target: "Filter Macro 1", amount: 0.6}  # per-note Y/CC74 → cutoff
-      # fallback when MPE unavailable: source "Press" (channel aftertouch) → Osc Macro 1
+      # HAND-BUILD on an MPE controller (not renderable; kept for tutorial/.adv):
+      - {source: "MPE Press", target: "A Osc Shape", amount: 0.7}     # per-note pressure → FM Amount
+      - {source: "MPE Slide", target: "A Filter Freq", amount: 0.6}   # per-note Y/CC74 → cutoff
+      # non-MPE fallback: "Press" (channel aftertouch) → A Osc Shape (global, not per-voice)
 
   # ── 05 — Patch walkthrough "Two-Hands": additive build, one element per step ──
   # Each step ISOLATES the one element added vs the previous step; verification
@@ -563,20 +646,22 @@ device_demos:
       audible: "A wide in-key saw body; no FM layer, no resonator, no modulation yet."
       spectral: "Dense saw-swarm comb quantized to scale degrees; single engine only."
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Swarm Saw"           # scale-aware (index 19)
-      "Engine A Osc Macro 1": 0.30               # Motion ~30 (UNCERTAIN, normalized)
-      "Engine A Osc Macro 2": 0.40               # Spacing ~40
-      "Engine A Osc Scale Aware": "On"
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.55            # gentle low-pass
-      "Engine A Filter Macro 2": 0.1
-      "Engine A Amp Env Attack": 0.05
-      "Engine A Amp Env Sustain": 0.9
-      "Engine A Amp Env Release": 0.4
-      "Engine B On": "Off"
-      "Global Scale": "C Minor"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 19                           # ref: Swarm Saw = index 19 (scale-aware ♭♯)
+      "A Osc Shape": 0.30                         # macro 1 = Motion
+      "A Osc Tone": 0.40                          # macro 2 = Spacing
+      "A Osc Scale Aware": 1
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.55                       # gentle low-pass
+      "A Filter Q": 0.1
+      "A Amp Attack": 0.05
+      "A Amp Sustain": 0.9
+      "A Amp Release": 0.4
+      "A Volume": 0.65
+      "B On": 0
+      "Scale Aware": 1                           # device-global scale enable (set Live-set Scale to C Minor before render)
 
   - id: meld-twohands-step2
     concept: "Step 2 — Engine B: Harmonic FM an octave up → Plate Resonator (the one filter that's 'physical modelling')"
@@ -594,37 +679,40 @@ device_demos:
       spectral: "Step1 spectrum + added discrete modal peaks an octave up (Plate Resonator). No B layer ⇒ reject."
     params:
       # Engine A — unchanged from step1
-      "Engine A On": "On"
-      "Engine A Osc Type": "Swarm Saw"
-      "Engine A Osc Macro 1": 0.30
-      "Engine A Osc Macro 2": 0.40
-      "Engine A Osc Scale Aware": "On"
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.55
-      "Engine A Filter Macro 2": 0.1
+      "A On": 1
+      "A Osc Type": 19                           # Swarm Saw
+      "A Osc Shape": 0.30
+      "A Osc Tone": 0.40
+      "A Osc Scale Aware": 1
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.55
+      "A Filter Q": 0.1
+      "A Volume": 0.65
       # Engine B — the added element
-      "Engine B On": "On"
-      "Engine B Osc Type": "Harmonic FM"
-      "Engine B Osc Macro 1": 0.50               # FM Amount (UNCERTAIN, normalized)
-      "Engine B Osc Macro 2": 0.40               # FM Ratio
-      "Engine B Transpose": 12                   # octave up
-      "Engine B Filter Type": "Plate Resonator"
-      "Engine B Filter Scale Aware": "On"
-      "Engine B Filter Macro 1": 0.50
-      "Engine B Filter Macro 2": 0.55
-      "Engine B Volume": 0.4                     # low level — a layer, not the lead
-      "Engine B Amp Env Attack": 0.005
-      "Engine B Amp Env Decay": 0.5
-      "Engine B Amp Env Sustain": 0.4
-      "Engine B Amp Env Release": 0.4
-      "Global Scale": "C Minor"
-      "Voicing": "Poly"
+      "B On": 1
+      "B Osc Type": 9                            # Harmonic FM
+      "B Osc Shape": 0.50                         # macro 1 = FM Amount
+      "B Osc Tone": 0.40                          # macro 2 = FM Ratio
+      "B Octave": 1                              # ref: "B Octave" idx65 (-3..3) — octave up (Transpose maxes ±12 semis)
+      "B Filter On": 1
+      "B Filter Type": 15                        # Plate Resonator (PLACEHOLDER idx — CONFIRM)
+      "B Filter Filter Scale Aware": 1
+      "B Filter Freq": 0.50
+      "B Filter Q": 0.55
+      "B Volume": 0.4                            # low level — a layer, not the lead
+      "B Amp Attack": 0.02
+      "B Amp Decay": 0.5
+      "B Amp Sustain": 0.4
+      "B Amp Release": 0.4
+      "Scale Aware": 1
 
   - id: meld-twohands-step3
     concept: "Step 3 — Cross-engine: A's LFO 1 drives B's Macro 1 (control-rate, NOT audio-rate cross-mod)"
     what_you_hear: "The two layers now breathe together but differently — A's slow LFO morphs B's FM timbre, so the glassy layer drifts under the steady body."
     structure: single
-    isolates: "Cross-engine matrix route: Engine A LFO 1 → Engine B Osc Macro 1"
+    isolates: "Cross-engine matrix route: A LFO 1 → B Osc Shape (macro 1)"
     duration_s: 5.0
     midi:
       notes:
@@ -634,35 +722,47 @@ device_demos:
       check: build-step
       audible: "Same two layers as step2, but B's timbre now slowly morphs at the LFO rate while A holds steady."
       spectral: "B's centroid oscillates at A's LFO rate; A unchanged. No B motion ⇒ the cross-engine route didn't take ⇒ reject."
+    # !! NO-MATRIX-FALLBACK: the cross-engine route A LFO 1 → B Osc Shape is a
+    #    matrix entry, not a LOM param → unrenderable headless. ORCHESTRATOR:
+    #    hand-build it. Fallback automation morphs B's Osc Shape directly (single
+    #    sweep, not LFO-cyclic) so the layer audibly moves; will NOT pass the
+    #    oscillation assertion. Flagged in DEMO_VERIFICATION.md.
     params:
-      # A + B as step2 (abbreviated; renderer carries forward — set explicitly in build)
-      "Engine A On": "On"
-      "Engine A Osc Type": "Swarm Saw"
-      "Engine A Osc Macro 1": 0.30
-      "Engine A Osc Macro 2": 0.40
-      "Engine A Osc Scale Aware": "On"
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.55
-      "Engine A LFO 1 Rate": 0.4                 # slow (UNCERTAIN units)
-      "Engine A LFO 1 Shape": "Sine"
-      "Engine B On": "On"
-      "Engine B Osc Type": "Harmonic FM"
-      "Engine B Osc Macro 1": 0.50               # modulated by A's LFO via matrix
-      "Engine B Osc Macro 2": 0.40
-      "Engine B Transpose": 12
-      "Engine B Filter Type": "Plate Resonator"
-      "Engine B Filter Scale Aware": "On"
-      "Engine B Volume": 0.4
-      "Global Scale": "C Minor"
-      "Voicing": "Poly"
+      # A + B as step2 (set explicitly — renderer does not carry forward)
+      "A On": 1
+      "A Osc Type": 19                           # Swarm Saw
+      "A Osc Shape": 0.30
+      "A Osc Tone": 0.40
+      "A Osc Scale Aware": 1
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.55
+      "A LFO 1 Type": 0
+      "A LFO 1 Rate": 0.25                        # slow, normalized
+      "A Volume": 0.65
+      "B On": 1
+      "B Osc Type": 9                            # Harmonic FM
+      "B Osc Shape": 0.50                         # modulated by A's LFO via matrix (hand-build)
+      "B Osc Tone": 0.40
+      "B Octave": 1
+      "B Filter On": 1
+      "B Filter Type": 15                        # Plate Resonator (PLACEHOLDER idx — CONFIRM)
+      "B Filter Filter Scale Aware": 1
+      "B Volume": 0.4
+      "Scale Aware": 1
+    automation:
+      # FALLBACK ONLY (single morph on B; will NOT pass cyclic assertion):
+      "B Osc Shape": {from: 0.35, to: 0.65, ramp_s: 4.0}
     matrix:
-      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}   # cross-engine, control-rate (UNCERTAIN LOM source name)
+      # HAND-BUILD (not renderable; kept for tutorial/.adv):
+      - {source: "A LFO 1", target: "B Osc Shape", amount: 0.6}   # cross-engine, control-rate
 
   - id: meld-twohands-step4
     concept: "Step 4 — Self-morph: Engine A Mod Env in AD Loop → A's Macro 1 (the body sequences itself)"
     what_you_hear: "The saw body now self-morphs on held notes — a looping modulation envelope cycles A's timbre without any new keypress. The seam to the IDM act."
     structure: single
-    isolates: "Engine A Mod Env mode = AD Loop, routed to Engine A Osc Macro 1"
+    isolates: "A Mod Loop Mode = AD Loop, routed to A Osc Shape (macro 1)"
     duration_s: 5.0
     midi:
       notes:
@@ -672,28 +772,40 @@ device_demos:
       check: self-sequence
       audible: "On a single held chord, A's body cyclically morphs (the AD-Loop envelope), recurring on a steady period."
       spectral: "A's centroid shows a repeating AD-Loop contour from one held note; no recurrence ⇒ the loop env didn't engage ⇒ reject."
+    # !! NO-MATRIX-FALLBACK: both routes (A LFO 1 → B Osc Shape; A Mod Env → A Osc
+    #    Shape) are matrix entries → unrenderable headless. ORCHESTRATOR hand-builds.
+    #    Fallback morphs A Osc Shape directly (single sweep, not loop-cyclic);
+    #    will NOT pass self-sequence recurrence. Flagged in DEMO_VERIFICATION.md.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Swarm Saw"
-      "Engine A Osc Macro 1": 0.40               # center the AD-Loop env modulates
-      "Engine A Osc Macro 2": 0.40
-      "Engine A Osc Scale Aware": "On"
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.55
-      "Engine A LFO 1 Rate": 0.4
-      "Engine A Mod Env Mode": "AD Loop"         # Meld's loop set: Trigger / Loop / AD Loop
-      "Engine A Mod Env Attack": 0.2
-      "Engine A Mod Env Decay": 0.6
-      "Engine B On": "On"
-      "Engine B Osc Type": "Harmonic FM"
-      "Engine B Transpose": 12
-      "Engine B Filter Type": "Plate Resonator"
-      "Engine B Volume": 0.4
-      "Global Scale": "C Minor"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 19                           # Swarm Saw
+      "A Osc Shape": 0.40                         # center the AD-Loop env modulates (matrix target)
+      "A Osc Tone": 0.40
+      "A Osc Scale Aware": 1
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.55
+      "A LFO 1 Type": 0
+      "A LFO 1 Rate": 0.25
+      "A Mod Loop Mode": 2                       # AD Loop=2 (idx55, 0–3; order UNCERTAIN — CONFIRM)
+      "A Mod Attack": 0.2
+      "A Mod Decay": 0.6
+      "A Volume": 0.65
+      "B On": 1
+      "B Osc Type": 9                            # Harmonic FM
+      "B Octave": 1
+      "B Filter On": 1
+      "B Filter Type": 15                        # Plate Resonator (PLACEHOLDER idx — CONFIRM)
+      "B Volume": 0.4
+      "Scale Aware": 1
+    automation:
+      # FALLBACK ONLY (single morph on A; will NOT pass self-sequence recurrence):
+      "A Osc Shape": {from: 0.40, to: 0.70, ramp_s: 4.0}
     matrix:
-      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}
-      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.7}   # AD-Loop self-morph
+      # HAND-BUILD (not renderable; kept for tutorial/.adv):
+      - {source: "A LFO 1", target: "B Osc Shape", amount: 0.6}
+      - {source: "A Mod Env", target: "A Osc Shape", amount: 0.7}   # AD-Loop self-morph
 
   - id: meld-twohands-step5
     concept: "Step 5 — Wire the fingers in: MPE Press → B's FM Amount, Slide → A's filter, Note Bend → A detune"
@@ -710,34 +822,42 @@ device_demos:
       check: mpe-per-note
       audible: "The pressed/slid note morphs more than the held-steady note — per-voice expression is audible."
       spectral: "The expressed voice's centroid moves with Press/Slide; the steady voice moves less. Identical ⇒ MPE routing didn't take ⇒ reject (or mark fallback)."
+    # !! CANNOT RENDER HEADLESS — needs per-note MPE expression (not authorable
+    #    over this clip path) AND matrix routes (not in LOM map). PLAY-IT-YOURSELF
+    #    on an MPE controller. Static render below makes sound but proves no
+    #    per-voice behavior. Flagged in DEMO_VERIFICATION.md.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Swarm Saw"
-      "Engine A Osc Macro 1": 0.40
-      "Engine A Osc Scale Aware": "On"
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.5             # base cutoff, raised per-note by Slide
-      "Engine A Mod Env Mode": "AD Loop"
-      "Engine B On": "On"
-      "Engine B Osc Type": "Harmonic FM"
-      "Engine B Osc Macro 1": 0.30               # base FM Amount, raised per-note by Press
-      "Engine B Transpose": 12
-      "Engine B Filter Type": "Plate Resonator"
-      "Engine B Volume": 0.4
-      "Global Scale": "C Minor"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 19                           # Swarm Saw
+      "A Osc Shape": 0.40
+      "A Osc Scale Aware": 1
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.5                        # base cutoff (raised per-note by Slide over MPE)
+      "A Mod Loop Mode": 2                       # AD Loop (idx55; order UNCERTAIN — CONFIRM)
+      "A Volume": 0.65
+      "B On": 1
+      "B Osc Type": 9                            # Harmonic FM
+      "B Osc Shape": 0.30                         # base FM Amount (raised per-note by Press over MPE)
+      "B Octave": 1
+      "B Filter On": 1
+      "B Filter Type": 15                        # Plate Resonator (PLACEHOLDER idx — CONFIRM)
+      "B Volume": 0.4
+      "Scale Aware": 1
     matrix:
-      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}
-      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.7}
-      - {source: "MPE Press", target: "Engine B Osc Macro 1", amount: 0.7}
-      - {source: "MPE Slide", target: "Engine A Filter Macro 1", amount: 0.5}
-      - {source: "MPE Note Bend", target: "Engine A Detune", amount: 0.3}
+      # HAND-BUILD on an MPE controller (not renderable; kept for tutorial/.adv):
+      - {source: "A LFO 1", target: "B Osc Shape", amount: 0.6}
+      - {source: "A Mod Env", target: "A Osc Shape", amount: 0.7}
+      - {source: "MPE Press", target: "B Osc Shape", amount: 0.7}
+      - {source: "MPE Slide", target: "A Filter Freq", amount: 0.5}
+      - {source: "MPE Note Bend", target: "A Detune", amount: 0.3}
 
   - id: meld-twohands-step6
     concept: "Step 6 — Global glue: Drive, Limiter, Stacked Voices + Spread for width"
     what_you_hear: "The finished patch widens and thickens — a touch of drive, a small unison spread, the limiter catching peaks. Fuller and wider than step 5, same notes."
     structure: single
-    isolates: "Global Drive + Limiter + Stacked Voices (2) + Spread (the finishing layer)"
+    isolates: "Global Drive + Limiter + Voice Spread (the finishing layer; 'Stacked Voices' is NOT a Meld param)"
     duration_s: 5.0
     midi:
       notes:
@@ -747,28 +867,35 @@ device_demos:
       check: build-step
       audible: "Same patch as step5, now wider (Spread) and thicker (Drive); differs from step5 only by the global glue."
       spectral: "Increased stereo width + saturation harmonics vs step5; no narrowing. No change ⇒ the global stage didn't engage ⇒ reject."
+    # NOTE: the global Drive/Limiter/Voice-Spread ARE renderable params; the
+    # matrix routes below are hand-build (carried from step5). The build-step
+    # contrast vs step5 (width + saturation) IS provable headless.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Swarm Saw"
-      "Engine A Osc Scale Aware": "On"
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Mod Env Mode": "AD Loop"
-      "Engine B On": "On"
-      "Engine B Osc Type": "Harmonic FM"
-      "Engine B Transpose": 12
-      "Engine B Filter Type": "Plate Resonator"
-      "Engine B Volume": 0.4
-      "Global Drive": 0.25                        # up a touch
-      "Global Limiter": "On"
-      "Stacked Voices": 2
-      "Spread": 0.3                               # small unison detune for width (normalized)
-      "Global Scale": "C Minor"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 19                           # Swarm Saw
+      "A Osc Scale Aware": 1
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.55
+      "A Mod Loop Mode": 2                       # AD Loop (idx55; order UNCERTAIN — CONFIRM)
+      "A Volume": 0.65
+      "B On": 1
+      "B Osc Type": 9                            # Harmonic FM
+      "B Octave": 1
+      "B Filter On": 1
+      "B Filter Type": 15                        # Plate Resonator (PLACEHOLDER idx — CONFIRM)
+      "B Volume": 0.4
+      "Drive": 0.25                              # ref: global "Drive" 0–1 — up a touch
+      "Limiter On": 1                            # ref: global "Limiter On" idx123 (0/1)
+      "Voice Spread": 0.3                        # ref: "Voice Spread" idx126 0–1 — unison/per-note width
+      "Scale Aware": 1
     matrix:
-      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}
-      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.7}
-      - {source: "MPE Press", target: "Engine B Osc Macro 1", amount: 0.7}
-      - {source: "MPE Slide", target: "Engine A Filter Macro 1", amount: 0.5}
+      # HAND-BUILD (not renderable; kept for tutorial/.adv):
+      - {source: "A LFO 1", target: "B Osc Shape", amount: 0.6}
+      - {source: "A Mod Env", target: "A Osc Shape", amount: 0.7}
+      - {source: "MPE Press", target: "B Osc Shape", amount: 0.7}
+      - {source: "MPE Slide", target: "A Filter Freq", amount: 0.5}
 
   - id: meld-twohands-final
     concept: "The finished 'Two-Hands' patch — two engines, ten fingers — played as a short MPE phrase"
@@ -784,99 +911,135 @@ device_demos:
       check: build-step
       audible: "All elements present and balanced; reads as one coherent instrument, not a pile of layers."
       spectral: "Saw-swarm body + octave-up modal-resonant FM layer + AD-Loop morph + per-note MPE motion all present."
+    # !! CANNOT FULLY RENDER HEADLESS — the capstone is an MPE PHRASE (per-note
+    #    expression) over the full matrix. Both are out of reach of this clip path.
+    #    PLAY-IT-YOURSELF on an MPE controller from the saved "Two-Hands" .adv.
+    #    A static-phrase render proves layering/timbre but NOT the MPE/matrix
+    #    motion. Flagged in DEMO_VERIFICATION.md.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Swarm Saw"
-      "Engine A Osc Scale Aware": "On"
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Mod Env Mode": "AD Loop"
-      "Engine B On": "On"
-      "Engine B Osc Type": "Harmonic FM"
-      "Engine B Transpose": 12
-      "Engine B Filter Type": "Plate Resonator"
-      "Engine B Volume": 0.4
-      "Global Drive": 0.25
-      "Global Limiter": "On"
-      "Stacked Voices": 2
-      "Spread": 0.3
-      "Global Scale": "C Minor"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 19                           # Swarm Saw
+      "A Osc Scale Aware": 1
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.55
+      "A Mod Loop Mode": 2                       # AD Loop (idx55; order UNCERTAIN — CONFIRM)
+      "A Volume": 0.65
+      "B On": 1
+      "B Osc Type": 9                            # Harmonic FM
+      "B Octave": 1
+      "B Filter On": 1
+      "B Filter Type": 15                        # Plate Resonator (PLACEHOLDER idx — CONFIRM)
+      "B Volume": 0.4
+      "Drive": 0.25
+      "Limiter On": 1
+      "Voice Spread": 0.3
+      "Scale Aware": 1
     matrix:
-      - {source: "Engine A LFO 1", target: "Engine B Osc Macro 1", amount: 0.6}
-      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.7}
-      - {source: "MPE Press", target: "Engine B Osc Macro 1", amount: 0.7}
-      - {source: "MPE Slide", target: "Engine A Filter Macro 1", amount: 0.5}
-      - {source: "MPE Note Bend", target: "Engine A Detune", amount: 0.3}
+      # HAND-BUILD on an MPE controller (not renderable; kept for tutorial/.adv):
+      - {source: "A LFO 1", target: "B Osc Shape", amount: 0.6}
+      - {source: "A Mod Env", target: "A Osc Shape", amount: 0.7}
+      - {source: "MPE Press", target: "B Osc Shape", amount: 0.7}
+      - {source: "MPE Slide", target: "A Filter Freq", amount: 0.5}
+      - {source: "MPE Note Bend", target: "A Detune", amount: 0.3}
 
   # ── 06a — Self-sequencing timbre: one note becomes a pattern (the Autechre move)
   - id: meld-self-sequence-onenote
     concept: "Modulate the timbre instead of writing the notes — a looping Mod Env + audio-rate LFO turn ONE held note into a pattern"
     what_you_hear: "A single held note that becomes a rhythmic, evolving pattern: the timbre cycles (Mod Env AD-Loop → macro) while an audio-rate LFO adds sideband grit. No new notes."
     structure: single                 # justification: the whole point is ONE note producing a pattern — A/B would break the illusion
-    isolates: "Engine A Mod Env (AD Loop) → Osc Macro 1 + audio-rate LFO 1 (~200 Hz) → filter, on one held note"
+    isolates: "A Mod Loop Mode (AD Loop) → A Osc Shape + audio-rate A LFO 1 → A Filter Freq, on one held note"
     duration_s: 8.0
     midi: {note: "C3", length_s: 7.6}
     verification:
       check: self-sequence
       audible: "From a single sustained key: a recurring rhythmic/timbral pattern, with a grainy sideband edge — no new note onsets."
       spectral: "Onset/timbre events recur on a steady grid from one held note; audio-rate LFO adds sidebands. No recurrence ⇒ the loop env didn't engage ⇒ reject."
+    # !! NO-MATRIX-FALLBACK: BOTH the self-sequence (Mod Env → Osc Shape) and the
+    #    audio-rate grit (LFO → Filter Freq) are matrix routes → unrenderable
+    #    headless. ORCHESTRATOR must hand-build this one to prove the self-sequence
+    #    recurrence. Fallback automation is a single Osc-Shape morph (audible, not
+    #    recurring) — will NOT pass self-sequence. Note "A LFO 1 Rate" is
+    #    NORMALIZED 0–1 (1.0 = top ≈200 Hz audio-rate), NOT 200. Flagged in
+    #    DEMO_VERIFICATION.md.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Basic Shapes"
-      "Engine A Osc Macro 1": 0.40               # center the AD-Loop env sweeps
-      "Engine A Osc Macro 2": 0.50
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.6             # cutoff modulated by audio-rate LFO
-      "Engine A Filter Macro 2": 0.2
-      "Engine A Mod Env Mode": "AD Loop"
-      "Engine A Mod Env Attack": 0.1
-      "Engine A Mod Env Decay": 0.35             # sets the self-sequence period
-      "Engine A LFO 1 Rate": 200                 # ~200 Hz, audio-rate → sideband grit (UNCERTAIN units; top of range)
-      "Engine A LFO 1 Shape": "Sine"
-      "Engine A Amp Env Attack": 0.02
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.3
-      "Engine B On": "Off"
-      "Voicing": "Mono"
+      "A On": 1
+      "A Osc Type": 0                            # Basic Shapes
+      "A Osc Shape": 0.40                         # center the AD-Loop env sweeps (matrix target)
+      "A Osc Tone": 0.50
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.6                        # cutoff (modulated by audio-rate LFO via matrix)
+      "A Filter Q": 0.2
+      "A Mod Loop Mode": 2                       # AD Loop=2 (idx55, 0–3; order UNCERTAIN — CONFIRM)
+      "A Mod Attack": 0.1
+      "A Mod Decay": 0.35                         # sets the self-sequence period
+      "A LFO 1 Type": 0
+      "A LFO 1 Rate": 1.0                        # ref: "A LFO 1 Rate" NORMALIZED 0–1; 1.0 = top of range (~200 Hz, audio-rate)
+      "A Amp Attack": 0.05
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.3
+      "A Volume": 0.7
+      "B On": 0
+    automation:
+      # FALLBACK ONLY (single morph; will NOT pass self-sequence recurrence):
+      "A Osc Shape": {from: 0.40, to: 0.70, ramp_s: 7.0}
     matrix:
-      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 1", amount: 0.8}   # AD-Loop self-sequence
-      - {source: "Engine A LFO 1", target: "Engine A Filter Macro 1", amount: 0.5}  # audio-rate → sideband grit
+      # HAND-BUILD (not renderable; kept for tutorial/.adv):
+      - {source: "A Mod Env", target: "A Osc Shape", amount: 0.8}    # AD-Loop self-sequence
+      - {source: "A LFO 1", target: "A Filter Freq", amount: 0.5}    # audio-rate → sideband grit
 
   # ── 06b — Environmental oscillators as composition (Rain/Crackle as source) ───
   - id: meld-rain-crackle-sub
     concept: "A synthesized environmental oscillator (Rain/Crackle) is the SOURCE, not an effect — evolving weather from a held note"
     what_you_hear: "An evolving synthesized-weather bed: Engine A is Rain (drops + wind), slowly evolving as a looping envelope drives its macro, over a quiet Sub from Engine B for body."
     structure: single                 # justification: a texture bed is a single evolving sound; A/B isn't the lesson here
-    isolates: "Engine A oscillator type = Rain as the sound source (Mod Env Loop → macro for evolution)"
+    isolates: "A Osc Type = Rain as the sound source (Rate macro evolves; Mod-Env-Loop route is hand-build)"
     duration_s: 8.0
     midi: {note: "C2", length_s: 7.6}
     verification:
       check: self-sequence
       audible: "A clearly synthesized rain/weather texture (not a sample) that evolves over the hold, with a low sub body underneath."
       spectral: "Broadband stochastic 'rain' content evolving over time + a low sub fundamental from Engine B. Static/flat ⇒ Mod Env evolution didn't engage ⇒ reject."
+    # NO-MATRIX-FALLBACK that WORKS: the true evolution comes from a Loop Mod Env
+    # → Rain Rate (matrix, hand-build). But the fallback below automates the Rate
+    # macro ("A Osc Tone") DIRECTLY — Rain's broadband content genuinely evolves
+    # as Rate sweeps, so this fallback DOES produce evolving weather and can pass
+    # the evolution check (it is a monotonic evolution, not a strict loop). The
+    # matrix block is kept for the looping-tutorial version. See DEMO_VERIFICATION.md.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Rain"                # type index 12
-      "Engine A Osc Macro 1": 0.50               # Tone (UNCERTAIN, normalized)
-      "Engine A Osc Macro 2": 0.40               # Rate — swept by the loop env
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.7
-      "Engine A Mod Env Mode": "Loop"            # Meld loop set: Trigger / Loop / AD Loop
-      "Engine A Mod Env Attack": 0.5
-      "Engine A Mod Env Decay": 1.0
-      "Engine A Amp Env Attack": 0.4
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.6
-      "Engine B On": "On"
-      "Engine B Osc Type": "Sub"                 # type index 18 — quiet body
-      "Engine B Osc Macro 1": 0.3                # Tone
-      "Engine B Osc Macro 2": 0.2                # Aux
-      "Engine B Volume": 0.35
-      "Engine B Filter Type": "Lowpass"
-      "Engine B Filter Macro 1": 0.4
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 12                           # ref: Rain = index 12
+      "A Osc Shape": 0.50                         # macro 1 = Tone
+      "A Osc Tone": 0.40                          # macro 2 = Rate — swept by automation below (the evolution)
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.7
+      "A Mod Loop Mode": 1                       # Loop=1 (idx55, 0–3; order UNCERTAIN — for hand-build only)
+      "A Mod Attack": 0.5
+      "A Mod Decay": 1.0
+      "A Amp Attack": 0.3
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.5
+      "A Volume": 0.7
+      "B On": 1
+      "B Osc Type": 18                           # ref: Sub = index 18 — quiet body
+      "B Osc Shape": 0.3                          # macro 1 = Tone
+      "B Osc Tone": 0.2                           # macro 2 = Aux
+      "B Volume": 0.4
+      "B Filter On": 1
+      "B Filter Type": 0
+      "B Filter L-B-H-N": 0.0
+      "B Filter Freq": 0.4
+    automation:
+      # WORKING FALLBACK: sweep Rain's Rate macro directly = evolving weather:
+      "A Osc Tone": {from: 0.20, to: 0.80, ramp_s: 7.0}
     matrix:
-      - {source: "Engine A Mod Env", target: "Engine A Osc Macro 2", amount: 0.7}   # Loop env → Rain Rate = evolving weather
+      # TUTORIAL/.adv version (Loop env → Rate; not renderable over LOM):
+      - {source: "A Mod Env", target: "A Osc Tone", amount: 0.7}   # Loop env → Rain Rate
 
   # ── 06c — The Shepard trick, back to the cold open: endless build under a pad ─
   - id: meld-shepard-under-pad
@@ -893,26 +1056,31 @@ device_demos:
       check: shepard-rise
       audible: "A continuous sense of rising tension under a steady pad; the rise never lands."
       spectral: "Engine A centroid drifts upward continuously with no octave reset, over Engine B's steady pad spectrum. Static A centroid ⇒ Shepard motion didn't take ⇒ reject."
+    # FULLY RENDERABLE: no matrix needed — the Shepard rise is intrinsic to the
+    # oscillator; Engine B is a static pad. Clean headless demo.
     params:
-      "Engine A On": "On"
-      "Engine A Osc Type": "Shepard's Pi"        # type index 13
-      "Engine A Osc Macro 1": 0.25               # Rate
-      "Engine A Osc Macro 2": 0.50               # Width
-      "Engine A Filter Type": "Lowpass"
-      "Engine A Filter Macro 1": 0.8
-      "Engine A Volume": 0.5
-      "Engine A Amp Env Attack": 0.4
-      "Engine A Amp Env Sustain": 1.0
-      "Engine A Amp Env Release": 0.8
-      "Engine B On": "On"
-      "Engine B Osc Type": "Basic Shapes"        # warm pad
-      "Engine B Osc Macro 1": 0.4
-      "Engine B Osc Macro 2": 0.5
-      "Engine B Filter Type": "Lowpass"
-      "Engine B Filter Macro 1": 0.5
-      "Engine B Volume": 0.6
-      "Engine B Amp Env Attack": 0.6
-      "Engine B Amp Env Sustain": 1.0
-      "Engine B Amp Env Release": 1.0
-      "Global Limiter": "On"
-      "Voicing": "Poly"
+      "A On": 1
+      "A Osc Type": 13                           # ref: Shepard's Pi = index 13
+      "A Osc Shape": 0.25                         # macro 1 = Rate
+      "A Osc Tone": 0.50                          # macro 2 = Width
+      "A Filter On": 1
+      "A Filter Type": 0
+      "A Filter L-B-H-N": 0.0
+      "A Filter Freq": 0.8
+      "A Volume": 0.5
+      "A Amp Attack": 0.3
+      "A Amp Sustain": 1.0
+      "A Amp Release": 0.6
+      "B On": 1
+      "B Osc Type": 0                            # Basic Shapes — warm pad
+      "B Osc Shape": 0.4
+      "B Osc Tone": 0.5
+      "B Filter On": 1
+      "B Filter Type": 0
+      "B Filter L-B-H-N": 0.0
+      "B Filter Freq": 0.5
+      "B Volume": 0.6
+      "B Amp Attack": 0.5
+      "B Amp Sustain": 1.0
+      "B Amp Release": 0.8
+      "Limiter On": 1
