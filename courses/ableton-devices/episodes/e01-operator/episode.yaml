@@ -86,6 +86,10 @@ beds:
       start_at_slide: 06c-math-connect
       end_at_slide: 06e-exercise
       gain_db: -3
+    - clip_id: bed-stria-drift        # act 5 walkthrough — bed under the build (muted under each demo)
+      start_at_slide: 05a-algo1
+      end_at_slide: 05h-save
+      gain_db: -4
 
 # Per-episode mastering overrides. Inherits from defaults in build_episode.py,
 # then from course.yaml's mastering block (if present), then this. All keys

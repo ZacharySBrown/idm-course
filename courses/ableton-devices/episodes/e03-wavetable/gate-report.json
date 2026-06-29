@@ -35,11 +35,9 @@
     },
     {
       "check": "beds",
-      "status": "warn",
-      "summary": "5 transitions, 4 beds; acts covered 4/6",
-      "problems": [
-        "act 05: no background-bed coverage (warn \u2014 fill or confirm demo-dense)"
-      ],
+      "status": "pass",
+      "summary": "5 transitions, 5 beds; acts covered 5/6",
+      "problems": [],
       "data": {
         "acts": [
           "01",
@@ -53,32 +51,27 @@
           "02",
           "03",
           "04",
+          "05",
           "06"
         ],
-        "uncovered": [
-          "05"
-        ]
+        "uncovered": []
       }
     },
     {
       "check": "audio_style",
-      "status": "warn",
-      "summary": "0 demos >12dB, 3 demos 6-12dB off voice",
-      "problems": [
-        "wt-position-by-hand: demo 7.0dB vs voice (warn >6)",
-        "wt-spectra-step1: demo 8.0dB vs voice (warn >6)",
-        "wt-user-table-scan: demo 6.799999999999999dB vs voice (warn >6)"
-      ],
+      "status": "pass",
+      "summary": "0 demos >12dB, 0 demos 6-12dB off voice",
+      "problems": [],
       "data": {}
     },
     {
       "check": "loudness",
       "status": "pass",
-      "summary": "-16.28 LUFS / -2.63 dBTP",
+      "summary": "-16.39 LUFS / -2.42 dBTP",
       "problems": [],
       "data": {
-        "integrated_lufs": -16.28,
-        "true_peak_db": -2.63
+        "integrated_lufs": -16.39,
+        "true_peak_db": -2.42
       }
     },
     {

@@ -1,0 +1,164 @@
+[
+  {
+    "id": "ch000",
+    "title": "Cold Open",
+    "start_ms": 0,
+    "end_ms": 118350
+  },
+  {
+    "id": "ch001",
+    "title": "What a Macro-Oscillator IS",
+    "start_ms": 118750,
+    "end_ms": 227100
+  },
+  {
+    "id": "ch002",
+    "title": "The Plaits Lineage (Braids 2013 \u2192 Plaits 2018)",
+    "start_ms": 227500,
+    "end_ms": 355150
+  },
+  {
+    "id": "ch003",
+    "title": "MPE: A Channel Per Finger",
+    "start_ms": 355550,
+    "end_ms": 457000
+  },
+  {
+    "id": "ch004",
+    "title": "Where Meld Sits: Pick-and-Play",
+    "start_ms": 457400,
+    "end_ms": 575250
+  },
+  {
+    "id": "ch005",
+    "title": "The 25 Oscillators, By Family",
+    "start_ms": 575650,
+    "end_ms": 682250
+  },
+  {
+    "id": "ch006",
+    "title": "FM, the Macro Way (Callback to Operator)",
+    "start_ms": 682650,
+    "end_ms": 768564
+  },
+  {
+    "id": "ch007",
+    "title": "The Modal Resonators: The One Physical-Modelling Part",
+    "start_ms": 768964,
+    "end_ms": 852464
+  },
+  {
+    "id": "ch008",
+    "title": "Scale-Aware Oscillators (Six of Them)",
+    "start_ms": 852864,
+    "end_ms": 926714
+  },
+  {
+    "id": "ch009",
+    "title": "LFOs Into Audio Rate + Loop Envelopes",
+    "start_ms": 927114,
+    "end_ms": 1023714
+  },
+  {
+    "id": "ch010",
+    "title": "Bi-Timbral: Two Full Engines, Summed",
+    "start_ms": 1024114,
+    "end_ms": 1128164
+  },
+  {
+    "id": "ch011",
+    "title": "The Two Macros + the Matrix (The Macro Is the New Position)",
+    "start_ms": 1128564,
+    "end_ms": 1222276
+  },
+  {
+    "id": "ch012",
+    "title": "MPE, Hands-On: A Finger's Signal Path",
+    "start_ms": 1222676,
+    "end_ms": 1323487
+  },
+  {
+    "id": "ch013",
+    "title": "Filters, Mixer, Global, Voicing",
+    "start_ms": 1323887,
+    "end_ms": 1400337
+  },
+  {
+    "id": "ch014",
+    "title": "Meld vs the Family: When to Reach for It",
+    "start_ms": 1400737,
+    "end_ms": 1482437
+  },
+  {
+    "id": "ch015",
+    "title": "Step 1: Engine A \u2014 Swarm Saw, Scale-Locked",
+    "start_ms": 1482837,
+    "end_ms": 1537237
+  },
+  {
+    "id": "ch016",
+    "title": "Step 2: Engine B \u2014 Harmonic FM + Plate Resonator",
+    "start_ms": 1537637,
+    "end_ms": 1590687
+  },
+  {
+    "id": "ch017",
+    "title": "Step 3: Cross-Engine \u2014 A's LFO Drives B's Macro",
+    "start_ms": 1591087,
+    "end_ms": 1645087
+  },
+  {
+    "id": "ch018",
+    "title": "Step 4: Self-Morph \u2014 Mod Env AD-Loop to Macro",
+    "start_ms": 1645487,
+    "end_ms": 1691087
+  },
+  {
+    "id": "ch019",
+    "title": "Step 5: Wire the Fingers In \u2014 MPE Press / Slide / Bend",
+    "start_ms": 1691487,
+    "end_ms": 1747887
+  },
+  {
+    "id": "ch020",
+    "title": "Step 6: Global Drive, Limiter, Stacked Voices + Spread",
+    "start_ms": 1748287,
+    "end_ms": 1791387
+  },
+  {
+    "id": "ch021",
+    "title": "Step 7: Save the Patch",
+    "start_ms": 1791787,
+    "end_ms": 1860587
+  },
+  {
+    "id": "ch022",
+    "title": "Self-Sequencing Timbre (the Autechre Idea)",
+    "start_ms": 1860987,
+    "end_ms": 1945805
+  },
+  {
+    "id": "ch023",
+    "title": "Environmental Oscillators as Composition",
+    "start_ms": 1946205,
+    "end_ms": 2019837
+  },
+  {
+    "id": "ch024",
+    "title": "The Shepard Trick (Back to the Cold Open)",
+    "start_ms": 2020237,
+    "end_ms": 2091387
+  },
+  {
+    "id": "ch025",
+    "title": "Two Myths, Logged: Not a Physical Modeller, Not 12.1",
+    "start_ms": 2091787,
+    "end_ms": 2145487
+  },
+  {
+    "id": "ch026",
+    "title": "Listener Exercise",
+    "start_ms": 2145887,
+    "end_ms": 2204537
+  }
+]

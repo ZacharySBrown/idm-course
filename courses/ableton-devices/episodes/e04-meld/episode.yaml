@@ -58,15 +58,15 @@ transitions:
   enabled: true
   insertions:
     - after_slide: 02d-where-meld-sits          # end of section 2 (history) → into 3
-      clip_id: TBD
+      clip_id: trans-after-02d
     - after_slide: 03e-lfo-loop-env             # end of section 3 (synthesis) → into 4
-      clip_id: TBD
+      clip_id: trans-after-03e
     - after_slide: 04e-when-to-reach            # end of section 4 (device) → into 5
-      clip_id: TBD
+      clip_id: trans-after-04e
     - after_slide: 05g-save                      # end of walkthrough → into 6
-      clip_id: TBD
+      clip_id: trans-after-05g
     - after_slide: 06c-shepard-trick             # before listener exercise
-      clip_id: TBD
+      clip_id: trans-after-06c
 
 # Background music beds — sidechain-ducked under narration. Left minimal for the
 # skeleton; ranges are placeholders the Sound Designer tightens after lock.
@@ -74,19 +74,23 @@ beds:
   enabled: true
   duck_db: -14
   insertions:
-    - clip_id: TBD
+    - clip_id: bed-history-polymer
       start_at_slide: 02a-what-a-macro-osc-is
       end_at_slide: 02d-where-meld-sits
       gain_db: -3
-    - clip_id: TBD
+    - clip_id: bed-synthesis-confield
       start_at_slide: 03a-the-osc-families
       end_at_slide: 03e-lfo-loop-env
       gain_db: -2
-    - clip_id: TBD
+    - clip_id: bed-device-geogaddi
       start_at_slide: 04a-bi-timbral
       end_at_slide: 04e-when-to-reach
       gain_db: -3
-    - clip_id: TBD
+    - clip_id: bed-synthesis-confield        # act 5 walkthrough — bed under the patch build (muted under each demo)
+      start_at_slide: 05a-engine-a-swarm
+      end_at_slide: 05g-save
+      gain_db: -4
+    - clip_id: bed-idm-geogaddi-amb
       start_at_slide: 06a-self-sequencing
       end_at_slide: 06e-exercise
       gain_db: -3

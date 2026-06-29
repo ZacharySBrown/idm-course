@@ -35,7 +35,7 @@
     },
     {
       "check": "beds",
-      "status": "warn",
+      "status": "fail",
       "summary": "5 transitions, 4 beds; acts covered 4/6",
       "problems": [
         "act 05: no background-bed coverage (warn \u2014 fill or confirm demo-dense)"
@@ -65,12 +65,12 @@
       "status": "fail",
       "summary": "4 demos >12dB, 2 demos 6-12dB off voice",
       "problems": [
-        "op-poly-bell-step2: demo -22.900000000000002dB vs voice (FAIL >12)",
-        "op-poly-bell-step3: demo -17.299999999999997dB vs voice (FAIL >12)",
-        "op-poly-bell-step4: demo -32.6dB vs voice (FAIL >12)",
-        "op-poly-bell-step5: demo -27.9dB vs voice (FAIL >12)",
-        "op-poly-bell-step6: demo -7.399999999999999dB vs voice (warn >6)",
-        "op-poly-bell-step7: demo -10.599999999999998dB vs voice (warn >6)"
+        "op-poly-bell-step2: demo -27.81dB vs voice (FAIL >12)",
+        "op-poly-bell-step3: demo -16.66dB vs voice (FAIL >12)",
+        "op-poly-bell-step4: demo -31.96dB vs voice (FAIL >12)",
+        "op-poly-bell-step5: demo -29.15dB vs voice (FAIL >12)",
+        "op-poly-bell-step6: demo -8.34dB vs voice (warn >6)",
+        "op-poly-bell-step7: demo -7.610000000000003dB vs voice (warn >6)"
       ],
       "data": {}
     },

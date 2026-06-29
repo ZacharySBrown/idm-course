@@ -426,6 +426,18 @@ def build_one(
     lesson_id = lesson["id"]
     episode_cfg = lesson.get("episode", {})
 
+    # Classify clips by MANIFEST MEMBERSHIP, not id prefix: a device demo (rendered
+    # patch) gets the tighter -22 LUFS demo target; a song_clip gets the louder -16.
+    # (The old prefix check only knew 'op-', so an-/wt-/meld- demos were mis-leveled
+    # as songs — 6 dB too hot vs the voice.)
+    _manifest = {}
+    _mp = lesson_dir / "clip_manifest.yaml"
+    if _mp.exists():
+        _manifest = yaml.safe_load(_mp.read_text()) or {}
+    device_demo_ids = set()
+    for _k in ("device_demos", "operator_demos"):
+        device_demo_ids |= {d["id"] for d in (_manifest.get(_k) or []) if d.get("id")}
+
     # Per-episode mastering override merged over course-level config.
     mastering = merge_mastering({**(mastering or {}), **(lesson.get("mastering") or {})})
 
@@ -472,9 +484,9 @@ def build_one(
         return None
 
     def _clip_role(demo_id: str) -> str:
-        # "op-..." = generated operator demo (tighter -22 LUFS target);
-        # everything else = extracted song clip (looser -16 LUFS target)
-        return "demo" if demo_id.startswith("op-") else "song"
+        # device demo (any synth, by manifest membership) = -22 LUFS demo target;
+        # everything else = extracted song clip (-16 LUFS). 'op-' kept as a fallback.
+        return "demo" if (demo_id in device_demo_ids or demo_id.startswith("op-")) else "song"
 
     for slide in lesson.get("slides", []):
         script_rel = slide.get("script_md")

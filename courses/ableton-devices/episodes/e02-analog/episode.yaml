@@ -83,6 +83,10 @@ beds:
       start_at_slide: 06a-self-oscillation
       end_at_slide: 06e-exercise
       gain_db: -3
+    - clip_id: bed-flash-light        # act 5 walkthrough — bed under the build (muted under each demo)
+      start_at_slide: 05a-default
+      end_at_slide: 05i-save
+      gain_db: -4
 
 # Episode runs as a sequence of slides (chunks); shared/tools/build_episode.py
 # concatenates narration WAVs in this order, splicing demo clips after each

@@ -1,7 +1,7 @@
 {
   "episode": "e05-warp-modes",
   "built": false,
-  "ready": true,
+  "ready": false,
   "checks": [
     {
       "check": "narration",
@@ -34,7 +34,7 @@
     },
     {
       "check": "beds",
-      "status": "warn",
+      "status": "fail",
       "summary": "4 transitions, 2 beds; acts covered 2/6",
       "problems": [
         "act 03: no background-bed coverage (warn \u2014 fill or confirm demo-dense)",

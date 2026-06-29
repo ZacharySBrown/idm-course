@@ -30,49 +30,49 @@
   {
     "heading": "Oscillator Spectra: Saw, Square, Pulse",
     "cue_id": "an-pwm-sweep",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 878500,
     "demo_end_ms": 883000
   },
   {
     "heading": "The Filter, for a Physicist",
     "cue_id": "an-slope-12-vs-24",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 995250,
     "demo_end_ms": 999700
   },
   {
     "heading": "Self-Oscillation: The Barkhausen Condition",
     "cue_id": "an-reso-to-self-osc",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 1069100,
     "demo_end_ms": 1073233
   },
   {
     "heading": "Detuning, Beating, and PWM",
     "cue_id": "an-reese-detune-sweep",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 1148833,
     "demo_end_ms": 1154833
   },
   {
     "heading": "Detuning, Beating, and PWM",
     "cue_id": "an-pwm-strings",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 1197633,
     "demo_end_ms": 1200305
   },
   {
     "heading": "Two Envelopes, Two Jobs",
     "cue_id": "an-filter-env-vs-amp-env",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 1298105,
     "demo_end_ms": 1301434
   },
   {
     "heading": "Drive: Re-Introducing Nonlinearity",
     "cue_id": "an-drive-sym-vs-asym",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 1381234,
     "demo_end_ms": 1385684
   },
@@ -86,28 +86,28 @@
   {
     "heading": "Physical Modeling and the Error Knob",
     "cue_id": "an-error-drift",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 1604184,
     "demo_end_ms": 1608380
   },
   {
     "heading": "The Oscillators: Shapes, Sub, Sync",
     "cue_id": "an-sync-ratio-sweep",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 1719930,
     "demo_end_ms": 1724930
   },
   {
     "heading": "The Two Filters: Multimode, Series, Formant",
     "cue_id": "an-ms20-series-filter",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 1838580,
     "demo_end_ms": 1844580
   },
   {
     "heading": "Voice Architecture and Make-It-Analog",
     "cue_id": "an-unison-supersaw",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2057380,
     "demo_end_ms": 2061109
   },
@@ -121,63 +121,63 @@
   {
     "heading": "Step 1: Mono, Glide, One Saw",
     "cue_id": "an-303-step1",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2149259,
     "demo_end_ms": 2153259
   },
   {
     "heading": "Step 2: Route to a 24 dB Low-Pass",
     "cue_id": "an-303-step2",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2192359,
     "demo_end_ms": 2196359
   },
   {
     "heading": "Step 3: Filter Envelope, the Per-Note Wow",
     "cue_id": "an-303-step3",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2251509,
     "demo_end_ms": 2255509
   },
   {
     "heading": "Step 4: Resonance Toward the Squelch",
     "cue_id": "an-303-step4",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2301109,
     "demo_end_ms": 2303210
   },
   {
     "heading": "Step 5: Asym Drive and Velocity Accent",
     "cue_id": "an-303-step5",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2361060,
     "demo_end_ms": 2365161
   },
   {
     "heading": "Step 6: Program and Automate the Cutoff",
     "cue_id": "an-303-step6",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2419961,
     "demo_end_ms": 2425755
   },
   {
     "heading": "Step 7: Morph the 303 into a Reese",
     "cue_id": "an-reese-morph",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2508155,
     "demo_end_ms": 2513155
   },
   {
     "heading": "Step 8: Detune and Listen for the Beating",
     "cue_id": "an-reese-final",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2559955,
     "demo_end_ms": 2564007
   },
   {
     "heading": "Step 9: Save the Patch",
     "cue_id": "an-303-reese-final",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2607707,
     "demo_end_ms": 2618003
   },
@@ -191,7 +191,7 @@
   {
     "heading": "The Filter as Oscillator: Digeridoo",
     "cue_id": "an-digeridoo-drone",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2706253,
     "demo_end_ms": 2713253
   },
@@ -205,7 +205,7 @@
   {
     "heading": "The MS-20 Dual Filter, Abused",
     "cue_id": "an-ms20-scream",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2800603,
     "demo_end_ms": 2804732
   },
@@ -219,7 +219,7 @@
   {
     "heading": "Looping Envelopes as Rhythm",
     "cue_id": "an-loop-env-pulse",
-    "role": "song",
+    "role": "demo",
     "demo_start_ms": 2894332,
     "demo_end_ms": 2900332
   },

@@ -1,15 +1,16 @@
 {
   "episode": "e04-meld",
-  "built": false,
-  "ready": false,
+  "built": true,
+  "ready": true,
   "checks": [
     {
       "check": "narration",
-      "status": "skip",
-      "summary": "no narration rendered yet",
+      "status": "pass",
+      "summary": "27/27 slides narrated",
       "problems": [],
       "data": {
-        "slides": 27
+        "slides": 27,
+        "missing": []
       }
     },
     {
@@ -25,7 +26,7 @@
     {
       "check": "demo_clips",
       "status": "pass",
-      "summary": "20 cues, 0 unresolved",
+      "summary": "20 cues, 0 unresolved; 0 cued/demo clips not rendered",
       "problems": [],
       "data": {
         "cues": 20,
@@ -34,20 +35,9 @@
     },
     {
       "check": "beds",
-      "status": "fail",
-      "summary": "5 transitions, 4 beds; acts covered 4/6",
-      "problems": [
-        "transition @ 02d-where-meld-sits: clip_id is TBD (placeholder)",
-        "transition @ 03e-lfo-loop-env: clip_id is TBD (placeholder)",
-        "transition @ 04e-when-to-reach: clip_id is TBD (placeholder)",
-        "transition @ 05g-save: clip_id is TBD (placeholder)",
-        "transition @ 06c-shepard-trick: clip_id is TBD (placeholder)",
-        "bed @ 02a-what-a-macro-osc-is: clip_id is TBD (placeholder)",
-        "bed @ 03a-the-osc-families: clip_id is TBD (placeholder)",
-        "bed @ 04a-bi-timbral: clip_id is TBD (placeholder)",
-        "bed @ 06a-self-sequencing: clip_id is TBD (placeholder)",
-        "act 05: no background-bed coverage (warn \u2014 fill or confirm demo-dense)"
-      ],
+      "status": "pass",
+      "summary": "5 transitions, 5 beds; acts covered 5/6",
+      "problems": [],
       "data": {
         "acts": [
           "01",
@@ -61,26 +51,28 @@
           "02",
           "03",
           "04",
+          "05",
           "06"
         ],
-        "uncovered": [
-          "05"
-        ]
+        "uncovered": []
       }
     },
     {
       "check": "audio_style",
-      "status": "skip",
-      "summary": "episode not built",
+      "status": "pass",
+      "summary": "0 demos >12dB, 0 demos 6-12dB off voice",
       "problems": [],
       "data": {}
     },
     {
       "check": "loudness",
-      "status": "skip",
-      "summary": "episode not built",
+      "status": "pass",
+      "summary": "-16.4 LUFS / -2.75 dBTP",
       "problems": [],
-      "data": {}
+      "data": {
+        "integrated_lufs": -16.4,
+        "true_peak_db": -2.75
+      }
     },
     {
       "check": "lexicon",

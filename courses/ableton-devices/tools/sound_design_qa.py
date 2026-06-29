@@ -57,7 +57,24 @@ def loudness(mp3: Path, start_ms: int, end_ms: int) -> dict:
             mean = float(line.split("mean_volume:")[1].split("dB")[0])
         elif "max_volume:" in line:
             peak = float(line.split("max_volume:")[1].split("dB")[0])
-    return {"mean": mean, "peak": peak}
+    # Integrated LUFS — the ACTUAL loudness-matching standard. volumedetect
+    # mean_volume is a raw sample-magnitude average, silence-biased: it reads a
+    # continuous demo as "hot" against gappy speech even when their loudness is
+    # matched. LUFS (gated, perceptual) is what loudnorm targets, so match on it.
+    lufs = None
+    r2 = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-nostats", "-ss", f"{start_ms/1000:.3f}",
+         "-t", f"{max(0.2,(end_ms-start_ms)/1000):.3f}", "-i", str(mp3),
+         "-af", "loudnorm=print_format=json", "-f", "null", "-"],
+        capture_output=True, text=True)
+    try:
+        txt = r2.stderr
+        blob = txt[txt.rindex("{"): txt.rindex("}") + 1]
+        v = float(json.loads(blob)["input_i"])
+        lufs = v if v > -70 else None  # -70 ≈ silence/unmeasurable
+    except (ValueError, KeyError, json.JSONDecodeError):
+        pass
+    return {"mean": mean, "peak": peak, "lufs": lufs}
 
 
 def silence_before(mp3: Path, onset_ms: int, look_ms: int = 700) -> bool:
@@ -108,7 +125,14 @@ def main() -> int:
         dl = loudness(mp3, s, e)
         # nearby narration loudness: the ~3s before the demo onset
         nl = loudness(mp3, max(0, s - 3000), max(1, s - 300))
-        delta = (dl["mean"] - nl["mean"]) if (dl["mean"] is not None and nl["mean"] is not None) else None
+        # Loudness-match on integrated LUFS (perceptual); fall back to mean_volume
+        # only if a window was too short/quiet for loudnorm to gate a reading.
+        if dl["lufs"] is not None and nl["lufs"] is not None:
+            delta = dl["lufs"] - nl["lufs"]
+        elif dl["mean"] is not None and nl["mean"] is not None:
+            delta = dl["mean"] - nl["mean"]
+        else:
+            delta = None
         checks = {
             "audible": (dl["peak"] is not None and dl["peak"] >= -22),
             "loudness_matched": (delta is not None and abs(delta) <= 6),

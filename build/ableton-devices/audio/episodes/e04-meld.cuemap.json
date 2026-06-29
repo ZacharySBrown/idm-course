@@ -1,0 +1,177 @@
+[
+  {
+    "heading": "Cold Open",
+    "cue_id": "shepard-pi-cold-open",
+    "role": "demo",
+    "demo_start_ms": 9900,
+    "demo_end_ms": 18900
+  },
+  {
+    "heading": "What a Macro-Oscillator IS",
+    "cue_id": "meld-one-knob-three-worlds",
+    "role": "demo",
+    "demo_start_ms": 199600,
+    "demo_end_ms": 204650
+  },
+  {
+    "heading": "The Plaits Lineage (Braids 2013 \u2192 Plaits 2018)",
+    "cue_id": "plaits-module-ref",
+    "role": "song",
+    "demo_start_ms": 297600,
+    "demo_end_ms": 311600
+  },
+  {
+    "heading": "Where Meld Sits: Pick-and-Play",
+    "cue_id": "trans-after-02d",
+    "role": "transition",
+    "demo_start_ms": 563250,
+    "demo_end_ms": 575250
+  },
+  {
+    "heading": "The 25 Oscillators, By Family",
+    "cue_id": "meld-type-switch-live",
+    "role": "demo",
+    "demo_start_ms": 660300,
+    "demo_end_ms": 663950
+  },
+  {
+    "heading": "FM, the Macro Way (Callback to Operator)",
+    "cue_id": "meld-squelch-feedback",
+    "role": "demo",
+    "demo_start_ms": 744100,
+    "demo_end_ms": 747264
+  },
+  {
+    "heading": "The Modal Resonators: The One Physical-Modelling Part",
+    "cue_id": "meld-plate-resonator",
+    "role": "demo",
+    "demo_start_ms": 817264,
+    "demo_end_ms": 821714
+  },
+  {
+    "heading": "Scale-Aware Oscillators (Six of Them)",
+    "cue_id": "meld-swarm-scale-snap",
+    "role": "demo",
+    "demo_start_ms": 903764,
+    "demo_end_ms": 908614
+  },
+  {
+    "heading": "LFOs Into Audio Rate + Loop Envelopes",
+    "cue_id": "meld-modenv-loop-macro",
+    "role": "demo",
+    "demo_start_ms": 979414,
+    "demo_end_ms": 986414
+  },
+  {
+    "heading": "LFOs Into Audio Rate + Loop Envelopes",
+    "cue_id": "trans-after-03e",
+    "role": "transition",
+    "demo_start_ms": 1011714,
+    "demo_end_ms": 1023714
+  },
+  {
+    "heading": "The Two Macros + the Matrix (The Macro Is the New Position)",
+    "cue_id": "meld-lfo-to-macro",
+    "role": "demo",
+    "demo_start_ms": 1196914,
+    "demo_end_ms": 1202326
+  },
+  {
+    "heading": "MPE, Hands-On: A Finger's Signal Path",
+    "cue_id": "meld-mpe-per-note",
+    "role": "demo",
+    "demo_start_ms": 1273976,
+    "demo_end_ms": 1278187
+  },
+  {
+    "heading": "Meld vs the Family: When to Reach for It",
+    "cue_id": "trans-after-04e",
+    "role": "transition",
+    "demo_start_ms": 1468437,
+    "demo_end_ms": 1482437
+  },
+  {
+    "heading": "Step 1: Engine A \u2014 Swarm Saw, Scale-Locked",
+    "cue_id": "meld-twohands-step1",
+    "role": "demo",
+    "demo_start_ms": 1521837,
+    "demo_end_ms": 1525837
+  },
+  {
+    "heading": "Step 2: Engine B \u2014 Harmonic FM + Plate Resonator",
+    "cue_id": "meld-twohands-step2",
+    "role": "demo",
+    "demo_start_ms": 1565887,
+    "demo_end_ms": 1569887
+  },
+  {
+    "heading": "Step 3: Cross-Engine \u2014 A's LFO Drives B's Macro",
+    "cue_id": "meld-twohands-step3",
+    "role": "demo",
+    "demo_start_ms": 1626887,
+    "demo_end_ms": 1631887
+  },
+  {
+    "heading": "Step 4: Self-Morph \u2014 Mod Env AD-Loop to Macro",
+    "cue_id": "meld-twohands-step4",
+    "role": "demo",
+    "demo_start_ms": 1668687,
+    "demo_end_ms": 1673687
+  },
+  {
+    "heading": "Step 5: Wire the Fingers In \u2014 MPE Press / Slide / Bend",
+    "cue_id": "meld-twohands-step5",
+    "role": "demo",
+    "demo_start_ms": 1723837,
+    "demo_end_ms": 1729837
+  },
+  {
+    "heading": "Step 6: Global Drive, Limiter, Stacked Voices + Spread",
+    "cue_id": "meld-twohands-step6",
+    "role": "demo",
+    "demo_start_ms": 1771287,
+    "demo_end_ms": 1776287
+  },
+  {
+    "heading": "Step 7: Save the Patch",
+    "cue_id": "meld-twohands-final",
+    "role": "demo",
+    "demo_start_ms": 1798937,
+    "demo_end_ms": 1808937
+  },
+  {
+    "heading": "Step 7: Save the Patch",
+    "cue_id": "trans-after-05g",
+    "role": "transition",
+    "demo_start_ms": 1848587,
+    "demo_end_ms": 1860587
+  },
+  {
+    "heading": "Self-Sequencing Timbre (the Autechre Idea)",
+    "cue_id": "meld-self-sequence-onenote",
+    "role": "demo",
+    "demo_start_ms": 1913887,
+    "demo_end_ms": 1920205
+  },
+  {
+    "heading": "Environmental Oscillators as Composition",
+    "cue_id": "meld-rain-crackle-sub",
+    "role": "demo",
+    "demo_start_ms": 1980605,
+    "demo_end_ms": 1987138
+  },
+  {
+    "heading": "The Shepard Trick (Back to the Cold Open)",
+    "cue_id": "meld-shepard-under-pad",
+    "role": "demo",
+    "demo_start_ms": 2051387,
+    "demo_end_ms": 2060387
+  },
+  {
+    "heading": "The Shepard Trick (Back to the Cold Open)",
+    "cue_id": "trans-after-06c",
+    "role": "transition",
+    "demo_start_ms": 2077387,
+    "demo_end_ms": 2091387
+  }
+]
