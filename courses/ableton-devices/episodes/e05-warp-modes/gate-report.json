@@ -1,0 +1,88 @@
+{
+  "episode": "e05-warp-modes",
+  "built": false,
+  "ready": true,
+  "checks": [
+    {
+      "check": "narration",
+      "status": "skip",
+      "summary": "no narration rendered yet",
+      "problems": [],
+      "data": {
+        "slides": 29
+      }
+    },
+    {
+      "check": "preset_books",
+      "status": "pass",
+      "summary": "0/0 described presets have a build book",
+      "problems": [],
+      "data": {
+        "described": 0,
+        "composed": 0
+      }
+    },
+    {
+      "check": "demo_clips",
+      "status": "pass",
+      "summary": "23 cues, 0 unresolved",
+      "problems": [],
+      "data": {
+        "cues": 23,
+        "unrendered": []
+      }
+    },
+    {
+      "check": "beds",
+      "status": "warn",
+      "summary": "4 transitions, 2 beds; acts covered 2/6",
+      "problems": [
+        "act 03: no background-bed coverage (warn \u2014 fill or confirm demo-dense)",
+        "act 04: no background-bed coverage (warn \u2014 fill or confirm demo-dense)",
+        "act 05: no background-bed coverage (warn \u2014 fill or confirm demo-dense)"
+      ],
+      "data": {
+        "acts": [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06"
+        ],
+        "covered": [
+          "02",
+          "06"
+        ],
+        "uncovered": [
+          "03",
+          "04",
+          "05"
+        ]
+      }
+    },
+    {
+      "check": "audio_style",
+      "status": "skip",
+      "summary": "episode not built",
+      "problems": [],
+      "data": {}
+    },
+    {
+      "check": "loudness",
+      "status": "skip",
+      "summary": "episode not built",
+      "problems": [],
+      "data": {}
+    },
+    {
+      "check": "lexicon",
+      "status": "pass",
+      "summary": "29 scripts, 0 violations",
+      "problems": [],
+      "data": {
+        "banned_terms_checked": 21
+      }
+    }
+  ]
+}

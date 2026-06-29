@@ -1,0 +1,95 @@
+{
+  "episode": "e04-meld",
+  "built": false,
+  "ready": false,
+  "checks": [
+    {
+      "check": "narration",
+      "status": "skip",
+      "summary": "no narration rendered yet",
+      "problems": [],
+      "data": {
+        "slides": 27
+      }
+    },
+    {
+      "check": "preset_books",
+      "status": "pass",
+      "summary": "19/19 described presets have a build book",
+      "problems": [],
+      "data": {
+        "described": 19,
+        "composed": 0
+      }
+    },
+    {
+      "check": "demo_clips",
+      "status": "pass",
+      "summary": "20 cues, 0 unresolved",
+      "problems": [],
+      "data": {
+        "cues": 20,
+        "unrendered": []
+      }
+    },
+    {
+      "check": "beds",
+      "status": "fail",
+      "summary": "5 transitions, 4 beds; acts covered 4/6",
+      "problems": [
+        "transition @ 02d-where-meld-sits: clip_id is TBD (placeholder)",
+        "transition @ 03e-lfo-loop-env: clip_id is TBD (placeholder)",
+        "transition @ 04e-when-to-reach: clip_id is TBD (placeholder)",
+        "transition @ 05g-save: clip_id is TBD (placeholder)",
+        "transition @ 06c-shepard-trick: clip_id is TBD (placeholder)",
+        "bed @ 02a-what-a-macro-osc-is: clip_id is TBD (placeholder)",
+        "bed @ 03a-the-osc-families: clip_id is TBD (placeholder)",
+        "bed @ 04a-bi-timbral: clip_id is TBD (placeholder)",
+        "bed @ 06a-self-sequencing: clip_id is TBD (placeholder)",
+        "act 05: no background-bed coverage (warn \u2014 fill or confirm demo-dense)"
+      ],
+      "data": {
+        "acts": [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06"
+        ],
+        "covered": [
+          "02",
+          "03",
+          "04",
+          "06"
+        ],
+        "uncovered": [
+          "05"
+        ]
+      }
+    },
+    {
+      "check": "audio_style",
+      "status": "skip",
+      "summary": "episode not built",
+      "problems": [],
+      "data": {}
+    },
+    {
+      "check": "loudness",
+      "status": "skip",
+      "summary": "episode not built",
+      "problems": [],
+      "data": {}
+    },
+    {
+      "check": "lexicon",
+      "status": "pass",
+      "summary": "27 scripts, 0 violations",
+      "problems": [],
+      "data": {
+        "banned_terms_checked": 21
+      }
+    }
+  ]
+}

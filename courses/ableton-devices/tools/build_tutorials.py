@@ -1,32 +1,35 @@
 #!/usr/bin/env python3
 """
-build_tutorials.py — turn every Operator demo's patch into a reproducible,
-click-by-click tutorial (from the DEFAULT device) and check its preset.
+build_tutorials.py — turn every demo's patch into a reproducible, click-by-click
+preset build book, for ANY device (Operator, Analog, Wavetable, Meld, …).
 
-Requirement (from the user): anything done in Ableton must be persisted as a
-preset, with a tutorial on how to produce it from the base device; any long
-string of device settings must come with a tutorial so it's reproducible.
+Requirement (from the user): EVERY described preset (a demo with a `params:` block)
+must have a build book so it's reproducible from the default device — and the
+readiness gate (`shared/tools/episode_readiness.py`, check `preset_books`) FAILS
+the build if any is missing. This tool generates/refreshes those books.
 
-For each `operator_demos` entry with a `params:` block this emits:
-  episodes/<ep>/tutorials/<id>.md   — ordered step table: panel · param · value · (hear)
+Device-generic by construction: instead of hardcoding one device's panels, it
+orders each demo's params by their INDEX in that device's dumped param map
+(`device_render/param_maps/<device>.json`) — i.e. the device's own natural
+parameter order — and groups them by the leading token of the param name
+("OSC1", "F1", "AEG1", "A Osc", "Osc 1", …). Enum values are shown with their
+human label from the map's `value_items`; normalized-0–1 params are flagged.
 
-and reports whether the matching preset exists:
-  episodes/<ep>/presets/<id>.adv    — saved from Live (right-click Operator → Save Preset)
-
-The step ORDER is deterministic: Algorithm → Osc A → B → C → D → Filter/Global,
-each operator grouped (wave, tuning, level, feedback, envelope). The generated
-table is a first draft the Ableton Expert refines (fills the "you should hear"
-column, sanity-checks envelope ms). Keeping the tutorial generated FROM the same
-params the renderer uses keeps patch, render, and tutorial in sync.
+For each demo with params it writes:
+  episodes/<ep>/tutorials/<id>.md   — step # · panel · parameter · value · (hear)
+and reports which presets/<id>.adv files are still missing (saved from Live).
 
 Usage:
   python courses/ableton-devices/tools/build_tutorials.py \
-      --course-root courses/ableton-devices --episode e01-operator
-  python ... --demo op-poly-bell-final        # one demo
+      --course-root courses/ableton-devices --episode e02-analog
+  # --device Analog      override the episode.yaml `device:` field
+  # --only-missing       only generate books that don't already exist (don't clobber)
+  # --demo <id>          a single demo
 """
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -36,90 +39,95 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "shared" / "tools"))
 from _course_lib import load_course, episodes_dir, lessons_dir  # noqa: E402
 
-# ── ordering: which params belong to which panel, and in what order ──────────
-GLOBAL_FIRST = ["Algorithm"]
-OSC_ORDER = ["A", "B", "C", "D"]
-# per-operator param suffixes in teaching order
-OSC_FIELDS = [
-    ("Osc-{o} On", "On/Off"), ("Osc-{o} Wave", "Wave"),
-    ("{o} Coarse", "Coarse"), ("{o} Fine", "Fine"),
-    ("Osc-{o} Level", "Level"), ("Osc-{o} Feedb", "Feedback"),
-    ("Osc-{o} Lev < Vel", "Level<Vel"),
-    ("{o}e Mode", "Env Mode"), ("{o}e Retrig", "Env Retrig"),
-    ("{o}e Attack", "Env Attack"), ("{o}e Decay", "Env Decay"),
-    ("{o}e Sustain", "Env Sustain"), ("{o}e Release", "Env Release"),
-]
-GLOBAL_LAST = [
-    ("Spread", "Spread"), ("Filter On", "Filter On"), ("Filter Type", "Filter Type"),
-    ("Filter Slope", "Filter Slope"), ("Filter Circuit - LP/HP", "Filter Circuit"),
-    ("Filter Freq", "Filter Freq"), ("Filter Drive", "Filter Drive"),
-]
+PARAM_MAPS = HERE / "device_render" / "param_maps"
+DEMO_KEYS = ("device_demos", "operator_demos")
 
 
-def fmt_val(name: str, v) -> str:
-    """Human-readable value. Envelope times are normalized 0-1 in the manifest;
-    flag them so the Expert sets the real ms by ear (Operator's mapping is non-linear)."""
-    if isinstance(v, float) and name.split()[-1] in ("Attack", "Decay", "Sustain", "Release"):
-        return f"{v:g}  *(norm 0–1; set by ear)*"
-    if isinstance(v, float) and "Level" in name and 0.0 <= v <= 1.0:
-        return f"{v:g}  *(0–1 ≈ {round(v*100)}%)*"
+def load_param_map(device: str) -> dict:
+    """name -> {index, min, max, is_quantized, value_items}. Empty if no map."""
+    p = PARAM_MAPS / f"{device.lower()}.json"
+    if not p.exists():
+        return {}
+    data = json.loads(p.read_text())
+    return {pp["name"]: pp for pp in data.get("parameters", [])}
+
+
+def panel_of(name: str) -> str:
+    """Group label = the param's leading token(s). 'F1 Freq' -> 'F1';
+    'A Osc Type' -> 'A Osc'; 'Osc 1 Pos' -> 'Osc 1'; 'AEG1 Attack' -> 'AEG1'."""
+    toks = name.split()
+    if not toks:
+        return "Global"
+    head = toks[0]
+    # bi-timbral 'A '/'B ' engines: keep the engine + section word
+    if head in ("A", "B") and len(toks) > 1:
+        return f"{head} {toks[1]}"
+    if len(head) <= 2 and len(toks) > 1 and toks[1].isdigit():  # 'Osc 1'
+        return f"{head} {toks[1]}"
+    return head
+
+
+def fmt_val(name: str, v, pm: dict) -> str:
+    """Human value, using the device param map: enum index -> label, normalized flag."""
+    meta = pm.get(name)
+    if meta and meta.get("is_quantized") and meta.get("value_items"):
+        items = meta["value_items"]
+        if isinstance(v, (int, float)) and 0 <= int(v) < len(items):
+            return f"{items[int(v)]}  *(index {int(v)})*"
+        return f"{v}"
+    if isinstance(v, float) and 0.0 <= v <= 1.0 and meta and float(meta.get("max", 1)) <= 1.0:
+        tail = ""
+        low = name.lower()
+        if any(k in low for k in ("attack", "decay", "release", "time", "rate", "speed", "freq", "pos")):
+            tail = "  *(norm 0–1; confirm by ear)*"
+        return f"{v:g}{tail}"
     return f"{v}"
 
 
-def build_steps(params: dict) -> list[tuple[str, str, str]]:
-    """Return ordered (panel, param-label, value) rows from a flat params dict."""
-    rows: list[tuple[str, str, str]] = []
-    rows.append(("Load", "Default Operator", "init"))
-    for p in GLOBAL_FIRST:
-        if p in params:
-            rows.append(("Global", p, fmt_val(p, params[p])))
-    for o in OSC_ORDER:
-        on_key = f"Osc-{o} On"
-        # skip operators that are off and otherwise unconfigured
-        if params.get(on_key) in ("Off", 0) and not any(
-            f.format(o=o) in params for f, _ in OSC_FIELDS if "On" not in f):
-            if on_key in params:
-                rows.append((f"Osc {o}", "On/Off", fmt_val(on_key, params[on_key])))
-            continue
-        for fmt, label in OSC_FIELDS:
-            key = fmt.format(o=o)
-            if key in params:
-                rows.append((f"Osc {o}", label, fmt_val(key, params[key])))
-    for key, label in GLOBAL_LAST:
-        if key in params:
-            rows.append(("Global", label, fmt_val(key, params[key])))
+def build_steps(params: dict, pm: dict) -> list[tuple[str, str, str]]:
+    rows: list[tuple[str, str, str]] = [("Load", "Default device", "init")]
+    # device-native order: by param-map index; unknown names sink to the end (stable)
+    def key(item):
+        meta = pm.get(item[0])
+        return (0, meta["index"]) if meta else (1, item[0])
+    for name, val in sorted(params.items(), key=key):
+        rows.append((panel_of(name), name, fmt_val(name, val, pm)))
     return rows
 
 
-def render_md(demo: dict) -> str:
+def render_md(demo: dict, pm: dict, device: str) -> str:
     did = demo["id"]
-    params = demo.get("params") or {}
-    concept = demo.get("concept", "")
-    desc = demo.get("description", "")
+    rows = build_steps(demo.get("params") or {}, pm)
     what = demo.get("what_you_hear", "")
-    rows = build_steps(params)
     lines = [
-        f"# Patch tutorial — `{did}`",
+        f"# Patch build book — `{did}`",
         "",
-        f"**Preset:** `presets/{did}.adv`  ·  **Concept:** {concept or '_(add concept)_'}",
+        f"**Device:** {device}  ·  **Preset:** `presets/{did}.adv`  ·  "
+        f"**Concept:** {demo.get('concept', '_(add)_')}",
         "",
-        (f"> {desc}" if desc else ""),
-        (f">\n> **You should hear:** {what}" if what else ""),
+        (f"> **You should hear:** {what}" if what else ""),
         "",
-        "Build from a **freshly loaded Operator** (init). One parameter per step;",
-        "the right column is your self-check.",
+        f"Build from a **freshly loaded {device}** (init). One parameter per step;",
+        "the right column is your self-check. Values map to the device's real LOM",
+        "parameters (enum values show their label + index).",
         "",
-        "| # | Panel | Parameter | Value | You should now hear |",
-        "|---|---|---|---|---|",
+        "| # | Panel | Parameter | Value |",
+        "|---|---|---|---|",
     ]
     for i, (panel, label, val) in enumerate(rows):
-        hear = "A single pure sine on each note" if val == "init" else ""
-        lines.append(f"| {i} | {panel} | {label} | {val} | {hear} |")
+        lines.append(f"| {i} | {panel} | {label} | {val} |")
+    sweeps = demo.get("automation") or {}
+    if sweeps:
+        lines += ["", "**Automation / sweeps** (draw as a clip envelope or move by hand):"]
+        for nm, spec in sweeps.items():
+            if isinstance(spec, dict) and "from" in spec:
+                lines.append(f"- `{nm}`: {spec['from']} → {spec['to']} over {spec.get('ramp_s', '?')}s")
+    if demo.get("ab_param"):
+        lines += ["", f"**A/B:** flip `{demo['ab_param']}` between {demo['ab_values']} (one variable, all else held)."]
     lines += [
         "",
-        "_Final check: it should match the preset and the demo render._",
-        "_To persist: in Live, right-click the Operator title bar → **Save Preset** → "
-        f"save as `{did}` into the episode's `presets/` folder._",
+        f"_To persist: in Live, right-click the {device} title bar → **Save Preset** → "
+        f"save as `{did}` into this episode's `presets/` folder._",
         "",
     ]
     return "\n".join(l for l in lines if l is not None)
@@ -129,36 +137,51 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--course-root", required=True)
     ap.add_argument("--episode", "--lesson", dest="episode", required=True)
+    ap.add_argument("--device")
     ap.add_argument("--demo")
+    ap.add_argument("--only-missing", action="store_true")
     args = ap.parse_args()
 
     cfg = load_course(args.course_root)
     base = episodes_dir(cfg) if cfg.get("content_kind") == "episode" else lessons_dir(cfg)
     ep_dir = base / args.episode
+    ep_yaml = yaml.safe_load((ep_dir / "episode.yaml").read_text()) or {}
+    device = args.device or ep_yaml.get("device", "Operator")
+    pm = load_param_map(device)
+    if not pm:
+        print(f"[warn] no param map for {device!r} at {PARAM_MAPS}/{device.lower()}.json — "
+              f"ordering falls back to alphabetical, values shown raw")
+
     man = yaml.safe_load((ep_dir / "clip_manifest.yaml").read_text()) or {}
+    demos = []
+    for k in DEMO_KEYS:
+        demos += man.get(k) or []
+    demos = [d for d in demos if d.get("params")]
+    if args.demo:
+        demos = [d for d in demos if d["id"] == args.demo]
 
     tut_dir = ep_dir / "tutorials"
     pre_dir = ep_dir / "presets"
     tut_dir.mkdir(exist_ok=True)
     pre_dir.mkdir(exist_ok=True)
 
-    demos = [d for d in (man.get("operator_demos") or []) if d.get("params")]
-    if args.demo:
-        demos = [d for d in demos if d["id"] == args.demo]
-
-    written, missing_preset = 0, []
+    written, skipped, missing_preset = 0, 0, []
     for d in demos:
-        (tut_dir / f"{d['id']}.md").write_text(render_md(d))
-        written += 1
+        out = tut_dir / f"{d['id']}.md"
+        if args.only_missing and out.exists():
+            skipped += 1
+        else:
+            out.write_text(render_md(d, pm, device))
+            written += 1
         if not (pre_dir / f"{d['id']}.adv").exists():
             missing_preset.append(d["id"])
 
-    print(f"tutorials → {tut_dir}  ({written} written)")
+    print(f"tutorials → {tut_dir}  ({written} written, {skipped} kept) for device {device!r}")
     if missing_preset:
-        print(f"\n⚠ {len(missing_preset)} demos have NO saved preset (presets/<id>.adv):")
+        print(f"\n⚠ {len(missing_preset)} described presets have NO saved .adv "
+              f"(save from Live → presets/<id>.adv):")
         for m in missing_preset:
             print(f"    {m}")
-        print("  Save each from Live: right-click Operator → Save Preset → presets/<id>.adv")
     return 0
 
 

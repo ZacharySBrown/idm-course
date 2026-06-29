@@ -99,7 +99,13 @@ DEFAULT_MASTERING = {
         },
         "limiter": {
             "enabled": True,
-            "limit": 0.97,        # peak ceiling, linear (≈ -0.26 dBFS)
+            # Final-stage ceiling. MUST be tighter than the loudnorm TP target or
+            # inter-sample peaks leak back up (this is what put e02 at -0.5 dBTP,
+            # over the -1.0 ceiling). 0.84 ≈ -1.5 dBFS sample → true-peak ≤ ~-1.0.
+            # 0.75 (~ -2.5 dBFS sample). The headroom absorbs the ~0.85 dB of
+            # inter-sample overshoot MP3 lossy encoding adds, so the DELIVERED mp3
+            # lands <= -1 dBTP (measured -0.65 at 0.84, ~-1.5 at 0.75).
+            "limit": 0.75,
             "attack": 7,
             "release": 100,
         },
@@ -152,10 +158,15 @@ def build_master_filter(mastering: dict) -> str:
     parts.append(f"loudnorm=I={mc['target_lufs']}:TP={mc['true_peak_db']}:LRA={mc['lra']}")
     lim = mc.get("limiter", {})
     if lim.get("enabled"):
+        # level=disabled is ESSENTIAL: ffmpeg's alimiter defaults to level=true,
+        # which re-normalizes the output back toward 0 dB AFTER limiting — undoing
+        # the ceiling and pushing inter-sample peaks above target (this is what put
+        # e02 over -1 dBTP). Disable it so the limiter actually caps and holds.
         parts.append(
             f"alimiter=limit={lim['limit']}"
             f":attack={lim['attack']}"
             f":release={lim['release']}"
+            f":level=disabled"
         )
     return ",".join(parts)
 
@@ -169,12 +180,17 @@ def build_bed_track(
     clips_dir: Path | None,
     out_path: Path,
     mute_spans: list[tuple[int, int]] | None = None,
-) -> None:
+) -> list[str]:
     """Generate a single 44.1kHz/16-bit stereo WAV of length total_ms with each
-    bed clip placed at the right time offset and faded in/out. Returns nothing
-    on disk if no insertions resolve."""
-    if not bed_insertions or clips_dir is None:
-        return
+    bed clip placed at the right time offset and faded in/out. Returns a list of
+    WARNING strings for any bed insertion that could NOT be placed (TBD/missing
+    clip, bad slide range, too short) — these used to be skipped SILENTLY, which
+    let an episode build bed-less with no signal. The readiness gate fails on them."""
+    warnings: list[str] = []
+    if clips_dir is None:
+        return ["beds: no clips_dir"]
+    if not bed_insertions:
+        return warnings
 
     slide_to_block = {sid: i for i, sid in enumerate(block_slides)}
 
@@ -187,7 +203,8 @@ def build_bed_track(
 
     for ins in bed_insertions:
         cid = ins.get("clip_id")
-        if not cid:
+        if not cid or cid == "TBD":
+            warnings.append(f"bed @ {ins.get('start_at_slide')}: clip_id is {cid or 'missing'} (placeholder)")
             continue
         # Resolve clip
         src = None
@@ -197,15 +214,18 @@ def build_bed_track(
                 src = cand
                 break
         if not src:
+            warnings.append(f"bed '{cid}': no rendered clip in {clips_dir.name}/ — dropped")
             continue
         sb = slide_to_block.get(ins.get("start_at_slide"))
         eb = slide_to_block.get(ins.get("end_at_slide", ins.get("start_at_slide")))
         if sb is None or eb is None:
+            warnings.append(f"bed '{cid}': slide range {ins.get('start_at_slide')}..{ins.get('end_at_slide')} not found — dropped")
             continue
         delay_ms = block_starts[sb]
         end_ms = block_ends[eb]
         dur_ms = max(0, end_ms - delay_ms)
         if dur_ms < 500:
+            warnings.append(f"bed '{cid}': span < 500ms — dropped")
             continue
         inputs.append(src)
         delays.append(delay_ms)
@@ -215,7 +235,7 @@ def build_bed_track(
         gains_db.append(ins.get("gain_db", 0))
 
     if not inputs:
-        return
+        return warnings
 
     # ffmpeg filter graph: each input gets adelay + afade(in/out) + atrim, then amix.
     args = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error"]
@@ -260,6 +280,7 @@ def build_bed_track(
         str(out_path),
     ]
     subprocess.run(args, check=True)
+    return warnings
 
 
 def concat_wavs(
@@ -613,6 +634,7 @@ def build_one(
     #         fade_in_ms: 3000
     #         fade_out_ms: 3000
     bed_track_path: Path | None = None
+    bed_warnings: list[str] = []
     beds_cfg = lesson.get("beds") or {}
     if beds_cfg.get("enabled") and clips_dir is not None:
         bed_track_path = out_dir / f"{lesson_id}.bed.wav"
@@ -620,7 +642,7 @@ def build_one(
         mute_spans = [(c["demo_start_ms"], c["demo_end_ms"]) for c in cuemap
                       if c.get("role") in ("demo", "song")]
         try:
-            build_bed_track(
+            bed_warnings = build_bed_track(
                 bed_insertions=beds_cfg.get("insertions") or [],
                 block_starts=block_starts,
                 block_ends=block_ends,
@@ -629,12 +651,14 @@ def build_one(
                 clips_dir=clips_dir,
                 out_path=bed_track_path,
                 mute_spans=mute_spans,
-            )
+            ) or []
             if not bed_track_path.exists():
                 bed_track_path = None
         except Exception as e:
             print(f"[bed] track generation failed: {e}; assembling without bed")
             bed_track_path = None
+        for w in bed_warnings:
+            print(f"[bed] DROPPED — {w}")
 
     concat_wavs(
         pieces, out_mp3,
@@ -667,6 +691,8 @@ def build_one(
     }
     if missing_demos:
         result["missing_demos"] = missing_demos
+    if bed_warnings:
+        result["bed_warnings"] = bed_warnings
     return result
 
 

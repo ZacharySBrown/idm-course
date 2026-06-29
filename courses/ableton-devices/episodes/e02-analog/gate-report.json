@@ -1,0 +1,92 @@
+{
+  "episode": "e02-analog",
+  "built": true,
+  "ready": true,
+  "checks": [
+    {
+      "check": "narration",
+      "status": "pass",
+      "summary": "33/33 slides narrated",
+      "problems": [],
+      "data": {
+        "slides": 33,
+        "missing": []
+      }
+    },
+    {
+      "check": "preset_books",
+      "status": "pass",
+      "summary": "22/22 described presets have a build book (+1 composed demos exempt)",
+      "problems": [],
+      "data": {
+        "described": 22,
+        "composed": 1
+      }
+    },
+    {
+      "check": "demo_clips",
+      "status": "pass",
+      "summary": "28 cues, 0 unresolved; 0 cued/demo clips not rendered",
+      "problems": [],
+      "data": {
+        "cues": 28,
+        "unrendered": []
+      }
+    },
+    {
+      "check": "beds",
+      "status": "warn",
+      "summary": "5 transitions, 4 beds; acts covered 4/6",
+      "problems": [
+        "act 05: no background-bed coverage (warn \u2014 fill or confirm demo-dense)"
+      ],
+      "data": {
+        "acts": [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06"
+        ],
+        "covered": [
+          "02",
+          "03",
+          "04",
+          "06"
+        ],
+        "uncovered": [
+          "05"
+        ]
+      }
+    },
+    {
+      "check": "audio_style",
+      "status": "warn",
+      "summary": "0 demos >12dB, 1 demos 6-12dB off voice",
+      "problems": [
+        "an-digeridoo-drone: demo 8.9dB vs voice (warn >6)"
+      ],
+      "data": {}
+    },
+    {
+      "check": "loudness",
+      "status": "pass",
+      "summary": "-16.26 LUFS / -1.15 dBTP",
+      "problems": [],
+      "data": {
+        "integrated_lufs": -16.26,
+        "true_peak_db": -1.15
+      }
+    },
+    {
+      "check": "lexicon",
+      "status": "pass",
+      "summary": "33 scripts, 0 violations",
+      "problems": [],
+      "data": {
+        "banned_terms_checked": 21
+      }
+    }
+  ]
+}

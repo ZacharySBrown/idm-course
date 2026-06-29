@@ -1,0 +1,94 @@
+{
+  "episode": "e03-wavetable",
+  "built": true,
+  "ready": true,
+  "checks": [
+    {
+      "check": "narration",
+      "status": "pass",
+      "summary": "29/29 slides narrated",
+      "problems": [],
+      "data": {
+        "slides": 29,
+        "missing": []
+      }
+    },
+    {
+      "check": "preset_books",
+      "status": "pass",
+      "summary": "20/20 described presets have a build book",
+      "problems": [],
+      "data": {
+        "described": 20,
+        "composed": 0
+      }
+    },
+    {
+      "check": "demo_clips",
+      "status": "pass",
+      "summary": "25 cues, 0 unresolved; 0 cued/demo clips not rendered",
+      "problems": [],
+      "data": {
+        "cues": 25,
+        "unrendered": []
+      }
+    },
+    {
+      "check": "beds",
+      "status": "warn",
+      "summary": "5 transitions, 4 beds; acts covered 4/6",
+      "problems": [
+        "act 05: no background-bed coverage (warn \u2014 fill or confirm demo-dense)"
+      ],
+      "data": {
+        "acts": [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06"
+        ],
+        "covered": [
+          "02",
+          "03",
+          "04",
+          "06"
+        ],
+        "uncovered": [
+          "05"
+        ]
+      }
+    },
+    {
+      "check": "audio_style",
+      "status": "warn",
+      "summary": "0 demos >12dB, 3 demos 6-12dB off voice",
+      "problems": [
+        "wt-position-by-hand: demo 7.0dB vs voice (warn >6)",
+        "wt-spectra-step1: demo 8.0dB vs voice (warn >6)",
+        "wt-user-table-scan: demo 6.799999999999999dB vs voice (warn >6)"
+      ],
+      "data": {}
+    },
+    {
+      "check": "loudness",
+      "status": "pass",
+      "summary": "-16.28 LUFS / -2.63 dBTP",
+      "problems": [],
+      "data": {
+        "integrated_lufs": -16.28,
+        "true_peak_db": -2.63
+      }
+    },
+    {
+      "check": "lexicon",
+      "status": "pass",
+      "summary": "29 scripts, 0 violations",
+      "problems": [],
+      "data": {
+        "banned_terms_checked": 21
+      }
+    }
+  ]
+}

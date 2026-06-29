@@ -8,14 +8,14 @@
       "demo_start_ms": 42000,
       "demo_end_ms": 54000,
       "demo_loudness": {
-        "mean": -16.6,
-        "peak": -1.5
+        "mean": -17.0,
+        "peak": -2.7
       },
       "voice_loudness": {
-        "mean": -19.9,
-        "peak": -4.0
+        "mean": -20.1,
+        "peak": -4.2
       },
-      "delta_db": 3.299999999999997,
+      "delta_db": 3.1000000000000014,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -37,14 +37,14 @@
       "demo_start_ms": 273900,
       "demo_end_ms": 283900,
       "demo_loudness": {
-        "mean": -16.2,
-        "peak": -1.5
+        "mean": -16.6,
+        "peak": -2.6
       },
       "voice_loudness": {
-        "mean": -21.4,
-        "peak": -5.5
+        "mean": -21.7,
+        "peak": -5.7
       },
-      "delta_db": 5.199999999999999,
+      "delta_db": 5.099999999999998,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -68,22 +68,21 @@
       "demo_start_ms": 317350,
       "demo_end_ms": 325350,
       "demo_loudness": {
-        "mean": -13.6,
-        "peak": -1.7
+        "mean": -13.9,
+        "peak": -2.8
       },
       "voice_loudness": {
-        "mean": -19.6,
-        "peak": -4.7
+        "mean": -19.8,
+        "peak": -5.0
       },
-      "delta_db": 6.000000000000002,
+      "delta_db": 5.9,
       "auto_checks": {
         "audible": true,
-        "loudness_matched": false,
+        "loudness_matched": true,
         "framed_by_silence": false,
         "overlaps_bed": true
       },
       "flags": [
-        "demo +6.0dB vs nearby voice (want \u00b16)",
         "no silence frame before the demo onset"
       ],
       "manual_review": [
@@ -100,14 +99,14 @@
       "demo_start_ms": 488350,
       "demo_end_ms": 496350,
       "demo_loudness": {
-        "mean": -15.4,
-        "peak": -6.4
+        "mean": -15.7,
+        "peak": -6.6
       },
       "voice_loudness": {
-        "mean": -19.1,
-        "peak": -3.3
+        "mean": -19.4,
+        "peak": -3.6
       },
-      "delta_db": 3.700000000000001,
+      "delta_db": 3.6999999999999993,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -129,14 +128,14 @@
       "demo_start_ms": 703350,
       "demo_end_ms": 706461,
       "demo_loudness": {
-        "mean": -15.1,
-        "peak": -9.7
+        "mean": -15.3,
+        "peak": -9.9
       },
       "voice_loudness": {
-        "mean": -22.0,
-        "peak": -6.1
+        "mean": -22.3,
+        "peak": -6.4
       },
-      "delta_db": 6.9,
+      "delta_db": 7.0,
       "auto_checks": {
         "audible": true,
         "loudness_matched": false,
@@ -144,7 +143,7 @@
         "overlaps_bed": true
       },
       "flags": [
-        "demo +6.9dB vs nearby voice (want \u00b16)",
+        "demo +7.0dB vs nearby voice (want \u00b16)",
         "no silence frame before the demo onset"
       ],
       "manual_review": [
@@ -161,14 +160,14 @@
       "demo_start_ms": 780811,
       "demo_end_ms": 785261,
       "demo_loudness": {
-        "mean": -14.4,
-        "peak": -8.3
+        "mean": -14.7,
+        "peak": -8.6
       },
       "voice_loudness": {
-        "mean": -18.6,
-        "peak": -3.9
+        "mean": -18.8,
+        "peak": -4.1
       },
-      "delta_db": 4.200000000000001,
+      "delta_db": 4.100000000000001,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -192,14 +191,14 @@
       "demo_start_ms": 880111,
       "demo_end_ms": 886561,
       "demo_loudness": {
-        "mean": -14.9,
-        "peak": -9.2
+        "mean": -15.2,
+        "peak": -9.5
       },
       "voice_loudness": {
-        "mean": -18.3,
-        "peak": -4.6
+        "mean": -18.6,
+        "peak": -4.8
       },
-      "delta_db": 3.4000000000000004,
+      "delta_db": 3.400000000000002,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -223,14 +222,14 @@
       "demo_start_ms": 978511,
       "demo_end_ms": 983761,
       "demo_loudness": {
-        "mean": -15.4,
-        "peak": -10.0
+        "mean": -15.6,
+        "peak": -10.3
       },
       "voice_loudness": {
-        "mean": -18.4,
-        "peak": -4.8
+        "mean": -18.7,
+        "peak": -5.1
       },
-      "delta_db": 2.9999999999999982,
+      "delta_db": 3.0999999999999996,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -254,14 +253,14 @@
       "demo_start_ms": 1059211,
       "demo_end_ms": 1064211,
       "demo_loudness": {
-        "mean": -15.6,
-        "peak": -7.3
+        "mean": -15.8,
+        "peak": -7.7
       },
       "voice_loudness": {
-        "mean": -17.5,
-        "peak": -4.5
+        "mean": -17.8,
+        "peak": -4.8
       },
-      "delta_db": 1.9000000000000004,
+      "delta_db": 2.0,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -283,12 +282,12 @@
       "demo_start_ms": 1241611,
       "demo_end_ms": 1246611,
       "demo_loudness": {
-        "mean": -16.9,
-        "peak": -6.4
+        "mean": -17.2,
+        "peak": -6.7
       },
       "voice_loudness": {
-        "mean": -20.4,
-        "peak": -6.2
+        "mean": -20.7,
+        "peak": -6.5
       },
       "delta_db": 3.5,
       "auto_checks": {
@@ -312,12 +311,12 @@
       "demo_start_ms": 1341461,
       "demo_end_ms": 1346461,
       "demo_loudness": {
-        "mean": -17.2,
-        "peak": -5.4
+        "mean": -17.5,
+        "peak": -5.7
       },
       "voice_loudness": {
-        "mean": -18.5,
-        "peak": -4.7
+        "mean": -18.8,
+        "peak": -5.0
       },
       "delta_db": 1.3000000000000007,
       "auto_checks": {
@@ -341,14 +340,14 @@
       "demo_start_ms": 1434811,
       "demo_end_ms": 1440066,
       "demo_loudness": {
-        "mean": -20.5,
-        "peak": -3.9
+        "mean": -20.8,
+        "peak": -4.4
       },
       "voice_loudness": {
-        "mean": -18.8,
-        "peak": -5.3
+        "mean": -19.0,
+        "peak": -5.6
       },
-      "delta_db": -1.6999999999999993,
+      "delta_db": -1.8000000000000007,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -370,14 +369,14 @@
       "demo_start_ms": 1522916,
       "demo_end_ms": 1527366,
       "demo_loudness": {
-        "mean": -20.2,
-        "peak": -2.8
+        "mean": -20.5,
+        "peak": -4.0
       },
       "voice_loudness": {
-        "mean": -18.5,
-        "peak": -4.5
+        "mean": -18.7,
+        "peak": -4.7
       },
-      "delta_db": -1.6999999999999993,
+      "delta_db": -1.8000000000000007,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -399,14 +398,14 @@
       "demo_start_ms": 1664516,
       "demo_end_ms": 1669516,
       "demo_loudness": {
-        "mean": -14.1,
-        "peak": -3.8
+        "mean": -14.3,
+        "peak": -4.1
       },
       "voice_loudness": {
-        "mean": -22.1,
-        "peak": -4.7
+        "mean": -22.3,
+        "peak": -5.0
       },
-      "delta_db": 8.000000000000002,
+      "delta_db": 8.0,
       "auto_checks": {
         "audible": true,
         "loudness_matched": false,
@@ -430,12 +429,12 @@
       "demo_start_ms": 1707016,
       "demo_end_ms": 1713016,
       "demo_loudness": {
-        "mean": -14.5,
-        "peak": -3.7
+        "mean": -14.8,
+        "peak": -3.9
       },
       "voice_loudness": {
-        "mean": -19.5,
-        "peak": -5.2
+        "mean": -19.8,
+        "peak": -5.5
       },
       "delta_db": 5.0,
       "auto_checks": {
@@ -459,14 +458,14 @@
       "demo_start_ms": 1753366,
       "demo_end_ms": 1757894,
       "demo_loudness": {
-        "mean": -20.4,
-        "peak": -2.9
+        "mean": -20.6,
+        "peak": -3.5
       },
       "voice_loudness": {
-        "mean": -20.1,
-        "peak": -5.8
+        "mean": -20.3,
+        "peak": -6.0
       },
-      "delta_db": -0.29999999999999716,
+      "delta_db": -0.3000000000000007,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -488,12 +487,12 @@
       "demo_start_ms": 1801994,
       "demo_end_ms": 1807994,
       "demo_loudness": {
-        "mean": -19.7,
-        "peak": -1.9
+        "mean": -20.0,
+        "peak": -3.0
       },
       "voice_loudness": {
-        "mean": -19.3,
-        "peak": -5.6
+        "mean": -19.6,
+        "peak": -5.9
       },
       "delta_db": -0.3999999999999986,
       "auto_checks": {
@@ -517,14 +516,14 @@
       "demo_start_ms": 1858994,
       "demo_end_ms": 1863543,
       "demo_loudness": {
-        "mean": -21.3,
-        "peak": -2.2
+        "mean": -21.8,
+        "peak": -3.4
       },
       "voice_loudness": {
-        "mean": -19.7,
-        "peak": -4.3
+        "mean": -20.0,
+        "peak": -4.6
       },
-      "delta_db": -1.6000000000000014,
+      "delta_db": -1.8000000000000007,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -546,14 +545,14 @@
       "demo_start_ms": 1907043,
       "demo_end_ms": 1915043,
       "demo_loudness": {
-        "mean": -21.6,
-        "peak": -1.5
+        "mean": -22.3,
+        "peak": -2.7
       },
       "voice_loudness": {
-        "mean": -18.9,
-        "peak": -6.9
+        "mean": -19.1,
+        "peak": -7.2
       },
-      "delta_db": -2.700000000000003,
+      "delta_db": -3.1999999999999993,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -575,14 +574,14 @@
       "demo_start_ms": 1950443,
       "demo_end_ms": 1957815,
       "demo_loudness": {
-        "mean": -21.0,
-        "peak": -1.6
+        "mean": -21.4,
+        "peak": -2.8
       },
       "voice_loudness": {
-        "mean": -18.2,
-        "peak": -3.8
+        "mean": -18.5,
+        "peak": -4.1
       },
-      "delta_db": -2.8000000000000007,
+      "delta_db": -2.8999999999999986,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -604,14 +603,14 @@
       "demo_start_ms": 2026765,
       "demo_end_ms": 2030897,
       "demo_loudness": {
-        "mean": -13.7,
-        "peak": -6.2
+        "mean": -13.9,
+        "peak": -6.3
       },
       "voice_loudness": {
-        "mean": -20.4,
-        "peak": -5.2
+        "mean": -20.7,
+        "peak": -5.5
       },
-      "delta_db": 6.699999999999999,
+      "delta_db": 6.799999999999999,
       "auto_checks": {
         "audible": true,
         "loudness_matched": false,
@@ -619,7 +618,7 @@
         "overlaps_bed": true
       },
       "flags": [
-        "demo +6.7dB vs nearby voice (want \u00b16)",
+        "demo +6.8dB vs nearby voice (want \u00b16)",
         "no silence frame before the demo onset"
       ],
       "manual_review": [
@@ -636,14 +635,14 @@
       "demo_start_ms": 2060647,
       "demo_end_ms": 2068647,
       "demo_loudness": {
-        "mean": -15.7,
-        "peak": -1.4
+        "mean": -16.1,
+        "peak": -2.7
       },
       "voice_loudness": {
-        "mean": -19.3,
-        "peak": -3.9
+        "mean": -19.5,
+        "peak": -4.1
       },
-      "delta_db": 3.6000000000000014,
+      "delta_db": 3.3999999999999986,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -667,14 +666,14 @@
       "demo_start_ms": 2107697,
       "demo_end_ms": 2113799,
       "demo_loudness": {
-        "mean": -19.5,
-        "peak": -1.7
+        "mean": -19.8,
+        "peak": -2.7
       },
       "voice_loudness": {
-        "mean": -20.9,
-        "peak": -6.3
+        "mean": -21.1,
+        "peak": -6.5
       },
-      "delta_db": 1.3999999999999986,
+      "delta_db": 1.3000000000000007,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -698,14 +697,14 @@
       "demo_start_ms": 2172949,
       "demo_end_ms": 2177949,
       "demo_loudness": {
-        "mean": -20.7,
-        "peak": -5.1
+        "mean": -20.9,
+        "peak": -5.3
       },
       "voice_loudness": {
-        "mean": -17.9,
-        "peak": -5.2
+        "mean": -18.2,
+        "peak": -5.4
       },
-      "delta_db": -2.8000000000000007,
+      "delta_db": -2.6999999999999993,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,
@@ -729,14 +728,14 @@
       "demo_start_ms": 2232449,
       "demo_end_ms": 2238449,
       "demo_loudness": {
-        "mean": -15.7,
-        "peak": -3.1
+        "mean": -16.0,
+        "peak": -3.4
       },
       "voice_loudness": {
-        "mean": -20.3,
-        "peak": -5.9
+        "mean": -20.5,
+        "peak": -6.2
       },
-      "delta_db": 4.600000000000001,
+      "delta_db": 4.5,
       "auto_checks": {
         "audible": true,
         "loudness_matched": true,

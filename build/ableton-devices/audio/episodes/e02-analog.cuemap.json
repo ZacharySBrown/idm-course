@@ -199,7 +199,35 @@
     "heading": "The Filter as Oscillator: Digeridoo",
     "cue_id": "digeridoo-clip",
     "role": "song",
-    "demo_start_ms": 2713653,
-    "demo_end_ms": 2723653
+    "demo_start_ms": 2732453,
+    "demo_end_ms": 2742453
+  },
+  {
+    "heading": "The MS-20 Dual Filter, Abused",
+    "cue_id": "an-ms20-scream",
+    "role": "song",
+    "demo_start_ms": 2800603,
+    "demo_end_ms": 2804732
+  },
+  {
+    "heading": "The MS-20 Dual Filter, Abused",
+    "cue_id": "tri-repetae-clip",
+    "role": "song",
+    "demo_start_ms": 2827182,
+    "demo_end_ms": 2837182
+  },
+  {
+    "heading": "Looping Envelopes as Rhythm",
+    "cue_id": "an-loop-env-pulse",
+    "role": "song",
+    "demo_start_ms": 2894332,
+    "demo_end_ms": 2900332
+  },
+  {
+    "heading": "Fat Is Just Interference",
+    "cue_id": "trans-can-you-feel-it",
+    "role": "transition",
+    "demo_start_ms": 2998232,
+    "demo_end_ms": 3012232
   }
 ]
