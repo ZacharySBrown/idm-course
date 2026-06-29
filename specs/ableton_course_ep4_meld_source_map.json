@@ -1,0 +1,264 @@
+{
+  "_meta": {
+    "episode": "ep4_meld",
+    "title": "Meld — Ableton Live 12's bi-timbral dual macro-oscillator MPE synth",
+    "dossier": "specs/ableton_course_ep4_meld_research.md",
+    "format": "claim_id -> {claim, confidence, source, url, quote}",
+    "confidence_legend": "CONFIRMED = primary/authoritative; LIKELY = strong secondary/single good source; UNCERTAIN = thin/contradicted/inference",
+    "note": "Meld is a 2024 device with no confirmed artist-track canon. Every Section 3/4 track illustrates a TECHNIQUE, not Meld usage; flagged as such."
+  },
+  "claims": {
+    "meld_is_bitimbral_macro_osc": {
+      "claim": "Meld is a bi-timbral, dual macro-oscillator, MPE-capable synthesizer with two independent engines (A and B), each with its own oscillator, filter, envelopes, LFOs, and MIDI/MPE modulation matrix.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Reference Manual — Live Instrument Reference",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "Each of the device's engines has a dedicated filter, envelopes, LFOs, and a MIDI and MPE-enabled Modulation Matrix."
+    },
+    "meld_bitimbral_definition": {
+      "claim": "Bi-timbral means the two engines produce, sculpt and combine two complete sounds independently.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton blog — Meld: A Look at Live 12's New Bi-Timbral Synth",
+      "url": "https://www.ableton.com/en/blog/meld-a-look-at-live-12s-new-bi-timbral-synth/",
+      "quote": "Meld is bi-timbral, meaning its distinct engines can produce, sculpt and combine two complete sounds without being tied to the amplitude and filter envelopes of one system."
+    },
+    "meld_NOT_physical_modeller": {
+      "claim": "CORRECTION: Meld is NOT a physical-modelling (Karplus-Strong/waveguide) synth. It is a macro-oscillator synth; only the Plate/Membrane Resonator FILTERS are physical-modelling-flavoured (modal). The 'Physical Modelling Hybrid' subtitle is inaccurate and should be changed.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton DSP reference (osc list) + SOS (resonator filters) + Ableton blog (macro-osc framing)",
+      "url": "https://www.soundonsound.com/techniques/ableton-live-meld",
+      "quote": "Scale-aware plate and membrane resonators that snap those resonant frequencies into tune with your track. [Meld is described throughout as a bi-timbral macro oscillator synth, not a physical modeller.]"
+    },
+    "meld_version_12_0_not_12_1": {
+      "claim": "CORRECTION: Meld shipped in the initial Live 12.0 release on 5 March 2024 (with Roar and Granulator III), NOT in 12.1. The brief's '12.1' is wrong.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton blog 'Live 12 — coming March 5' + Engadget + MusicTech launch coverage",
+      "url": "https://www.ableton.com/en/blog/ableton-live-12-coming-march-5/",
+      "quote": "Live 12 was available at Ableton.com starting March 5, 2024 ... new devices such as Meld, Roar, and Granulator III. [Engadget: 'Meld is exclusively available in the Live 12 Suite edition.']"
+    },
+    "meld_chord_osc_added_12_2": {
+      "claim": "The Chord oscillator type (four sawtooth oscillators playing chords) was ADDED in Live 12.2 (11 June 2025) — the only Meld feature added after the 12.0 launch. So Meld has 24 osc types at 12.0 and 25 at 12.2+.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Live 12 Release Notes",
+      "url": "https://www.ableton.com/en/release-notes/live-12/",
+      "quote": "Added a new Chord oscillator type, which is comprised of four sawtooth oscillators that play a variety of chords. Added new Meld presets that feature the Chord oscillator."
+    },
+    "meld_suite_only": {
+      "claim": "Meld is a Live 12 Suite-exclusive device (not in Intro or Standard).",
+      "confidence": "CONFIRMED",
+      "source": "Ableton — Compare Live editions",
+      "url": "https://www.ableton.com/en/live/compare-editions",
+      "quote": "Meld (New in Live 12) appears exclusively under the Suite column; not available in Intro and Standard editions."
+    },
+    "meld_design_team": {
+      "claim": "Meld was designed by concept lead / UX designer Christian Kleine with lead engineer Rob Tubb.",
+      "confidence": "CONFIRMED",
+      "source": "Sound on Sound — Ableton Live: Meld",
+      "url": "https://www.soundonsound.com/techniques/ableton-live-meld",
+      "quote": "Concept lead and UX designer: Christian Kleine. Lead engineer: Rob Tubb."
+    },
+    "kleine_two_synths_quote": {
+      "claim": "Christian Kleine describes Meld as two synthesizers in one.",
+      "confidence": "CONFIRMED",
+      "source": "Sound on Sound — Ableton Live: Meld",
+      "url": "https://www.soundonsound.com/techniques/ableton-live-meld",
+      "quote": "It's two synthesizers in one. It allows for a combination of two things, and this makes the sum bigger than its parts."
+    },
+    "tubb_modular_influence_quote": {
+      "claim": "Rob Tubb cites Mutable Instruments / modular adaptability as a big influence on Meld.",
+      "confidence": "CONFIRMED",
+      "source": "Sound on Sound — Ableton Live: Meld",
+      "url": "https://www.soundonsound.com/techniques/ableton-live-meld",
+      "quote": "The sheer adaptability and multi-function stuff that modules can do, that was a big influence."
+    },
+    "kleine_scale_aware_quote": {
+      "claim": "Kleine considers scale awareness a must-have for any modern synth.",
+      "confidence": "CONFIRMED",
+      "source": "Sound on Sound — Ableton Live: Meld",
+      "url": "https://www.soundonsound.com/techniques/ableton-live-meld",
+      "quote": "Even if you don't use scale awareness, this is a feature that I think is a must-have for any modern synth."
+    },
+    "meld_24_osc_types_6_scale_aware": {
+      "claim": "Each engine offers twenty-four oscillator types including six scale-aware oscillators (marked with flat-sharp symbol).",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Reference Manual — Live Instrument Reference",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "Engines A and B each have a selection of twenty-four oscillator types to choose from, including six scale aware oscillators."
+    },
+    "meld_osc_type_full_list": {
+      "claim": "The 24 oscillator types with their two macros each: Basic Shapes (Shape/Tone), Bitgrunge (Frequency/Mult), Bubble (Density/Spread), Chip (Tone/Rate), Crackle (Density/Intensity), Dual Basic Shapes (Shape/Detune), Extratone (Pitch/Env Amount), Filtered Noise (Frequency/Narrowness), Fold FM (FM Amount/Shape), Harmonic FM (FM Amount/FM Ratio), Noise Loop (Rate/Fade), Noisy Shapes (Shape/Rough), Rain (Tone/Rate), Shepard's Pi (Rate/Width), Simple FM (FM Amount/FM Ratio), Square 5th (5th Amount/Pulse Width), Square Sync (Freq 1/Freq 2), FM Bass aka Squelch (FM Amount/Feedback), Sub (Tone/Aux), Swarm Saw/Sine/Square/Triangle (Motion/Spacing), Tarp (Decay/Tone).",
+      "confidence": "CONFIRMED",
+      "source": "Ableton DSP Reference — abl.dsp.meldosc~ (Cycling '74 docs)",
+      "url": "https://docs.cycling74.com/reference/abl.dsp.meldosc~",
+      "quote": "Bitgrunge: A pseudo-random lo-fi square wave oscillator reminiscent of loading an old computer game from a tape. Shepard's Pi: A Shepard tone oscillator with depth and direction. Harmonic FM: A harmonic FM oscillator with modulation ratio and amount. FM Bass (Squelch): A FM oscillator with modulation index amount and operator feedback. [Full 24-entry table with per-type Macro 1 / Macro 2 enumerated.]"
+    },
+    "meld_six_scale_aware_named": {
+      "claim": "The six scale-aware oscillator types are Dual Basic Shapes, Chip, Swarm Sine, Swarm Triangle, Swarm Saw, and Swarm Square.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Reference Manual — Live Instrument Reference",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "Six oscillator types support scale awareness: Dual Basic Shapes, Swarm Sine, Swarm Triangle, Swarm Saw, Swarm Square, and Chip."
+    },
+    "meld_two_macros_per_osc": {
+      "claim": "Each oscillator type has exactly two dedicated macro knobs whose meaning changes with the selected type.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton — Meld pack page",
+      "url": "https://www.ableton.com/en/packs/meld/",
+      "quote": "Each engine features two dedicated macro knobs, which change along with the oscillator type selected."
+    },
+    "meld_squelch_feedback": {
+      "claim": "The FM Bass (Squelch) oscillator exposes operator feedback as its second macro — the one place Meld exposes FM feedback.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton DSP Reference — abl.dsp.meldosc~",
+      "url": "https://docs.cycling74.com/reference/abl.dsp.meldosc~",
+      "quote": "FM Bass (Squelch): A FM oscillator with modulation index amount and operator feedback. [Macro 1: FM Amount, Macro 2: Feedback]"
+    },
+    "meld_17_filter_types": {
+      "claim": "Each engine has one dedicated filter offering seventeen filter types (LP/HP/BP, phasers, comb, vocal/vowel formant, lo-fi/bitcrusher, resonators), each with two macro knobs.",
+      "confidence": "CONFIRMED",
+      "source": "MusicRadar — Ultimate guide to Meld + SOS",
+      "url": "https://www.musicradar.com/news/ableton-live-12-ultimate-guide-to-meld",
+      "quote": "17 types available [filter examples: Plate Resonator, Phaser, Vowel filter, Lo-fi effects, Bitcrusher]."
+    },
+    "meld_resonator_filters_scale_aware": {
+      "claim": "The Plate Resonator and Membrane Resonator filters are scale-aware modal resonators that snap resonant frequencies to the track's tuning — the one genuinely physical-modelling-flavoured DSP element in Meld.",
+      "confidence": "CONFIRMED",
+      "source": "Sound on Sound — Ableton Live: Meld",
+      "url": "https://www.soundonsound.com/techniques/ableton-live-meld",
+      "quote": "Scale-aware plate and membrane resonators that snap those resonant frequencies into tune with your track."
+    },
+    "meld_envelopes_loop_modes": {
+      "claim": "Each engine has two envelopes (Amplitude + Modulation), ADSR with adjustable slopes and three loop modes: Trigger, Loop, and AD Loop. A Link Envelopes button links each engine's amp and mod envelopes.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Reference Manual — Live Instrument Reference",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "Attack, Decay, Sustain, and Release, with slope adjustments and three loop modes: Trigger mode, Loop mode, and AD Loop mode. Link Envelopes button links each engine's Amplitude and Modulation envelopes."
+    },
+    "meld_lfo_config": {
+      "claim": "Each engine has LFO 1 (with an FX panel), LFO 1 FX (eighteen effect types incl. S&H/fade-in, usable as an independent source), and LFO 2 (six classic waveforms). LFO 1 and LFO 1 FX are independent matrix sources.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Reference Manual — Live Instrument Reference",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "LFO 1 (with FX panel for serial effects), LFO 1 FX (eighteen effect types), and LFO 2 (six classic waveforms). LFO 1 and LFO1 FX can be used as independent modulation sources in Meld's Modulation Matrix."
+    },
+    "meld_lfo_200hz_audio_rate": {
+      "claim": "Meld's LFO rate reaches ~200 Hz, into audio rate, for tonal/sideband modulation effects.",
+      "confidence": "CONFIRMED",
+      "source": "Sound on Sound — Ableton Live: Meld",
+      "url": "https://www.soundonsound.com/techniques/ableton-live-meld",
+      "quote": "LFO rate goes up to a relatively fast 200Hz, allowing you to achieve real audio-rate tonal effects by modulating volume or filter with LFO 1 FX."
+    },
+    "meld_mod_matrix": {
+      "claim": "Each engine has its own Modulation Matrix (sources across top, targets down side, bipolar amounts), ~23 targets in expanded view, with cross-engine modulation (one engine's LFOs/envelopes can modulate the other engine).",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Reference Manual + MusicRadar (~23 targets) + SOS (cross-engine)",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "Meld's Modulation Matrix lets you assign modulation sources to modulation targets within the device. [MusicRadar: 'approximately 23 targets in expanded view'; SOS: 'Synth A's LFOs can modulate Synth B's parameters.']"
+    },
+    "meld_midi_mpe_sources": {
+      "claim": "Matrix MIDI sources include Velocity, Pitch (note), Random, Pitch Bend, Press (channel aftertouch), Modulation Wheel; MPE sources include per-note Note Pitch Bend, Slide (Y/CC74), and Press (per-note pressure).",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Reference Manual — Live Instrument Reference",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "Velocity, Pitch, Random, Pitch Bend, Press, Modulation Wheel, and MPE controls (Note Pitch Bend, Slide, and Press)."
+    },
+    "meld_mpe_designed_in": {
+      "claim": "Meld is designed MPE-first; the MIDI and MPE tabs turn MPE functionality into modulation sources, making Meld a dynamic performance tool.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton — Meld pack page + Ableton blog",
+      "url": "https://www.ableton.com/en/packs/meld/",
+      "quote": "Live's new MPE-capable synthesizer is designed for sound variety, playfulness and character. [Blog: 'Meld's MIDI and MPE tabs let you use MIDI and MPE functionality as modulation sources, which can turn Meld into an extremely dynamic performance tool.']"
+    },
+    "meld_mixer_global": {
+      "claim": "Per-engine mixer: Volume, Pan, Tone Filter (high/low tone cut). Global: Drive, Limiter, Master Volume. Voicing: Poly/Mono, glide modes Portamento and Glissando, Stacked Voices + Spread (unison), phase-reset options.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton Reference Manual + MusicRadar",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "Per-engine: Volume, Pan, Tone Filter. Global controls include Drive, Limiter, Master Volume. Supports glide modes (Portamento and Glissando) and phase reset options. [MusicRadar: 'high/low tone cut in mixer section.']"
+    },
+    "meld_voice_cap_unresolved": {
+      "claim": "Polyphony cap is UNRESOLVED in public docs: one manual read says up to 32 voices, another says the Poly drop-down maxes at 12. VERIFY in the live device before stating a number on-mic.",
+      "confidence": "UNCERTAIN",
+      "source": "Ableton Reference Manual (conflicting search summaries)",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "Supports up to 32 voices [one read] / Poly drop-down lets you increase voices up to 12 [another read]. CONFLICT — verify in device."
+    },
+    "macro_oscillator_definition": {
+      "claim": "A macro-oscillator is a single oscillator slot hiding a complex DSP algorithm behind a small fixed set of high-level macros (two in Meld), trading fine editability for instant breadth and playability.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton — Meld pack page (macro framing) + Ableton DSP reference (per-type macros)",
+      "url": "https://www.ableton.com/en/packs/meld/",
+      "quote": "Each engine features two dedicated macro knobs, which change along with the oscillator type selected."
+    },
+    "plaits_lineage": {
+      "claim": "The macro-oscillator-as-product idea was crystallized by Mutable Instruments (Émilie Gillet): Braids (2013), Plaits (2018, 16 synthesis models). Plaits' firmware/DSP was released open-source (MIT) and propagated to Behringer Brains, Arturia MicroFreak, VCV Rack, etc.",
+      "confidence": "CONFIRMED",
+      "source": "Mutable Instruments Plaits documentation + SynthAnatomy (Brains)",
+      "url": "https://pichenettes.github.io/mutable-instruments-documentation/modules/plaits/",
+      "quote": "Plaits contains 16 total synthesis engines [pitched + noise/percussion]. [SynthAnatomy: 'Behringer Brains, macro oscillator with 15 Mutable Instruments Plaits algorithms'; firmware released under permissive open source licenses.]"
+    },
+    "plaits_has_physical_models": {
+      "claim": "Plaits genuinely contains physical-modelling engines — Karplus-Strong (extended) and a modal resonator — which is the likely origin of the 'physical modelling' association; Meld inherited only the modal-resonator idea (as filters), not a Karplus-Strong oscillator.",
+      "confidence": "CONFIRMED",
+      "source": "Mutable Instruments Plaits documentation",
+      "url": "https://pichenettes.github.io/mutable-instruments-documentation/modules/plaits/",
+      "quote": "Karplus-Strong ... excited by bursts of white noise. Modal resonator ... excited by a mallet or dust noise. [These are explicitly physical-modelling based.]"
+    },
+    "meld_plaits_influence_not_code": {
+      "claim": "Meld is acknowledged as influenced by Mutable/modular thinking (Tubb quote), but NO source documents Plaits open-source code being inside Meld. Frame as lineage/influence, never 'Plaits inside Meld.'",
+      "confidence": "LIKELY",
+      "source": "Sound on Sound — Ableton Live: Meld (Tubb influence quote)",
+      "url": "https://www.soundonsound.com/techniques/ableton-live-meld",
+      "quote": "The sheer adaptability and multi-function stuff that modules can do, that was a big influence. [No claim of code reuse exists in any source consulted.]"
+    },
+    "mpe_paradigm": {
+      "claim": "MPE (MIDI Polyphonic Expression, MMA-adopted 2018) gives each note its own MIDI channel so pitch bend, a Y-axis Slide (CC74), and per-note pressure can be controlled independently per finger — popularized by ROLI Seaboard, LinnStrument, Push 3.",
+      "confidence": "CONFIRMED",
+      "source": "General MIDI standard knowledge (flagged as such in dossier)",
+      "url": "https://www.ableton.com/en/manual/live-instrument-reference/",
+      "quote": "MPE controls (Note Pitch Bend, Slide, and Press) [as per-note matrix sources in Meld]. [MPE per-note-channel definition is general MIDI knowledge.]"
+    },
+    "aphex_per_note_iridium": {
+      "claim": "Aphex Twin collaborated on the Waldorf Iridium MK2 Per-Note Parameter Locks — illustrating the IDM per-note-timbre obsession that MPE in Meld serves. THEMATIC KINSHIP ONLY: no source links Aphex to Meld.",
+      "confidence": "CONFIRMED (collaboration); UNVERIFIED (Meld usage)",
+      "source": "MusicRadar — Waldorf Iridium Aphex Twin collaboration",
+      "url": "https://www.musicradar.com/music-tech/synths/waldorf-upgrades-its-iridium-desktop-synth-with-a-little-help-from-aphex-twin",
+      "quote": "the result of a collaboration with legendary Aphex Twin [Per-Note Parameter Locks]. NOTE: connects Aphex to per-note control as an idea, NOT to Meld."
+    },
+    "autechre_modulate_not_notes": {
+      "claim": "Autechre's self-generating-pattern / modulate-a-parameter aesthetic (custom Max/MSP from Confield on) is an aesthetic analogue for Meld's loop-mode Mod-Env -> oscillator-macro trick. Aesthetic kinship; UNVERIFIED as Meld usage.",
+      "confidence": "LIKELY (aesthetic); UNVERIFIED (Meld usage)",
+      "source": "Sound on Sound — Autechre: Techno Logical",
+      "url": "https://www.soundonsound.com/people/autechre-techno-logical",
+      "quote": "[Autechre's documented custom Max/MSP, parameter-driven self-generating approach. No Meld usage claim.]"
+    },
+    "squarepusher_builds_own": {
+      "claim": "Squarepusher builds his own tools in Reaktor and avoids off-the-shelf presets — used as an honest negative; no Meld usage claimed.",
+      "confidence": "CONFIRMED (stance)",
+      "source": "Sound on Sound — Squarepusher",
+      "url": "https://www.soundonsound.com/people/squarepusher",
+      "quote": "[Squarepusher's documented preference for self-built Reaktor instruments over off-the-shelf devices.]"
+    },
+    "plaid_polymer_texture": {
+      "claim": "Plaid's Polymer (2019) used Tone2 Icarus + Madrona Polymer for scanning/morphing textures — used as the 'timbre-as-composition' technique exemplar, NOT a Plaits/Meld claim.",
+      "confidence": "CONFIRMED (gear); illustrative only",
+      "source": "Headphone Commute — Interview with Plaid",
+      "url": "https://headphonecommute.com/2019/09/17/interview-with-plaid/",
+      "quote": "more original sounds perhaps were made with Tone2's Icarus using the 3D Wavetable functionality ... making and scanning through wavetables on Polymer."
+    },
+    "boc_analog_texture": {
+      "claim": "Boards of Canada use analog gear + sampler (Akai S1000) for their field-recording-flavoured texture — cited as an aesthetic target for Meld's Rain/Crackle oscillators, NOT a Meld claim (and confirmed they do not use Meld-style wavetable/macro synths).",
+      "confidence": "CONFIRMED (gear); illustrative negative",
+      "source": "Gearnews — Boards of Canada gear",
+      "url": "https://www.gearnews.com/boards-of-canada-sound-perfect-match/",
+      "quote": "[BoC's documented analog + Akai S1000 sampler setup. Used as texture target, not Meld usage.]"
+    },
+    "live_12_release_date": {
+      "claim": "Live 12 was released 5 March 2024.",
+      "confidence": "CONFIRMED",
+      "source": "Ableton blog — Live 12 coming March 5 + DJ Life",
+      "url": "https://www.ableton.com/en/blog/ableton-live-12-coming-march-5/",
+      "quote": "Live 12 was available at Ableton.com starting March 5, 2024."
+    }
+  }
+}

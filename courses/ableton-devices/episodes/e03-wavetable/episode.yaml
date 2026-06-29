@@ -1,0 +1,270 @@
+id: e03-wavetable
+title: "Wavetable: Morphing Through Spectra"
+device: Wavetable
+synthesis_type: "Wavetable (position-scan over single-cycle frames + Cytomic filters)"
+week: 3                        # episode-number alias for shared build_episode
+target_duration_minutes: 40
+ableton_manual_url: "https://www.ableton.com/en/manual/live-instrument-reference/"
+
+idm_primary_artists:
+  - Plaid
+  - Aphex Twin
+  - Autechre
+idm_primary_records:
+  - "Plaid — Polymer"
+  - "Depeche Mode — A Broken Frame"
+  - "Skrillex — Scary Monsters and Nice Sprites"
+adjacent_genres:
+  - synth-pop
+  - dubstep
+  - melodic bass / EDM
+
+# Bibliography references checked by validate.ts; full entries in references/bibliography.json.
+# NOTE: ep03 bib keys to be added during scripting — listed here as the citation
+# spine the Researcher's dossier (specs/ableton_course_ep3_wavetable_research.md) hangs on.
+references:
+  - bib:ableton_manual_wavetable
+  - bib:ableton_blog_new_wave
+  - bib:sos_wavetable_ableton_synth
+  - bib:help_ableton_user_wavetables
+  - bib:wikipedia_wavetable_synthesis
+  - bib:wikipedia_ppg_wave
+  - bib:hermannseib_ppg_history
+  - bib:musicradar_palm_emulation_boring
+  - bib:tillkopper_ppg_demystified
+  - bib:wikipedia_waldorf_music
+  - bib:sos_waldorf_microwave_creative
+  - bib:waldorfmusic_charlie_clouser
+  - bib:musicradar_massive_synth_week
+  - bib:uniphonic_xfer_serum
+  - bib:vital_audio
+  - bib:sos_tangerine_dream_part2
+  - bib:reverbmachine_tff_everybody
+  - bib:sideline_ppg_brainworx
+  - bib:attackmagazine_wavetable_routings
+  - bib:kvraudio_wavetable_aliasing
+  - bib:headphonecommute_plaid_polymer
+  - bib:musicradar_iridium_aphex
+
+# Background-music transitions inserted after specific slides. Each entry's
+# clip_id resolves to an entry in clip_manifest.yaml (under song_clips). Left
+# minimal for the skeleton — Sound Designer fills clip ids after SCRIPT LOCK.
+transitions:
+  enabled: true
+  insertions:
+    - after_slide: 02e-ableton-enters         # end of section 2 (history) → into 3
+      clip_id: TBD
+    - after_slide: 03e-wavetable-vs-fm         # end of section 3 (synthesis) → into 4
+      clip_id: TBD
+    - after_slide: 04f-vs-serum-massive         # end of section 4 (device) → into 5
+      clip_id: TBD
+    - after_slide: 05g-save                      # end of walkthrough → into 6
+      clip_id: TBD
+    - after_slide: 06d-mpe-position              # before listener exercise
+      clip_id: TBD
+
+# Background music beds — sidechain-ducked under narration. Left minimal for the
+# skeleton; ranges are placeholders the Sound Designer tightens after lock.
+beds:
+  enabled: true
+  duck_db: -14
+  insertions:
+    - clip_id: TBD
+      start_at_slide: 02a-palm-accident
+      end_at_slide: 02e-ableton-enters
+      gain_db: -3
+    - clip_id: TBD
+      start_at_slide: 03a-what-a-wavetable-is
+      end_at_slide: 03e-wavetable-vs-fm
+      gain_db: -2
+    - clip_id: TBD
+      start_at_slide: 04a-architecture
+      end_at_slide: 04f-vs-serum-massive
+      gain_db: -3
+    - clip_id: TBD
+      start_at_slide: 06a-import-your-own
+      end_at_slide: 06e-exercise
+      gain_db: -3
+
+# Episode runs as a sequence of slides (chunks); shared/tools/build_episode.py
+# concatenates narration WAVs in this order, splicing demo clips after each
+# slide's narration. Each demo id resolves via clip_manifest.yaml to either a
+# song-clip or a Wavetable-render WAV. Wavetable device renders use the `wt-`
+# prefix.
+#
+# ── ARC (planted up front — this is the ep1 structural lesson applied) ──────
+#   FOCUS SENTENCE: "Wavetable synthesis is the art of modulating one parameter
+#     — Position — and everything from the 1982 PPG choir to the 2021 dubstep
+#     growl is the same gesture at a different rate: you don't filter a sound to
+#     make it move, you walk between sounds."
+#   DRIVING QUESTION: "Why is the most important knob in the whole instrument the
+#     one that changes neither pitch, nor volume, nor the filter — only which
+#     waveform you're playing while you play it?"
+#   SURPRISING PAYOFF: the harsh scan Wolfgang Palm tried to filter OUT in 1978 —
+#     and then kept — is the same Position-modulation gesture that became 80s pop
+#     (PPG choir), the gritty-digital 90s (Waldorf), and the modern dubstep growl;
+#     a pad and a Skrillex bass are one LFO-rate decision apart on the SAME patch.
+#   PAYOFF REFRAIN (seed in 01-cold-open; echo once per act boundary —
+#     02e / 03e / 04f / 05g — and land in 06e): "Pitch and timbre, separate dials.
+#     Walk the timbre."  (the three-beat spine, made sayable)
+#   ANECDOTE/REFLECTION ALTERNATION: history beats (Palm's accident, the PPG 80s,
+#     Waldorf grit, the plugin revival) are ANECDOTE; theory + device beats are
+#     REFLECTION; the walkthrough is hands-on. Keep them interleaved — never run
+#     >2 reflection beats without an anecdote (the ep1 Section-4 flatline failure).
+#   ACT-BOUNDARY SIGNPOSTS: every section-opening slide names the stop and ties
+#     it to the focus sentence (cold open plants the four-stop map; each act open
+#     says "you are here"). See script/*.md headers.
+slides:
+  # ── Cold Open (90s) — confession: the failed filter that became the sound.
+  #    PLANT HERE: the four-stop map (history / theory / the device / make-IDM-
+  #    with-it) and the first instance of the "Pitch and timbre, separate dials.
+  #    Walk the timbre." refrain. Bed in under the PPG "See You" choir. ─────────
+  - id: 01-cold-open
+    heading: "Cold Open"
+    script_md: script/01-cold-open.md
+    demos: [see-you-cold-open]
+
+  # ── Section 2: History & Theory (8–9 min, 5 beats) ─────────────────────
+  #    ACT OPEN — signpost: "Stop one — where this sound came from." 02a tells
+  #    the Palm accident concretely (a failed low-pass that scanned harshly) so
+  #    every history beat after it is an ANSWER to "who kept the harsh part, and
+  #    why did it win three separate times?".
+  - id: 02a-palm-accident
+    heading: "The Palm Accident (1978)"
+    script_md: script/02a-palm-accident.md
+  - id: 02b-ppg-defines-80s
+    heading: "The PPG Wave Defines the 80s"
+    script_md: script/02b-ppg-defines-80s.md
+    demos: [see-you-choir, everybody-wants-bass]
+  - id: 02c-waldorf-grit
+    heading: "Waldorf Carries the Grit (1989–2007)"
+    script_md: script/02c-waldorf-grit.md
+  - id: 02d-plugin-revival
+    heading: "The Plugin Revival: Massive, Serum, Vital"
+    script_md: script/02d-plugin-revival.md
+    demos: [scary-monsters-growl]
+  - id: 02e-ableton-enters
+    heading: "Ableton Enters (Live 10, 2018)"
+    script_md: script/02e-ableton-enters.md
+
+  # ── Section 3: Synthesis Deep Dive (8–9 min, 5 beats) ──────────────────
+  #    ACT SEAM (history → theory) must be MOTIVATED, not a cut: 03a opens by
+  #    turning the just-named PPG choir into a question — "we heard scanning do
+  #    its thing for forty years; now, for a physicist, what IS a wavetable and
+  #    why is pitch on a separate dial from timbre?"
+  #    ACT OPEN — signpost: "Stop two — how it actually works."
+  - id: 03a-what-a-wavetable-is
+    heading: "What a Wavetable IS"
+    script_md: script/03a-what-a-wavetable-is.md
+    demos: [wt-position-by-hand]
+  - id: 03b-additive-connection
+    heading: "The Additive Connection (For the Physicist)"
+    script_md: script/03b-additive-connection.md
+    demos: [wt-ab-two-positions]
+  - id: 03c-interpolation
+    heading: "Interpolation: The Math of Scanning"
+    script_md: script/03c-interpolation.md
+    demos: [wt-zipper-vs-smooth]
+  - id: 03d-aliasing
+    heading: "Aliasing: The Central DSP Fight"
+    script_md: script/03d-aliasing.md
+    demos: [wt-hiq-on-vs-off]
+  - id: 03e-wavetable-vs-fm
+    heading: "Wavetable vs FM: Interpolate, Don't Generate"
+    script_md: script/03e-wavetable-vs-fm.md
+    demos: [wt-fm-inside-wavetable]
+
+  # ── Section 4: Ableton Wavetable Deep Dive (8–9 min, 6 beats) ──────────
+  #    DRIVING QUESTION — planted at 04a, answered by EVERY beat after it (the
+  #    ep1 Section-4 fix; without this the device tour flatlines into "and also,
+  #    and also"): "Ableton came to wavetable LAST — after Massive, Serum, Vital
+  #    already owned it. So what did they do DIFFERENTLY: what did they leave OUT
+  #    on purpose, what did they build the whole instrument AROUND, and what can
+  #    it do that Serum can't do in one click?"
+  #    Each beat answers it: 04b = what they built around (the per-osc effects +
+  #    the matrix is destination-first); 04c = the matrix is the heart; 04d/04e =
+  #    the parts that serve Position (envelopes/LFOs, filters); 04f = what they
+  #    left out (no FFT editor) and what's distinctive (Split, Position Spread).
+  - id: 04a-architecture
+    heading: "Wavetable Architecture: 2 Osc + Sub"
+    script_md: script/04a-architecture.md
+  - id: 04b-oscillator-effects
+    heading: "The Oscillator Effects: FM, Classic, Modern"
+    script_md: script/04b-oscillator-effects.md
+    demos: [wt-modern-fold-sweep]
+  - id: 04c-mod-matrix
+    heading: "The Modulation Matrix: The Heart"
+    script_md: script/04c-mod-matrix.md
+    demos: [wt-lfo-to-position]
+  - id: 04d-envelopes-lfos
+    heading: "Envelopes and LFOs: The Fade-In Trick"
+    script_md: script/04d-envelopes-lfos.md
+    demos: [wt-lfo-attack-bloom]
+  - id: 04e-filters-unison
+    heading: "Filters and Unison: Cytomic + Position Spread"
+    script_md: script/04e-filters-unison.md
+    demos: [wt-position-spread-chord]
+  - id: 04f-vs-serum-massive
+    heading: "Wavetable vs Serum vs Massive"
+    script_md: script/04f-vs-serum-massive.md
+
+  # ── Section 5: Patch Walkthrough — PPG choir → Subtronics growl (5–6 min,
+  #    7 steps) — one patch, one macro proves they're the same instrument.
+  #    ACT SEAM (device → hands-on) motivated: "enough touring the panel — the
+  #    only way Position means anything is one decision at a time." ACT OPEN —
+  #    signpost: "Stop three — build it." Plant position markers in the steps
+  #    ("step 3 of 7", "halfway — now we turn the pad into a growl") so the build
+  #    does not feel like it might run forever (the ep1 Section-5 marker gap).
+  - id: 05a-vowel-pad
+    heading: "Step 1: A Static Vowel Pad"
+    script_md: script/05a-vowel-pad.md
+    demos: [wt-spectra-step1]
+  - id: 05b-lfo-position
+    heading: "Step 2: Slow LFO to Position — the PPG Choir"
+    script_md: script/05b-lfo-position.md
+    demos: [wt-spectra-step2]
+  - id: 05c-position-spread
+    heading: "Step 3: Position Spread — a Chord of Timbres"
+    script_md: script/05c-position-spread.md
+    demos: [wt-spectra-step3]
+  - id: 05d-sub-and-bell
+    heading: "Step 4: Sub for Weight, Osc 2 for Glass"
+    script_md: script/05d-sub-and-bell.md
+    demos: [wt-spectra-step4]
+  - id: 05e-arm-the-growl
+    heading: "Step 5: Arm the Growl — Fast LFO + FM"
+    script_md: script/05e-arm-the-growl.md
+    demos: [wt-spectra-step5]
+  - id: 05f-macro-morph
+    heading: "Step 6: One Macro — Pad to Growl"
+    script_md: script/05f-macro-morph.md
+    demos: [wt-spectra-macro-sweep]
+  - id: 05g-save
+    heading: "Step 7: Save the Patch"
+    script_md: script/05g-save.md
+    demos: [wt-spectra-morph-final]
+
+  # ── Section 6: IDM Application (5–6 min, 5 beats) ──────────────────────
+  #    ACT OPEN — signpost: "Stop four — make Plaid and the PPG out of it." The
+  #    payoff lands in 06e: restate the focus sentence and the "Pitch and timbre,
+  #    separate dials. Walk the timbre." refrain as resolution (NOT a new
+  #    thought) — close on the exercise + a shrug, never a motivational kicker.
+  - id: 06a-import-your-own
+    heading: "Import Your Own Wavetable"
+    script_md: script/06a-import-your-own.md
+    demos: [wt-user-table-scan, polymer-clip]
+  - id: 06b-loop-envelope-rhythm
+    heading: "Rhythmic Timbre: Loop Envelopes"
+    script_md: script/06b-loop-envelope-rhythm.md
+    demos: [wt-loop-env-sequence]
+  - id: 06c-aliasing-on-purpose
+    heading: "The Aliasing Aesthetic, On Purpose"
+    script_md: script/06c-aliasing-on-purpose.md
+    demos: [wt-hiq-off-grit]
+  - id: 06d-mpe-position
+    heading: "MPE: Pressure Scans the Timbre"
+    script_md: script/06d-mpe-position.md
+    demos: [wt-mpe-pressure-position]
+  - id: 06e-exercise
+    heading: "Listener Exercise"
+    script_md: script/06e-exercise.md

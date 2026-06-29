@@ -1,0 +1,1112 @@
+# clip_manifest — every audio asset spliced into e03-wavetable.mp3.
+#
+# Two families:
+#   song_clips    — extracted from acquired tracks via shared/tools/extract_clips.py
+#   device_demos  — rendered by the wavetable-render tool (AbletonOSC / M4L freeze
+#                   pipeline; `wt-` prefix). Mirrors e01's operator_demos and e02's
+#                   device_demos families, but the device is Ableton Wavetable
+#                   (two wavetable oscillators + Sub, destination-first matrix,
+#                   Cytomic filters). Param names are Wavetable's LOM-exposed
+#                   names where known; UNCERTAIN ones are flagged inline.
+#
+# Each entry's `id` matches a slide's `demos:` reference in episode.yaml.
+# Output paths: <build_root>/audio/clips/<episode>/<id>.wav
+#                = build/ableton-devices/audio/clips/e03-wavetable/<id>.wav
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# REQUIRED SOURCE WAVs — the user must acquire these and drop them in
+#   songs/ableton-ep03/  (git-ignored; copyrighted — cite, don't commit)
+# ─────────────────────────────────────────────────────────────────────────────
+#   01_see-you.wav          Depeche Mode — "See You" (1982, A Broken Frame)   [PPG Wave 2 — choir + bell]
+#   02_everybody-wants.wav  Tears for Fears — "Everybody Wants to Rule the World" (1985)
+#                                                                              [PPG Wave 2.3 click under DX7 bass]
+#   03_scary-monsters.wav   Skrillex — "Scary Monsters and Nice Sprites" (2010)
+#                                                                              [NI Massive + FM8 growl — NOT Serum]
+#   04_polymer.wav          Plaid — "Polymer" (2019, title track of Polymer)  [Tone2 Icarus 3D-wavetable scan]
+#
+# Acquire as 44.1k/16-or-24-bit stereo WAV. Filenames above are the `source:`
+# values below; rename your rips to match (or edit `source:` per entry).
+# Timestamps are from specs/ableton_course_ep3_wavetable_research.md §3–§4;
+# RE-CUT BY EAR if your rip differs — extract_clips.py re-slices on edit.
+# Verify the "See You" / "Everybody Wants" / "Scary Monsters" entry points by
+# ear before stating anything on-mic — pressing/edit versions differ.
+
+# Where the user drops acquired song WAVs. Override per entry if needed.
+song_source_dir: songs/ableton-ep03
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SONG CLIPS — acquired-track excerpts (foreground cues, transitions, beds)
+# Each: id, source filename, start/end, fades, normalize_lufs, notes.
+# ═══════════════════════════════════════════════════════════════════════════════
+song_clips:
+
+  # ── Foreground cues (referenced by id from episode.yaml > slides[].demos) ───
+  - id: see-you-cold-open
+    source: "01_see-you.wav"
+    start: "0:00"
+    end: "0:12"
+    fade_in_ms: 0
+    fade_out_ms: 2200
+    normalize_lufs: -14          # cold-open hero clip: leave louder, ducks under narration
+    notes: "Depeche Mode 'See You' intro — the ghostly PPG choir pad ALONE before the beat. Hold ~10s, fade under as narration enters. The canonical glassy wavetable choir. Re-cut start by ear: the bare pad must be isolated (no drums)."
+
+  - id: see-you-choir
+    source: "01_see-you.wav"
+    start: "0:00"
+    end: "0:10"
+    fade_in_ms: 150
+    fade_out_ms: 900
+    normalize_lufs: -16
+    notes: "Same 'See You' choir/bell pad, cued in 02b as the 'this IS a PPG wavetable' example. The bell riff with metallic overtones should be audible. If identical to the cold-open clip is undesirable, nudge start to catch the bell riff (≈0:08+)."
+
+  - id: everybody-wants-bass
+    source: "02_everybody-wants.wav"
+    start: "0:10"
+    end: "0:18"
+    fade_in_ms: 120
+    fade_out_ms: 500
+    normalize_lufs: -16
+    notes: "Tears for Fears 'Everybody Wants to Rule the World' — the PPG (Wave 2.3, modified '013 A' preset) as a percussive high-end CLICK layered under the DX7 bass. The SUBTLE PPG, our transient-design example. Verify the bass/click enters ~0:10 in your rip; it may differ."
+
+  - id: scary-monsters-growl
+    source: "03_scary-monsters.wav"
+    start: "0:55"
+    end: "1:03"
+    fade_in_ms: 100
+    fade_out_ms: 400
+    normalize_lufs: -16
+    notes: "Skrillex 'Scary Monsters and Nice Sprites' first growl/'talking-bass' drop (~0:55-1:05). The LFO-on-position + formant 'talking' bass. SET UP CORRECTLY ON-MIC AS NI MASSIVE + FM8 (Serum didn't ship until 2014). Second-drop vowel-morph (~2:30+) is an alternate cut if the first is muddy."
+
+  - id: polymer-clip
+    source: "04_polymer.wav"
+    start: "0:30"
+    end: "0:38"
+    fade_in_ms: 150
+    fade_out_ms: 700
+    normalize_lufs: -16
+    notes: "Plaid 'Polymer' scanning-texture — wavetable as compositional TEXTURE, not bass (Tone2 Icarus 3D-wavetable). The IDM software-wavetable reference for 06a. Verify a clear morphing/scanning passage by ear; exact tracks across the record vary."
+
+  # ── Transition cues (background music between sections) ─────────────────────
+  # Long fades, lower normalization target. Referenced from
+  # episode.yaml > transitions.insertions[].clip_id (currently TBD — wire these
+  # ids in after SCRIPT LOCK). extract_clips.py cuts them like song clips.
+  - id: trans-see-you-pad
+    source: "01_see-you.wav"
+    start: "0:02"
+    end: "0:14"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 02e-ableton-enters → into Section 3 (synthesis). PPG choir pad, warm and slow."
+
+  - id: trans-everybody-bell
+    source: "02_everybody-wants.wav"
+    start: "0:20"
+    end: "0:32"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 03e-wavetable-vs-fm → into Section 4 (device). Bright PPG-click texture."
+
+  - id: trans-polymer-scan
+    source: "04_polymer.wav"
+    start: "1:00"
+    end: "1:14"
+    fade_in_ms: 3000
+    fade_out_ms: 4000
+    normalize_lufs: -22
+    notes: "After 04f-vs-serum-massive → into Section 5 (walkthrough). Plaid scanning texture as a bridge into building one."
+
+  - id: trans-scary-monsters
+    source: "03_scary-monsters.wav"
+    start: "2:30"
+    end: "2:42"
+    fade_in_ms: 2500
+    fade_out_ms: 3500
+    normalize_lufs: -22
+    notes: "After 05g-save → into Section 6 (IDM application). Growl bass nodding back to the pad→growl macro just built."
+
+  - id: trans-see-you-outro
+    source: "01_see-you.wav"
+    start: "0:00"
+    end: "0:14"
+    fade_in_ms: 3000
+    fade_out_ms: 4500
+    normalize_lufs: -22
+    notes: "After 06d-mpe-position → before the listener exercise. Return to the cold-open PPG choir, closing the loop."
+
+  # ── Background beds (sidechain-ducked under narration) ──────────────────────
+  # Long, slow, atmospheric, loop-friendly. Normalized quiet (-26 LUFS) so even
+  # before the duck they sit far below the voice. Referenced from
+  # episode.yaml > beds.insertions[].clip_id (currently TBD — wire after LOCK).
+  - id: bed-see-you-drift
+    source: "01_see-you.wav"
+    start: "0:00"
+    end: "0:40"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    notes: "Section 2 (history) bed — the PPG choir as a slow era-appropriate cloud."
+
+  - id: bed-polymer-texture
+    source: "04_polymer.wav"
+    start: "0:40"
+    end: "1:20"
+    fade_in_ms: 3500
+    fade_out_ms: 4500
+    normalize_lufs: -26
+    notes: "Section 3 (synthesis deep-dive) bed — Plaid scanning texture, moving but unobtrusive."
+
+  - id: bed-everybody-pad
+    source: "02_everybody-wants.wav"
+    start: "0:30"
+    end: "1:10"
+    fade_in_ms: 4000
+    fade_out_ms: 5000
+    normalize_lufs: -26
+    notes: "Section 4 (device deep-dive) bed — mid-track wash under the panel tour."
+
+  - id: bed-polymer-amb
+    source: "04_polymer.wav"
+    start: "2:00"
+    end: "2:40"
+    fade_in_ms: 4000
+    fade_out_ms: 5000
+    normalize_lufs: -26
+    notes: "Section 6 (IDM application + outro) bed — late-track stillness."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DEVICE DEMOS — Ableton Wavetable patches rendered via the wavetable-render
+# pipeline (AbletonOSC / M4L freeze; `wt-` prefix).
+# Output: build/ableton-devices/audio/clips/e03-wavetable/<id>.wav
+#
+# Each demo ISOLATES ONE variable and has a teaching `structure` (ab/sweep/
+# ladder/single) chosen so the change is obvious on laptop + phone speakers.
+# `verification.check` names the Gate-7 machine assertion; audible/spectral
+# describe the pass condition. `params` is the patch step-table (best-effort
+# Wavetable LOM names + values; lines marked UNCERTAIN need calibration by ear
+# on first render — Wavetable's LOM names are not all documented).
+#
+# PARAM-NAME NOTES (resolve during render scaffolding):
+#   - "Osc 1 On"/"Osc 2 On"/"Sub On"  — the per-oscillator cube toggles.
+#   - "Osc 1 Wavetable Category"/"... Table" — dropdown selectors; Wavetable's
+#     LOM may expose these as indices, not strings. Names below are the UI
+#     labels; map to indices at render time.  [UNCERTAIN names]
+#   - "Osc 1 Wave Position" — the marquee Position destination, 0..100 in UI;
+#     matrix range is -100..+100. Treat the values below as UI-percent (0..100).
+#   - "Osc 1 Effect Mode" ∈ {None, FM, Classic, Modern}; effect params are
+#     "Osc 1 Effect 1"/"Osc 1 Effect 2" (FM=Amount/Tune, Classic=PW/Sync,
+#     Modern=Warp/Fold). Exact LOM names UNCERTAIN — calibrate by ear.
+#   - "Filter 1 ..." Freq/Reso/Drive/Type; "Filter Routing" ∈ {Serial,Parallel,
+#     Split}; "Filter 1 Circuit" ∈ {Clean,OSR,MS2,SMP,PRD}.  [names UNCERTAIN]
+#   - "Hi-Q" (Global) — oversampling toggle; LOM name UNCERTAIN (may be
+#     "High Quality" / "Oversampling").
+#   - Envelopes: "Env N Attack/Decay/Sustain/Release" + "Env N Mode"
+#     ∈ {None,Trigger,Loop}; times are normalized 0..1 (non-linear) — adjust by
+#     ear, mirroring e01/e02.
+#   - LFOs: "LFO N Shape", "LFO N Rate" (synced via note icon), "LFO N Attack"
+#     (fade-in), "LFO N Restart".  [names UNCERTAIN]
+#   - The modulation matrix is destination-first: a routing is declared in the
+#     `matrix:` block as {source -> destination: amount}. The renderer must
+#     create that matrix row (in the UI you tweak the destination so it appears,
+#     then assign the source). Amounts are in matrix units (Position uses the
+#     -100..+100 scale).
+# Each demo sets every relevant param explicitly so it is self-contained (the
+# render does not reset Wavetable between demos).
+# ═══════════════════════════════════════════════════════════════════════════════
+device_demos:
+
+  # ── 03a — Position itself: pitch/timbre orthogonality (THE key demo) ────────
+  - id: wt-position-by-hand
+    concept: "Position → which waveform you play (timbre), with pitch held constant"
+    what_you_hear: "One held note, constant in pitch and loudness, walking sine → triangle → saw → square as Position scans the table by hand. Nothing but the harmonic content changes."
+    structure: sweep
+    isolates: "Osc 1 Wave Position (Basic Shapes table, scanned 0 → 100)"
+    duration_s: 5.0
+    midi: {note: "C3", length_s: 4.7}
+    verification:
+      check: position-sweep
+      audible: "Pitch and loudness constant the whole clip; only the timbre changes (sine→tri→saw→square)."
+      spectral: "Spectral centroid rises monotonically and harmonic count increases start→end while the fundamental f0 stays fixed. Flat centroid ⇒ the Position scan didn't take ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"          # UNCERTAIN LOM name
+      "Osc 1 Wavetable Table": "Basic Shapes"       # UNCERTAIN LOM name (sine→tri→saw→square)
+      "Osc 1 Wave Position": 0.0                     # swept by automation below (UI 0..100)
+      "Osc 1 Transpose": 0
+      "Osc 1 Detune": 0
+      "Osc 1 Gain": 0.0                              # dB; unity into the filter
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"                     # UNCERTAIN name
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"                    # transparent — must NOT color the demo
+      "Filter 1 Freq": 1.0                           # wide open / effectively bypassed
+      "Filter 1 Reso": 0.0
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"                                   # clean scan so Position is the only variable
+      "Env 1 Mode": "None"                           # Env 1 = Amp
+      "Env 1 Attack": 0.05
+      "Env 1 Decay": 0.0
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.15
+    automation:
+      "Osc 1 Wave Position": {from: 0.0, to: 100.0, ramp_s: 4.5}   # full table, smooth scan
+
+  # ── 03b — A wavetable IS a collection of spectra (A/B two positions) ────────
+  - id: wt-ab-two-positions
+    concept: "A wavetable is a collection of spectra — two positions of ONE table are two distinct timbres"
+    what_you_hear: "The same note played twice, same table: first at a low Position, beat of silence, then at a high Position. Two clearly different tones from one waveform set."
+    structure: ab
+    isolates: "Osc 1 Wave Position (low vs high in the SAME table)"
+    duration_s: 5.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 2.0}    # segment A: low Position
+        - {note: "C3", t: 2.6, length_s: 2.0}    # segment B: high Position
+    verification:
+      check: position-ab
+      audible: "Same pitch both segments; segment B is audibly brighter/richer than A."
+      spectral: "Segment B has measurably higher spectral centroid / more harmonics than A at the identical f0. A ≈ B ⇒ reject."
+    ab_param: "Osc 1 Wave Position"
+    ab_values: [10.0, 85.0]                          # A=low, B=high (UI 0..100)
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 10.0                     # segment A value (the ONE variable)
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 1.0                            # open; identical both segments
+      "Filter 1 Reso": 0.0
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.05
+      "Env 1 Decay": 0.0
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.15
+
+  # ── 03c — Interpolation: zipper vs smooth scan ──────────────────────────────
+  - id: wt-zipper-vs-smooth
+    concept: "Frame interpolation → a stepped scan becomes a continuous glide"
+    what_you_hear: "The same slow Position sweep played twice: first stepping/zippering between frames (no interpolation, Hi-Q off proxy), then a smooth continuous morph (interpolated, Hi-Q on). The second glides where the first stairsteps."
+    structure: ab
+    isolates: "Hi-Q / interpolation (stepped vs interpolated scan; everything else held)"
+    duration_s: 7.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 3.0}    # segment A: stepped (Hi-Q off proxy)
+        - {note: "C3", t: 3.4, length_s: 3.0}    # segment B: smooth (Hi-Q on)
+    verification:
+      check: interpolation-ab
+      audible: "Segment A has audible stepping/zipper artifacts during the sweep; segment B is a continuous glide."
+      spectral: "Segment A shows discontinuous frame-to-frame spectral jumps (high frame-to-frame flux variance); segment B's spectral change is smooth/monotone. A's flux ≈ B's ⇒ reject (interpolation made no difference)."
+    ab_param: "Hi-Q"
+    ab_values: ["Off", "On"]                         # A=stepped proxy, B=interpolated
+    # Both segments run the SAME slow Position sweep (below); only Hi-Q changes.
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 0.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 1.0
+      "Filter 1 Reso": 0.0
+      "Filter 2 On": "Off"
+      "Hi-Q": "Off"                                   # segment A value (the ONE variable)
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.05
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.15
+    automation:
+      "Osc 1 Wave Position": {from: 0.0, to: 100.0, ramp_s: 2.8}   # same sweep in BOTH segments
+    # NOTE: Ableton always interpolates frames; "stepped" is approximated by
+    # Hi-Q off + a fast scan on a high-harmonic table so aliasing/stepping is
+    # audible. If the contrast is too subtle, render segment A from a coarse
+    # hand-stepped Position automation (discrete jumps) instead.  [calibrate]
+
+  # ── 03d — Aliasing: Hi-Q off (PPG) vs on (Serum) ────────────────────────────
+  - id: wt-hiq-on-vs-off
+    concept: "Hi-Q (oversampling) → aliasing removed; the PPG-vs-Serum aesthetic in one switch"
+    what_you_hear: "A fast Position sweep on a bright table played twice: Hi-Q OFF first (gritty, aliased — a PPG), then Hi-Q ON (clean glide — a Serum). The grit vanishes on the second pass."
+    structure: ab
+    isolates: "Hi-Q (oversampling off vs on; same fast sweep both segments)"
+    duration_s: 6.0
+    midi:
+      notes:
+        - {note: "C5", t: 0.0, length_s: 2.4}    # high note exaggerates aliasing; segment A: Hi-Q off
+        - {note: "C5", t: 3.0, length_s: 2.4}    # segment B: Hi-Q on
+    verification:
+      check: aliasing-ab
+      audible: "Segment A has audible inharmonic 'grit'/buzz during the fast sweep; segment B is clean."
+      spectral: "Segment A shows inharmonic (non-integer-multiple) partials / raised noise floor between harmonics; segment B's energy sits on the harmonic comb of f0. A ≈ B ⇒ reject."
+    ab_param: "Hi-Q"
+    ab_values: ["Off", "On"]                         # A=PPG grit, B=Serum clean
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Distortion"       # UNCERTAIN — a bright/harmonic-rich table
+      "Osc 1 Wavetable Table": "(bright distortion table)"  # UNCERTAIN exact name; pick a high-harmonic one
+      "Osc 1 Wave Position": 0.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 1.0                            # open so aliasing is not masked
+      "Filter 1 Reso": 0.0
+      "Filter 2 On": "Off"
+      "Hi-Q": "Off"                                   # segment A value (the ONE variable)
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.02
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.1
+    automation:
+      "Osc 1 Wave Position": {from: 0.0, to: 100.0, ramp_s: 2.0}   # FAST sweep, same in both segments
+
+  # ── 03e — FM inside the wavetable oscillator (the Operator bridge) ──────────
+  - id: wt-fm-inside-wavetable
+    concept: "The hidden FM oscillator → harmonics generated INSIDE the wavetable osc (the Ep1 bridge)"
+    what_you_hear: "One held note, fixed Position, opening from the bare wavetable tone into a metallic, sideband-rich buzz as FM Amount sweeps up — harmonics grown, not scanned."
+    structure: sweep
+    isolates: "Osc 1 Effect Amount (FM Amount), Position held fixed"
+    duration_s: 5.0
+    midi: {note: "C3", length_s: 4.7}
+    verification:
+      check: fm-amount-sweep
+      audible: "Pitch and loudness roughly constant; only harmonic content rises as the metallic FM edge fades in."
+      spectral: "FM sidebands appear and grow; spectral centroid / inharmonic-content rises monotonically while Position is fixed. Flat centroid ⇒ FM Amount didn't engage ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 30.0                     # FIXED — Position is NOT the variable here
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "FM"                       # hidden-sine FM engine
+      "Osc 1 Effect 1": 0.0                           # FM Amount — swept by automation (the ONE variable)
+      "Osc 1 Effect 2": 0.0                           # FM Tune = 0 (modulator at osc pitch); ±2 oct range
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 1.0
+      "Filter 1 Reso": 0.0
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.05
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.15
+    automation:
+      "Osc 1 Effect 1": {from: 0.0, to: 0.85, ramp_s: 4.3}   # FM Amount 0 → high
+
+  # ── 04b — Modern→Fold wavefolder sweep ──────────────────────────────────────
+  - id: wt-modern-fold-sweep
+    concept: "Modern→Fold (wavefolding) → buzzy upper harmonics from one oscillator, no extra device"
+    what_you_hear: "A held note, fixed Position, growing from a plain tone into a buzzy, harmonically dense wavefold as Fold amount sweeps up — the wave driven into itself."
+    structure: sweep
+    isolates: "Osc 1 Effect Fold amount (Modern mode), Position held fixed"
+    duration_s: 5.0
+    midi: {note: "C3", length_s: 4.7}
+    verification:
+      check: fold-sweep
+      audible: "Pitch constant; harmonic density/brightness rises as the fold deepens."
+      spectral: "Upper-harmonic energy and spectral spread increase monotonically start→end at fixed f0. Flat ⇒ Fold didn't engage ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 25.0                     # FIXED
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "Modern"
+      "Osc 1 Effect 1": 0.0                           # Warp = 0
+      "Osc 1 Effect 2": 0.0                           # Fold — swept (the ONE variable). UNCERTAIN which slot is Fold
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 1.0
+      "Filter 1 Reso": 0.0
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.05
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.15
+    automation:
+      "Osc 1 Effect 2": {from: 0.0, to: 0.9, ramp_s: 4.3}    # Fold 0 → high
+
+  # ── 04c — LFO → Position wobble (pitch unchanged), the matrix in action ─────
+  - id: wt-lfo-to-position
+    concept: "LFO → Position in the matrix → timbral wobble with NO pitch change (the dubstep 'wub')"
+    what_you_hear: "A held note that wobbles in timbre at a synced 1/8 — the tone scanning back and forth through the table — while the pitch never moves."
+    structure: single
+    isolates: "LFO 1 → Wave Position routing (the only modulation; pitch/filter held)"
+    duration_s: 5.0
+    midi: {note: "C3", length_s: 4.7}
+    verification:
+      check: lfo-position-wobble
+      audible: "Pitch dead constant; timbre/brightness oscillates at a steady ~1/8 rate."
+      spectral: "Spectral centroid oscillates periodically at the LFO rate while f0 is fixed. f0 wobbling ⇒ it was routed to pitch by mistake ⇒ reject. Static centroid ⇒ routing didn't take ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 40.0                     # center; LFO scans around it
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 1.0
+      "Filter 1 Reso": 0.0
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "LFO 1 Shape": "Triangle"
+      "LFO 1 Rate": "1/8"                             # tempo-synced; UNCERTAIN LOM value format
+      "LFO 1 Attack": 0.0
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.05
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.15
+    matrix:
+      - {source: "LFO 1", destination: "Osc 1 Wave Position", amount: 40}   # matrix units (-100..+100)
+
+  # ── 04d — LFO Attack fade-in: morph blooms only after the note is held ──────
+  - id: wt-lfo-attack-bloom
+    concept: "LFO Attack (fade-in) → modulation that blooms only after a sustained note"
+    what_you_hear: "A held note that starts static, then ~2 seconds in the timbre begins to morph and breathe as the LFO fades in — the 'comes alive on long notes' pad trick."
+    structure: single
+    isolates: "LFO 1 Attack (fade-in time on an LFO→Position routing)"
+    duration_s: 7.0
+    midi: {note: "C3", length_s: 6.7}
+    verification:
+      check: lfo-attack-bloom
+      audible: "First ~2 s static; movement appears and deepens only in the second half of the held note."
+      spectral: "Spectral-centroid oscillation amplitude is near zero for the first ~2 s, then grows. Movement present from t=0 ⇒ the LFO Attack fade-in didn't take ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 35.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "OSR"                       # gentle character; cutoff still open-ish
+      "Filter 1 Freq": 0.9
+      "Filter 1 Reso": 0.1
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "LFO 1 Shape": "Triangle"
+      "LFO 1 Rate": "1/2"                             # slow; UNCERTAIN value format
+      "LFO 1 Attack": 0.6                             # ~2 s fade-in (the ONE variable). UNCERTAIN normalized mapping
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.2                             # slow amp attack so the note sustains into the bloom
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.3
+    matrix:
+      - {source: "LFO 1", destination: "Osc 1 Wave Position", amount: 35}
+
+  # ── 04e — Position Spread unison: a chord of timbres from one note ──────────
+  - id: wt-position-spread-chord
+    concept: "Position Spread unison → each voice at a different Position = a chord of timbres from ONE note"
+    what_you_hear: "A single held note (mono unison off) then the SAME note with Position Spread unison: a stack of distinct timbres ringing together, where before there was one."
+    structure: ab
+    isolates: "Unison Mode (Off vs Position Spread); same single note both segments"
+    duration_s: 5.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 2.0}    # segment A: unison off (one timbre)
+        - {note: "C3", t: 2.6, length_s: 2.0}    # segment B: Position Spread (chord of timbres)
+    verification:
+      check: position-spread-ab
+      audible: "Same pitch both segments; segment B is audibly wider and richer (multiple timbres at once)."
+      spectral: "Segment B shows more distinct spectral peaks / broader harmonic content and wider stereo spread than A at the same f0. A ≈ B ⇒ reject."
+    ab_param: "Unison Mode"
+    ab_values: ["None", "Position Spread"]           # A=off, B=spread; UNCERTAIN LOM enum strings
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 50.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "OSR"
+      "Filter 1 Freq": 0.85
+      "Filter 1 Reso": 0.1
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Unison Mode": "None"                           # segment A value (the ONE variable)
+      "Unison Voices": 4                              # used by segment B
+      "Unison Amount": 0.3                            # light detune for B
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.1
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.3
+
+  # ── 05a–05g — Patch walkthrough: PPG pad → Subtronics growl on ONE patch ────
+  #   These are CUMULATIVE build steps (each adds ONE thing to the previous), so
+  #   the listener hears exactly what each move does. The "isolated variable" is
+  #   the single addition at that step. Final step is the saved patch + the macro
+  #   sweep that proves pad and growl are the same instrument.
+
+  - id: wt-spectra-step1
+    concept: "Walkthrough step 1 of 7 — a static vowel pad (the starting point)"
+    what_you_hear: "A held chord on a vocal/formant table with a slow amp attack and long release: a static vowel pad, no movement yet."
+    structure: single
+    isolates: "Baseline patch — vocal-formant table + slow amp envelope (no modulation yet)"
+    duration_s: 5.0
+    midi:
+      notes:                                          # a sustained triad
+        - {note: "C3", t: 0.0, length_s: 4.5}
+        - {note: "Eb3", t: 0.0, length_s: 4.5}
+        - {note: "G3", t: 0.0, length_s: 4.5}
+    verification:
+      check: static-pad
+      audible: "A sustained vowel-like chord with a soft attack and no timbral motion."
+      spectral: "Formant-style fixed spectrum; spectral centroid roughly flat across the sustain (no movement yet — movement is added in step 2)."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Formants"         # UNCERTAIN
+      "Osc 1 Wavetable Table": "(vocal/choir formant table)"  # UNCERTAIN exact name
+      "Osc 1 Wave Position": 35.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 0.9
+      "Filter 1 Reso": 0.1
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Env 1 Mode": "None"                            # Amp env
+      "Env 1 Attack": 0.45                            # ~800 ms
+      "Env 1 Decay": 0.0
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.55                           # ~1.5 s
+
+  - id: wt-spectra-step2
+    concept: "Walkthrough step 2 of 7 — slow LFO → Position with a fade-in: the PPG choir bloom"
+    what_you_hear: "The step-1 pad, now blooming and morphing after it's held — a slow Position scan added via LFO 1 with a ~2 s attack."
+    structure: single
+    isolates: "ADDED: LFO 1 (triangle, slow) → Position with ~2 s LFO Attack"
+    duration_s: 6.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 5.5}
+        - {note: "Eb3", t: 0.0, length_s: 5.5}
+        - {note: "G3", t: 0.0, length_s: 5.5}
+    verification:
+      check: pad-bloom
+      audible: "Static at first, then the chord morphs/breathes after ~2 s — the PPG choir scan."
+      spectral: "Spectral-centroid motion near zero early, growing later (the LFO Attack bloom). No motion ⇒ the LFO→Position routing or its fade-in didn't take ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Formants"         # UNCERTAIN
+      "Osc 1 Wavetable Table": "(vocal/choir formant table)"  # UNCERTAIN
+      "Osc 1 Wave Position": 35.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 0.9
+      "Filter 1 Reso": 0.1
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "LFO 1 Shape": "Triangle"
+      "LFO 1 Rate": "0.5 Hz"                          # sub-1 Hz free rate; UNCERTAIN format
+      "LFO 1 Attack": 0.6                             # ~2 s fade-in
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.45
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.55
+    matrix:
+      - {source: "LFO 1", destination: "Osc 1 Wave Position", amount: 30}
+
+  - id: wt-spectra-step3
+    concept: "Walkthrough step 3 of 7 — Position Spread unison: a chord of timbres + gentle OSR filter"
+    what_you_hear: "The morphing pad now spread into a chord of timbres (Position Spread unison) with a gentle OSR low-pass — wider and richer."
+    structure: single
+    isolates: "ADDED: Unison = Position Spread (4 voices) + OSR filter character"
+    duration_s: 6.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 5.5}
+        - {note: "Eb3", t: 0.0, length_s: 5.5}
+        - {note: "G3", t: 0.0, length_s: 5.5}
+    verification:
+      check: spread-pad
+      audible: "Same morphing pad, now noticeably wider and with more simultaneous timbres."
+      spectral: "Broader stereo spread and more distinct partials than step 2; the Position-scan motion is preserved."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Formants"         # UNCERTAIN
+      "Osc 1 Wavetable Table": "(vocal/choir formant table)"  # UNCERTAIN
+      "Osc 1 Wave Position": 35.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "OSR"                       # ADDED gentle analog character
+      "Filter 1 Freq": 0.8
+      "Filter 1 Reso": 0.12
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Unison Mode": "Position Spread"                # ADDED (the ONE variable this step)
+      "Unison Voices": 4
+      "Unison Amount": 0.25                           # light detune
+      "LFO 1 Shape": "Triangle"
+      "LFO 1 Rate": "0.5 Hz"
+      "LFO 1 Attack": 0.6
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.45
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.55
+    matrix:
+      - {source: "LFO 1", destination: "Osc 1 Wave Position", amount: 30}
+
+  - id: wt-spectra-step4
+    concept: "Walkthrough step 4 of 7 — Sub for weight, Osc 2 for glassy bell overtones"
+    what_you_hear: "The pad gains low-end body (Sub one octave down) and a glassy bell shimmer on top (Osc 2 an octave up on a Harmonics/bell table, low gain) — the Depeche Mode bell layer."
+    structure: single
+    isolates: "ADDED: Sub (-1 oct, low Tone) + Osc 2 (+1 oct, bell/Harmonics table, low gain)"
+    duration_s: 6.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 5.5}
+        - {note: "Eb3", t: 0.0, length_s: 5.5}
+        - {note: "G3", t: 0.0, length_s: 5.5}
+    verification:
+      check: sub-and-bell
+      audible: "Same morphing pad with added low-end weight and a high glassy bell shimmer."
+      spectral: "More energy below the fundamental (Sub) AND added high partials (Osc 2 bell) vs step 3."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Formants"         # UNCERTAIN
+      "Osc 1 Wavetable Table": "(vocal/choir formant table)"  # UNCERTAIN
+      "Osc 1 Wave Position": 35.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "On"                                # ADDED glassy bell layer
+      "Osc 2 Wavetable Category": "Harmonics"        # UNCERTAIN
+      "Osc 2 Wavetable Table": "(bell / inharmonic table)"  # UNCERTAIN
+      "Osc 2 Wave Position": 60.0
+      "Osc 2 Transpose": 12                           # +1 octave
+      "Osc 2 Gain": -12.0                             # low — overtones, not the body
+      "Osc 2 Effect Mode": "None"
+      "Sub On": "On"                                  # ADDED weight
+      "Sub Transpose": -12                            # -1 octave
+      "Sub Tone": 0.15                                # ~15% — mostly clean sine weight
+      "Sub Gain": -6.0
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "OSR"
+      "Filter 1 Freq": 0.8
+      "Filter 1 Reso": 0.12
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Unison Mode": "Position Spread"
+      "Unison Voices": 4
+      "Unison Amount": 0.25
+      "LFO 1 Shape": "Triangle"
+      "LFO 1 Rate": "0.5 Hz"
+      "LFO 1 Attack": 0.6
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.45
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.55
+    matrix:
+      - {source: "LFO 1", destination: "Osc 1 Wave Position", amount: 30}
+
+  - id: wt-spectra-step5
+    concept: "Walkthrough step 5 of 7 (halfway — arm the growl) — fast LFO 2 → Position (bypassed), Env → Filter, Osc 1 FM"
+    what_you_hear: "The pad, unchanged at the surface, now ARMED: a fast 1/8 LFO 2 → Position is in the matrix but bypassed, an Env → Filter Freq is added, and Osc 1's effect is switched to FM (amount ~20) for a metallic edge."
+    structure: single
+    isolates: "ADDED (armed, not yet engaged): LFO 2 (saw, 1/8) → Position bypassed; Env 2 → Filter Freq; Osc 1 Effect = FM"
+    duration_s: 6.0
+    midi:
+      notes:
+        - {note: "C3", t: 0.0, length_s: 5.5}
+        - {note: "Eb3", t: 0.0, length_s: 5.5}
+        - {note: "G3", t: 0.0, length_s: 5.5}
+    verification:
+      check: armed-pad
+      audible: "Still recognizably the pad, with a faint metallic edge from the FM; the fast wobble is armed but not yet audible (bypassed)."
+      spectral: "A slight rise in upper/inharmonic content vs step 4 (the FM edge); the fast LFO is present in the patch but not modulating yet."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Formants"         # UNCERTAIN
+      "Osc 1 Wavetable Table": "(vocal/choir formant table)"  # UNCERTAIN
+      "Osc 1 Wave Position": 35.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "FM"                       # SWITCHED to FM for a metallic edge
+      "Osc 1 Effect 1": 0.2                           # FM Amount ~20%
+      "Osc 1 Effect 2": 0.0                           # FM Tune = 0
+      "Osc 2 On": "On"
+      "Osc 2 Wavetable Category": "Harmonics"        # UNCERTAIN
+      "Osc 2 Wavetable Table": "(bell / inharmonic table)"  # UNCERTAIN
+      "Osc 2 Wave Position": 60.0
+      "Osc 2 Transpose": 12
+      "Osc 2 Gain": -12.0
+      "Sub On": "On"
+      "Sub Transpose": -12
+      "Sub Tone": 0.15
+      "Sub Gain": -6.0
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "OSR"
+      "Filter 1 Freq": 0.8
+      "Filter 1 Reso": 0.15
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Unison Mode": "Position Spread"
+      "Unison Voices": 4
+      "Unison Amount": 0.25
+      "LFO 1 Shape": "Triangle"
+      "LFO 1 Rate": "0.5 Hz"
+      "LFO 1 Attack": 0.6
+      "LFO 2 Shape": "Saw"                            # ADDED, fast — the growl engine
+      "LFO 2 Rate": "1/8"                             # tempo-synced; UNCERTAIN format
+      "LFO 2 Attack": 0.0
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.45
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.55
+      "Env 2 Mode": "None"                            # ADDED — to Filter Freq
+      "Env 2 Attack": 0.05
+      "Env 2 Decay": 0.4
+      "Env 2 Sustain": 0.3
+      "Env 2 Release": 0.3
+    matrix:
+      - {source: "LFO 1", destination: "Osc 1 Wave Position", amount: 30}
+      - {source: "LFO 2", destination: "Osc 1 Wave Position", amount: 0}   # ARMED but bypassed (amount 0)
+      - {source: "Env 2", destination: "Filter 1 Freq", amount: 35}
+
+  - id: wt-spectra-macro-sweep
+    concept: "Walkthrough step 6 of 7 — ONE macro turns the pad into a growl (the payoff)"
+    what_you_hear: "The same patch as one Macro sweeps 0 → 127: at 0 it's the slow PPG pad; by 127 the fast 1/8 LFO wobble engages, the filter tightens, and mono/glide kicks in — a dubstep growl. Same oscillators, same table, one decision apart."
+    structure: sweep
+    isolates: "Macro 1 (0 → 127), which crossfades slow-LFO→Position out and fast-LFO→Position + filter-tighten + mono in"
+    duration_s: 8.0
+    midi:
+      notes:                                          # one sustained note so the macro move is the only change
+        - {note: "C2", t: 0.0, length_s: 7.5}
+    verification:
+      check: macro-pad-to-growl
+      audible: "Starts as a slow morphing pad; ends as a fast rhythmic growl on the SAME note. The transformation is continuous and driven only by the macro."
+      spectral: "Spectral-centroid modulation rate rises from sub-1 Hz (pad) to ~1/8-synced (growl) across the clip; high-band energy increases as the filter tightens then opens on the wobble. No change in modulation rate ⇒ the macro didn't remap ⇒ reject."
+    params:
+      # Same patch as step 5; the macro re-maps the live controls below.
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Formants"         # UNCERTAIN
+      "Osc 1 Wavetable Table": "(vocal/choir formant table)"  # UNCERTAIN
+      "Osc 1 Wave Position": 35.0
+      "Osc 1 Effect Mode": "FM"
+      "Osc 1 Effect 1": 0.2
+      "Osc 2 On": "On"
+      "Osc 2 Transpose": 12
+      "Osc 2 Gain": -12.0
+      "Sub On": "On"
+      "Sub Transpose": -12
+      "Sub Tone": 0.15
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "OSR"
+      "Filter 1 Freq": 0.8
+      "Filter 1 Reso": 0.2
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Unison Mode": "Position Spread"
+      "Unison Voices": 4
+      "LFO 1 Rate": "0.5 Hz"
+      "LFO 1 Attack": 0.6
+      "LFO 2 Shape": "Saw"
+      "LFO 2 Rate": "1/8"
+      "Voices": 8
+      "Mono": "Off"                                   # macro turns this On at full
+      "Glide": 0.0                                    # macro adds glide at full
+    matrix:
+      - {source: "LFO 1", destination: "Osc 1 Wave Position", amount: 30}
+      - {source: "LFO 2", destination: "Osc 1 Wave Position", amount: 0}    # macro raises this
+      - {source: "Env 2", destination: "Filter 1 Freq", amount: 35}
+    macros:
+      # Macro 1: 0 = pad, 127 = growl. Each mapping crossfades across the macro range.
+      - name: "Pad ↔ Growl"
+        param: "Macro 1"
+        mappings:
+          - {target: "matrix: LFO 1 -> Osc 1 Wave Position", from: 30, to: 0}     # slow pad scan out
+          - {target: "matrix: LFO 2 -> Osc 1 Wave Position", from: 0, to: 50}     # fast wobble in
+          - {target: "Filter 1 Freq", from: 0.8, to: 0.5}                          # filter tightens
+          - {target: "Mono", from: "Off", to: "On"}                                # mono/glide for the bass
+          - {target: "Glide", from: 0.0, to: 0.1}
+    automation:
+      "Macro 1": {from: 0.0, to: 127.0, ramp_s: 7.0}   # sweep the macro live across the held note
+
+  - id: wt-spectra-morph-final
+    concept: "Walkthrough step 7 of 7 — the saved 'Spectra-Morph' patch, demonstrated"
+    what_you_hear: "The finished patch played as a short phrase: a held pad chord, then the macro pushed up to growl on a low note — the PPG and Skrillex, one patch."
+    structure: single
+    isolates: "Final saved patch (no parameter isolated — a demonstration of the whole instrument)"
+    duration_s: 9.0
+    midi:
+      notes:                                          # pad chord, then a growl note
+        - {note: "C3", t: 0.0, length_s: 4.0}
+        - {note: "Eb3", t: 0.0, length_s: 4.0}
+        - {note: "G3", t: 0.0, length_s: 4.0}
+        - {note: "C2", t: 4.5, length_s: 4.0}        # macro up here for the growl
+    verification:
+      check: final-demo
+      audible: "First half a morphing pad; second half a growl on the low note — recognizably the same instrument."
+      spectral: "First segment shows slow Position-scan motion; second segment shows fast wobble + tighter filter. Both halves clearly the same patch."
+    params:
+      # Identical to wt-spectra-macro-sweep's patch (the saved preset). The
+      # macro automation below drives the pad→growl move mid-phrase.
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Formants"         # UNCERTAIN
+      "Osc 1 Wavetable Table": "(vocal/choir formant table)"  # UNCERTAIN
+      "Osc 1 Wave Position": 35.0
+      "Osc 1 Effect Mode": "FM"
+      "Osc 1 Effect 1": 0.2
+      "Osc 2 On": "On"
+      "Osc 2 Transpose": 12
+      "Osc 2 Gain": -12.0
+      "Sub On": "On"
+      "Sub Transpose": -12
+      "Sub Tone": 0.15
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "OSR"
+      "Filter 1 Freq": 0.8
+      "Filter 1 Reso": 0.2
+      "Hi-Q": "On"
+      "Unison Mode": "Position Spread"
+      "Unison Voices": 4
+      "LFO 1 Rate": "0.5 Hz"
+      "LFO 1 Attack": 0.6
+      "LFO 2 Shape": "Saw"
+      "LFO 2 Rate": "1/8"
+    matrix:
+      - {source: "LFO 1", destination: "Osc 1 Wave Position", amount: 30}
+      - {source: "LFO 2", destination: "Osc 1 Wave Position", amount: 0}
+      - {source: "Env 2", destination: "Filter 1 Freq", amount: 35}
+    automation:
+      "Macro 1": {steps: [0, 0, 110, 110], step_s: 2.25}   # pad for first half, growl for second
+
+  # ── 06a — Import your own wavetable and scan it (Plaid Polymer method) ──────
+  - id: wt-user-table-scan
+    concept: "User-imported wavetable + Env/LFO → Position → scanning your OWN source as texture"
+    what_you_hear: "A held note on a wavetable built from an imported audio file (a vowel / field recording / resampled FM patch), with Position scanned by a slow envelope — your own sound morphing, not a factory table."
+    structure: sweep
+    isolates: "Osc 1 Wave Position over a USER-IMPORTED table (Env → Position)"
+    duration_s: 6.0
+    midi: {note: "C3", length_s: 5.7}
+    verification:
+      check: user-table-scan
+      audible: "A morphing tone clearly derived from a non-standard (imported) source; timbre changes across the held note."
+      spectral: "Spectral content evolves monotonically/clearly across the clip; the source spectrum is distinct from the factory Basic Shapes tables."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "User"             # UNCERTAIN — imported-table slot
+      "Osc 1 Wavetable Table": "(imported audio file — up to 256 frames)"  # render-time: drag a WAV onto sprite area
+      "Osc 1 Wave Position": 0.0                       # scanned by Env 2 below
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 0.95
+      "Filter 1 Reso": 0.1
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.05
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.2
+      "Env 2 Mode": "None"                            # slow scan envelope
+      "Env 2 Attack": 0.7                             # long — scans Position across the note
+      "Env 2 Decay": 0.0
+      "Env 2 Sustain": 1.0
+      "Env 2 Release": 0.2
+    matrix:
+      - {source: "Env 2", destination: "Osc 1 Wave Position", amount: 90}
+    # NOTE: requires a small source WAV for the import. Provide a neutral one in
+    # the render rig (e.g. a resampled Operator FM patch or a sung vowel); not a
+    # copyrighted song. Document the exact file at render time.
+
+  # ── 06b — Loop envelope → Position: rhythm from synthesis ───────────────────
+  - id: wt-loop-env-sequence
+    concept: "Free envelope in Loop → Position → a self-sequencing timbral pattern from ONE held note"
+    what_you_hear: "A single held note that becomes a repeating rhythmic timbre pattern, because a free envelope in Loop mode cycles Position on the grid (plus a 1/16 LFO on FM Amount for grit). No new notes are played."
+    structure: single
+    isolates: "Env 2 Mode = Loop (synced) → Position (the rhythmic engine)"
+    duration_s: 8.0
+    midi: {note: "C3", length_s: 7.7}                 # ONE held note for the whole clip
+    verification:
+      check: loop-env-rhythm
+      audible: "A steady repeating timbral pattern at a clear grid rate, from a single sustained key."
+      spectral: "Onset/spectral-flux peaks recur at a fixed grid rate matching the loop-envelope cycle (e.g. ~1/8 or 1/16 @ tempo). No periodic recurrence ⇒ the loop mode didn't engage ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 0.0                       # cycled by the loop envelope
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "FM"
+      "Osc 1 Effect 1": 0.1                            # base FM amount; LFO adds rhythmic grit
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "MS2"
+      "Filter 1 Freq": 0.7
+      "Filter 1 Reso": 0.2
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.02
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.1
+      "Env 2 Mode": "Loop"                            # the rhythmic engine (the ONE variable)
+      "Env 2 Rate": "1/8"                             # synced loop period; UNCERTAIN format
+      "Env 2 Attack": 0.1
+      "Env 2 Decay": 0.4
+      "Env 2 Sustain": 0.0
+      "LFO 1 Shape": "Square"
+      "LFO 1 Rate": "1/16"                            # synced; grit on FM Amount
+    matrix:
+      - {source: "Env 2", destination: "Osc 1 Wave Position", amount: 90}
+      - {source: "LFO 1", destination: "Osc 1 Effect 1", amount: 30}   # 1/16 grit on FM Amount
+
+  # ── 06c — Aliasing on purpose: Hi-Q off + Fold (the Hamburg grit) ───────────
+  - id: wt-hiq-off-grit
+    concept: "Hi-Q OFF + Modern→Fold + fast sweep → the PPG/Hamburg grit, on purpose"
+    what_you_hear: "A fast Position sweep through a Distortion-category table with Hi-Q OFF and Fold pushed up: deliberately gritty, aliased, lo-fi — the harsh PPG sound Palm kept."
+    structure: single
+    isolates: "Hi-Q OFF (with Fold up + fast sweep) — the aliasing aesthetic as a choice"
+    duration_s: 5.0
+    midi: {note: "C4", length_s: 4.7}
+    verification:
+      check: grit-on-purpose
+      audible: "Obvious gritty/aliased buzz throughout — distinct from the clean Hi-Q-on demos."
+      spectral: "Strong inharmonic / non-integer partials and a raised inter-harmonic noise floor present throughout (uncorrected aliasing). Clean harmonic comb ⇒ Hi-Q wasn't actually off ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Distortion"       # UNCERTAIN
+      "Osc 1 Wavetable Table": "(harsh distortion table)"  # UNCERTAIN exact name
+      "Osc 1 Wave Position": 0.0
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "Modern"
+      "Osc 1 Effect 1": 0.0                           # Warp
+      "Osc 1 Effect 2": 0.7                           # Fold up (which slot is Fold — UNCERTAIN)
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "OSR"
+      "Filter 1 Freq": 0.85
+      "Filter 1 Reso": 0.15
+      "Filter 1 Drive": 0.4                           # a little Drive for edge; UNCERTAIN name
+      "Filter 2 On": "Off"
+      "Hi-Q": "Off"                                   # the ONE variable — aliasing left IN
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.02
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.1
+    automation:
+      "Osc 1 Wave Position": {from: 0.0, to: 100.0, ramp_s: 1.5}   # FAST sweep so aliasing is loud
+
+  # ── 06d — MPE: per-note Pressure → Position ─────────────────────────────────
+  - id: wt-mpe-pressure-position
+    concept: "MPE Pressure → Position → per-note timbre scanned by finger pressure"
+    what_you_hear: "A held chord where each note's brightness rises independently as per-note Pressure increases — the timbre scanned per voice, not globally."
+    structure: ladder
+    isolates: "Per-note Pressure value (low / mid / high) → Position, identical notes"
+    duration_s: 6.0
+    midi:
+      # Three identical notes, increasing per-note pressure (MPE). Renderer must
+      # emit per-note channel pressure (MPE), not channel aftertouch.
+      notes:
+        - {note: "C3", t: 0.0, length_s: 1.6, mpe_pressure: 0.1}   # low
+        - {note: "C3", t: 2.0, length_s: 1.6, mpe_pressure: 0.5}   # mid
+        - {note: "C3", t: 4.0, length_s: 1.6, mpe_pressure: 0.95}  # high
+    verification:
+      check: mpe-pressure-ladder
+      audible: "Three identical pitches at rising brightness; each step audibly brighter than the last."
+      spectral: "Spectral centroid increases monotonically across the three notes (low<mid<high) at identical f0. Equal across notes ⇒ Pressure→Position didn't take ⇒ reject."
+    params:
+      "Osc 1 On": "On"
+      "Osc 1 Wavetable Category": "Basics"           # UNCERTAIN
+      "Osc 1 Wavetable Table": "Basic Shapes"        # UNCERTAIN
+      "Osc 1 Wave Position": 10.0                      # baseline; Pressure scans upward
+      "Osc 1 Gain": 0.0
+      "Osc 1 Effect Mode": "None"
+      "Osc 2 On": "Off"
+      "Sub On": "Off"
+      "Filter Routing": "Serial"
+      "Filter 1 On": "On"
+      "Filter 1 Type": "Lowpass"
+      "Filter 1 Circuit": "Clean"
+      "Filter 1 Freq": 0.95
+      "Filter 1 Reso": 0.05
+      "Filter 2 On": "Off"
+      "Hi-Q": "On"
+      "MPE Enable": "On"                              # UNCERTAIN LOM name (MIDI tab)
+      "Env 1 Mode": "None"
+      "Env 1 Attack": 0.05
+      "Env 1 Sustain": 1.0
+      "Env 1 Release": 0.15
+    matrix:
+      - {source: "Pressure", destination: "Osc 1 Wave Position", amount: 80}   # MPE per-note source
